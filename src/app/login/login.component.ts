@@ -13,10 +13,15 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     loginForm: FormGroup;
     submitted = false;
     loading = false;
-    returnUrl: string;
+    returnUrl: string = '';
     error = "";
 
-    constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {}
+    constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
+      this.loginForm = this.formBuilder.group({
+        username: ["", Validators.required],
+        password: ["", Validators.required]
+    });
+    }
 
     ngOnInit() {
         //console.log("in ngoninit in login component");
@@ -50,7 +55,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
         this.loading = true;
 
         this.authenticationService
-            .login(this.f.username.value, this.f.password.value)
+            .login(this.f["username"].value, this.f["password"].value)
             .pipe(first())
             .subscribe(
                 data => {
