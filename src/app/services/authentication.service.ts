@@ -57,7 +57,7 @@ export class AuthenticationService {
                     
                     this.currentUserSubject.next(user);
 
-                    this.userStore.updateUsername('auser');
+                    this.userStore.updateUsername(u);
 
                     return user;
                 })
