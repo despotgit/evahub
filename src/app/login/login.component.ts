@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-        this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
+        this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/home";
     }
 
     // Convenience getter for easy access to form fields
