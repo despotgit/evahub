@@ -4,6 +4,6 @@
 
 export const environment = {
     production: true,
-    baseApiBackendUrl: "https://theseus-test.jrc.ec.europa.eu/CUP/backend",
-    baseApiFrontendUrl: "http://localhost:4200"
+    baseApiBackendUrl: "ahttps://theseus-test.jrc.ec.europa.eu/CUP/backend",
+    baseApiFrontendUrl: "ahttp://localhost:4200"
 };

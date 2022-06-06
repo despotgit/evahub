@@ -9,6 +9,7 @@ import { loginTokenExpiryTime } from "../common/constants";
 import { Router } from "@angular/router";
 import { User } from '../models/user';
 import { UserToken } from '../models/UserToken';
+import { isNull } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
@@ -16,9 +17,11 @@ export class AuthenticationService {
     public currentUser: Observable<User>;
 
     constructor(public http: HttpClient, private router: Router) {
-        let cu = localStorage.getItem("currentUser") ? localStorage.getItem("currentUser") : JSON.stringify("aa");
+        let cu = localStorage.getItem("currentUser");
+        if(cu === null) {
+          cu = JSON.stringify({});
+        }
 
-        cu = JSON.stringify({a: 1});
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(cu));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -39,11 +42,10 @@ export class AuthenticationService {
                     if (user.authenticated && user.token) {
                         // store user details and jwt token in local storage to keep user logged in between page refreshes
                         localStorage.setItem("currentUser", JSON.stringify(user));
-                        this.currentUserSubject.next(user);
-                    } else {
-                        this.currentUserSubject.next(user);
-                        //return null;
-                    }
+                        
+                    } 
+                    
+                    this.currentUserSubject.next(user);
 
                     return user;
                 })
