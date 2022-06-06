@@ -10,13 +10,15 @@ import { Router } from "@angular/router";
 import { User } from '../models/user';
 import { UserToken } from '../models/UserToken';
 import { isNull } from '@angular/compiler/src/output/output_ast';
+import { UserStoreService } from './user-store.service';
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
 
-    constructor(public http: HttpClient, private router: Router) {
+    constructor(public http: HttpClient,
+      private userStore: UserStoreService) {
         let cu = localStorage.getItem("currentUser");
         if(cu === null) {
           cu = JSON.stringify({});
@@ -24,6 +26,14 @@ export class AuthenticationService {
 
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(cu));
         this.currentUser = this.currentUserSubject.asObservable();
+
+        this.userStore.setState({
+          username: '',
+          isLoggedIn: false
+          
+        }); 
+
+        
     }
 
     public get currentUserValue(): User {
@@ -46,6 +56,8 @@ export class AuthenticationService {
                     } 
                     
                     this.currentUserSubject.next(user);
+
+                    this.userStore.updateUsername('auser');
 
                     return user;
                 })

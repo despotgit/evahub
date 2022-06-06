@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
 import { first } from "rxjs/operators";
+import { UserStoreService } from "../services/user-store.service";
 
 @Component({
     selector: "app-login",
@@ -16,7 +17,12 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     returnUrl: string = '';
     error = "";
 
-    constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
+
+    constructor(private formBuilder: FormBuilder, 
+      private route: ActivatedRoute, 
+      private router: Router, 
+      private authenticationService: AuthenticationService,
+      private userStore: UserStoreService) {
       this.loginForm = this.formBuilder.group({
         username: ["", Validators.required],
         password: ["", Validators.required]
@@ -30,8 +36,9 @@ export class LoginComponent implements OnInit, AfterViewChecked {
             password: ["", Validators.required]
         });
 
-        // logout the person when he opens the app for the first time
-        this.authenticationService.logout();
+        
+
+        
     }
 
     ngAfterViewChecked() {
