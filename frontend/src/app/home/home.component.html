@@ -1,0 +1,10 @@
+<p>home works!</p>
+<input type="button" (click)="logout()" value="Log out">
+
+<div *ngIf="{
+  un: username$ | async
+
+} as asyncData">
+
+  username: {{ asyncData.un }}
+</div>
