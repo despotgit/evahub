@@ -17,12 +17,10 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     returnUrl: string = '';
     error = "";
 
-
     constructor(private formBuilder: FormBuilder, 
       private route: ActivatedRoute, 
       private router: Router, 
-      private authenticationService: AuthenticationService,
-      private userStore: UserStoreService) {
+      private authenticationService: AuthenticationService) {
       this.loginForm = this.formBuilder.group({
         username: ["", Validators.required],
         password: ["", Validators.required]
@@ -35,17 +33,12 @@ export class LoginComponent implements OnInit, AfterViewChecked {
             username: ["", Validators.required],
             password: ["", Validators.required]
         });
-
-        
-
-        
     }
 
     ngAfterViewChecked() {
         this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/home";
     }
 
-    // Convenience getter for easy access to form fields
     get f() {
         return this.loginForm.controls;
     }
@@ -66,24 +59,12 @@ export class LoginComponent implements OnInit, AfterViewChecked {
             .pipe(first())
             .subscribe(
                 data => {
-                    //console.log("in loginComponent, this.returnUrl is:");
-                    //console.log(this.returnUrl);
-
-                    //console.log("in subscribe, data is:");
-                    //console.log(data);
-
+                   
                     if (data.authenticated) {
                         this.router.navigate([this.returnUrl]);
                     } else {
                         this.error = "Wrong credentials entered.";
                     }
-                    this.loading = false;
-                },
-                error => {
-                    //console.log("in login component error branch, error is:");
-                    //console.log(error);
-
-                    this.error = "Problem during authentication.";
                     this.loading = false;
                 }
             );

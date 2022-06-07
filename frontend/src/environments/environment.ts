@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    baseApiBackendUrl: "http://localhost/cup/backend",
+    baseApiBackendUrl: "http://localhost/power/backend",
     baseApiFrontendUrl: "http://localhost:4200"
 };
 

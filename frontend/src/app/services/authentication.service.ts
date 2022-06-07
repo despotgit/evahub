@@ -43,7 +43,9 @@ export class AuthenticationService {
             })
             .pipe(
                 map(user => {
+                    console.log('user from pipe map is:', user);
                     if (user.authenticated && user.token) {
+                        
                         localStorage.setItem(storedObjectName, JSON.stringify(user));
                     } 
                     
@@ -65,21 +67,21 @@ export class AuthenticationService {
     validateLoginToken() {
 
         const tok: string = localStorage.getItem(storedObjectName) || '';
-        const currentUser: any = JSON.parse(tok);
+        const storedObject: any = JSON.parse(tok);
 
-        console.log('currentUser is:', currentUser);
+        console.log('storedObject is:', storedObject);
         
-        if (currentUser && currentUser.token && currentUser.iat) {
+        if (storedObject && storedObject.token && storedObject.iat) {
             const nowTime: number = new Date().getTime();
             const now: number = Math.floor(nowTime / 1000);
-            const iat: number = currentUser.iat;
+            const iat: number = storedObject.iat;
 
             let minutesPassedSinceLogin = (now - iat) / 60;
 
             //console.log("passed time (in minutes) since login is:");
             //console.log(minutesPassedSinceLogin);
 
-            if (currentUser.role === "admin" || minutesPassedSinceLogin <= loginTokenExpiryTime) {
+            if (storedObject.role === "admin" || minutesPassedSinceLogin <= loginTokenExpiryTime) {
                 return true;
             } else {
                 return false;
