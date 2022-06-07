@@ -5,7 +5,7 @@ import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 
 
-import { loginTokenExpiryTime } from "../common/constants";
+import { jwtName, loginTokenExpiryTime } from "../common/constants";
 import { Router } from "@angular/router";
 import { User } from '../models/user';
 import { UserToken } from '../models/UserToken';
@@ -14,18 +14,15 @@ import { UserStoreService } from './user-store.service';
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
-    private currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
 
     constructor(public http: HttpClient,
       private userStore: UserStoreService) {
-        let cu = localStorage.getItem("currentUser");
+        let cu = localStorage.getItem("powerJwt");
         if(cu === null) {
           cu = JSON.stringify({});
         }
 
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(cu));
-        this.currentUser = this.currentUserSubject.asObservable();
+        console.log('do something with the JSON.parse(cu)');
 
         this.userStore.setState({
           username: '',
@@ -36,9 +33,6 @@ export class AuthenticationService {
         
     }
 
-    public get currentUserValue(): User {
-        return this.currentUserSubject.value;
-    }
 
     login(u: string, p: string) {
         return this.http
@@ -51,12 +45,10 @@ export class AuthenticationService {
                     // login is successful if there's a jwt token in the response
                     if (user.authenticated && user.token) {
                         // store user details and jwt token in local storage to keep user logged in between page refreshes
-                        localStorage.setItem("currentUser", JSON.stringify(user));
+                        localStorage.setItem(jwtName, JSON.stringify(user));
                         
                     } 
                     
-                    this.currentUserSubject.next(user);
-
                     this.userStore.updateUsername(u);
 
                     return user;
@@ -66,14 +58,14 @@ export class AuthenticationService {
 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem("currentUser");
-        this.currentUserSubject.next(new User());
+        localStorage.removeItem("powerJwt");
+        
     }
 
     // Validate the token exists, and the iat is recent enough, in order to enable
     // the client to make API call
     validateLoginToken() {
-        //const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        //const currentUser = JSON.parse(localStorage.getItem(jwtName));
         const currentUser = new User();
 
         if (currentUser && currentUser.token && currentUser.iat) {

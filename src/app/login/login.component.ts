@@ -73,7 +73,6 @@ export class LoginComponent implements OnInit, AfterViewChecked {
                     //console.log(data);
 
                     if (data.authenticated) {
-                        //localStorage.setItem("currentUser", data);
                         this.router.navigate([this.returnUrl]);
                     } else {
                         this.error = "Wrong credentials entered.";
