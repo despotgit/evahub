@@ -67,7 +67,13 @@ export class AuthenticationService {
   validateLoginToken() {
 
     const tok: string = localStorage.getItem(storedObjectName) || '';
-    const storedObject: any = JSON.parse(tok);
+    let storedObject: any;
+    try {
+      storedObject = JSON.parse(tok);
+    } catch (e) {
+      return false;
+
+    }
 
     console.log('storedObject is:', storedObject);
 
