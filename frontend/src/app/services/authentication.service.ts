@@ -15,80 +15,80 @@ import { UserStoreService } from './user-store.service';
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
 
-    constructor(public http: HttpClient,
-      private userStore: UserStoreService) {
+  constructor(public http: HttpClient,
+    private userStore: UserStoreService) {
 
-        this.userStore.setState({
-          username: '',
-          isLoggedIn: false
-          
-        }); 
+    this.userStore.setState({
+      username: '',
+      isLoggedIn: false
 
-        let cu = localStorage.getItem(storedObjectName);
-        if(cu === null) {
-          cu = JSON.stringify({});
-        } else {
-          console.log('cu is:', cu);
-        }
+    });
 
-        console.log('do something with the JSON.parse(cu)');
-
+    let cu = localStorage.getItem(storedObjectName);
+    if (cu === null) {
+      cu = JSON.stringify({});
+    } else {
+      console.log('cu is:', cu);
     }
 
-    login(u: string, p: string) {
-        return this.http
-            .post<any>(`${environment.baseApiBackendUrl}/post/authenticate`, {
-                username: u,
-                password: p
-            })
-            .pipe(
-                map(user => {
-                    console.log('user from pipe map is:', user);
-                    if (user.authenticated && user.token) {
-                        
-                        localStorage.setItem(storedObjectName, JSON.stringify(user));
-                    } 
-                    
-                    this.userStore.updateUsername(u);
+    console.log('do something with the JSON.parse(cu)');
 
-                    return user;
-                })
-            );
+  }
+
+  login(u: string, p: string) {
+    return this.http
+      .post<any>(`${environment.baseApiBackendUrl}/post/authenticate`, {
+        username: u,
+        password: p
+      })
+      .pipe(
+        map(user => {
+          console.log('user from pipe map is:', user);
+          if (user.authenticated && user.token) {
+
+            localStorage.setItem(storedObjectName, JSON.stringify(user));
+          }
+
+          this.userStore.updateUsername(u);
+
+          return user;
+        })
+      );
+  }
+
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem(storedObjectName);
+
+  }
+
+  // Validate the token exists, and the iat is recent enough, in order to enable
+  // the client to make API call
+  validateLoginToken() {
+
+    const tok: string = localStorage.getItem(storedObjectName) || '';
+    const storedObject: any = JSON.parse(tok);
+
+    console.log('storedObject is:', storedObject);
+
+    if (storedObject && storedObject.token && storedObject.iat) {
+      const nowTime: number = new Date().getTime();
+      const now: number = Math.floor(nowTime / 1000);
+      const iat: number = storedObject.iat;
+
+      let minutesPassedSinceLogin = (now - iat) / 60;
+
+      //console.log("passed time (in minutes) since login is:");
+      //console.log(minutesPassedSinceLogin);
+
+      if (storedObject.role === "admin" || minutesPassedSinceLogin <= loginTokenExpiryTime) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
     }
-
-    logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem(storedObjectName);
-        
-    }
-
-    // Validate the token exists, and the iat is recent enough, in order to enable
-    // the client to make API call
-    validateLoginToken() {
-
-        const tok: string = localStorage.getItem(storedObjectName) || '';
-        const storedObject: any = JSON.parse(tok);
-
-        console.log('storedObject is:', storedObject);
-        
-        if (storedObject && storedObject.token && storedObject.iat) {
-            const nowTime: number = new Date().getTime();
-            const now: number = Math.floor(nowTime / 1000);
-            const iat: number = storedObject.iat;
-
-            let minutesPassedSinceLogin = (now - iat) / 60;
-
-            //console.log("passed time (in minutes) since login is:");
-            //console.log(minutesPassedSinceLogin);
-
-            if (storedObject.role === "admin" || minutesPassedSinceLogin <= loginTokenExpiryTime) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
+  }
 }
 
