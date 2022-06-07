@@ -4,13 +4,13 @@ use \Firebase\JWT\JWT;
 
 class CredentialsVerificator
 {
-    function setConnection($connect)
+    public function setConnection($connect)
     {
         $this->connect = $connect;
     }
 
     // Verifies the username/password credentials
-    function verifyCredentials($username, $password)
+    public function verifyCredentials($username, $password)
     {
         $connect = $this->connect;
 
@@ -31,12 +31,10 @@ class CredentialsVerificator
         $response = new stdClass();
 
         if ($r) {
-            //echo "<pre>r is: ";
-            //print_r($r);
-            //echo "</pre>";
 
             $response->authenticated = true;
             $response->role = $r["role"];
+            $response->username = $username;
 
             return $response;
         } else {
@@ -47,7 +45,7 @@ class CredentialsVerificator
     }
 
     // Verifies the JWT token
-    function verifyJwt()
+    public function verifyJwt()
     {
 
         $headers = apache_request_headers();
@@ -79,7 +77,7 @@ class CredentialsVerificator
             return false;
         }
 
-        // Verify that the token has not expired 
+        // Verify that the token has not expired
         $jwtExpirationInterval = 60;
 
         if ($jwtDecoded->iat) {
@@ -97,7 +95,6 @@ class CredentialsVerificator
         if ($minutesPassedSinceLogin > $jwtExpirationInterval) {
             return false;
         }
-
 
         return true;
     }

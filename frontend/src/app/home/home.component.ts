@@ -14,19 +14,18 @@ export class HomeComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService,
     private router: Router,
-    private userStore: UserStoreService) { 
-      this.username$ = this.userStore.$username;    }
+    private userStore: UserStoreService) {
+
+    this.username$ = this.userStore.$username;
+  }
 
   ngOnInit(): void {
-    //this.username$ = this.userStore.$username;
 
-    console.log('username is:', this.username$);
   }
 
   logout() {
     this.authenticationService.logout();
     this.router.navigate(["login"]);
-    
 
   }
 

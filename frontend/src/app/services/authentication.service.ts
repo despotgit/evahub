@@ -82,6 +82,7 @@ export class AuthenticationService {
       //console.log(minutesPassedSinceLogin);
 
       if (storedObject.role === "admin" || minutesPassedSinceLogin <= loginTokenExpiryTime) {
+        this.userStore.updateUsername(storedObject.username);
         return true;
       } else {
         return false;

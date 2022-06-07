@@ -1,17 +1,16 @@
 {
-    //"php.validate.executablePath": "/Applications/MAMP/bin/php/php7.4.2/bin/php",
-    //"php.executablePath": "/Applications/MAMP/bin/php/php7.4.2/bin/php",
-
-    //"php.executablePath": "c:\\xampp\\php53\\php.exe",
-    //"php.validate.executablePath": "c:\\xampp\\php53\\php.exe",
-
-    "javascript.preferences.quoteStyle": "double",
-    "typescript.preferences.quoteStyle": "double",
-    "html.format.wrapLineLength": 176,
-    "prettier.printWidth": 120,
-    "prettier.tabWidth": 4,
-    "editor.formatOnSave": true,
-    "editor.wordWrapColumn": 120,
-    "editor.wordWrap": "wordWrapColumn",
-    "prettier.trailingComma": "none"
+  //"php.validate.executablePath": "/Applications/MAMP/bin/php/php7.4.2/bin/php",
+  //"php.executablePath": "/Applications/MAMP/bin/php/php7.4.2/bin/php",
+  //"php.executablePath": "c:\\xampp\\php53\\php.exe",
+  //"php.validate.executablePath": "c:\\xampp\\php53\\php.exe",
+  "javascript.preferences.quoteStyle": "double",
+  "typescript.preferences.quoteStyle": "double",
+  "html.format.wrapLineLength": 176,
+  "prettier.printWidth": 120,
+  "prettier.tabWidth": 4,
+  "editor.formatOnSave": true,
+  "editor.wordWrapColumn": 120,
+  "editor.wordWrap": "wordWrapColumn",
+  "prettier.trailingComma": "none",
+  "editor.tabSize": 2
 }
