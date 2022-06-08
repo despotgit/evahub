@@ -11,17 +11,21 @@ export interface UserState {
   providedIn: 'root'
 })
 export class UserStoreService extends ComponentStore<UserState> {
-  
+
   constructor() {
     super();
-    
-  } 
+
+  }
 
   $username: Observable<string> = this.select(state => state.username);
   $isLoggedIn: Observable<boolean> = this.select(state => state.isLoggedIn);
 
-  updateUsername(username: string){
-    this.patchState({username}); // self-explaining syntax
+  updateUsername(username: string) {
+    this.patchState({ username }); // self-explaining syntax
+  }
+
+  updateIsLoggedIn(isLoggedIn: boolean) {
+    this.patchState({ isLoggedIn }); // self-explaining syntax
   }
 
 }
