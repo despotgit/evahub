@@ -15,22 +15,20 @@ There can be other conditions too, like role based authentication
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard implements CanActivate {
-    constructor(private router: Router, public authenticationService: AuthenticationService) {}
+  constructor(private router: Router, public authenticationService: AuthenticationService) { }
 
-    canActivate(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        //console.log("Nella auth guard, e nella sua canActivate");
+  canActivate(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    //console.log("Nella auth guard, e nella sua canActivate");
 
-        // Check the token for expiry time and other stuff potentially
+    if (this.authenticationService.validateLoginToken()) {
+      return true;
+    } else {
+      console.log("in auth guard on false validateLoginToken.");
+      this.router.navigate(["/login"], {
+        queryParams: { returnUrl: state.url }
+      });
 
-        if (this.authenticationService.validateLoginToken()) {
-            return true;
-        } else {
-            console.log("in auth guard on false validateLoginToken.");
-            this.router.navigate(["/login"], {
-                queryParams: { returnUrl: state.url }
-            });
-
-            return false;
-        }
+      return false;
     }
+  }
 }
