@@ -6,6 +6,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -16,7 +19,11 @@ import { MatInputModule } from '@angular/material/input';
     MatSliderModule,
     MatSidenavModule,
     MatStepperModule,
-    MatInputModule],
+    MatInputModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatIconModule
+  ],
   exports: [
     MatFormFieldModule,
     MatToolbarModule,
@@ -24,7 +31,11 @@ import { MatInputModule } from '@angular/material/input';
     MatSliderModule,
     MatSidenavModule,
     MatStepperModule,
-    MatInputModule]
+    MatInputModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatIconModule
+  ]
 })
 export class VladosMaterialModule {
 

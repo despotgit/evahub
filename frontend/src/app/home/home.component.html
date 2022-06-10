@@ -11,13 +11,7 @@
   username: {{ asyncData.un }}
 </div>
 <div>
-  <button mat-button>farog</button>
-  <!--
-  <mat-slider min="1"
-    max="100"
-    step="1"
-    value="50"></mat-slider>
-  -->
+  <button mat-button>press me</button>
 
   <mat-slider thumbLabel
     tickInterval="1000"
@@ -80,6 +74,39 @@
         matStepperPrevious>Back</button>
       <button mat-button
         (click)="stepper.reset()">Reset</button>
+      <button mat-button
+        (click)="doneStepper()">Done</button>
     </div>
   </mat-step>
 </mat-vertical-stepper>
+
+
+
+<!--  EXPANSION  -->
+<mat-accordion>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        This is the expansion title
+      </mat-panel-title>
+      <mat-panel-description>
+        This is a summary of the content
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>This is the primary content of the panel.</p>
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Self aware panel
+      </mat-panel-title>
+      <mat-panel-description>
+        Currently I am {{panelOpenState ? 'open' : 'closed'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>I'm visible because I am open</p>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<!-- END EXPANSION -->
