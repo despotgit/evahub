@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
+import { HomePageDataStoreService } from "./services/home-page-data-store.service";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,14 @@ import { Router } from "@angular/router";
 export class AppComponent {
   title = 'power';
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private homePageDataStore: HomePageDataStoreService) {
+    this.homePageDataStore.setState(
+      {
+        firstLastName: 'i',
+
+      }
+    );
 
   }
 

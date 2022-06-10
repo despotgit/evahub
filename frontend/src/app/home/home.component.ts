@@ -1,37 +1,76 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, tap } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
-import { UserStoreService } from '../services/user-store.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion } from "@angular/material/expansion";
+import { HomePageDataStoreService } from "../services/home-page-data-store.service";
+import { UserStoreService } from '../services/user-store.service';
+
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
 
   panelOpenState = false;
 
-  username$: Observable<string>;
+  step1FormGroup: any;
 
-  firstFormGroup: FormGroup = this._formBuilder.group({ firstCtrl: [''] });
-  secondFormGroup: FormGroup = this._formBuilder.group({ secondCtrl: [''] });
+  username$: Observable<string> = this.userStore.$username;
+  firstLastName$: Observable<string> = this.homePageDataStore.firstLastName$;
+
+  /*
+  firstNameChanges$ = this.step1FormGroup.get('firstLastName').valueChanges.pipe(
+    debounceTime(300),
+    //map(v => (v || '').trim()),
+    distinctUntilChanged(),
+    tap(value => console.log('yeahhhhsh'))
+  );
+  */
+
+
 
   constructor(private authenticationService: AuthenticationService,
     private router: Router,
     private userStore: UserStoreService,
-    private _formBuilder: FormBuilder) {
+    private homePageDataStore: HomePageDataStoreService,
+    private formBuilder: FormBuilder) {
 
-    this.username$ = this.userStore.$username;
+    this.step1FormGroup = this.formBuilder.group({
+      firstLastNameFormControl: new FormControl('')
+
+    });
 
 
   }
 
+
+
   ngOnInit(): void {
+    this.step1FormGroup.get('firstLastNameFormControl').valueChanges.pipe(
+      map((a) => {
+        console.log('oy!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+      })
+    );
+
+    this.step1FormGroup.get('firstLastNameFormControl').valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(value => console.log('oy!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')),
+      map((a) => a),
+      tap((text: any) => {
+
+        this.homePageDataStore.updateFirstLastName(text);
+
+      })
+    ).subscribe();
+
 
   }
 
@@ -43,9 +82,13 @@ export class HomeComponent implements OnInit {
 
   doneStepper() {
 
-    console.log('v is:', this.firstFormGroup.value);
+    //console.log('v is:', this.firstFormGroup.value);
 
-    //console.log('stepper is:', this.stepper);
+  }
+
+  onChangeFirstLastName($event: any) {
+
+    console.log('event is:', $event);
   }
 
 

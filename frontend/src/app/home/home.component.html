@@ -6,42 +6,25 @@
 <div *ngIf="{
   un: username$ | async
 
-} as asyncData">
+} as asyncData1">
 
-  username: {{ asyncData.un }}
-</div>
-<div>
-  <button mat-button>press me</button>
-
-  <mat-slider thumbLabel
-    tickInterval="1000"
-    step="1000"
-    min="0"
-    max="100000"
-    aria-label="units"></mat-slider>
+  username: {{ asyncData1.un }}
 </div>
 
-
-<div class="example-input-wrapper">
-  <label for="duration">Animation duration:</label>
-  <input id="duration"
-    value="2000"
-    type="number"
-    min="0"
-    step="100"
-    #duration>
-</div>
-
-<mat-vertical-stepper [linear]="false"
+<mat-vertical-stepper *ngIf="{
+  firstLastName: firstLastName$ | async
+  
+} as asyncData"
+  [linear]="false"
   #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
+  <mat-step [stepControl]="step1FormGroup">
+    firstLastName is: {{ asyncData.firstLastName }}
+    <form [formGroup]="step1FormGroup">
       <ng-template matStepLabel>Fill out your name</ng-template>
       <mat-form-field>
         <input matInput
-          placeholder="Last name, First name"
-          formControlName="firstCtrl"
-          required>
+          placeholder='Last name, First name'
+          formControlName='firstLastNameFormControl'>
       </mat-form-field>
       <div>
         <button mat-button
@@ -49,6 +32,7 @@
       </div>
     </form>
   </mat-step>
+  <!--
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Fill out your address</ng-template>
@@ -56,6 +40,7 @@
         <input matInput
           placeholder="Address"
           formControlName="secondCtrl"
+          value="address"
           required>
       </mat-form-field>
       <div>
@@ -66,6 +51,7 @@
       </div>
     </form>
   </mat-step>
+  -->
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     You are now done.
