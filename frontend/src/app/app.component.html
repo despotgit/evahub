@@ -1,10 +1,10 @@
-<mat-sidenav-container>
-  <mat-sidenav>Start</mat-sidenav>
-  <mat-sidenav-content>Main</mat-sidenav-content>
-</mat-sidenav-container>
-
-
 <mat-toolbar>
   <span>Power Monitor</span>
+
+  <button mat-button
+    (click)='gotoReports()'>Reports</button>
+  <button mat-button
+    (click)='gotoHome()'>Home</button>
+
 </mat-toolbar>
 <router-outlet></router-outlet>

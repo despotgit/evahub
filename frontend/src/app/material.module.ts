@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatExpansionModule,
     MatDatepickerModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
   ],
   exports: [
     MatFormFieldModule,
@@ -34,7 +36,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatExpansionModule,
     MatDatepickerModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
   ]
 })
 export class VladosMaterialModule {
