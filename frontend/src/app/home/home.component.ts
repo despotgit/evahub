@@ -22,8 +22,7 @@ export class HomeComponent implements OnInit {
   step1FormGroup: any;
 
   username$: Observable<string> = this.userStore.$username;
-  firstLastName$: Observable<string> = this.homePageDataStore.firstLastName$;
-  firstLastNameInput$: Observable<string> = this.firstLastName$.pipe(
+  firstLastName$: Observable<string> = this.homePageDataStore.firstLastName$.pipe(
     tap((newName) => {
       this.step1FormGroup.get('firstLastNameFormControl').setValue(newName);
     }
