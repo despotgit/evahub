@@ -12,13 +12,13 @@
 </div>
 
 <mat-vertical-stepper *ngIf="{
-  firstLastName: firstLastName$ | async
-  
+  firstLastNameInput: firstLastNameInput$ | async
 } as asyncData"
   [linear]="false"
   #stepper>
   <mat-step [stepControl]="step1FormGroup">
-    firstLastName is: {{ asyncData.firstLastName }}
+
+    firstLastNameInput is: {{ asyncData.firstLastNameInput }}
     <form [formGroup]="step1FormGroup">
       <ng-template matStepLabel>Fill out your name</ng-template>
       <mat-form-field>

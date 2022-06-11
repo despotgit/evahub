@@ -23,16 +23,14 @@ export class HomeComponent implements OnInit {
 
   username$: Observable<string> = this.userStore.$username;
   firstLastName$: Observable<string> = this.homePageDataStore.firstLastName$;
+  firstLastNameInput$: Observable<string> = this.firstLastName$.pipe(
+    tap((newName) => {
+      console.log('newName is:', newName);
+      this.step1FormGroup.get('firstLastNameFormControl').setValue(newName);
 
-  /*
-  firstNameChanges$ = this.step1FormGroup.get('firstLastName').valueChanges.pipe(
-    debounceTime(300),
-    //map(v => (v || '').trim()),
-    distinctUntilChanged(),
-    tap(value => console.log('yeahhhhsh'))
+    }
+    )
   );
-  */
-
 
 
   constructor(private authenticationService: AuthenticationService,
@@ -46,23 +44,12 @@ export class HomeComponent implements OnInit {
 
     });
 
-
   }
-
-
 
   ngOnInit(): void {
     this.step1FormGroup.get('firstLastNameFormControl').valueChanges.pipe(
-      map((a) => {
-        console.log('oy!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-
-      })
-    );
-
-    this.step1FormGroup.get('firstLastNameFormControl').valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      tap(value => console.log('oy!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')),
       map((a) => a),
       tap((text: any) => {
 
@@ -70,7 +57,6 @@ export class HomeComponent implements OnInit {
 
       })
     ).subscribe();
-
 
   }
 
