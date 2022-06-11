@@ -25,13 +25,10 @@ export class HomeComponent implements OnInit {
   firstLastName$: Observable<string> = this.homePageDataStore.firstLastName$;
   firstLastNameInput$: Observable<string> = this.firstLastName$.pipe(
     tap((newName) => {
-      console.log('newName is:', newName);
       this.step1FormGroup.get('firstLastNameFormControl').setValue(newName);
-
     }
     )
   );
-
 
   constructor(private authenticationService: AuthenticationService,
     private router: Router,
@@ -41,7 +38,6 @@ export class HomeComponent implements OnInit {
 
     this.step1FormGroup = this.formBuilder.group({
       firstLastNameFormControl: new FormControl('')
-
     });
 
   }
@@ -52,9 +48,7 @@ export class HomeComponent implements OnInit {
       distinctUntilChanged(),
       map((a) => a),
       tap((text: any) => {
-
         this.homePageDataStore.updateFirstLastName(text);
-
       })
     ).subscribe();
 
