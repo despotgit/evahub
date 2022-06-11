@@ -4,15 +4,16 @@
   value="Log out">
 
 <div *ngIf="{
-  un: username$ | async
+  username: username$ | async
 
 } as asyncData1">
 
-  username: {{ asyncData1.un }}
+  username: {{ asyncData1.username }}
 </div>
 
 <mat-vertical-stepper *ngIf="{
-  firstLastName: firstLastName$ | async
+  firstLastName: firstLastName$ | async,
+  address: address$ | async
 } as asyncData"
   [linear]="false"
   #stepper>
@@ -31,14 +32,14 @@
       </div>
     </form>
   </mat-step>
-  <!--
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
+
+  <mat-step [stepControl]="step2FormGroup">
+    <form [formGroup]="step2FormGroup">
       <ng-template matStepLabel>Fill out your address</ng-template>
       <mat-form-field>
         <input matInput
           placeholder="Address"
-          formControlName="secondCtrl"
+          formControlName="addressFormControl"
           value="address"
           required>
       </mat-form-field>
@@ -50,7 +51,7 @@
       </div>
     </form>
   </mat-step>
-  -->
+
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     You are now done.

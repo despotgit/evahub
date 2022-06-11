@@ -14,7 +14,8 @@ export class AppComponent {
     private homePageDataStore: HomePageDataStoreService) {
     this.homePageDataStore.setState(
       {
-        firstLastName: 'i',
+        firstLastName: '',
+        address: ''
 
       }
     );

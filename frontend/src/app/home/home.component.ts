@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   panelOpenState = false;
 
   step1FormGroup: any;
+  step2FormGroup: any
 
   username$: Observable<string> = this.userStore.$username;
   firstLastName$: Observable<string> = this.homePageDataStore.firstLastName$.pipe(
@@ -28,6 +29,11 @@ export class HomeComponent implements OnInit {
     }
     )
   );
+  address$: Observable<string> = this.homePageDataStore.address$.pipe(
+    tap((address) => {
+      this.step2FormGroup.get('addressFormControl').setValue(address);
+    })
+  )
 
   constructor(private authenticationService: AuthenticationService,
     private router: Router,
@@ -39,15 +45,26 @@ export class HomeComponent implements OnInit {
       firstLastNameFormControl: new FormControl('')
     });
 
+    this.step2FormGroup = this.formBuilder.group({
+      addressFormControl: new FormControl('')
+    });
+
   }
 
   ngOnInit(): void {
     this.step1FormGroup.get('firstLastNameFormControl').valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      map((a) => a),
       tap((text: any) => {
         this.homePageDataStore.updateFirstLastName(text);
+      })
+    ).subscribe();
+
+    this.step2FormGroup.get('addressFormControl').valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap((text: any) => {
+        this.homePageDataStore.updateAddress(text);
       })
     ).subscribe();
 
