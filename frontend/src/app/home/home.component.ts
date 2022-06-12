@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged, map, Observable, tap } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, map, mergeMap, Observable, tap } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion } from "@angular/material/expansion";
 import { HomePageDataStoreService } from "../services/home-page-data-store.service";
 import { UserStoreService } from '../services/user-store.service';
+import { concatWith, mergeAll } from 'rxjs/operators';
+import { concat } from 'rxjs';
+import { merge } from 'rxjs';
+import { concatMap } from 'rxjs';
 
 
 
@@ -52,19 +56,17 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.step1FormGroup.get('firstLastNameFormControl').valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap((text: any) => {
-        this.homePageDataStore.updateFirstLastName(text);
-      })
-    ).subscribe();
 
-    this.step2FormGroup.get('addressFormControl').valueChanges.pipe(
+    const firstLastNameEvents: Observable<any> = this.step1FormGroup.get('firstLastNameFormControl').valueChanges;
+    const addressEvents: Observable<any> = this.step2FormGroup.get('addressFormControl').valueChanges;
+
+    const fieldsChange = combineLatest([firstLastNameEvents, addressEvents]).pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      tap((text: any) => {
-        this.homePageDataStore.updateAddress(text);
+      map(([a, b]) => {
+        this.homePageDataStore.updateFirstLastName(a);
+        this.homePageDataStore.updateAddress(b);
+
       })
     ).subscribe();
 
