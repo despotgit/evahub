@@ -63,9 +63,9 @@ export class HomeComponent implements OnInit {
     combineLatest([firstLastNameEvents, addressEvents]).pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      map(([a, b]) => {
-        this.homePageDataStore.updateFirstLastName(a);
-        this.homePageDataStore.updateAddress(b);
+      map(([firstLastName, address]) => {
+        this.homePageDataStore.updateFirstLastName(firstLastName);
+        this.homePageDataStore.updateAddress(address);
 
       })
     ).subscribe();
