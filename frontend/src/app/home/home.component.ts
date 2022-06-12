@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
     const firstLastNameEvents: Observable<any> = this.step1FormGroup.get('firstLastNameFormControl').valueChanges;
     const addressEvents: Observable<any> = this.step2FormGroup.get('addressFormControl').valueChanges;
 
-    const fieldsChange = combineLatest([firstLastNameEvents, addressEvents]).pipe(
+    combineLatest([firstLastNameEvents, addressEvents]).pipe(
       debounceTime(300),
       distinctUntilChanged(),
       map(([a, b]) => {
