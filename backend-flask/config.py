@@ -32,3 +32,5 @@ if "production" == FLASK_ENV:
 JWT_TOKEN_LOCATION = ["headers"]
 
 JWT_EXPIRY_INTERVAL = float(JWT_EXPIRY_INTERVAL)
+
+print('DEV:  cazzo duro 6')

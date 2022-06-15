@@ -6,7 +6,6 @@ import requests
 
 base_routes = Blueprint("base_routes", __name__)
 
-
 @base_routes.route("/")
 def send_index():
     return send_from_directory("./seta-ui", "index.html")
@@ -20,6 +19,7 @@ def send_js(path):
 
 @base_routes.route("/rest/<path:path>", methods=["GET", "POST"])
 def proxy(path):
+    
     # print(request.__dict__.items())
     mimetype = request.mimetype
     protocol = "https"
@@ -36,8 +36,13 @@ def proxy(path):
         # + request.query_string.decode("utf-8")
     )
     print(f'After: {url}', flush=True)
-    if (request.method == 'GET'):
+    
+    checkAuthorizationHeader = False
+    if(checkAuthorizationHeader):
+      if (request.method == 'GET'):
         r = requests.get(url + f'?{request.query_string.decode("utf-8")}', headers={"Authorization":request.headers["Authorization"]})
-    else:
+      else:
         r = requests.post(url, data= request.data, headers={"Authorization":request.headers["Authorization"]})
+    
+    
     return Response(r.content, mimetype=mimetype)
