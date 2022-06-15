@@ -1,0 +1,13 @@
+flask
+flask-cors
+Pillow
+reportlab
+testresources
+pymongo
+python-cas
+pyjwt==2.1.0
+gunicorn
+python-dotenv
+flask_jwt_extended
+setproctitle
+pycryptodome

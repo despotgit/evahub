@@ -1,0 +1,58 @@
+import time
+
+from db_config import getDb
+
+db = getDb()
+
+def addDbUser(u):
+    
+    usersCollection = db["users"]
+
+    u = {
+        "username": u["uid"],
+        "first_name": u["firstName"],
+        "last_name": u["lastName"],
+        "email": u["email"],
+        "domain": u["domain"],
+        "created-at": str(time.time())
+    }
+
+    usersCollection.insert_one(u)
+    return
+
+
+def getDbUser(username):
+    usersCollection = db["users"]
+    uq = {"username": username}
+
+    user = usersCollection.find_one(uq)
+    if user == None:
+        return None
+    else:
+        return user
+
+
+def updateDbUser(username, field, value):
+    usersCollection = db["users"]
+    userQuery = {"username": username}
+
+    user = usersCollection.find_one(userQuery)
+    if user == None:
+        return None
+
+    updateParameter = {"$set": {field: value, "modified-at": str(time.time())}}
+
+    usersCollection.update({"username": username}, updateParameter  )
+
+    return
+
+
+def deleteAllDbUserData(username):
+    usersCollection = db["users"]
+    uq = {"username": username}
+
+    user = usersCollection.delete_many(uq)
+    if user == None:
+        return None
+    else:
+        return "ok"

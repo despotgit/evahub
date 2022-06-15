@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   panelOpenState = false;
 
   step1FormGroup: any;
-  step2FormGroup: any
+  step2FormGroup: any;
 
   username$: Observable<string> = this.userStore.$username;
   firstLastName$: Observable<string> = this.homePageDataStore.firstLastName$.pipe(
