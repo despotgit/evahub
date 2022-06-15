@@ -9,11 +9,6 @@ define("SALT", "J75prrWYDVabYXDbV8tV");
 
 require_once "jwtAuthenticationServer.php";
 
-ini_set('display_errors', 0);
-
-//error_reporting(E_ALL);
-error_reporting(0);
-
 $productionServerDbSchema = "CUP";
 $devDbSchema = "CUP";
 $useLocalDbOnTheWindowsDevMachine = true;
