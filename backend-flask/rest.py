@@ -2,14 +2,13 @@
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
 
-#from auth import authenticateJwt, checkIfAuthorized
-#from db_corpus_queries_broker import getAllCorpusQueries
-#from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
-#from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
+from auth import authenticateJwt, checkIfAuthorized
+from db_corpus_queries_broker import getAllCorpusQueries
+from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
+from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
 
 rest = Blueprint("rest", __name__)
 
-print('DEV:  cazzo duro 5')
 
 @rest.before_request
 @jwt_required()
@@ -20,9 +19,6 @@ def before_request():
 # GET - Test
 @rest.route("/rest/test")
 def getTest():
-
-  print('cazzo duro 4')
-  
   response = {
             "authenticated": True,
             "status": "OK", 

@@ -8,7 +8,7 @@ from Crypto.PublicKey import RSA
 from Crypto.Signature import pkcs1_15
 
 # create a message
-message = b'the message'
+message = b'duh message'
 
 # load private key
 with open('rsa_private_key.pem', 'r') as f:

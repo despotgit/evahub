@@ -12,8 +12,6 @@ from db_revoked_tokens_broker import isTokenRevoked
 # (i.e. the argument "username" has to be the same as the username in JWT)
 def authenticateJwt(username):
 
-    print('DEV:  cazzo duro 7')
-
     auth_header = request.headers.get("Authorization")
     if auth_header:
         jwt_token = auth_header.split(" ")[1]
