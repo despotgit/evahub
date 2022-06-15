@@ -1,1 +1,0 @@
-select distinct extracted_from_file_type, is_kpi_indicator, is_computed, is_composite, is_raw from indicators where 1 limit 100000;
