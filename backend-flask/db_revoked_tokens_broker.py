@@ -50,10 +50,3 @@ def getAllUserRevokedTokensDb(username=None):
         for token in revokedTokens:
             tokens.append(token["jwt"])
     return tokens
-
-    
-            
-
-
-
-        

@@ -24,7 +24,7 @@ def login():
     if username != "test" or password != "test":
         return json.jsonify({"msg": "Bad username or password"}), 401
 
-    access_token = create_access_token(identity=username)
+    access_token = create_access_token(identity=username, additional_claims={"some": 123})
     return json.jsonify(access_token=access_token)
 
 # Protect a route with jwt_required, which will kick out requests

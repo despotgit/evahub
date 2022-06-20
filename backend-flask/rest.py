@@ -8,7 +8,6 @@ from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
 
 rest = Blueprint("rest", __name__)
 
-
 @rest.before_request
 @jwt_required(locations=["headers"])
 def before_request():
