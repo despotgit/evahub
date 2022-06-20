@@ -1,9 +1,8 @@
 
 from flask import Blueprint, json, request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
 from auth import authenticateJwt, checkIfAuthorized
-from db_corpus_queries_broker import getAllCorpusQueries
 from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
 from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
 
@@ -11,24 +10,10 @@ rest = Blueprint("rest", __name__)
 
 
 @rest.before_request
-@jwt_required()
+@jwt_required(locations=["headers"])
 def before_request():
     print("in before_request")
     pass
-
-# GET - Test
-@rest.route("/rest/test")
-def getTest():
-  response = {
-            "authenticated": True,
-            "status": "OK", 
-            "message": "Fine"
-        }
-
-  response.headers.add("Access-Control-Allow-Origin", "*")
-  
-  return response
-
 
 # GET - Get user (by username)
 @rest.route("/rest/user/get/<username>")
@@ -267,38 +252,6 @@ def deleteUserState():
     return response
 
 # Custom non-pure REST calls:
-
-# GET - get all queries
-@rest.route("/rest/queries/<username>")
-def getQueries(username):
-    authentication = authenticateJwt(username)
-
-    if not authentication["authenticated"]:
-        return authentication
-
-    queries = getAllCorpusQueries(username)
-
-    if queries == None:
-        print("No queries have been found for this user.")
-
-        response = {
-            "authenticated": True, 
-            "status": "error", 
-            "message": "No state with given key exists."
-        }
-        
-    else:
-        response = {
-            "authenticated": True,
-            "status": "OK", 
-            "state": queries
-        }
-
-    response = json.jsonify(response)
-
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
-
 
 # Try to get a restricted resource
 @rest.route("/rest/ec-restricted/<username>/<resource>")

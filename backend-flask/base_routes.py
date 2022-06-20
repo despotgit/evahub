@@ -3,9 +3,7 @@ from flask_jwt_extended import jwt_required
 import config
 import requests
 
-
 base_routes = Blueprint("base_routes", __name__)
-
 
 @base_routes.route("/")
 def send_index():

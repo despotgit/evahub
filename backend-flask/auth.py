@@ -1,11 +1,54 @@
-
 import time
 
 import jwt
-from flask import request
+from flask import request, Blueprint
 
 import config
 from db_revoked_tokens_broker import isTokenRevoked
+
+from flask import Blueprint, json, request
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+
+auth = Blueprint("auth", __name__)
+
+# Create a route to authenticate your users and return JWTs. The
+# create_access_token() function is used to actually generate the JWT.
+@auth.route("/auth/login", methods=["POST"])
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    print("username is:" + username)
+    print("password is:" + password)
+    
+    if username != "test" or password != "test":
+        return json.jsonify({"msg": "Bad username or password"}), 401
+
+    access_token = create_access_token(identity=username)
+    return json.jsonify(access_token=access_token)
+
+# Protect a route with jwt_required, which will kick out requests
+# without a valid JWT present.
+@auth.route("/auth/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    # Access the identity of the current user with get_jwt_identity
+    current_user = get_jwt_identity()
+    return json.jsonify(logged_in_as=current_user), 200
+
+# GET - Test
+@auth.route("/auth/test", methods=["GET"])
+def getTest():
+  response = json.jsonify({
+            "authenticated": True,
+            "status": "OK", 
+            "message": "Fine"
+        })
+
+  response.headers.add("Access-Control-Allow-Origin", "*")
+  
+  return response
+
 
 
 # Check if JWT is genuine and belongs to the user for which the resource is requested

@@ -10,9 +10,11 @@ from flask_jwt_extended import JWTManager
 import config
 from base_routes import base_routes
 from db_users_broker import addDbUser, getDbUser
-from ecas import ecas
 from rest import rest
 from rsa import rsa
+from auth import auth
+
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -21,9 +23,13 @@ jwt = JWTManager(app)
 app.secret_key = config.SECRET_KEY
 
 app.register_blueprint(rest, url_prefix="/")
+app.register_blueprint(auth, url_prefix="/")
 app.register_blueprint(base_routes, url_prefix="/seta-ui/")
-app.register_blueprint(ecas, url_prefix="/seta-ui/")
 app.register_blueprint(rsa, url_prefix="/seta-ui/")
+    
+    
+app.config["JWT_SECRET_KEY"] = "FDF89F906815206ABB3270BCB808CDAE6F08BE2B07097A76A507650BD456B4BD"
+app.config["JWT_HEADER_TYPE"] = "Bearer"
 
 if config.FLASK_ENV == "dev":
     cors = CORS(app, resources={r"/*": {"origins": "*"}})
