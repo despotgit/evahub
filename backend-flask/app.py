@@ -1,20 +1,18 @@
 import os
-
+import config
 from bson import ObjectId, datetime
 from cas import CASClient
 from flask import (Flask, Response, json, redirect, render_template, request,
                    send_from_directory, session, url_for)
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-
-import config
 from base_routes import base_routes
 from db_users_broker import addDbUser, getDbUser
 from rest import rest
 from rsa import rsa
 from auth import auth
-
 from flask import jsonify
+from flaskext.mysql import MySQL
 
 app = Flask(__name__)
 
@@ -26,10 +24,32 @@ app.register_blueprint(rest, url_prefix="/")
 app.register_blueprint(auth, url_prefix="/")
 app.register_blueprint(base_routes, url_prefix="/seta-ui/")
 app.register_blueprint(rsa, url_prefix="/seta-ui/")
-    
-    
+
 app.config["JWT_SECRET_KEY"] = "FDF89F906815206ABB3270BCB808CDAE6F08BE2B07097A76A507650BD456B4BD"
 app.config["JWT_HEADER_TYPE"] = "Bearer"
+
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_DB'] = 'power'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql = MySQL()
+mysql.init_app(app)
+
+#my_cursor = mysql.get_db().cursor()
+#my_cursor.execute("SHOW DATABASES")
+#print(my_cursor)
+
+my = MySQL(app, prefix='', host="localhost", user="root", password="root", db="power", autocommit=True)
+connection = my.connect()
+print(connection)
+#c = connection.get_db()
+#print(c)
+cursor = connection.cursor()
+print("cursor is:")
+print(cursor)
+result = cursor.execute("SELECT * FROM users")
+print("result is:")
+print(result)
 
 if config.FLASK_ENV == "dev":
     cors = CORS(app, resources={r"/*": {"origins": "*"}})
