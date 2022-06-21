@@ -47,9 +47,13 @@ print(connection)
 cursor = connection.cursor()
 print("cursor is:")
 print(cursor)
-result = cursor.execute("SELECT * FROM users")
-print("result is:")
-print(result)
+cursor.execute("SELECT * FROM users")
+results = cursor.fetchall()
+#print("results is:")
+#print(results)
+
+for result in results:
+  print(result[1])
 
 if config.FLASK_ENV == "dev":
     cors = CORS(app, resources={r"/*": {"origins": "*"}})
