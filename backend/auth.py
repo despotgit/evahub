@@ -16,17 +16,15 @@ def register():
     username = request.form["username"]
     password = request.form["password"]
     encoding = 'utf-8'
-    connection = getDb()
     passwordEncoded = password.encode(encoding)
     
     hashed = bcrypt.hashpw(passwordEncoded, bcrypt.gensalt())
 
     hashedDecoded = hashed.decode(encoding)
 
+    connection = getDb()
     cursor = connection.cursor()
-    sql = "INSERT INTO users (`username`, `password`) VALUES ('" + username + "', '" + hashedDecoded + "')"
-    
-    cursor.execute(sql)
+    cursor.execute("INSERT INTO users (`username`, `password`) VALUES ('" + username + "', '" + hashedDecoded + "')")
 
     #results = cursor.fetchall()
     #for result in results:
