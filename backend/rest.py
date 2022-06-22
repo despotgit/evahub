@@ -14,6 +14,32 @@ def before_request():
     print("in before_request")
     pass
 
+#Copied from the old server, a proxy of some sort
+@rest.route("/rest/<path:path>", methods=["GET", "POST"])
+def proxy(path):
+    print("**********************************************************   in proxy of sorts")
+    # print(request.__dict__.items())
+    mimetype = request.mimetype
+    protocol = "https"
+    if config.FLASK_ENV == "dev" :
+        protocol = "http"
+    print(f'Before: {request.url}', flush=True)
+    url = (
+        protocol
+        + "://"
+        + config.API_TARGET_PATH
+        + "/"
+        + path
+        # + "?"
+        # + request.query_string.decode("utf-8")
+    )
+    print(f'After: {url}', flush=True)
+    if (request.method == 'GET'):
+        r = requests.get(url + f'?{request.query_string.decode("utf-8")}', headers={"Authorization":request.headers["Authorization"]})
+    else:
+        r = requests.post(url, data=request.data, headers={"Authorization":request.headers["Authorization"]})
+    return Response(r.content, mimetype=mimetype)
+
 # GET - Get user (by username)
 @rest.route("/rest/user/get/<username>")
 def getUserData(username):
@@ -61,23 +87,21 @@ def setUserData(username):
 
         response = {
           "authenticated": True,
-          "status": "error", 
+          "status": "error",
           "message": "User not found in DB."
         }
         
     else:
 
         r = json.loads(request.data.decode("UTF-8"))
-
         updateDbUser(username, r["field"], r["value"])
-
         user = getDbUser(username)
 
         # Return response
         response = {
             "authenticated": True,
-            "status": "OK", 
-            "message": "User updated correctly.", 
+            "status": "OK",
+            "message": "User updated correctly.",
             "user": user
         }
         

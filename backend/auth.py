@@ -1,15 +1,28 @@
 import time
-
 import jwt
-from flask import request, Blueprint
-
 import config
+import bcrypt
+from flask import request, Blueprint
 from db_revoked_tokens_broker import isTokenRevoked
-
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
+
 auth = Blueprint("auth", __name__)
+
+@auth.route("auth/register", methods=["POST"])
+def register():
+    username = request.form["username"]
+    password = request.form["password"]
+  
+    # Hash a password for the first time, with a randomly-generated salt
+    hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+    # Check that an unhashed password matches one that has previously been
+    # hashed
+    if bcrypt.checkpw(password, hashed):
+        print("It Matches!")
+    else:
+        print("It Does not Match :(")
 
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
