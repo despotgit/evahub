@@ -46,21 +46,20 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
 
-    #print("username is:" + username)
-    #print("password is:" + password)
+    connection = getDb()
+    cursor = connection.cursor()
+    sql = "SELECT password FROM users WHERE username='" + username + "'"
+    
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    for result in results:
+      dbPassword = result[0]
 
-    passwordEncoded = password.encode('utf-8')
-    hashed = bcrypt.hashpw(passwordEncoded, bcrypt.gensalt())
-
-    if bcrypt.checkpw(password, hashed):
+    if bcrypt.checkpw(password.encode('utf-8'), dbPassword.encode('utf-8')):
         print("It Matches!")
     else:
         print("It Does not Match :(")
     
-    #Fake password check:
-    #if username != "test" or password != "test":
-    #    return json.jsonify({"msg": "Bad username or password"}), 401
-
     access_token = create_access_token(identity=username, additional_claims={"some": 123})
     return json.jsonify(access_token=access_token)
 
