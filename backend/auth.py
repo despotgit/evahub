@@ -6,6 +6,7 @@ from flask import request, Blueprint
 from db_revoked_tokens_broker import isTokenRevoked
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+from db_config import getDb
 
 
 auth = Blueprint("auth", __name__)
@@ -14,15 +15,31 @@ auth = Blueprint("auth", __name__)
 def register():
     username = request.form["username"]
     password = request.form["password"]
+    encoding = 'utf-8'
+    connection = getDb()
+    passwordEncoded = password.encode(encoding)
+    
+    hashed = bcrypt.hashpw(passwordEncoded, bcrypt.gensalt())
+
+    hashedDecoded = hashed.decode(encoding)
+
+    cursor = connection.cursor()
+    sql = "INSERT INTO users (`username`, `password`) VALUES ('" + username + "', '" + hashedDecoded + "')"
+    
+    cursor.execute(sql)
+
+    #results = cursor.fetchall()
+    #for result in results:
+    #  print(result[1])
+
+    response = json.jsonify({
+       "status": "OK", 
+    })
+
+    response.headers.add("Access-Control-Allow-Origin", "*")
   
-    # Hash a password for the first time, with a randomly-generated salt
-    hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-    # Check that an unhashed password matches one that has previously been
-    # hashed
-    if bcrypt.checkpw(password, hashed):
-        print("It Matches!")
-    else:
-        print("It Does not Match :(")
+    return response
+    
 
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
@@ -31,11 +48,11 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
 
-    print("username is:" + username)
-    print("password is:" + password)
+    #print("username is:" + username)
+    #print("password is:" + password)
 
-    #hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-    #hashed = in this case we need to take the already created hash from the DB
+    passwordEncoded = password.encode('utf-8')
+    hashed = bcrypt.hashpw(passwordEncoded, bcrypt.gensalt())
 
     if bcrypt.checkpw(password, hashed):
         print("It Matches!")
