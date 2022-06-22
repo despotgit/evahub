@@ -33,9 +33,18 @@ def login():
 
     print("username is:" + username)
     print("password is:" + password)
+
+    #hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+    #hashed = in this case we need to take the already created hash from the DB
+
+    if bcrypt.checkpw(password, hashed):
+        print("It Matches!")
+    else:
+        print("It Does not Match :(")
     
-    if username != "test" or password != "test":
-        return json.jsonify({"msg": "Bad username or password"}), 401
+    #Fake password check:
+    #if username != "test" or password != "test":
+    #    return json.jsonify({"msg": "Bad username or password"}), 401
 
     access_token = create_access_token(identity=username, additional_claims={"some": 123})
     return json.jsonify(access_token=access_token)
