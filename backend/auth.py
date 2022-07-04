@@ -1,3 +1,4 @@
+import datetime
 import time
 import jwt
 import config
@@ -53,12 +54,25 @@ def register():
 @auth.route("/auth/login", methods=["POST"])
 def login():
 
-    username = request.form["username"]
-    password = request.form["password"]
+    isPostman = False
+
+    if not isPostman:
+        print("it is:")
+        print(request.get_json())
+
+        o = request.get_json()
+        print(o["username"])
+        print(o["password"])
+
+        username = o["username"]
+        password = o["password"]
+    else:
+        username = request.form["username"]
+        password = request.form["password"]
 
     connection = getDb()
     cursor = connection.cursor()
-    sql = "SELECT password FROM users WHERE username='" + username + "'"
+    sql = "SELECT password, role FROM users WHERE username='" + username + "'"
 
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -70,6 +84,7 @@ def login():
     else:
         result = results[0]
         dbPassword = result[0]
+        dbRole = result[1]
 
         if bcrypt.checkpw(password.encode("utf-8"), dbPassword.encode("utf-8")):
             # print("It matches!")
@@ -92,7 +107,10 @@ def login():
     }
 
     if authenticated:
-        response["access_token"] = access_token
+        response["token"] = access_token
+        response["role"] = dbRole
+        response["username"] = username
+        response["iat"] = datetime.datetime.now().timestamp()
 
     response = json.jsonify(response)
 

@@ -35,10 +35,16 @@ export class AuthenticationService {
 
   }
 
-  login(u: string, p: string) {
+  login(u: string, p: string, isFlaskServer = true) {
+    let url;
+    if (isFlaskServer) {
+      url = `${environment.baseApiBackendUrl}/auth/login`
+    } else {
+      url = `${environment.baseApiBackendUrl}/post/authenticate`
+    }
+
     return this.http
-      //.post<any>(`${environment.baseApiBackendUrl}/auth/login`, {
-      .post<any>(`${environment.baseApiBackendUrl}/post/authenticate`, {
+      .post<any>(url, {
         username: u,
         password: p
       })
