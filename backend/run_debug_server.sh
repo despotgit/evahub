@@ -1,7 +1,6 @@
 #!/bin/sh
 
 export FLASK_APP=app.py
-
 export FLASK_ENV=development
 
 # gunicorn --workers=4 --bind 0.0.0.0:8080 wsgi:app
