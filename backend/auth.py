@@ -52,7 +52,7 @@ def register():
 # create_access_token() function is used to actually generate the JWT.
 @auth.route("/auth/login", methods=["POST"])
 def login():
-    print("im doin it")
+
     username = request.form["username"]
     password = request.form["password"]
 
@@ -63,20 +63,16 @@ def login():
     cursor.execute(sql)
     results = cursor.fetchall()
 
-    print("results is:")
-    print(results)
-
     if results == ():
         msg = "No user with that username exists."
         authenticated = False
         status = "Failed"
-        print(msg)
     else:
         result = results[0]
         dbPassword = result[0]
 
         if bcrypt.checkpw(password.encode("utf-8"), dbPassword.encode("utf-8")):
-            print("It matches!")
+            # print("It matches!")
             msg = "Login successful."
             authenticated = True
             access_token = create_access_token(
@@ -84,7 +80,7 @@ def login():
             )
             status = "OK"
         else:
-            print("It does not match :(")
+            # print("It does not match :(")
             msg = "Login failed."
             authenticated = False
             status = "Failed"
