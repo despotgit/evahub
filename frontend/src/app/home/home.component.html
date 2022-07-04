@@ -5,29 +5,23 @@
 
 } as asyncData">
   <p>home works!</p>
-  <input type="button"
-    (click)="logout()"
-    value="Log out">
+  <input type="button" (click)="logout()" value="Log out">
 
   <div>
 
-    username: {{ asyncData.username }}
+    yeah, username: {{ asyncData.username }}
   </div>
 
-  <mat-vertical-stepper [linear]="false"
-    #stepper>
+  <mat-vertical-stepper [linear]="false" #stepper>
     <mat-step [stepControl]="step1FormGroup">
 
       <form [formGroup]="step1FormGroup">
         <ng-template matStepLabel>Fill out your name</ng-template>
         <mat-form-field>
-          <input matInput
-            placeholder='Last name, First name'
-            formControlName='firstLastNameFormControl'>
+          <input matInput placeholder='Last name, First name' formControlName='firstLastNameFormControl'>
         </mat-form-field>
         <div>
-          <button mat-button
-            matStepperNext>Next</button>
+          <button mat-button matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
@@ -36,17 +30,11 @@
       <form [formGroup]="step2FormGroup">
         <ng-template matStepLabel>Fill out your address</ng-template>
         <mat-form-field>
-          <input matInput
-            placeholder="Address"
-            formControlName="addressFormControl"
-            value="address"
-            required>
+          <input matInput placeholder="Address" formControlName="addressFormControl" value="address" required>
         </mat-form-field>
         <div>
-          <button mat-button
-            matStepperPrevious>Back</button>
-          <button mat-button
-            matStepperNext>Next</button>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
@@ -55,12 +43,9 @@
       <ng-template matStepLabel>Done</ng-template>
       You are now done.
       <div>
-        <button mat-button
-          matStepperPrevious>Back</button>
-        <button mat-button
-          (click)="stepper.reset()">Reset</button>
-        <button mat-button
-          (click)="doneStepper()">Done</button>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button (click)="doneStepper()">Done</button>
       </div>
     </mat-step>
   </mat-vertical-stepper>
@@ -80,8 +65,7 @@
       </mat-expansion-panel-header>
       <p>This is the primary content of the panel.</p>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-      (closed)="panelOpenState = false">
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Self aware panel

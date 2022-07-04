@@ -2,15 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/
 import { Router } from '@angular/router';
 import { combineLatest, debounceTime, distinctUntilChanged, map, mergeMap, Observable, tap } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatAccordion } from "@angular/material/expansion";
+import { FormBuilder, FormControl } from '@angular/forms';
 import { HomePageDataStoreService } from "../services/home-page-data-store.service";
 import { UserStoreService } from '../services/user-store.service';
-import { concatWith, mergeAll } from 'rxjs/operators';
-import { concat } from 'rxjs';
-import { merge } from 'rxjs';
-import { concatMap } from 'rxjs';
-
 
 
 @Component({
