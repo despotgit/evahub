@@ -11,57 +11,99 @@ from db_config import getDb
 
 auth = Blueprint("auth", __name__)
 
+
 @auth.route("auth/register", methods=["POST"])
 def register():
     username = request.form["username"]
     password = request.form["password"]
-    encoding = 'utf-8'
+    encoding = "utf-8"
     passwordEncoded = password.encode(encoding)
-    
+
     hashed = bcrypt.hashpw(passwordEncoded, bcrypt.gensalt())
 
     hashedDecoded = hashed.decode(encoding)
 
     connection = getDb()
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO users (`username`, `password`) VALUES ('" + username + "', '" + hashedDecoded + "')")
+    cursor.execute(
+        "INSERT INTO users (`username`, `password`) VALUES ('"
+        + username
+        + "', '"
+        + hashedDecoded
+        + "')"
+    )
 
-    #results = cursor.fetchall()
-    #for result in results:
+    # results = cursor.fetchall()
+    # for result in results:
     #  print(result[1])
 
-    response = json.jsonify({
-       "status": "OK", 
-    })
+    response = json.jsonify(
+        {
+            "status": "OK",
+        }
+    )
 
     response.headers.add("Access-Control-Allow-Origin", "*")
-  
+
     return response
-    
+
 
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
 @auth.route("/auth/login", methods=["POST"])
 def login():
+    print("im doin it")
     username = request.form["username"]
     password = request.form["password"]
 
     connection = getDb()
     cursor = connection.cursor()
     sql = "SELECT password FROM users WHERE username='" + username + "'"
-    
+
     cursor.execute(sql)
     results = cursor.fetchall()
-    for result in results:
-      dbPassword = result[0]
 
-    if bcrypt.checkpw(password.encode('utf-8'), dbPassword.encode('utf-8')):
-        print("It Matches!")
+    print("results is:")
+    print(results)
+
+    if results == ():
+        msg = "No user with that username exists."
+        authenticated = False
+        status = "Failed"
+        print(msg)
     else:
-        print("It Does not Match :(")
-    
-    access_token = create_access_token(identity=username, additional_claims={"some": 123})
-    return json.jsonify(access_token=access_token)
+        result = results[0]
+        dbPassword = result[0]
+
+        if bcrypt.checkpw(password.encode("utf-8"), dbPassword.encode("utf-8")):
+            print("It matches!")
+            msg = "Login successful."
+            authenticated = True
+            access_token = create_access_token(
+                identity=username, additional_claims={"some": 123}
+            )
+            status = "OK"
+        else:
+            print("It does not match :(")
+            msg = "Login failed."
+            authenticated = False
+            status = "Failed"
+
+    response = {
+        "authenticated": authenticated,
+        "status": status,
+        "message": msg,
+    }
+
+    if authenticated:
+        response["access_token"] = access_token
+
+    response = json.jsonify(response)
+
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response
+
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
@@ -72,19 +114,15 @@ def protected():
     current_user = get_jwt_identity()
     return json.jsonify(logged_in_as=current_user), 200
 
+
 # GET - Test
 @auth.route("/auth/test", methods=["GET"])
 def getTest():
-  response = json.jsonify({
-            "authenticated": True,
-            "status": "OK", 
-            "message": "Fine"
-        })
+    response = json.jsonify({"authenticated": True, "status": "OK", "message": "Fine"})
 
-  response.headers.add("Access-Control-Allow-Origin", "*")
-  
-  return response
+    response.headers.add("Access-Control-Allow-Origin", "*")
 
+    return response
 
 
 # Check if JWT is genuine and belongs to the user for which the resource is requested
@@ -102,18 +140,14 @@ def authenticateJwt(username):
         decodedToken = jwt.decode(jwt_token, config.SECRET_KEY, algorithms=["HS256"])
     except:
         msg = "Token is not valid."
-        return {
-            "status": "error", 
-            "authenticated": False, 
-            "message": msg
-        }
+        return {"status": "error", "authenticated": False, "message": msg}
 
     if decodedToken["user"]["uid"] != username:
-        
+
         return {
-            "status": "error", 
-            "authenticated": False, 
-            "message": "Username in the JWT token does not match the username being requested."
+            "status": "error",
+            "authenticated": False,
+            "message": "Username in the JWT token does not match the username being requested.",
         }
 
     # Check if JWT is not expired
@@ -126,17 +160,17 @@ def authenticateJwt(username):
             "message": "JWT is expired",
             "expired": True,
         }
-    
+
     # Check that JWT is not revoked
     if isTokenRevoked(username, jwt_token):
-        return { 
+        return {
             "status": "error",
             "authenticated": False,
-            "message": "Token is revoked."
+            "message": "Token is revoked.",
         }
 
     # 1. JWT is valid and authenticated,
-    # 2. authorized (username parameter is equal from username from JWT), 
+    # 2. authorized (username parameter is equal from username from JWT),
     # 3. JWT is not expired
     # 4. JWT is not revoked
     return {
