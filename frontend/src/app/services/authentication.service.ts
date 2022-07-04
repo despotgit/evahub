@@ -37,6 +37,7 @@ export class AuthenticationService {
 
   login(u: string, p: string) {
     return this.http
+      //.post<any>(`${environment.baseApiBackendUrl}/auth/login`, {
       .post<any>(`${environment.baseApiBackendUrl}/post/authenticate`, {
         username: u,
         password: p
@@ -67,8 +68,10 @@ export class AuthenticationService {
   validateLoginToken() {
 
     const tok: string = localStorage.getItem(storedObjectName) || '';
+
     let storedObject: any;
     try {
+
       storedObject = JSON.parse(tok);
     } catch (e) {
       return false;
@@ -92,6 +95,7 @@ export class AuthenticationService {
         this.userStore.updateIsLoggedIn(true);
         return true;
       } else {
+        
         return false;
       }
     } else {
