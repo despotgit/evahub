@@ -9,8 +9,8 @@ define("SALT", "J75prrWYDVabYXDbV8tV");
 
 require_once "jwtAuthenticationServer.php";
 
-$productionServerDbSchema = "CUP";
-$devDbSchema = "CUP";
+$productionServerDbSchema = "cup";
+$devDbSchema = "cup";
 $useLocalDbOnTheWindowsDevMachine = true;
 
 // Take DB credentials based on the server files are on:

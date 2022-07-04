@@ -12,5 +12,6 @@
   "editor.wordWrapColumn": 120,
   "editor.wordWrap": "wordWrapColumn",
   "prettier.trailingComma": "none",
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "python.formatting.provider": "black"
 }
