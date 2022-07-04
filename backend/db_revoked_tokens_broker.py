@@ -1,4 +1,4 @@
-import pymongo
+#import pymongo
 
 import config
 from db_config import getDb
