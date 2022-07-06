@@ -57,12 +57,9 @@ def login():
     isPostman = False
 
     if not isPostman:
-        print("it is:")
         print(request.get_json())
 
         o = request.get_json()
-        print(o["username"])
-        print(o["password"])
 
         username = o["username"]
         password = o["password"]
