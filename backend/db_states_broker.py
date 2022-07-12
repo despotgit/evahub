@@ -26,7 +26,12 @@ def setDbState(username, key, value):
     state = c.find_one(q)
     if state == None:
         msg = "There is no such state, so it will be added."
-        s = {"username": username, "key": key, "value": value, "created-at": str(time.time())}
+        s = {
+            "username": username,
+            "key": key,
+            "value": value,
+            "created-at": str(time.time()),
+        }
         c.insert_one(s)
     else:
         msg = "State is found, so it will be set to new value."
@@ -40,7 +45,12 @@ def setDbState(username, key, value):
 
 def addDbState(username, key, value):
     c = db["users"]
-    sq = {"username": username, "key": key, "value": value, "created-at": str(time.time())}
+    sq = {
+        "username": username,
+        "key": key,
+        "value": value,
+        "created-at": str(time.time()),
+    }
     c.insert_one(sq)
     return "ok"
 
@@ -50,5 +60,3 @@ def deleteDbState(username, key):
     sq = {"username": username, "key": key}
     c.delete_one(sq)
     return "ok"
-
-
