@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss']
+    selector: "app-reports",
+    templateUrl: "./reports.component.html",
+    styleUrls: ["./reports.component.scss"]
 })
 export class ReportsComponent implements OnInit {
+    constructor(private http: HttpClient) {}
 
-  constructor() { }
+    ngOnInit(): void {
+        //
+        this.getReportsList();
+    }
 
-  ngOnInit(): void {
-    //
-  }
-
+    getReportsList() {}
 }
