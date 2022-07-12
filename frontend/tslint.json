@@ -19,6 +19,7 @@
     ],
     "import-spacing": true,
     "indent": [
+      4,
       true,
       "spaces"
     ],
