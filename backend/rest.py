@@ -1,4 +1,3 @@
-
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
@@ -8,22 +7,24 @@ from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
 
 rest = Blueprint("rest", __name__)
 
+
 @rest.before_request
 @jwt_required(locations=["headers"])
 def before_request():
     print("in before_request")
     pass
 
-#Copied from the old server, a proxy of some sort
+
+# Copied from the old server, a proxy of some sort
 @rest.route("/rest/<path:path>", methods=["GET", "POST"])
 def proxy(path):
-    print("**********************************************************   in proxy of sorts")
+    print("********************************************************** in proxy")
     # print(request.__dict__.items())
     mimetype = request.mimetype
     protocol = "https"
-    if config.FLASK_ENV == "dev" :
+    if config.FLASK_ENV == "dev":
         protocol = "http"
-    print(f'Before: {request.url}', flush=True)
+    print(f"Before: {request.url}", flush=True)
     url = (
         protocol
         + "://"
@@ -33,12 +34,20 @@ def proxy(path):
         # + "?"
         # + request.query_string.decode("utf-8")
     )
-    print(f'After: {url}', flush=True)
-    if (request.method == 'GET'):
-        r = requests.get(url + f'?{request.query_string.decode("utf-8")}', headers={"Authorization":request.headers["Authorization"]})
+    print(f"After: {url}", flush=True)
+    if request.method == "GET":
+        r = requests.get(
+            url + f'?{request.query_string.decode("utf-8")}',
+            headers={"Authorization": request.headers["Authorization"]},
+        )
     else:
-        r = requests.post(url, data=request.data, headers={"Authorization":request.headers["Authorization"]})
+        r = requests.post(
+            url,
+            data=request.data,
+            headers={"Authorization": request.headers["Authorization"]},
+        )
     return Response(r.content, mimetype=mimetype)
+
 
 # GET - Get user (by username)
 @rest.route("/rest/user/get/<username>")
@@ -47,7 +56,7 @@ def getUserData(username):
 
     if not authentication["authenticated"]:
         return authentication
-  
+
     user = getDbUser(username)
 
     if user == None:
@@ -55,17 +64,17 @@ def getUserData(username):
 
         response = {
             "authenticated": True,
-            "status": "error", 
-            "message": "User not found"
+            "status": "error",
+            "message": "User not found",
         }
     else:
         response = {
             "authenticated": True,
-            "status": "OK", 
+            "status": "OK",
             "user": user,
-            "message": "User retrieved successfully"
+            "message": "User retrieved successfully",
         }
-        
+
     response = json.jsonify(response)
 
     response.headers.add("Access-Control-Allow-Origin", "*")
@@ -86,11 +95,11 @@ def setUserData(username):
         print("User not found in DB")
 
         response = {
-          "authenticated": True,
-          "status": "error",
-          "message": "User not found in DB."
+            "authenticated": True,
+            "status": "error",
+            "message": "User not found in DB.",
         }
-        
+
     else:
 
         r = json.loads(request.data.decode("UTF-8"))
@@ -102,12 +111,13 @@ def setUserData(username):
             "authenticated": True,
             "status": "OK",
             "message": "User updated correctly.",
-            "user": user
+            "user": user,
         }
-        
+
     response = json.jsonify(response)
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
+
 
 # POST - Delete user (by username)
 @rest.route("/rest/user/delete", methods=["POST"])
@@ -127,19 +137,18 @@ def deleteUserAccount():
 
         response = {
             "authenticated": True,
-            "status": "error", 
-            "message": "User not found in DB."
+            "status": "error",
+            "message": "User not found in DB.",
         }
     else:
         deleteAllDbUserData(username)
-        
+
         # Return response
         response = {
             "authenticated": True,
             "status": "OK",
-            "message":
-            "All user data successfully deleted.",
-            "username": username
+            "message": "All user data successfully deleted.",
+            "username": username,
         }
 
     response = json.jsonify(response)
@@ -162,17 +171,13 @@ def getState(username, key):
         print("No state with key " + key + " found for user.")
 
         response = {
-            "authenticated": True, 
-            "status": "error", 
-            "message": "No state with given key exists."
-        }
-        
-    else:
-        response = {
             "authenticated": True,
-            "status": "OK", 
-            "state": state
+            "status": "error",
+            "message": "No state with given key exists.",
         }
+
+    else:
+        response = {"authenticated": True, "status": "OK", "state": state}
 
     response = json.jsonify(response)
 
@@ -195,9 +200,9 @@ def setState(username):
 
         response = json.jsonify(
             {
-              "authenticated": True, 
-              "status": "error", 
-              "message": "User not found in DB."
+                "authenticated": True,
+                "status": "error",
+                "message": "User not found in DB.",
             }
         )
     else:
@@ -234,6 +239,7 @@ def setState(username):
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
+
 # POST
 @rest.route("/rest/state/delete", methods=["POST"])
 def deleteUserState():
@@ -254,8 +260,8 @@ def deleteUserState():
 
         response = {
             "authenticated": True,
-            "status": "error", 
-            "message": "State not found in DB."
+            "status": "error",
+            "message": "State not found in DB.",
         }
     else:
         deleteDbState(username, key)
@@ -265,14 +271,15 @@ def deleteUserState():
             "authenticated": True,
             "status": "OK",
             "message": "State successfully deleted.",
-            "key": key
+            "key": key,
         }
-    
+
     response = json.jsonify(response)
 
     response.headers.add("Access-Control-Allow-Origin", "*")
 
     return response
+
 
 # Custom non-pure REST calls:
 
