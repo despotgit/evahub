@@ -15,7 +15,7 @@ def before_request():
     pass
 
 
-# Copied from the old server, a proxy of some sort
+# A proxy of some sort
 @rest.route("/rest/<path:path>", methods=["GET", "POST"])
 def proxy(path):
     print("********************************************************** in proxy")
