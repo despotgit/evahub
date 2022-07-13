@@ -1,5 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { environment } from "src/environments/environment";
+import { Report, UserReportsStoreService } from "../services/user-reports.service";
 
 @Component({
     selector: "app-reports",
@@ -7,12 +11,36 @@ import { Component, OnInit } from "@angular/core";
     styleUrls: ["./reports.component.scss"]
 })
 export class ReportsComponent implements OnInit {
-    constructor(private http: HttpClient) {}
+    userReports$: Observable<Report[]> = this.userReportsStore.$userReports;
 
-    ngOnInit(): void {
-        //
-        this.getReportsList();
+    constructor(private httpClient: HttpClient, private userReportsStore: UserReportsStoreService) {
+        this.userReportsStore.setState({
+            userReports: []
+        });
     }
 
-    getReportsList() {}
+    ngOnInit(): void {
+        this.getUserReportsList();
+    }
+
+    getUserReportsList() {
+        let username = "test2";
+
+        let url = `${environment.baseApiBackendUrl}/rest/reports/get/${username}`;
+        console.log("CHECKPOINT 1");
+
+        this.httpClient
+            .get(url)
+            .pipe(
+                map(ur => {
+                    console.log("ur from pipe map is:", ur);
+
+                    //this.userReportsStore.updateUserReportsList(ur);
+                    this.userReportsStore.updateUserReportsList([]);
+
+                    return ur;
+                })
+            )
+            .subscribe();
+    }
 }

@@ -4,6 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 from auth import authenticateJwt, checkIfAuthorized
 from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
 from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
+from db_user_reports_broker import getDbUserReports
 
 rest = Blueprint("rest", __name__)
 
@@ -149,6 +150,41 @@ def deleteUserAccount():
             "status": "OK",
             "message": "All user data successfully deleted.",
             "username": username,
+        }
+
+    response = json.jsonify(response)
+
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
+# GET - Get user's reports (by username)
+@rest.route("/rest/reports/get/<username>", methods=["GET"])
+def getUserReports(username):
+    print("checkpoint 2.0")
+    authentication = authenticateJwt(username)
+
+    if not authentication["authenticated"]:
+        return authentication
+
+    print("checkpoint 2.1")
+
+    userReports = getDbUserReports(username)
+
+    if userReports == None:
+        print("No reports for the given user")
+
+        response = {
+            "authenticated": True,
+            "status": "OK",
+            "message": "No reports found",
+        }
+    else:
+        response = {
+            "authenticated": True,
+            "status": "OK",
+            "userReports": userReports,
+            "message": "User retrieved successfully",
         }
 
     response = json.jsonify(response)

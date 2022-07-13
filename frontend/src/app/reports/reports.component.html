@@ -1,1 +1,11 @@
+<div *ngIf="{
+    reports: userReports$ | async
+} as asyncData" >
 <p>reports works!</p>
+    <div *ngFor="let report of asyncData.reports">
+        {{report.reportName}}
+        {{report.reportContent}}
+
+    </div>
+
+</div>

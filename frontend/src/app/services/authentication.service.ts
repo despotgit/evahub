@@ -1,14 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
-
 import { storedObjectName, loginTokenExpiryTime } from "../common/constants";
-import { Router } from "@angular/router";
-import { User } from "../models/user";
-import { UserToken } from "../models/UserToken";
-import { isNull } from "@angular/compiler/src/output/output_ast";
 import { UserStoreService } from "./user-store.service";
 
 @Injectable({ providedIn: "root" })
@@ -23,10 +17,8 @@ export class AuthenticationService {
         if (cu === null) {
             cu = JSON.stringify({});
         } else {
-            console.log("cu is:", cu);
+            //console.log("cu is:", cu);
         }
-
-        console.log("do something with the JSON.parse(cu)");
     }
 
     login(u: string, p: string, isFlaskServer = true) {
@@ -72,8 +64,6 @@ export class AuthenticationService {
         } catch (e) {
             return false;
         }
-
-        console.log("storedObject is:", storedObject);
 
         if (storedObject && storedObject.token && storedObject.iat) {
             const nowTime: number = new Date().getTime();
