@@ -1,12 +1,12 @@
 from flask import Flask
+
+app = Flask(__name__)
+
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from rest import rest
 from auth import auth
 import config
-import db_config
-
-app = Flask(__name__)
 
 app.config[
     "JWT_SECRET_KEY"

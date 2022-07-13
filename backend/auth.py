@@ -100,11 +100,10 @@ def login():
             authenticated = False
             status = "Failed"
 
-    response = {
-        "authenticated": authenticated,
-        "status": status,
-        "message": msg,
-    }
+    response = {}
+    response["authenticated"] = authenticated
+    response["status"] = status
+    response["message"] = msg
 
     if authenticated:
         response["token"] = accessToken
@@ -151,15 +150,13 @@ def authenticateJwt(username):
 
     # Check that token can be properly decoded
     try:
-        # decodedToken = decode_token(jwt_token, config.SECRET_KEY, algorithms=["HS256"])
         decodedToken = decode_token(jwt_token)
-        # decodedToken = jwt.decode(jwt_token, config.SECRET_KEY)
     except Exception as e:
         print(e)
         return {"status": "error", "authenticated": False, "message": str(e)}
 
-    # print("decodedToken is:")
-    # print(decodedToken)
+    print("decodedToken is:")
+    print(decodedToken)
 
     if decodedToken["sub"] != username:
 
