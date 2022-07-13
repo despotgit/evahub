@@ -158,8 +158,8 @@ def authenticateJwt(username):
         print(e)
         return {"status": "error", "authenticated": False, "message": str(e)}
 
-    print("decodedToken is:")
-    print(decodedToken)
+    # print("decodedToken is:")
+    # print(decodedToken)
 
     if decodedToken["sub"] != username:
 
@@ -171,6 +171,9 @@ def authenticateJwt(username):
 
     # Check if JWT is not expired
     timePassed = time.time() - decodedToken["iat"]
+
+    print("timepassed is:")
+    print(timePassed)
 
     if timePassed > config.JWT_EXPIRY_INTERVAL:
         return {

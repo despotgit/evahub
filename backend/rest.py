@@ -1,12 +1,17 @@
-from flask import Blueprint, json, request
+from flask import Blueprint, Flask, json, request
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
 from auth import authenticateJwt, checkIfAuthorized
 from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
 from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
 from db_user_reports_broker import getDbUserReports
+import config
+import requests
+from flask import Flask, Blueprint, request, Response, send_from_directory
 
 rest = Blueprint("rest", __name__)
+
+app = Flask(__name__)
 
 
 @rest.before_request
@@ -161,16 +166,16 @@ def deleteUserAccount():
 # GET - Get user's reports (by username)
 @rest.route("/rest/reports/get/<username>", methods=["GET"])
 def getUserReports(username):
-    print("checkpoint 2.0")
+    # print("checkpoint 2.0")
     authentication = authenticateJwt(username)
 
-    print("authentication is:")
-    print(authentication)
+    # print("authentication is:")
+    # print(authentication)
 
     if not authentication["authenticated"]:
         return authentication
 
-    print("checkpoint 2.1")
+    # print("checkpoint 2.1")
 
     userReports = getDbUserReports(username)
 

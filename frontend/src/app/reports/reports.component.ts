@@ -33,10 +33,10 @@ export class ReportsComponent implements OnInit {
             .get(url)
             .pipe(
                 map(ur => {
+                    let u: any = ur;
                     console.log("ur from pipe map is:", ur);
 
-                    //this.userReportsStore.updateUserReportsList(ur);
-                    this.userReportsStore.updateUserReportsList([]);
+                    this.userReportsStore.updateUserReportsList(u.userReports);
 
                     return ur;
                 })
