@@ -164,6 +164,9 @@ def getUserReports(username):
     print("checkpoint 2.0")
     authentication = authenticateJwt(username)
 
+    print("authentication is:")
+    print(authentication)
+
     if not authentication["authenticated"]:
         return authentication
 

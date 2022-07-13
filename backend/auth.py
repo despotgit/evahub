@@ -6,7 +6,12 @@ import bcrypt
 from flask import request, Blueprint
 from db_revoked_tokens_broker import isTokenRevoked
 from flask import Blueprint, json, request
-from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+from flask_jwt_extended import (
+    jwt_required,
+    get_jwt_identity,
+    create_access_token,
+    decode_token,
+)
 from db_config import getDb
 
 
@@ -39,9 +44,7 @@ def register():
     #  print(result[1])
 
     response = json.jsonify(
-        {
-            "status": "OK",
-        }
+        {"status": "OK", "message": "User successfully registered."}
     )
 
     response.headers.add("Access-Control-Allow-Origin", "*")
@@ -87,7 +90,7 @@ def login():
             # print("It matches!")
             msg = "Login successful."
             authenticated = True
-            access_token = create_access_token(
+            accessToken = create_access_token(
                 identity=username, additional_claims={"some": 123}
             )
             status = "OK"
@@ -104,7 +107,7 @@ def login():
     }
 
     if authenticated:
-        response["token"] = access_token
+        response["token"] = accessToken
         response["role"] = dbRole
         response["username"] = username
         response["iat"] = datetime.datetime.now().timestamp()
@@ -148,12 +151,17 @@ def authenticateJwt(username):
 
     # Check that token can be properly decoded
     try:
-        decodedToken = jwt.decode(jwt_token, config.SECRET_KEY, algorithms=["HS256"])
-    except:
-        msg = "Token is not valid."
-        return {"status": "error", "authenticated": False, "message": msg}
+        # decodedToken = decode_token(jwt_token, config.SECRET_KEY, algorithms=["HS256"])
+        decodedToken = decode_token(jwt_token)
+        # decodedToken = jwt.decode(jwt_token, config.SECRET_KEY)
+    except Exception as e:
+        print(e)
+        return {"status": "error", "authenticated": False, "message": str(e)}
 
-    if decodedToken["user"]["uid"] != username:
+    print("decodedToken is:")
+    print(decodedToken)
+
+    if decodedToken["sub"] != username:
 
         return {
             "status": "error",
@@ -172,24 +180,26 @@ def authenticateJwt(username):
             "expired": True,
         }
 
+    checkIfRevoked = False
+
     # Check that JWT is not revoked
-    if isTokenRevoked(username, jwt_token):
+    if checkIfRevoked and isTokenRevoked(username, jwt_token):
         return {
             "status": "error",
             "authenticated": False,
             "message": "Token is revoked.",
         }
-
-    # 1. JWT is valid and authenticated,
-    # 2. authorized (username parameter is equal from username from JWT),
-    # 3. JWT is not expired
-    # 4. JWT is not revoked
-    return {
-        "status": "OK",
-        "authenticated": True,
-        "message": "Token successfully verified for given user.",
-        "decodedToken": decodedToken,
-    }
+    else:
+        # 1. JWT is valid and authenticated,
+        # 2. authorized (username parameter is equal from username from JWT),
+        # 3. JWT is not expired
+        # 4. JWT is not revoked
+        return {
+            "status": "OK",
+            "authenticated": True,
+            "message": "Token successfully verified for given user.",
+            "decodedToken": decodedToken,
+        }
 
 
 # Authorization method, based on the decoded token, decide if the user's domain
