@@ -15,9 +15,9 @@ def getDbUserReport(username, reportId):
 
 def getDbUserReports(username):
     return [
-        {"userId": 1, "content": "aaa"},
-        {"userId": 2, "content": "bbb"},
-        {"userId": 3, "content": "ccc"},
+        {"reportUserId": 1, "reportContent": "aaa", "reportName": "first"},
+        {"reportUserId": 1, "reportContent": "bbb", "reportName": "second"},
+        {"reportUserId": 1, "reportContent": "ccc", "reportName": "third"},
     ]
 
 

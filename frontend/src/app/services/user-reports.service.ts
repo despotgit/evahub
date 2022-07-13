@@ -3,6 +3,7 @@ import { ComponentStore } from "@ngrx/component-store";
 import { Observable } from "rxjs";
 
 export interface Report {
+    reportUserId: number;
     reportId: number;
     reportName: string;
     reportContent: string;
