@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
 import { first } from "rxjs/operators";
-import { UserStoreService } from "../services/user-store.service";
 
 @Component({
     selector: "app-login",
@@ -14,17 +13,19 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     loginForm: FormGroup;
     submitted = false;
     loading = false;
-    returnUrl: string = '';
+    returnUrl: string = "";
     error = "";
 
-    constructor(private formBuilder: FormBuilder, 
-      private route: ActivatedRoute, 
-      private router: Router, 
-      private authenticationService: AuthenticationService) {
-      this.loginForm = this.formBuilder.group({
-        username: ["", Validators.required],
-        password: ["", Validators.required]
-    });
+    constructor(
+        private formBuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router,
+        private authenticationService: AuthenticationService
+    ) {
+        this.loginForm = this.formBuilder.group({
+            username: ["", Validators.required],
+            password: ["", Validators.required]
+        });
     }
 
     ngOnInit() {
@@ -57,16 +58,13 @@ export class LoginComponent implements OnInit, AfterViewChecked {
         this.authenticationService
             .login(this.f["username"].value, this.f["password"].value)
             .pipe(first())
-            .subscribe(
-                data => {
-                   
-                    if (data.authenticated) {
-                        this.router.navigate([this.returnUrl]);
-                    } else {
-                        this.error = "Wrong credentials entered.";
-                    }
-                    this.loading = false;
+            .subscribe(data => {
+                if (data.authenticated) {
+                    this.router.navigate([this.returnUrl]);
+                } else {
+                    this.error = "Wrong credentials entered.";
                 }
-            );
+                this.loading = false;
+            });
     }
 }

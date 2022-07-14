@@ -21,7 +21,7 @@ export class UserReportsStoreService extends ComponentStore<UserReportsState> {
         super();
     }
 
-    $userReports: Observable<Report[]> = this.select(state => state.userReports);
+    userReports$: Observable<Report[]> = this.select(state => state.userReports);
 
     updateUserReportsList(userReports: Report[]) {
         this.patchState({ userReports });

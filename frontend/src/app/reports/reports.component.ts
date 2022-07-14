@@ -11,7 +11,7 @@ import { Report, UserReportsStoreService } from "../services/user-reports.servic
     styleUrls: ["./reports.component.scss"]
 })
 export class ReportsComponent implements OnInit {
-    userReports$: Observable<Report[]> = this.userReportsStore.$userReports;
+    userReports$: Observable<Report[]> = this.userReportsStore.userReports$;
 
     constructor(private httpClient: HttpClient, private userReportsStore: UserReportsStoreService) {
         this.userReportsStore.setState({
@@ -34,7 +34,7 @@ export class ReportsComponent implements OnInit {
             .pipe(
                 map(ur => {
                     let u: any = ur;
-                    console.log("ur from pipe map is:", ur);
+                    console.log(ur);
 
                     this.userReportsStore.updateUserReportsList(u.userReports);
 

@@ -4,14 +4,12 @@ import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { storedObjectName, loginTokenExpiryTime } from "../common/constants";
 import { UserStoreService } from "./user-store.service";
+import { INITIAL_USER_STATE } from "./user-store.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
     constructor(public http: HttpClient, private userStore: UserStoreService) {
-        this.userStore.setState({
-            username: "",
-            isLoggedIn: false
-        });
+        this.userStore.setState(INITIAL_USER_STATE);
 
         let cu = localStorage.getItem(storedObjectName);
         if (cu === null) {
@@ -51,6 +49,8 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem(storedObjectName);
+        //this.userStore.updateUsername(null);
+        this.userStore.resetUserState();
     }
 
     // Validate the token exists, and the iat is recent enough, in order to enable
