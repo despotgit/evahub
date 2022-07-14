@@ -11,7 +11,7 @@ SECRET_KEY = "2a43ca5b42240a33dadc64beace65d1f"
 # environment = os.environ.get("FLASK_ENV")
 
 # SECRET_KEY = os.environ.get("SECRET_KEY")
-app = Flask(__name__)
+app = Flask("app")
 
 if "dev" == FLASK_ENV:
     TARGET_PATH = "http://localhost:5000"
@@ -37,4 +37,4 @@ if "production" == FLASK_ENV:
 
 JWT_TOKEN_LOCATION = ["headers"]
 
-JWT_EXPIRY_INTERVAL = float(JWT_EXPIRY_INTERVAL)
+# JWT_EXPIRY_INTERVAL = float(JWT_EXPIRY_INTERVAL)
