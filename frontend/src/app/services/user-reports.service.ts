@@ -13,6 +13,10 @@ export interface UserReportsState {
     userReports: Report[];
 }
 
+export const INITIAL_USER_REPORTS_STATE = {
+    userReports: []
+};
+
 @Injectable({
     providedIn: "root"
 })
@@ -25,5 +29,9 @@ export class UserReportsStoreService extends ComponentStore<UserReportsState> {
 
     updateUserReportsList(userReports: Report[]) {
         this.patchState({ userReports });
+    }
+
+    resetUserReportsState() {
+        this.setState(INITIAL_USER_REPORTS_STATE);
     }
 }

@@ -5,10 +5,17 @@ import { environment } from "../../environments/environment";
 import { storedObjectName, loginTokenExpiryTime } from "../common/constants";
 import { UserStoreService } from "./user-store.service";
 import { INITIAL_USER_STATE } from "./user-store.service";
+import { HomePageDataStoreService } from "./home-page-data-store.service";
+import { UserReportsStoreService } from "./user-reports.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
-    constructor(public http: HttpClient, private userStore: UserStoreService) {
+    constructor(
+        public http: HttpClient,
+        private userStore: UserStoreService,
+        private homepageStoreService: HomePageDataStoreService,
+        private userReportsStore: UserReportsStoreService
+    ) {
         this.userStore.setState(INITIAL_USER_STATE);
 
         let cu = localStorage.getItem(storedObjectName);
@@ -49,8 +56,9 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem(storedObjectName);
-        //this.userStore.updateUsername(null);
         this.userStore.resetUserState();
+        this.userReportsStore.resetUserReportsState();
+        this.homepageStoreService.resetHomepageState();
     }
 
     // Validate the token exists, and the iat is recent enough, in order to enable
