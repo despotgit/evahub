@@ -8,9 +8,6 @@ import config
 
 app = Flask(__name__)
 
-app.config[
-    "JWT_SECRET_KEY"
-] = "FDF89F906815206ABB3270BCB808CDAE6F08BE2B07097A76A507650BD456B4BD"
 app.config["JWT_HEADER_TYPE"] = "Bearer"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = JWT_EXPIRY_INTERVAL
 
