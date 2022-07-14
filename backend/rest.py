@@ -11,8 +11,6 @@ from flask import Flask, Blueprint, request, Response, send_from_directory
 
 rest = Blueprint("rest", __name__)
 
-app = Flask(__name__)
-
 
 @rest.before_request
 @jwt_required(locations=["headers"])
