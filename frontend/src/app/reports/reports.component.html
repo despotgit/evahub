@@ -1,5 +1,6 @@
+<button mat-button (click)="drawer.toggle()">Toggle sidenav</button>
 <mat-drawer-container class="reports-container" autosize>
-    <mat-drawer #drawer class="reports-sidenav" mode="side">
+    <mat-drawer #drawer class="reports-sidenav" mode="side" [opened]="false">
         <div
             *ngIf="{
                 reports: userReports$ | async
@@ -17,7 +18,7 @@
     </mat-drawer>
 
     <div class="reports-sidenav-content">
-        <mat-grid-list rowHeight="fit" gutterSize="10px" cols="6" rowHeight="3:1">
+        <mat-grid-list rowHeight="fit" gutterSize="10px" cols="6">
             <mat-grid-tile colspan="3">
                 <mat-card>1.1</mat-card>
             </mat-grid-tile>
@@ -29,7 +30,5 @@
             <mat-grid-tile colspan="2">2.2</mat-grid-tile>
             <mat-grid-tile colspan="2">2.3</mat-grid-tile>
         </mat-grid-list>
-        <br />
-        <button mat-button (click)="drawer.toggle()">Toggle sidenav</button>
     </div>
 </mat-drawer-container>

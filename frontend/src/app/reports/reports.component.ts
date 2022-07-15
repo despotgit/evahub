@@ -1,11 +1,9 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Report, UserReportsStoreService } from "../services/user-reports.service";
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatGridListModule } from "@angular/material/grid-list";
 
 @Component({
     selector: "app-reports",
@@ -15,13 +13,17 @@ import { MatGridListModule } from "@angular/material/grid-list";
 export class ReportsComponent implements OnInit {
     userReports$: Observable<Report[]> = this.userReportsStore.userReports$;
 
+    showFiller = false;
+
+    @ViewChild("drawer") drawer;
+
     constructor(private httpClient: HttpClient, private userReportsStore: UserReportsStoreService) {
         this.userReportsStore.setState({
             userReports: []
         });
-    }
 
-    showFiller = false;
+        //
+    }
 
     ngOnInit(): void {
         this.getUserReportsList();

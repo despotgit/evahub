@@ -86,7 +86,7 @@ def getUserData(username):
 
 
 # POST - Set user data (by username, field name, and value)
-@rest.route("/rest/user/set/<username>", methods=["POST"])
+@rest.route("/user/set/<username>", methods=["POST"])
 def setUserData(username):
     authentication = authenticateJwt(username)
 
@@ -124,7 +124,7 @@ def setUserData(username):
 
 
 # POST - Delete user (by username)
-@rest.route("/rest/user/delete", methods=["POST"])
+@rest.route("/user/delete", methods=["POST"])
 def deleteUserAccount():
     r = json.loads(request.data.decode("UTF-8"))
     username = r["username"]
@@ -200,7 +200,7 @@ def getUserReports(username):
 
 
 # GET - Get state (by username and key)
-@rest.route("/rest/state/<username>/<key>")
+@rest.route("/state/<username>/<key>")
 def getState(username, key):
     authentication = authenticateJwt(username)
 
@@ -228,7 +228,7 @@ def getState(username, key):
 
 
 # POST - Set state, given the username, key and value
-@rest.route("/rest/state/<username>", methods=["POST"])
+@rest.route("/state/<username>", methods=["POST"])
 def setState(username):
     authentication = authenticateJwt(username)
 
@@ -283,7 +283,7 @@ def setState(username):
 
 
 # POST
-@rest.route("/rest/state/delete", methods=["POST"])
+@rest.route("/state/delete", methods=["POST"])
 def deleteUserState():
     r = json.loads(request.data.decode("UTF-8"))
     username = r["username"]
@@ -324,30 +324,3 @@ def deleteUserState():
 
 
 # Custom non-pure REST calls:
-
-# Try to get a restricted resource
-@rest.route("/rest/ec-restricted/<username>/<resource>")
-def getEcRestrictedResource(username="", resource=""):
-    authentication = authenticateJwt(username)
-
-    if not authentication["authenticated"]:
-        return authentication
-
-    authorized = checkIfAuthorized(authentication["decodedToken"], resource)
-
-    if authorized:
-        response = json.jsonify(
-            {
-                "status": "OK",
-                "message": "You are authorized.",
-                "resource": "some very restricted resource",
-            }
-        )
-
-    else:
-        response = json.jsonify(
-            {"status": "error", "message": "You are not authorized."}
-        )
-
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response

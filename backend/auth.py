@@ -172,6 +172,9 @@ def authenticateJwt(username):
     print("timepassed is:")
     print(timePassed)
 
+    print("config.JWT_EXPIRY_INTERVAL is:")
+    print(config.JWT_EXPIRY_INTERVAL)
+
     if timePassed > config.JWT_EXPIRY_INTERVAL:
         return {
             "status": "error",

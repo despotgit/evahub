@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -11,7 +11,7 @@ import { HomeComponent } from "./home/home.component";
 import { VladosMaterialModule } from "./material.module";
 import { ReportsComponent } from "./reports/reports.component";
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from "@ionic/angular";
 
 @NgModule({
     declarations: [AppComponent, LoginComponent, HomeComponent, ReportsComponent],
@@ -26,6 +26,7 @@ import { IonicModule } from '@ionic/angular';
         IonicModule.forRoot()
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
