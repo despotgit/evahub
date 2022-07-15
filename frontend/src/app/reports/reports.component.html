@@ -1,11 +1,20 @@
-<div *ngIf="{
-    reports: userReports$ | async
-} as asyncData" >
-<p>reports works!</p>
-    <div *ngFor="let report of asyncData.reports">
-        {{report.reportName}}
-        {{report.reportContent}}
+<mat-drawer-container class="reports-container" autosize>
+    <mat-drawer #drawer class="reports-sidenav" mode="side">
+        <div
+            *ngIf="{
+                reports: userReports$ | async
+            } as asyncData"
+        >
+            <p *ngFor="let report of asyncData.reports">
+                {{ report.reportName }}
+                {{ report.reportContent }}
+            </p>
+        </div>
+        <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+        <button (click)="showFiller = !showFiller" mat-raised-button>Toggle extra text</button>
+    </mat-drawer>
 
+    <div class="reports-sidenav-content">
+        <button type="button" mat-button (click)="drawer.toggle()">Toggle sidenav</button>
     </div>
-
-</div>
+</mat-drawer-container>

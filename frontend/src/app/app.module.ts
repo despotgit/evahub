@@ -11,6 +11,7 @@ import { HomeComponent } from "./home/home.component";
 import { VladosMaterialModule } from "./material.module";
 import { ReportsComponent } from "./reports/reports.component";
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
     declarations: [AppComponent, LoginComponent, HomeComponent, ReportsComponent],
@@ -21,7 +22,8 @@ import { JwtInterceptor } from "./helpers/jwt.interceptor";
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        VladosMaterialModule
+        VladosMaterialModule,
+        IonicModule.forRoot()
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
     bootstrap: [AppComponent]

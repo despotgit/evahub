@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Report, UserReportsStoreService } from "../services/user-reports.service";
+import { MatSidenavModule } from "@angular/material/sidenav";
 
 @Component({
     selector: "app-reports",
@@ -18,6 +19,8 @@ export class ReportsComponent implements OnInit {
             userReports: []
         });
     }
+
+    showFiller = false;
 
     ngOnInit(): void {
         this.getUserReportsList();
