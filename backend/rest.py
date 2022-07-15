@@ -13,14 +13,14 @@ rest = Blueprint("rest", __name__)
 
 
 @rest.before_request
-@jwt_required(locations=["headers"])
+# @jwt_required(locations=["headers"])
 def before_request():
     print("in before_request")
     pass
 
 
 # A proxy of some sort
-@rest.route("/rest/<path:path>", methods=["GET", "POST"])
+@rest.route("/<path:path>", methods=["GET", "POST"])
 def proxy(path):
     print("********************************************************** in proxy")
     # print(request.__dict__.items())
@@ -54,7 +54,7 @@ def proxy(path):
 
 
 # GET - Get user (by username)
-@rest.route("/rest/user/get/<username>")
+@rest.route("/user/get/<username>")
 def getUserData(username):
     authentication = authenticateJwt(username)
 
@@ -162,7 +162,7 @@ def deleteUserAccount():
 
 
 # GET - Get user's reports (by username)
-@rest.route("/rest/reports/get/<username>", methods=["GET"])
+@rest.route("/reports/get/<username>", methods=["GET"])
 def getUserReports(username):
     # print("checkpoint 2.0")
     authentication = authenticateJwt(username)

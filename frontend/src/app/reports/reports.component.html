@@ -6,15 +6,30 @@
             } as asyncData"
         >
             <p *ngFor="let report of asyncData.reports">
-                {{ report.reportName }}
+                <ion-button (click)="userReportSelected(report.reportId)">
+                    {{ report.reportName }}
+                </ion-button>
                 {{ report.reportContent }}
             </p>
         </div>
         <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-        <button (click)="showFiller = !showFiller" mat-raised-button>Toggle extra text</button>
+        <button mat-button (click)="showFiller = !showFiller" mat-raised-button>Toggle extra text</button>
     </mat-drawer>
 
     <div class="reports-sidenav-content">
-        <button type="button" mat-button (click)="drawer.toggle()">Toggle sidenav</button>
+        <mat-grid-list rowHeight="fit" gutterSize="10px" cols="6" rowHeight="3:1">
+            <mat-grid-tile colspan="3">
+                <mat-card>1.1</mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="3">1.2</mat-grid-tile>
+            <mat-grid-tile colspan="3">1.3</mat-grid-tile>
+            <mat-grid-tile colspan="3">1.4</mat-grid-tile>
+
+            <mat-grid-tile colspan="2">2.1</mat-grid-tile>
+            <mat-grid-tile colspan="2">2.2</mat-grid-tile>
+            <mat-grid-tile colspan="2">2.3</mat-grid-tile>
+        </mat-grid-list>
+        <br />
+        <button mat-button (click)="drawer.toggle()">Toggle sidenav</button>
     </div>
 </mat-drawer-container>

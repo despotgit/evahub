@@ -5,6 +5,7 @@ import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Report, UserReportsStoreService } from "../services/user-reports.service";
 import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatGridListModule } from "@angular/material/grid-list";
 
 @Component({
     selector: "app-reports",
@@ -45,5 +46,9 @@ export class ReportsComponent implements OnInit {
                 })
             )
             .subscribe();
+    }
+
+    userReportSelected(reportId: number) {
+        console.log("doing something with", reportId);
     }
 }

@@ -54,7 +54,7 @@ def register():
 
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
-@auth.route("/auth/login", methods=["POST"])
+@auth.route("/login", methods=["POST"])
 def login():
 
     isPostman = False
@@ -120,7 +120,7 @@ def login():
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
-@auth.route("/auth/protected", methods=["GET"])
+@auth.route("/protected", methods=["GET"])
 @jwt_required()
 def protected():
     # Access the identity of the current user with get_jwt_identity
@@ -129,7 +129,7 @@ def protected():
 
 
 # GET - Test
-@auth.route("/auth/test", methods=["GET"])
+@auth.route("/test", methods=["GET"])
 def getTest():
     response = json.jsonify({"authenticated": True, "status": "OK", "message": "Fine"})
 

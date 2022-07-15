@@ -53,7 +53,7 @@ export class AuthenticationService {
             );
     }
 
-    logout() {
+    logOut() {
         // remove user from local storage to log user out
         localStorage.removeItem(storedObjectName);
         this.userStore.resetUserState();
@@ -80,14 +80,16 @@ export class AuthenticationService {
 
             let minutesPassedSinceLogin = (now - iat) / 60;
 
-            //console.log("passed time (in minutes) since login is:");
-            //console.log(minutesPassedSinceLogin);
+            console.log("minutesPassedSinceLogin is: ", minutesPassedSinceLogin);
+            console.log("loginTokenExpiryTime is: ", loginTokenExpiryTime);
+            console.log("storedObject.role is: ", storedObject.role);
 
             if (storedObject.role === "admin" || minutesPassedSinceLogin <= loginTokenExpiryTime) {
                 this.userStore.updateUsername(storedObject.username);
                 this.userStore.updateIsLoggedIn(true);
                 return true;
             } else {
+                this.logOut();
                 return false;
             }
         } else {
