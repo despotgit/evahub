@@ -30,7 +30,7 @@ mat-grid-tile {
     background-color: $background-color;
 }
 
-.example-container {
+.reports-container {
     width: 1000px;
     height: 400px;
     margin: 10px;
@@ -40,11 +40,4 @@ mat-grid-tile {
     bottom: 0;
     left: 0;
     right: 0;
-}
-
-.example-events {
-    width: 300px;
-    height: 200px;
-    overflow: auto;
-    border: 1px solid #555;
 }
