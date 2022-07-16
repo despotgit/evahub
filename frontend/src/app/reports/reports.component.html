@@ -23,10 +23,7 @@
         <button mat-button (click)="showFiller = !showFiller" mat-raised-button>Toggle extra text</button>
     </mat-sidenav>
 
-    <mat-sidenav-content>
-        <!--
-        <p><mat-checkbox [(ngModel)]="opened">sidenav.opened</mat-checkbox></p>
-        -->
+    <mat-sidenav-content [ngStyle]="{ left: opened ? '8px' : '-5px' }">
         <p>
             <button class="toggle-sidenav-button" mat-button (click)="sidenav.toggle()">sidenav.toggle()</button>
         </p>
