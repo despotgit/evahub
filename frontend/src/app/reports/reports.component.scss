@@ -1,27 +1,31 @@
-.reports-container {
+@import "../../common.scss";
 
+.reports-container {
     height: 300px;
     width: 99.3%;
+}
 
-  }
-
-  .reports-sidenav-content {
+.reports-sidenav-content {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
 
-  .reports-sidenav {
+.reports-sidenav {
     padding: 20px;
-  }
+    margin: 20px;
+}
 
-  mat-grid-tile {
+mat-grid-tile {
     background: lightblue;
     margin: 10px;
     //padding: 20px;
+}
 
-  }
-
-  .mat-grid-list {
+.mat-grid-list {
     position: inherit;
-  }
+}
+
+.mat-drawer-container {
+    background-color: $background-color;
+}
