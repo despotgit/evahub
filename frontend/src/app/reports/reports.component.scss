@@ -23,7 +23,7 @@ mat-grid-tile {
 }
 
 .mat-grid-list {
-    position: inherit;
+    position: initial;
 }
 
 .mat-drawer-container {
@@ -36,8 +36,12 @@ mat-grid-tile {
     margin: 10px;
     border: 1px solid #555;
 
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    //top: 0;
+    //bottom: 0;
+    //left: 0;
+    //right: 0;
+}
+
+.toggle-sidenav-button {
+    z-index: 1;
 }
