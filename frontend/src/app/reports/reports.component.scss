@@ -13,13 +13,14 @@
 
 .reports-sidenav {
     padding: 20px;
-    margin: 20px;
+    left: 20px;
+    margin-right: 20px;
+    //min-width: 250px;
 }
 
 mat-grid-tile {
     background: lightblue;
     margin: 10px;
-    //padding: 20px;
 }
 
 .mat-grid-list {

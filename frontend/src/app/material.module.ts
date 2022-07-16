@@ -27,7 +27,8 @@ import { MatCardModule } from "@angular/material/card";
         MatIconModule,
         MatMenuModule,
         MatGridListModule,
-        MatCardModule
+        MatCardModule,
+        MatSidenavModule
     ],
     exports: [
         MatFormFieldModule,
@@ -42,7 +43,8 @@ import { MatCardModule } from "@angular/material/card";
         MatIconModule,
         MatMenuModule,
         MatGridListModule,
-        MatCardModule
+        MatCardModule,
+        MatSidenavModule
     ]
 })
 export class VladosMaterialModule {}

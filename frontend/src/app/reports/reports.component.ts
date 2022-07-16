@@ -17,12 +17,13 @@ export class ReportsComponent implements OnInit {
 
     @ViewChild("drawer") drawer;
 
+    events: string[] = [];
+    opened: boolean = true;
+
     constructor(private httpClient: HttpClient, private userReportsStore: UserReportsStoreService) {
         this.userReportsStore.setState({
             userReports: []
         });
-
-        //
     }
 
     ngOnInit(): void {
