@@ -7,9 +7,7 @@
             } as asyncData"
         >
             <p *ngFor="let report of asyncData.reports">
-                <ion-button (click)="userReportSelected(report.reportId)">
-                    {{ report.reportName }}
-                </ion-button>
+                <ion-button (click)="userReportSelected(report.reportId)"> {{ report.reportName }} </ion-button>
                 {{ report.reportContent }}
             </p>
         </div>
