@@ -6,7 +6,20 @@
         (opened)="events.push('open!')"
         (closed)="events.push('close!')"
     >
-        Sidenav content
+        <div
+            *ngIf="{
+                reports: userReports$ | async
+            } as asyncData"
+        >
+            <p *ngFor="let report of asyncData.reports">
+                <ion-button (click)="userReportSelected(report.reportId)">
+                    {{ report.reportName }}
+                </ion-button>
+                {{ report.reportContent }}
+            </p>
+        </div>
+        <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+        <button mat-button (click)="showFiller = !showFiller" mat-raised-button>Toggle extra text</button>
     </mat-sidenav>
 
     <mat-sidenav-content>
