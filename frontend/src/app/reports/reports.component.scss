@@ -13,8 +13,9 @@
 
 .reports-sidenav {
     padding: 20px;
-    left: 20px;
+    //left: 20px;
     margin-right: 20px;
+    //width: 170px;
 }
 
 mat-grid-tile {
@@ -34,12 +35,6 @@ mat-grid-tile {
     width: 1000px;
     height: 400px;
     margin: 10px;
-    border: 1px solid #555;
-
-    //top: 0;
-    //bottom: 0;
-    //left: 0;
-    //right: 0;
 }
 
 .toggle-sidenav-button {
