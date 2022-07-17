@@ -1,11 +1,37 @@
 <mat-toolbar>
-  <span>Power Monitor</span>
+    <span>Power Monitor</span>
 
-  <button mat-button
-    (click)='gotoHome()'>Home</button>
-  <button mat-button
-    (click)='gotoReports()'>Reports</button>
+    <button mat-button (click)="gotoHome()">Home</button>
+    <button mat-button (click)="gotoReports()">Reports</button>
 
-
+    <mat-icon (click)="sidenav.toggle()" aria-hidden="false" aria-label="Home icon">menu</mat-icon>
 </mat-toolbar>
-<router-outlet></router-outlet>
+<mat-sidenav-container class="reports-container">
+    <mat-sidenav
+        class="reports-sidenav"
+        #sidenav
+        mode="side"
+        [(opened)]="opened"
+        (opened)="events.push('open!')"
+        (closed)="events.push('close!')"
+    >
+        <div
+            *ngIf="{
+                reports: userReports$ | async
+            } as asyncData"
+        >
+            <p *ngFor="let report of asyncData.reports">
+                <ion-button (click)="userReportSelected(report.reportId)">
+                    {{ report.reportName }}
+                </ion-button>
+                {{ report.reportContent }}
+            </p>
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content [ngStyle]="{ left: opened ? '2px' : '-3px' }">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- <router-outlet></router-outlet>  -->

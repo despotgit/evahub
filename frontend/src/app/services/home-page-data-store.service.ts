@@ -24,6 +24,7 @@ export class HomePageDataStoreService extends ComponentStore<HomePageDataState> 
     address$: Observable<string> = this.select(state => state.address);
 
     updateFirstLastName(firstLastName: string) {
+        console.log("in update store state!!!!");
         this.patchState({ firstLastName });
     }
 

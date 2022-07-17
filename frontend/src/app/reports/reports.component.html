@@ -1,42 +1,12 @@
-<mat-sidenav-container class="reports-container" *ngIf="true">
-    <mat-sidenav
-        class="reports-sidenav"
-        #sidenav
-        mode="side"
-        [(opened)]="opened"
-        (opened)="events.push('open!')"
-        (closed)="events.push('close!')"
-    >
-        <div
-            *ngIf="{
-                reports: userReports$ | async
-            } as asyncData"
-        >
-            <p *ngFor="let report of asyncData.reports">
-                <ion-button (click)="userReportSelected(report.reportId)">
-                    {{ report.reportName }}
-                </ion-button>
-                {{ report.reportContent }}
-            </p>
-        </div>
-    </mat-sidenav>
+<mat-grid-list rowHeight="fit" gutterSize="20px" cols="6">
+    <mat-grid-tile colspan="3">
+        <mat-card>1.1</mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3">1.2</mat-grid-tile>
+    <mat-grid-tile colspan="3">1.3</mat-grid-tile>
+    <mat-grid-tile colspan="3">1.4</mat-grid-tile>
 
-    <mat-sidenav-content [ngStyle]="{ left: opened ? '2px' : '-3px' }">
-        <p>
-            <button class="toggle-sidenav-button" mat-button (click)="sidenav.toggle()">sidenav.toggle()</button>
-        </p>
-
-        <mat-grid-list rowHeight="fit" gutterSize="20px" cols="6">
-            <mat-grid-tile colspan="3">
-                <mat-card>1.1</mat-card>
-            </mat-grid-tile>
-            <mat-grid-tile colspan="3">1.2</mat-grid-tile>
-            <mat-grid-tile colspan="3">1.3</mat-grid-tile>
-            <mat-grid-tile colspan="3">1.4</mat-grid-tile>
-
-            <mat-grid-tile colspan="2">2.1</mat-grid-tile>
-            <mat-grid-tile colspan="2">2.2</mat-grid-tile>
-            <mat-grid-tile colspan="2">2.3</mat-grid-tile>
-        </mat-grid-list>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+    <mat-grid-tile colspan="2">2.1</mat-grid-tile>
+    <mat-grid-tile colspan="2">2.2</mat-grid-tile>
+    <mat-grid-tile colspan="2">2.3</mat-grid-tile>
+</mat-grid-list>
