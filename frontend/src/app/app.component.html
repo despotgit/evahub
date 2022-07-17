@@ -1,10 +1,20 @@
-<mat-toolbar>
+<mat-toolbar
+    *ngIf="{
+    username: username$ | async,
+
+} as asyncData"
+>
     <span>Power Monitor</span>
 
     <button mat-button (click)="gotoHome()">Home</button>
     <button mat-button (click)="gotoReports()">Reports</button>
 
     <mat-icon (click)="sidenav.toggle()" aria-hidden="false" aria-label="Home icon">menu</mat-icon>
+
+    <mat-card>
+        <input type="button" (click)="logOut()" value="Log out" />
+        <div>yeah, username: {{ asyncData.username }}</div>
+    </mat-card>
 </mat-toolbar>
 <mat-sidenav-container class="reports-container">
     <mat-sidenav
@@ -29,7 +39,8 @@
         </div>
     </mat-sidenav>
 
-    <mat-sidenav-content [ngStyle]="{ left: opened ? '2px' : '-3px' }">
+    <!-- <mat-sidenav-content [ngStyle]="{ left: opened ? '1px' : '-3px' }"> -->
+    <mat-sidenav-content>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

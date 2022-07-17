@@ -4,8 +4,10 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
+import { AuthenticationService } from "./services/authentication.service";
 import { HomePageDataStoreService } from "./services/home-page-data-store.service";
 import { Report, UserReportsStoreService } from "./services/user-reports.service";
+import { UserStoreService } from "./services/user-store.service";
 
 @Component({
     selector: "app-root",
@@ -14,6 +16,7 @@ import { Report, UserReportsStoreService } from "./services/user-reports.service
 })
 export class AppComponent implements OnInit {
     userReports$: Observable<Report[]> = this.userReportsStore.userReports$;
+    username$: Observable<string> = this.userStore.$username;
 
     showFiller = false;
 
@@ -28,7 +31,9 @@ export class AppComponent implements OnInit {
         private httpClient: HttpClient,
         private userReportsStore: UserReportsStoreService,
         private router: Router,
-        private homePageDataStore: HomePageDataStoreService
+        private homePageDataStore: HomePageDataStoreService,
+        private userStore: UserStoreService,
+        private authenticationService: AuthenticationService
     ) {
         this.userReportsStore.setState({
             userReports: []
@@ -75,5 +80,10 @@ export class AppComponent implements OnInit {
 
     userReportSelected(reportId: number) {
         console.log("doing something with", reportId);
+    }
+
+    logOut() {
+        this.authenticationService.logOut();
+        this.router.navigate(["login"]);
     }
 }

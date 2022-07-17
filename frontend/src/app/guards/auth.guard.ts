@@ -18,9 +18,9 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router, public authenticationService: AuthenticationService) {}
 
     canActivate(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        console.log("in guard.");
+        //console.log("in guard.");
         if (this.authenticationService.validateLoginToken()) {
-            console.log("in true branch");
+            //console.log("in true branch");
             return true;
         } else {
             console.log("in false branch");

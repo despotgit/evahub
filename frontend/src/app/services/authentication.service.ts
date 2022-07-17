@@ -80,9 +80,9 @@ export class AuthenticationService {
 
             let minutesPassedSinceLogin = (now - iat) / 60;
 
-            console.log("minutesPassedSinceLogin is: ", minutesPassedSinceLogin);
-            console.log("loginTokenExpiryTime is: ", loginTokenExpiryTime);
-            console.log("storedObject.role is: ", storedObject.role);
+            //console.log("minutesPassedSinceLogin is: ", minutesPassedSinceLogin);
+            //console.log("loginTokenExpiryTime is: ", loginTokenExpiryTime);
+            //console.log("storedObject.role is: ", storedObject.role);
 
             if (storedObject.role === "admin" || minutesPassedSinceLogin <= loginTokenExpiryTime) {
                 this.userStore.updateUsername(storedObject.username);

@@ -57,3 +57,7 @@ body {
 .mat-drawer-container {
     overflow: visible !important;
 }
+
+.mat-toolbar {
+    background: $global-background-color;
+}

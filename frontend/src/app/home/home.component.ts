@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { combineLatest, debounceTime, distinctUntilChanged, map, mergeMap, Observable, tap } from "rxjs";
-import { AuthenticationService } from "../services/authentication.service";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { HomePageDataStoreService } from "../services/home-page-data-store.service";
 import { UserStoreService } from "../services/user-store.service";
@@ -32,7 +31,6 @@ export class HomeComponent implements OnInit {
     );
 
     constructor(
-        private authenticationService: AuthenticationService,
         private router: Router,
         private userStore: UserStoreService,
         private homePageDataStore: HomePageDataStoreService,
@@ -62,11 +60,6 @@ export class HomeComponent implements OnInit {
                 })
             )
             .subscribe();
-    }
-
-    logOut() {
-        this.authenticationService.logOut();
-        this.router.navigate(["login"]);
     }
 
     doneStepper() {

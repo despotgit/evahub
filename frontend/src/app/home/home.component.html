@@ -5,11 +5,6 @@
         address: address$ | async
     } as asyncData"
 >
-    <p>home works!</p>
-    <input type="button" (click)="logOut()" value="Log out" />
-
-    <div>yeah, username: {{ asyncData.username }}</div>
-
     <mat-vertical-stepper [linear]="false" #stepper>
         <mat-step [stepControl]="step1FormGroup">
             <form [formGroup]="step1FormGroup">
