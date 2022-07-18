@@ -10,10 +10,9 @@
 
     <mat-icon (click)="sidenav.toggle()" aria-hidden="false" aria-label="Home icon">menu</mat-icon>
 
-    <div>
-        <button mat-raised-button color="primary" (click)="logOut()">Log out</button>
-        <div>yeah, username: {{ asyncData.username }}</div>
-    </div>
+    <div class="right-pusher"></div>
+    <div class="username mat-button">{{ asyncData.username }}</div>
+    <button mat-raised-button color="primary" (click)="logOut()">Log out</button>
 </mat-toolbar>
 <mat-sidenav-container class="reports-container">
     <mat-sidenav

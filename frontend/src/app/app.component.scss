@@ -40,3 +40,12 @@ mat-grid-tile {
 .toggle-sidenav-button {
     z-index: 1;
 }
+
+.right-pusher {
+    display: inherit;
+    flex: 1 1 auto;
+}
+
+.username {
+    margin-right: 10px;
+}
