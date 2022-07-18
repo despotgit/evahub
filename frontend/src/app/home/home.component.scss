@@ -1,3 +1,5 @@
+@import "../../common.scss";
+
 .example-input-wrapper {
     margin-bottom: 16px;
 }
@@ -6,24 +8,27 @@ label {
     margin-right: 4px;
 }
 
-
 // Accordion:
 .example-action-buttons {
-  padding-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 .example-headers-align .mat-expansion-panel-header-title,
 .example-headers-align .mat-expansion-panel-header-description {
-  flex-basis: 0;
+    flex-basis: 0;
 }
 
 .example-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .example-headers-align .mat-form-field + .mat-form-field {
-  margin-left: 8px;
+    margin-left: 8px;
 }
 
 // End accordion
+
+.home-page-stepper {
+    background: $global-background-color;
+}
