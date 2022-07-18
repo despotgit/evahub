@@ -4,7 +4,7 @@
         reports: userReports$ | async
     } as asyncData"
 >
-    <mat-grid-list rowHeight="fit" gutterSize="20px" cols="6">
+    <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile *ngFor="let report of asyncData.reports" colspan="3">
             <mat-card>{{ report.reportName }} {{ report.reportContent }}</mat-card>
         </mat-grid-tile>
