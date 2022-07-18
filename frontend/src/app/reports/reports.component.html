@@ -1,12 +1,12 @@
-<mat-grid-list rowHeight="fit" gutterSize="20px" cols="6">
-    <mat-grid-tile colspan="3">
-        <mat-card>1.1</mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile colspan="3">1.2</mat-grid-tile>
-    <mat-grid-tile colspan="3">1.3</mat-grid-tile>
-    <mat-grid-tile colspan="3">1.4</mat-grid-tile>
-
-    <mat-grid-tile colspan="2">2.1</mat-grid-tile>
-    <mat-grid-tile colspan="2">2.2</mat-grid-tile>
-    <mat-grid-tile colspan="2">2.3</mat-grid-tile>
-</mat-grid-list>
+<div
+    id="user-reports-wrapper"
+    *ngIf="{
+        reports: userReports$ | async
+    } as asyncData"
+>
+    <mat-grid-list rowHeight="fit" gutterSize="20px" cols="6">
+        <mat-grid-tile *ngFor="let report of asyncData.reports" colspan="3">
+            <mat-card>{{ report.reportName }} {{ report.reportContent }}</mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

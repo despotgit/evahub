@@ -15,7 +15,6 @@ import { UserStoreService } from "./services/user-store.service";
     styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-    userReports$: Observable<Report[]> = this.userReportsStore.userReports$;
     username$: Observable<string> = this.userStore.$username;
 
     showFiller = false;
@@ -29,25 +28,18 @@ export class AppComponent implements OnInit {
 
     constructor(
         private httpClient: HttpClient,
-        private userReportsStore: UserReportsStoreService,
         private router: Router,
         private homePageDataStore: HomePageDataStoreService,
         private userStore: UserStoreService,
         private authenticationService: AuthenticationService
     ) {
-        this.userReportsStore.setState({
-            userReports: []
-        });
-
         this.homePageDataStore.setState({
             firstLastName: "",
             address: ""
         });
     }
 
-    ngOnInit(): void {
-        this.getUserReportsList();
-    }
+    ngOnInit(): void {}
 
     gotoReports() {
         this.router.navigate(["/reports"]);
@@ -55,31 +47,6 @@ export class AppComponent implements OnInit {
 
     gotoHome() {
         this.router.navigate(["/home"]);
-    }
-
-    getUserReportsList() {
-        let username = "test2";
-
-        let url = `${environment.baseApiBackendUrl}/rest/reports/get/${username}`;
-        console.log("CHECKPOINT 1");
-
-        this.httpClient
-            .get(url)
-            .pipe(
-                map(ur => {
-                    let u: any = ur;
-                    console.log(ur);
-
-                    this.userReportsStore.updateUserReportsList(u.userReports);
-
-                    return ur;
-                })
-            )
-            .subscribe();
-    }
-
-    userReportSelected(reportId: number) {
-        console.log("doing something with", reportId);
     }
 
     logOut() {

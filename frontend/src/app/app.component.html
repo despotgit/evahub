@@ -23,18 +23,6 @@
         (opened)="events.push('open!')"
         (closed)="events.push('close!')"
     >
-        <div
-            *ngIf="{
-                reports: userReports$ | async
-            } as asyncData"
-        >
-            <p *ngFor="let report of asyncData.reports">
-                <button mat-raised-button color="primary" (click)="userReportSelected(report.reportId)">
-                    {{ report.reportName }}
-                </button>
-                {{ report.reportContent }}
-            </p>
-        </div>
     </mat-sidenav>
 
     <!-- <mat-sidenav-content [ngStyle]="{ left: opened ? '1px' : '-3px' }"> -->
