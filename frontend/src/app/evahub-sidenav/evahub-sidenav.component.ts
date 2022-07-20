@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 
 @Component({
     selector: "evahub-sidenav",
@@ -7,6 +7,9 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 })
 export class EvahubSidenavComponent implements OnInit, OnDestroy {
     opened: boolean;
+
+    @Input()
+    menuOptions: any[];
 
     constructor() {}
 
