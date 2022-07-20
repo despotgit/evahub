@@ -16,9 +16,9 @@
     <div class="username mat-button">{{ asyncData.username }}</div>
     <button mat-raised-button color="primary" (click)="logOut()">Log out</button>
 </mat-toolbar>
-<mat-sidenav-container class="reports-container">
+<mat-sidenav-container class="main-container">
     <mat-sidenav
-        class="reports-sidenav"
+        class="main-sidenav"
         #sidenav
         mode="side"
         [(opened)]="opened"
