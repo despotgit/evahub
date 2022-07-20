@@ -14,16 +14,11 @@ import { UserStoreService } from "./services/user-store.service";
 export class AppComponent implements OnInit {
     username$: Observable<string> = this.userStore.$username;
 
-    showFiller = false;
-
     @ViewChild("sidenav") sidenav;
 
-    events: string[] = [];
     opened: boolean;
 
     title = "EVAHUB";
-
-    panelOpenState = false;
 
     constructor(
         private httpClient: HttpClient,

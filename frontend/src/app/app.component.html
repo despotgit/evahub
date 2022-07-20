@@ -17,14 +17,7 @@
     <button mat-raised-button color="primary" (click)="logOut()">Log out</button>
 </mat-toolbar>
 <mat-sidenav-container class="main-container">
-    <mat-sidenav
-        class="main-sidenav"
-        #sidenav
-        mode="side"
-        [(opened)]="opened"
-        (opened)="events.push('open!')"
-        (closed)="events.push('close!')"
-    >
+    <mat-sidenav class="main-sidenav" #sidenav mode="side" [(opened)]="opened">
         <mat-accordion>
             <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header>
