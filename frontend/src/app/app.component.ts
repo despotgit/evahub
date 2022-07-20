@@ -2,11 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { environment } from "src/environments/environment";
 import { AuthenticationService } from "./services/authentication.service";
 import { HomePageDataStoreService } from "./services/home-page-data-store.service";
-import { Report, UserReportsStoreService } from "./services/user-reports.service";
 import { UserStoreService } from "./services/user-store.service";
 
 @Component({
@@ -26,6 +23,8 @@ export class AppComponent implements OnInit {
 
     title = "EVAHUB";
 
+    panelOpenState = false;
+
     constructor(
         private httpClient: HttpClient,
         private router: Router,
@@ -41,8 +40,16 @@ export class AppComponent implements OnInit {
 
     ngOnInit(): void {}
 
+    gotoLogs() {
+        this.router.navigate(["/logs"]);
+    }
+
     gotoReports() {
         this.router.navigate(["/reports"]);
+    }
+
+    gotoChecks() {
+        this.router.navigate(["/checks"]);
     }
 
     gotoHome() {

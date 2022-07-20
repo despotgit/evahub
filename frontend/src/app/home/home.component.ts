@@ -12,8 +12,6 @@ import { UserStoreService } from "../services/user-store.service";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
-    panelOpenState = false;
-
     step1FormGroup: any;
     step2FormGroup: any;
 

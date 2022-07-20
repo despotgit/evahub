@@ -12,9 +12,11 @@ import { VladosMaterialModule } from "./material.module";
 import { ReportsComponent } from "./reports/reports.component";
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { IonicModule } from "@ionic/angular";
+import { ChecksComponent } from './checks/checks.component';
+import { LogsComponent } from './logs/logs.component';
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent, HomeComponent, ReportsComponent],
+    declarations: [AppComponent, LoginComponent, HomeComponent, ReportsComponent, ChecksComponent, LogsComponent],
     imports: [
         BrowserModule,
         HttpClientModule,
