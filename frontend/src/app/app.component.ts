@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { AuthenticationService } from "./services/authentication.service";
 import { HomePageDataStoreService } from "./services/home-page-data-store.service";
 import { UserStoreService } from "./services/user-store.service";
+import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.component";
 
 @Component({
     selector: "app-root",
@@ -16,12 +17,11 @@ export class AppComponent implements OnInit {
 
     @ViewChild("sidenav") sidenav;
 
-    opened: boolean;
+    opened: boolean = false;
 
     title = "EVAHUB";
 
     constructor(
-        private httpClient: HttpClient,
         private router: Router,
         private homePageDataStore: HomePageDataStoreService,
         private userStore: UserStoreService,

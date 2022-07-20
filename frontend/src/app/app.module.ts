@@ -12,11 +12,20 @@ import { VladosMaterialModule } from "./material.module";
 import { ReportsComponent } from "./reports/reports.component";
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { IonicModule } from "@ionic/angular";
-import { ChecksComponent } from './checks/checks.component';
-import { LogsComponent } from './logs/logs.component';
+import { ChecksComponent } from "./checks/checks.component";
+import { LogsComponent } from "./logs/logs.component";
+import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.component";
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent, HomeComponent, ReportsComponent, ChecksComponent, LogsComponent],
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        HomeComponent,
+        ReportsComponent,
+        ChecksComponent,
+        LogsComponent,
+        EvahubSidenavComponent
+    ],
     imports: [
         BrowserModule,
         HttpClientModule,
