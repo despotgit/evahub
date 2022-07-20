@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
+import { PageIndex } from "./common/constants";
 import { AuthenticationService } from "./services/authentication.service";
 import { HomePageDataStoreService } from "./services/home-page-data-store.service";
 import { UserStoreService } from "./services/user-store.service";
@@ -21,6 +22,8 @@ export class AppComponent implements OnInit {
     title = "EVAHUB";
 
     menuOptions = [1, 3, 5, 7];
+
+    currentPageIndex = PageIndex.NONE_PAGE;
 
     constructor(
         private router: Router,

@@ -1,6 +1,7 @@
 <mat-toolbar
     *ngIf="{
-        username: username$ | async
+        username: username$ | async,
+        isLoggedIn: isLoggedIn$ | async
     } as asyncData"
 >
     <span>EVAHUB</span>
@@ -10,7 +11,9 @@
     <button mat-button (click)="gotoReports()">Reports</button>
     <button mat-button (click)="gotoChecks()">Checks</button>
 
-    <mat-icon (click)="sidenav.toggle()" aria-hidden="false" aria-label="Home icon">menu</mat-icon>
+    <mat-icon *ngIf="asyncData.isLoggedIn" (click)="sidenav.toggle()" aria-hidden="false" aria-label="Home icon"
+        >menu</mat-icon
+    >
 
     <div class="right-pusher"></div>
     <div class="username mat-button">{{ asyncData.username }}</div>
