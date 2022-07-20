@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
     step1FormGroup: any;
     step2FormGroup: any;
 
-    username$: Observable<string> = this.userStore.$username;
+    username$: Observable<string> = this.userStore.username$;
     firstLastName$: Observable<string> = this.homePageDataStore.firstLastName$.pipe(
         tap(newName => {
             //console.log("CHECKPOINT 2");

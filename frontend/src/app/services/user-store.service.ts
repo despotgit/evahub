@@ -20,8 +20,8 @@ export class UserStoreService extends ComponentStore<UserState> {
         super();
     }
 
-    $username: Observable<string> = this.select(state => state.username);
-    $isLoggedIn: Observable<boolean> = this.select(state => state.isLoggedIn);
+    username$: Observable<string> = this.select(state => state.username);
+    isloggedIn$: Observable<boolean> = this.select(state => state.isLoggedIn);
 
     updateUsername(username: string) {
         this.patchState({ username }); // self-explaining syntax

@@ -1,11 +1,9 @@
-import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { AuthenticationService } from "./services/authentication.service";
 import { HomePageDataStoreService } from "./services/home-page-data-store.service";
 import { UserStoreService } from "./services/user-store.service";
-import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.component";
 
 @Component({
     selector: "app-root",
@@ -13,13 +11,16 @@ import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.componen
     styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-    username$: Observable<string> = this.userStore.$username;
+    username$: Observable<string> = this.userStore.username$;
+    isLoggedIn$: Observable<boolean> = this.userStore.isloggedIn$;
 
     @ViewChild("sidenav") sidenav;
 
     opened: boolean = false;
 
     title = "EVAHUB";
+
+    menuOptions = [1, 3, 5, 7];
 
     constructor(
         private router: Router,
@@ -54,5 +55,6 @@ export class AppComponent implements OnInit {
     logOut() {
         this.authenticationService.logOut();
         this.router.navigate(["login"]);
+        this.opened = false;
     }
 }
