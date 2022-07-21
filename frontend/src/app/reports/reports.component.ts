@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { Report, UserReportsStoreService } from "../services/user-reports.service";
+import { INITIAL_USER_REPORTS_STATE, Report, UserReportsStoreService } from "../services/user-reports.service";
 
 @Component({
     selector: "app-reports",
@@ -11,9 +11,7 @@ import { Report, UserReportsStoreService } from "../services/user-reports.servic
 })
 export class ReportsComponent implements OnInit {
     constructor(private userReportsStore: UserReportsStoreService, private httpClient: HttpClient) {
-        this.userReportsStore.setState({
-            userReports: []
-        });
+        this.userReportsStore.setState(INITIAL_USER_REPORTS_STATE);
     }
 
     userReports$: Observable<Report[]> = this.userReportsStore.userReports$;
