@@ -10,11 +10,12 @@ import { INITIAL_USER_REPORTS_STATE, Report, UserReportsStoreService } from "../
     styleUrls: ["./reports.component.scss"]
 })
 export class ReportsComponent implements OnInit {
+    userReports$: Observable<Report[]> = this.userReportsStore.userReports$;
+    selectedUserReport$: Observable<Report> = this.userReportsStore.selectedUserReport$;
+
     constructor(private userReportsStore: UserReportsStoreService, private httpClient: HttpClient) {
         this.userReportsStore.setState(INITIAL_USER_REPORTS_STATE);
     }
-
-    userReports$: Observable<Report[]> = this.userReportsStore.userReports$;
 
     ngOnInit(): void {
         this.initUserReportsList();
