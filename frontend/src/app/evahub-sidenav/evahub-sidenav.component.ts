@@ -1,5 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 
+export interface EvahubSidenavMenuOption {
+    id: number;
+    label?: string;
+    action?: string;
+}
+
 @Component({
     selector: "evahub-sidenav",
     templateUrl: "./evahub-sidenav.component.html",
@@ -9,7 +15,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
     opened: boolean;
 
     @Input()
-    menuOptions: any[];
+    menuOptions: EvahubSidenavMenuOption[];
 
     constructor() {}
 

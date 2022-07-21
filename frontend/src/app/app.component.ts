@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
     title = "EVAHUB";
 
-    menuOptions = [1, 3, 5, 7];
+    menuOptions = [{ id: 1 }, { id: 3 }, { id: 5 }];
 
     currentPageIndex = PageIndex.NONE_PAGE;
 

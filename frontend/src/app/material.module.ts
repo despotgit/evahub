@@ -12,6 +12,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatCardModule } from "@angular/material/card";
+import { MatDividerModule } from "@angular/material/divider";
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { MatCardModule } from "@angular/material/card";
         MatMenuModule,
         MatGridListModule,
         MatCardModule,
-        MatSidenavModule
+        MatSidenavModule,
+        MatDividerModule
     ],
     exports: [
         MatFormFieldModule,
@@ -44,7 +46,8 @@ import { MatCardModule } from "@angular/material/card";
         MatMenuModule,
         MatGridListModule,
         MatCardModule,
-        MatSidenavModule
+        MatSidenavModule,
+        MatDividerModule
     ]
 })
 export class VladosMaterialModule {}
