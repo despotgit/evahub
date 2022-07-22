@@ -1,30 +1,37 @@
-<mat-toolbar
+<div
     *ngIf="{
         username: username$ | async,
-        isLoggedIn: isLoggedIn$ | async
+        isLoggedIn: isLoggedIn$ | async,
+        opened: opened$ | async
     } as asyncData"
 >
-    <span>EVAHUB</span>
+    <mat-toolbar>
+        <span>EVAHUB</span>
 
-    <button mat-button (click)="gotoHome()">Home</button>
-    <button mat-button (click)="gotoLogs()">Logs</button>
-    <button mat-button (click)="gotoReports()">Reports</button>
-    <button mat-button (click)="gotoChecks()">Checks</button>
+        <button mat-button (click)="gotoHome()">Home</button>
+        <button mat-button (click)="gotoLogs()">Logs</button>
+        <button mat-button (click)="gotoReports()">Reports</button>
+        <button mat-button (click)="gotoChecks()">Checks</button>
 
-    <mat-icon *ngIf="asyncData.isLoggedIn" (click)="sidenav.toggle()" aria-hidden="false" aria-label="Home icon"
-        >menu</mat-icon
-    >
+        <mat-icon
+            *ngIf="asyncData.isLoggedIn"
+            (click)="sidenav.toggle()"
+            aria-hidden="false"
+            aria-label="Home icon"
+            >menu</mat-icon
+        >
 
-    <div class="right-pusher"></div>
-    <div class="username mat-button">{{ asyncData.username }}</div>
-    <button mat-raised-button color="primary" (click)="logOut()">Log out</button>
-</mat-toolbar>
-<mat-sidenav-container class="main-container">
-    <mat-sidenav class="main-sidenav" #sidenav mode="side" [(opened)]="opened">
-        <evahub-sidenav [menuOptions]="menuOptions"></evahub-sidenav>
-    </mat-sidenav>
+        <div class="right-pusher"></div>
+        <div class="username mat-button">{{ asyncData.username }}</div>
+        <button mat-raised-button color="primary" (click)="logOut()">Log out</button>
+    </mat-toolbar>
+    <mat-sidenav-container class="main-container">
+        <mat-sidenav class="main-sidenav" #sidenav mode="side" [(opened)]="asyncData.opened">
+            <evahub-sidenav [menuOptions]="menuOptions"></evahub-sidenav>
+        </mat-sidenav>
 
-    <mat-sidenav-content [ngStyle]="{ left: opened ? '1px' : '-3px' }">
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+        <mat-sidenav-content [ngStyle]="{ left: asyncData.opened ? '1px' : '-3px' }">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

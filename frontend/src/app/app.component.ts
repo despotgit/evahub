@@ -3,7 +3,8 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { PageIndex } from "./common/constants";
 import { AuthenticationService } from "./services/authentication.service";
-import { HomePageDataStoreService } from "./services/home-page-data-store.service";
+import { HomePageDataStoreService, INITIAL_HOMEPAGE_STATE } from "./services/home-page-data-store.service";
+import { SidenavStoreService } from "./services/sidenav-store.service";
 import { UserStoreService } from "./services/user-store.service";
 
 @Component({
@@ -14,10 +15,9 @@ import { UserStoreService } from "./services/user-store.service";
 export class AppComponent implements OnInit {
     username$: Observable<string> = this.userStore.username$;
     isLoggedIn$: Observable<boolean> = this.userStore.isloggedIn$;
+    opened$: Observable<boolean> = this.sidenavStore.opened$;
 
     @ViewChild("sidenav") sidenav;
-
-    opened: boolean = false;
 
     title = "EVAHUB";
 
@@ -29,12 +29,10 @@ export class AppComponent implements OnInit {
         private router: Router,
         private homePageDataStore: HomePageDataStoreService,
         private userStore: UserStoreService,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private sidenavStore: SidenavStoreService
     ) {
-        this.homePageDataStore.setState({
-            firstLastName: "",
-            address: ""
-        });
+        this.homePageDataStore.setState(INITIAL_HOMEPAGE_STATE);
     }
 
     ngOnInit(): void {}
@@ -57,7 +55,5 @@ export class AppComponent implements OnInit {
 
     logOut() {
         this.authenticationService.logOut();
-        this.router.navigate(["login"]);
-        this.opened = false;
     }
 }

@@ -7,14 +7,18 @@ import { UserStoreService } from "./user-store.service";
 import { INITIAL_USER_STATE } from "./user-store.service";
 import { HomePageDataStoreService } from "./home-page-data-store.service";
 import { UserReportsStoreService } from "./user-reports.service";
+import { Router } from "@angular/router";
+import { SidenavStoreService } from "./sidenav-store.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
     constructor(
         public http: HttpClient,
         private userStore: UserStoreService,
-        private homepageStoreService: HomePageDataStoreService,
-        private userReportsStore: UserReportsStoreService
+        private homepageStore: HomePageDataStoreService,
+        private userReportsStore: UserReportsStoreService,
+        private sidenavStore: SidenavStoreService,
+        private router: Router
     ) {
         this.userStore.setState(INITIAL_USER_STATE);
 
@@ -58,7 +62,9 @@ export class AuthenticationService {
         localStorage.removeItem(storedObjectName);
         this.userStore.resetUserState();
         this.userReportsStore.resetUserReportsState();
-        this.homepageStoreService.resetHomepageState();
+        this.homepageStore.resetHomepageState();
+        this.sidenavStore.resetSidenavState();
+        this.router.navigate(["login"]);
     }
 
     // Validate the token exists, and the iat is recent enough, in order to enable

@@ -1,4 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
+import { SidenavStoreService } from "../services/sidenav-store.service";
 
 export interface EvahubSidenavMenuOption {
     id: number;
@@ -12,12 +14,14 @@ export interface EvahubSidenavMenuOption {
     styleUrls: ["./evahub-sidenav.component.scss"]
 })
 export class EvahubSidenavComponent implements OnInit, OnDestroy {
-    opened: boolean;
+    opened$: Observable<boolean> = this.sidenavStore.opened$;
 
     @Input()
     menuOptions: EvahubSidenavMenuOption[];
 
-    constructor() {}
+    constructor(private sidenavStore: SidenavStoreService) {
+        //
+    }
 
     ngOnInit(): void {}
 

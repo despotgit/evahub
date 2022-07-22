@@ -1,5 +1,5 @@
-<mat-list *ngFor="let menuOption of menuOptions">
-    <mat-list-item>
+<mat-list *ngIf="{ opened: opened$ | async } as asyncData">
+    <mat-list-item *ngFor="let menuOption of menuOptions">
         {{ menuOption.id }}
         <mat-divider></mat-divider>
     </mat-list-item>

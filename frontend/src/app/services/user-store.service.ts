@@ -1,6 +1,16 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { Observable } from "rxjs";
+import { HomePageDataState } from "./home-page-data-store.service";
+import { UserReportsState } from "./user-reports.service";
+
+export interface ApplicationState {
+    currentUser: UserState;
+    isLoggedIn: boolean;
+    homepageData: HomePageDataState;
+    address: string;
+    userReports: UserReportsState;
+}
 
 export interface UserState {
     username: string;
