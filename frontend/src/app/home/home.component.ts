@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/
 import { Router } from "@angular/router";
 import { combineLatest, debounceTime, distinctUntilChanged, map, mergeMap, Observable, tap } from "rxjs";
 import { FormBuilder, FormControl } from "@angular/forms";
-import { HomePageDataStoreService } from "../services/home-page-data-store.service";
-import { UserStoreService } from "../services/user-store.service";
+import { ApplicationStateStoreService } from "../services/application-state-store.service";
 
 @Component({
     selector: "app-home",
@@ -15,14 +14,14 @@ export class HomeComponent implements OnInit {
     step1FormGroup: any;
     step2FormGroup: any;
 
-    username$: Observable<string> = this.userStore.username$;
-    firstLastName$: Observable<string> = this.homePageDataStore.firstLastName$.pipe(
+    username$: Observable<string> = this.store.username$;
+    firstLastName$: Observable<string> = this.store.firstLastName$.pipe(
         tap(newName => {
             //console.log("CHECKPOINT 2");
             this.step1FormGroup.get("firstLastNameFormControl").setValue(newName);
         })
     );
-    address$: Observable<string> = this.homePageDataStore.address$.pipe(
+    address$: Observable<string> = this.store.address$.pipe(
         tap(address => {
             this.step2FormGroup.get("addressFormControl").setValue(address);
         })
@@ -30,8 +29,7 @@ export class HomeComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private userStore: UserStoreService,
-        private homePageDataStore: HomePageDataStoreService,
+        private store: ApplicationStateStoreService,
         private formBuilder: FormBuilder
     ) {
         this.step1FormGroup = this.formBuilder.group({
@@ -53,8 +51,8 @@ export class HomeComponent implements OnInit {
                 debounceTime(300),
                 distinctUntilChanged(),
                 map(([firstLastName, address]) => {
-                    this.homePageDataStore.updateFirstLastName(firstLastName);
-                    this.homePageDataStore.updateAddress(address);
+                    this.store.updateFirstLastName(firstLastName);
+                    this.store.updateAddress(address);
                 })
             )
             .subscribe();

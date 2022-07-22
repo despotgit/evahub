@@ -2,7 +2,7 @@
     *ngIf="{
         username: username$ | async,
         isLoggedIn: isLoggedIn$ | async,
-        opened: opened$ | async
+        isSidenavOpened: isSidenavOpened$ | async
     } as asyncData"
 >
     <mat-toolbar>
@@ -26,11 +26,11 @@
         <button mat-raised-button color="primary" (click)="logOut()">Log out</button>
     </mat-toolbar>
     <mat-sidenav-container class="main-container">
-        <mat-sidenav class="main-sidenav" #sidenav mode="side" [(opened)]="asyncData.opened">
+        <mat-sidenav class="main-sidenav" #sidenav mode="side" [(opened)]="asyncData.isSidenavOpened">
             <evahub-sidenav [menuOptions]="menuOptions"></evahub-sidenav>
         </mat-sidenav>
 
-        <mat-sidenav-content [ngStyle]="{ left: asyncData.opened ? '1px' : '-3px' }">
+        <mat-sidenav-content [ngStyle]="{ left: asyncData.isSidenavOpened ? '1px' : '-3px' }">
             <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>

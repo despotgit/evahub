@@ -2,10 +2,8 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { PageIndex } from "./common/constants";
+import { ApplicationStateStoreService } from "./services/application-state-store.service";
 import { AuthenticationService } from "./services/authentication.service";
-import { HomePageDataStoreService, INITIAL_HOMEPAGE_STATE } from "./services/home-page-data-store.service";
-import { SidenavStoreService } from "./services/sidenav-store.service";
-import { UserStoreService } from "./services/user-store.service";
 
 @Component({
     selector: "app-root",
@@ -13,9 +11,9 @@ import { UserStoreService } from "./services/user-store.service";
     styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-    username$: Observable<string> = this.userStore.username$;
-    isLoggedIn$: Observable<boolean> = this.userStore.isloggedIn$;
-    opened$: Observable<boolean> = this.sidenavStore.opened$;
+    username$: Observable<string> = this.store.username$;
+    isLoggedIn$: Observable<boolean> = this.store.isloggedIn$;
+    isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$;
 
     @ViewChild("sidenav") sidenav;
 
@@ -27,12 +25,10 @@ export class AppComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private homePageDataStore: HomePageDataStoreService,
-        private userStore: UserStoreService,
-        private authenticationService: AuthenticationService,
-        private sidenavStore: SidenavStoreService
+        private store: ApplicationStateStoreService,
+        private authenticationService: AuthenticationService
     ) {
-        this.homePageDataStore.setState(INITIAL_HOMEPAGE_STATE);
+        //
     }
 
     ngOnInit(): void {}

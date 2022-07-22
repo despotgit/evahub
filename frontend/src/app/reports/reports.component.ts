@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { INITIAL_USER_REPORTS_STATE, Report, UserReportsStoreService } from "../services/user-reports.service";
+import { ApplicationStateStoreService, Report } from "../services/application-state-store.service";
 
 @Component({
     selector: "app-reports",
@@ -10,11 +10,11 @@ import { INITIAL_USER_REPORTS_STATE, Report, UserReportsStoreService } from "../
     styleUrls: ["./reports.component.scss"]
 })
 export class ReportsComponent implements OnInit {
-    userReports$: Observable<Report[]> = this.userReportsStore.userReports$;
-    selectedUserReport$: Observable<Report> = this.userReportsStore.selectedUserReport$;
+    userReports$: Observable<Report[]> = this.store.userReports$;
+    selectedUserReport$: Observable<Report> = this.store.selectedUserReport$;
 
-    constructor(private userReportsStore: UserReportsStoreService, private httpClient: HttpClient) {
-        this.userReportsStore.setState(INITIAL_USER_REPORTS_STATE);
+    constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {
+        //this.userReportsStore.setState(INITIAL_USER_REPORTS_STATE);
     }
 
     ngOnInit(): void {
@@ -38,7 +38,7 @@ export class ReportsComponent implements OnInit {
                     let u: any = ur;
                     console.log(ur);
 
-                    this.userReportsStore.updateUserReportsList(u.userReports);
+                    this.store.updateUserReports(u.userReports);
 
                     return ur;
                 })

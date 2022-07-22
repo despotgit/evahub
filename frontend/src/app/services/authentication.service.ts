@@ -3,24 +3,13 @@ import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { storedObjectName, loginTokenExpiryTime } from "../common/constants";
-import { UserStoreService } from "./user-store.service";
-import { INITIAL_USER_STATE } from "./user-store.service";
-import { HomePageDataStoreService } from "./home-page-data-store.service";
-import { UserReportsStoreService } from "./user-reports.service";
 import { Router } from "@angular/router";
-import { SidenavStoreService } from "./sidenav-store.service";
+import { ApplicationStateStoreService, INITIAL_APPLICATION_STATE } from "./application-state-store.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
-    constructor(
-        public http: HttpClient,
-        private userStore: UserStoreService,
-        private homepageStore: HomePageDataStoreService,
-        private userReportsStore: UserReportsStoreService,
-        private sidenavStore: SidenavStoreService,
-        private router: Router
-    ) {
-        this.userStore.setState(INITIAL_USER_STATE);
+    constructor(public http: HttpClient, private store: ApplicationStateStoreService, private router: Router) {
+        this.store.setState(INITIAL_APPLICATION_STATE);
 
         let cu = localStorage.getItem(storedObjectName);
         if (cu === null) {
@@ -50,7 +39,7 @@ export class AuthenticationService {
                         localStorage.setItem(storedObjectName, JSON.stringify(user));
                     }
 
-                    this.userStore.updateUsername(u);
+                    this.store.updateUsername(u);
 
                     return user;
                 })
@@ -60,10 +49,7 @@ export class AuthenticationService {
     logOut() {
         // remove user from local storage to log user out
         localStorage.removeItem(storedObjectName);
-        this.userStore.resetUserState();
-        this.userReportsStore.resetUserReportsState();
-        this.homepageStore.resetHomepageState();
-        this.sidenavStore.resetSidenavState();
+        this.store.resetApplicationState();
         this.router.navigate(["login"]);
     }
 
@@ -91,8 +77,8 @@ export class AuthenticationService {
             //console.log("storedObject.role is: ", storedObject.role);
 
             if (storedObject.role === "admin" || minutesPassedSinceLogin <= loginTokenExpiryTime) {
-                this.userStore.updateUsername(storedObject.username);
-                this.userStore.updateIsLoggedIn(true);
+                this.store.updateUsername(storedObject.username);
+                this.store.updateIsLoggedIn(true);
                 return true;
             } else {
                 this.logOut();
