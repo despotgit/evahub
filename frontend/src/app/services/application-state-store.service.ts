@@ -72,6 +72,51 @@ export const INITIAL_USER_REPORTS_STATE = {
     }
 };
 
+// CHECKS:
+export interface Check {
+    checkUserId?: number;
+    checkId?: number;
+    checkContent?: string;
+}
+
+export interface UserChecksState {
+    userChecks: Check[];
+    selectedUserCheck: Check;
+}
+
+export const INITIAL_USER_CHECKS_STATE = {
+    userChecks: [],
+    selectedUserCheck: {
+        checkUserId: 0,
+        checkId: 0,
+        checkContent: ""
+    }
+};
+
+// LOGS:
+export interface Log {
+    logUserId?: number;
+    logId?: number;
+    logName?: string;
+    logContent?: string;
+}
+
+export interface UserLogsState {
+    userLogs: Log[];
+    selectedUserLog: Log;
+}
+
+export const INITIAL_USER_LOGS_STATE = {
+    userLogs: [],
+    selectedUserLog: {
+        logUserId: 0,
+        logId: 0,
+        logContent: ""
+    }
+};
+
+// APP STATE:
+
 export const INITIAL_APPLICATION_STATE = {
     currentUser: INITIAL_USER_STATE,
     homepageData: INITIAL_HOMEPAGE_STATE,
