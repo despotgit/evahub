@@ -204,21 +204,11 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // REPORTS:
 
     updateUserReports(ur: Report[]) {
-        const oldReports = this.get(state => state.userReports);
-        const userReports = {
-            ...oldReports,
-            userReports: ur
-        };
-        this.patchState({ userReports });
+        this.updateState("userReports", "userReports", ur);
     }
 
-    updateSelectedUserReport(selectedUserReport: Report) {
-        const oldUserReports = this.get(state => state.userReports);
-        const userReports = {
-            ...oldUserReports,
-            selectedUserReport
-        };
-        this.patchState({ userReports });
+    updateSelectedUserReport(sur: Report) {
+        this.updateState("userReports", "selecteduserReport", sur);
     }
 
     // APPLICATION STATE:
