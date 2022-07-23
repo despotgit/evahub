@@ -14,11 +14,13 @@ export interface ApplicationState {
 export interface UserState {
     username: string;
     isLoggedIn: boolean;
+    currentPageIndex: number;
 }
 
 export const INITIAL_USER_STATE = {
     username: "",
-    isLoggedIn: false
+    isLoggedIn: false,
+    currentPageIndex: 0
 };
 
 // HOMEPAGE
@@ -133,6 +135,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // CURRENT USER
     username$: Observable<string> = this.select(state => state.currentUser.username);
     isloggedIn$: Observable<boolean> = this.select(state => state.currentUser.isLoggedIn);
+    currentPageIndex$: Observable<number> = this.select(state => state.currentUser.currentPageIndex);
 
     // HOMEPAGE
     firstLastName$: Observable<string> = this.select(state => state.homepageData.firstLastName);
@@ -168,6 +171,15 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         const currentUser = {
             ...oldCurrentUser,
             isLoggedIn
+        };
+        this.patchState({ currentUser });
+    }
+
+    updateCurrentPageIndex(currentPageIndex: number) {
+        const oldCurrentUser = this.get(state => state.currentUser);
+        const currentUser = {
+            ...oldCurrentUser,
+            currentPageIndex
         };
         this.patchState({ currentUser });
     }
@@ -226,11 +238,6 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // APPLICATION STATE:
 
     resetApplicationState() {
-        this.setState({
-            currentUser: INITIAL_USER_STATE,
-            homepageData: INITIAL_HOMEPAGE_STATE,
-            userReports: INITIAL_USER_REPORTS_STATE,
-            sidenav: INITIAL_SIDENAV_STATE
-        });
+        this.setState(INITIAL_APPLICATION_STATE);
     }
 }
