@@ -37,9 +37,10 @@ export class AuthenticationService {
                     console.log("user from pipe map is:", user);
                     if (user.authenticated && user.token) {
                         localStorage.setItem(storedObjectName, JSON.stringify(user));
-                    }
 
-                    this.store.updateUsername(u);
+                        this.store.updateUsername(u);
+                        this.store.updateIsSidenavOpened(true);
+                    }
 
                     return user;
                 })
@@ -79,7 +80,7 @@ export class AuthenticationService {
             if (storedObject.role === "admin" || minutesPassedSinceLogin <= loginTokenExpiryTime) {
                 this.store.updateUsername(storedObject.username);
                 this.store.updateIsLoggedIn(true);
-                //this.store.updateIsSidenavOpened(false);
+
                 return true;
             } else {
                 this.logOut();

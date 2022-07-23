@@ -37,7 +37,6 @@ export class ReportsComponent implements OnInit {
                     console.log(ur);
 
                     this.store.updateUserReports(u.userReports);
-                    //this.store.update
 
                     return ur;
                 })
