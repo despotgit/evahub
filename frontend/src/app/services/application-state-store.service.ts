@@ -215,24 +215,33 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.patchState({ sidenav });
     }
 
+    updateSidenavMenuOptions(sidenavMenuOptions: EvahubSidenavMenuOption[]) {
+        const oldSidenav = this.get(state => state.sidenav);
+        const sidenav = {
+            ...oldSidenav,
+            sidenavMenuOptions
+        };
+        this.patchState({ sidenav });
+    }
+
     // REPORTS:
 
-    updateUserReports(newUserReports: Report[]) {
+    updateUserReports(ur: Report[]) {
         const oldReports = this.get(state => state.userReports);
         const userReports = {
             ...oldReports,
-            userReports: newUserReports
+            userReports: ur
         };
         this.patchState({ userReports });
     }
 
-    updateSelectedUserReport(isLoggedIn: boolean) {
-        const oldCurrentUser = this.get(state => state.currentUser);
-        const currentUser = {
-            ...oldCurrentUser,
-            isLoggedIn
+    updateSelectedUserReport(selectedUserReport: Report) {
+        const oldUserReports = this.get(state => state.userReports);
+        const userReports = {
+            ...oldUserReports,
+            selectedUserReport
         };
-        this.patchState({ currentUser });
+        this.patchState({ userReports });
     }
 
     // APPLICATION STATE:
