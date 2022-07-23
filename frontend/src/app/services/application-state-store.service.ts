@@ -37,10 +37,12 @@ export const INITIAL_HOMEPAGE_STATE = {
 
 export interface SidenavState {
     isSidenavOpened: boolean;
+    sidenavMenuOptions: EvahubSidenavMenuOption[];
 }
 
 export const INITIAL_SIDENAV_STATE = {
-    isSidenavOpened: false
+    isSidenavOpened: false,
+    sidenavMenuOptions: []
 };
 
 export interface EvahubSidenavMenuOption {
@@ -138,6 +140,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // SIDENAV
     isSidenavOpened$: Observable<boolean> = this.select(state => state.sidenav.isSidenavOpened);
+    sidenavMenuOptions$: Observable<EvahubSidenavMenuOption[]> = this.select(
+        state => state.sidenav.sidenavMenuOptions
+    );
 
     // REPORTS
     userReports$: Observable<Report[]> = this.select(state => state.userReports.userReports);

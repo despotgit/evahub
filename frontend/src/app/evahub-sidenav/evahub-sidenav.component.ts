@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
 import {
     ApplicationStateStoreService,
     EvahubSidenavMenuOption
