@@ -13,13 +13,13 @@ rest = Blueprint("rest", __name__)
 
 
 @rest.before_request
-# @jwt_required(locations=["headers"])
+@jwt_required(locations=["headers"])
 def before_request():
     print("in before_request")
     pass
 
 
-# A proxy of some sort
+# A proxy
 @rest.route("/<path:path>", methods=["GET", "POST"])
 def proxy(path):
     print("********************************************************** in proxy")
