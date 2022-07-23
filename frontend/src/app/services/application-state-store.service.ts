@@ -155,73 +155,50 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         super();
     }
 
+    // UPDATERS:
+
+    // Generic update (to test)
+    updateState(sliceName, propertyName, newValue) {
+        const oldSliceState = this.get(state => state[sliceName]);
+        const newSliceState = { ...oldSliceState };
+        newSliceState[propertyName] = newValue;
+        const toApply = {};
+        toApply[sliceName] = newSliceState;
+        this.patchState(toApply);
+    }
+
     // CURRENT USER:
 
     updateUsername(username: string) {
-        const oldCurrentUser = this.get(state => state.currentUser);
-        const currentUser = {
-            ...oldCurrentUser,
-            username: username
-        };
-        this.patchState({ currentUser });
+        this.updateState("currentUser", "username", username);
     }
 
     updateIsLoggedIn(isLoggedIn: boolean) {
-        const oldCurrentUser = this.get(state => state.currentUser);
-        const currentUser = {
-            ...oldCurrentUser,
-            isLoggedIn
-        };
-        this.patchState({ currentUser });
+        this.updateState("currentUser", "isLoggedIn", isLoggedIn);
     }
 
     updateCurrentPageIndex(currentPageIndex: number) {
-        const oldCurrentUser = this.get(state => state.currentUser);
-        const currentUser = {
-            ...oldCurrentUser,
-            currentPageIndex
-        };
-        this.patchState({ currentUser });
+        this.updateState("currentUser", "currentPageIndex", currentPageIndex);
     }
 
     // HOMEPAGE:
 
     updateFirstLastName(firstLastName: string) {
-        const oldHomepageData = this.get(state => state.homepageData);
-        const homepageData = {
-            ...oldHomepageData,
-            firstLastName
-        };
-        this.patchState({ homepageData });
+        this.updateState("homepageData", "firstLastName", firstLastName);
     }
 
     updateAddress(address: string) {
-        const oldHomepageData = this.get(state => state.homepageData);
-        const homepageData = {
-            ...oldHomepageData,
-            address
-        };
-        this.patchState({ homepageData });
+        this.updateState("homepageData", "address", address);
     }
 
     // SIDENAV:
 
     updateIsSidenavOpened(isSidenavOpened: boolean) {
-        const oldSidenav = this.get(state => state.sidenav);
-        const sidenav = {
-            ...oldSidenav,
-            isSidenavOpened
-        };
-        this.patchState({ sidenav });
+        this.updateState("sidenav", "isSidenavOpened", isSidenavOpened);
     }
 
     updateSidenavMenuOptions(sidenavMenuOptions: EvahubSidenavMenuOption[]) {
-        const oldSidenav = this.get(state => state.sidenav);
-        const sidenav = {
-            ...oldSidenav,
-            sidenavMenuOptions
-        };
-        this.patchState({ sidenav });
+        this.updateState("sidenav", "sidenavMenuOptions", sidenavMenuOptions);
     }
 
     // REPORTS:
