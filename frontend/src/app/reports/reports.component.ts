@@ -2,7 +2,11 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { ApplicationStateStoreService, Report } from "../services/application-state-store.service";
+import {
+    ApplicationStateStoreService,
+    EvahubSidenavMenuOption,
+    Report
+} from "../services/application-state-store.service";
 
 @Component({
     selector: "app-reports",
@@ -38,13 +42,32 @@ export class ReportsComponent implements OnInit {
             .pipe(
                 map(ur => {
                     let u: any = ur;
-                    console.log(ur);
 
                     this.store.updateUserReports(u.userReports);
+                    this.processReports(u.userReports);
 
                     return ur;
                 })
             )
             .subscribe();
+    }
+
+    processReports(rs: Report[]) {
+        console.log("reports are: ", rs);
+
+        const menuOptions = rs.map(r => {
+            let mo: EvahubSidenavMenuOption = {
+                id: r.reportId,
+                label: r.reportName
+            };
+            return mo;
+
+            //
+        });
+
+        console.log("menuOptions is:", menuOptions);
+
+        this.store.updateSidenavMenuOptions(menuOptions);
+        //this.store.updateSelectedUserReport()
     }
 }
