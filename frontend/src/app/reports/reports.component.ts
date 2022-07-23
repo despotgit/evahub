@@ -13,7 +13,11 @@ export class ReportsComponent implements OnInit {
     userReports$: Observable<Report[]> = this.store.userReports$;
     selectedUserReport$: Observable<Report> = this.store.selectedUserReport$;
 
-    constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {}
+    constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {
+        setTimeout(() => {
+            this.store.updateIsSidenavOpened(true);
+        }, 100);
+    }
 
     ngOnInit(): void {
         this.initUserReportsList();
