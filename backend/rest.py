@@ -164,7 +164,7 @@ def deleteUserAccount():
 # GET - Get user's reports (by username)
 @rest.route("/reports/get/<username>", methods=["GET"])
 def getUserReports(username):
-    # print("checkpoint 2.0")
+
     authentication = authenticateJwt(username)
 
     # print("authentication is:")
@@ -172,8 +172,6 @@ def getUserReports(username):
 
     if not authentication["authenticated"]:
         return authentication
-
-    # print("checkpoint 2.1")
 
     userReports = getDbUserReports(username)
 

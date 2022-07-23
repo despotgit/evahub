@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, of, tap } from "rxjs";
 import { PageIndex } from "./common/constants";
 import { ApplicationStateStoreService } from "./services/application-state-store.service";
 import { AuthenticationService } from "./services/authentication.service";
@@ -10,16 +10,21 @@ import { AuthenticationService } from "./services/authentication.service";
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.scss"]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
     username$: Observable<string> = this.store.username$;
     isLoggedIn$: Observable<boolean> = this.store.isloggedIn$;
-    isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$;
+    isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$.pipe(
+        tap(a => {
+            console.log("a is:");
+            console.log(a);
+        })
+    );
 
     @ViewChild("sidenav") sidenav;
 
     title = "EVAHUB";
 
-    menuOptions = [{ id: 1 }, { id: 3 }, { id: 5 }];
+    menuOptions$ = of([{ id: 1 }, { id: 3 }, { id: 5 }]);
 
     currentPageIndex = PageIndex.NONE_PAGE;
 
@@ -32,6 +37,10 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {}
+
+    ngAfterViewInit(): void {
+        //this.sidenav.close();
+    }
 
     gotoLogs() {
         this.router.navigate(["/logs"]);

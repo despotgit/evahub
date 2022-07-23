@@ -11,8 +11,6 @@ import {
     styleUrls: ["./evahub-sidenav.component.scss"]
 })
 export class EvahubSidenavComponent implements OnInit, OnDestroy {
-    isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$;
-
     @Input()
     menuOptions: EvahubSidenavMenuOption[];
 

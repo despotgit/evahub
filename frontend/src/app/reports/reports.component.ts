@@ -13,9 +13,7 @@ export class ReportsComponent implements OnInit {
     userReports$: Observable<Report[]> = this.store.userReports$;
     selectedUserReport$: Observable<Report> = this.store.selectedUserReport$;
 
-    constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {
-        //this.userReportsStore.setState(INITIAL_USER_REPORTS_STATE);
-    }
+    constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {}
 
     ngOnInit(): void {
         this.initUserReportsList();
@@ -39,6 +37,7 @@ export class ReportsComponent implements OnInit {
                     console.log(ur);
 
                     this.store.updateUserReports(u.userReports);
+                    //this.store.update
 
                     return ur;
                 })

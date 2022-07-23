@@ -189,7 +189,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // SIDENAV:
 
-    updateOpened(isSidenavOpened: boolean) {
+    updateIsSidenavOpened(isSidenavOpened: boolean) {
         const oldSidenav = this.get(state => state.sidenav);
         const sidenav = {
             ...oldSidenav,

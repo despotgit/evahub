@@ -79,6 +79,7 @@ export class AuthenticationService {
             if (storedObject.role === "admin" || minutesPassedSinceLogin <= loginTokenExpiryTime) {
                 this.store.updateUsername(storedObject.username);
                 this.store.updateIsLoggedIn(true);
+                //this.store.updateIsSidenavOpened(false);
                 return true;
             } else {
                 this.logOut();
