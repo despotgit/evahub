@@ -17,14 +17,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     username$: Observable<string> = this.store.username$;
     isLoggedIn$: Observable<boolean> = this.store.isloggedIn$;
     isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$;
-    //menuOptions$ = of([{ id: 1 }, { id: 3 }, { id: 5 }]);
     sidenavMenuOptions$: Observable<EvahubSidenavMenuOption[]> = this.store.sidenavMenuOptions$;
+    currentPageIndex$: Observable<PageIndex> = this.store.currentPageIndex$;
 
     @ViewChild("sidenav") sidenav;
 
     title = "EVAHUB";
-
-    currentPageIndex = PageIndex.NONE_PAGE;
 
     constructor(
         private router: Router,
@@ -58,5 +56,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     logOut() {
         this.authenticationService.logOut();
+    }
+
+    menuItemClicked($event) {
+        console.log($event);
     }
 }

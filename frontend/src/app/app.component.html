@@ -30,7 +30,10 @@
     </mat-toolbar>
     <mat-sidenav-container class="main-container">
         <mat-sidenav class="main-sidenav" #sidenav mode="side" [(opened)]="asyncData.isSidenavOpened">
-            <evahub-sidenav [menuOptions]="asyncData.menuOptions"></evahub-sidenav>
+            <evahub-sidenav
+                (emitItemClicked)="menuItemClicked($event)"
+                [menuOptions]="asyncData.menuOptions"
+            ></evahub-sidenav>
         </mat-sidenav>
 
         <mat-sidenav-content [ngStyle]="{ left: asyncData.isSidenavOpened ? '1px' : '-3px' }">

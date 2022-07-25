@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { Observable } from "rxjs";
+import { PageIndex } from "../common/constants";
 
 export interface ApplicationState {
     currentUser: UserState;
@@ -14,13 +15,13 @@ export interface ApplicationState {
 export interface UserState {
     username: string;
     isLoggedIn: boolean;
-    currentPageIndex: number;
+    currentPageIndex: PageIndex;
 }
 
 export const INITIAL_USER_STATE = {
     username: "",
     isLoggedIn: false,
-    currentPageIndex: 0
+    currentPageIndex: PageIndex.NONE_PAGE
 };
 
 // HOMEPAGE
@@ -159,11 +160,11 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // Generic update (to test)
     updateState(sliceName, propertyName, newValue) {
-        const oldSliceState = this.get(state => state[sliceName]);
-        const newSliceState = { ...oldSliceState };
-        newSliceState[propertyName] = newValue;
+        const oldStateSlice = this.get(state => state[sliceName]);
+        const newStateSlice = { ...oldStateSlice };
+        newStateSlice[propertyName] = newValue;
         const toApply = {};
-        toApply[sliceName] = newSliceState;
+        toApply[sliceName] = newStateSlice;
         this.patchState(toApply);
     }
 
