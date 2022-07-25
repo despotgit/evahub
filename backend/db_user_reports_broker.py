@@ -1,6 +1,7 @@
 import time
 
 from db_config import getDb
+from db import getValuesFromDb
 
 db = getDb()
 
@@ -14,26 +15,23 @@ def getDbUserReport(username, reportId):
 
 
 def getDbUserReports(username):
-    return [
-        {
-            "reportId": 1,
-            "reportUserId": 1,
-            "reportContent": "aaa",
-            "reportName": "first report",
-        },
-        {
-            "reportId": 2,
-            "reportUserId": 1,
-            "reportContent": "bbb",
-            "reportName": "second report",
-        },
-        {
-            "reportId": 3,
-            "reportUserId": 1,
-            "reportContent": "ccc",
-            "reportName": "third report",
-        },
-    ]
+
+    results = getValuesFromDb(
+        "select report_id as reportId, user_id as reportUserId, report_name as reportName, report_content as reportContent from reports where report_username = '"
+        + str(username)
+        + "'"
+    )
+
+    print("results is:")
+    print(results)
+
+    toReturn = []
+    for r in results:
+        toReturn.append({"reportId": r[0], "reportName": r[2], "reportContent": r[3]})
+
+    print(toReturn)
+
+    return toReturn
 
 
 def updateDbUserReport(username, reportId, reportContent):
