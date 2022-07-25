@@ -6,7 +6,9 @@ import { PageIndex } from "../common/constants";
 export interface ApplicationState {
     currentUser: UserState;
     homepageData: HomePageDataState;
+    userLogs: UserLogsState;
     userReports: UserReportsState;
+    userChecks: UserChecksState;
     sidenav: SidenavState;
 }
 
@@ -125,7 +127,9 @@ export const INITIAL_USER_LOGS_STATE = {
 export const INITIAL_APPLICATION_STATE = {
     currentUser: INITIAL_USER_STATE,
     homepageData: INITIAL_HOMEPAGE_STATE,
+    userLogs: INITIAL_USER_LOGS_STATE,
     userReports: INITIAL_USER_REPORTS_STATE,
+    userChecks: INITIAL_USER_CHECKS_STATE,
     sidenav: INITIAL_SIDENAV_STATE
 };
 
@@ -151,6 +155,14 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // REPORTS
     userReports$: Observable<Report[]> = this.select(state => state.userReports.userReports);
     selectedUserReport$: Observable<Report> = this.select(state => state.userReports.selectedUserReport);
+
+    // LOGS
+    userLogs$: Observable<Log[]> = this.select(state => state.userLogs.userLogs);
+    selectedUserLog$: Observable<Log> = this.select(state => state.userLogs.selectedUserLog);
+
+    // CHECKS
+    userChecks$: Observable<Check[]> = this.select(state => state.userChecks.userChecks);
+    selectedUserCheck$: Observable<Check> = this.select(state => state.userChecks.selectedUserCheck);
 
     constructor() {
         super();
