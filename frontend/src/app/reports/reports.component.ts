@@ -43,7 +43,6 @@ export class ReportsComponent implements OnInit {
                 map(ur => {
                     let u: any = ur;
 
-                    this.store.updateUserReports(u.userReports);
                     this.processReports(u.userReports);
 
                     return ur;
@@ -53,6 +52,8 @@ export class ReportsComponent implements OnInit {
     }
 
     processReports(rs: Report[]) {
+        this.store.updateUserReports(rs);
+
         console.log("reports are: ", rs);
 
         const menuOptions = rs.map(r => {
@@ -68,6 +69,6 @@ export class ReportsComponent implements OnInit {
         console.log("menuOptions is:", menuOptions);
 
         this.store.updateSidenavMenuOptions(menuOptions);
-        //this.store.updateSelectedUserReport()
+        this.store.updateSelectedUserReport(rs[0]);
     }
 }

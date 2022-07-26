@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 
-import {
-    ApplicationStateStoreService,
-    EvahubSidenavMenuOption
-} from "../services/application-state-store.service";
+import { EvahubSidenavMenuOption } from "../services/application-state-store.service";
 
 @Component({
     selector: "evahub-sidenav",
@@ -17,7 +14,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
     @Output()
     emitItemClicked: EventEmitter<number> = new EventEmitter();
 
-    constructor(private store: ApplicationStateStoreService) {
+    constructor() {
         //
     }
 

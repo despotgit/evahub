@@ -221,7 +221,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     }
 
     updateSelectedUserReport(sur: Report) {
-        this.updateState("userReports", "selecteduserReport", sur);
+        this.updateState("userReports", "selectedUserReport", sur);
     }
 
     // APPLICATION STATE:
