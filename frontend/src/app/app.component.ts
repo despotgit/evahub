@@ -1,10 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { combineLatest, map, Observable, of, tap, withLatestFrom } from "rxjs";
+import { combineLatest, map, Observable, of, Subscription, tap, withLatestFrom } from "rxjs";
 import { PageIndex } from "./common/constants";
 import {
     ApplicationStateStoreService,
-    EvahubSidenavMenuOption
+    Check,
+    EvahubSidenavMenuOption,
+    Log,
+    Report
 } from "./services/application-state-store.service";
 import { AuthenticationService } from "./services/authentication.service";
 
@@ -19,6 +22,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$;
     sidenavMenuOptions$: Observable<EvahubSidenavMenuOption[]> = this.store.sidenavMenuOptions$;
     currentPageIndex$: Observable<PageIndex> = this.store.currentPageIndex$;
+    userReports$: Observable<Report[]> = this.store.userReports$;
+    userChecks$: Observable<Check[]> = this.store.userChecks$;
+    userLogs$: Observable<Log[]> = this.store.userLogs$;
+
+    reportSelectedSub: Subscription;
 
     @ViewChild("sidenav") sidenav;
 
@@ -63,18 +71,26 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     menuItemClicked($event) {
-        let id$ = of($event);
+        let documentId$ = of($event);
 
-        let sub = this.currentPageIndex$
+        this.reportSelectedSub = this.currentPageIndex$
             .pipe(
-                withLatestFrom(id$),
-                map(([cpi, id]) => {
+                withLatestFrom(documentId$, this.userReports$),
+                map(([cpi, documentId, reports]) => {
                     console.log("and now...");
-                    console.log(cpi, id);
+                    console.log(cpi, documentId);
+                    switch (cpi) {
+                        case PageIndex.REPORTS_PAGE:
+                            const selectedRep = reports.filter(r => r.reportId == documentId);
+                            this.store.updateSelectedUserReport(selectedRep[0]);
+                        //console.log("selectedRep is:", selectedRep);
+                    }
                 })
             )
             .subscribe();
+    }
 
-        sub.unsubscribe();
+    ngOnDestroy() {
+        this.reportSelectedSub.unsubscribe();
     }
 }
