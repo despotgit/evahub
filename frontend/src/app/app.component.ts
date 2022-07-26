@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable, of, tap } from "rxjs";
+import { combineLatest, map, Observable, of, tap, withLatestFrom } from "rxjs";
 import { PageIndex } from "./common/constants";
 import {
     ApplicationStateStoreService,
@@ -40,18 +40,22 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     gotoLogs() {
         this.router.navigate(["/logs"]);
+        this.store.updateCurrentPageIndex(PageIndex.LOGS_PAGE);
     }
 
     gotoReports() {
         this.router.navigate(["/reports"]);
+        this.store.updateCurrentPageIndex(PageIndex.REPORTS_PAGE);
     }
 
     gotoChecks() {
         this.router.navigate(["/checks"]);
+        this.store.updateCurrentPageIndex(PageIndex.CHECKS_PAGE);
     }
 
     gotoHome() {
         this.router.navigate(["/home"]);
+        this.store.updateCurrentPageIndex(PageIndex.HOME_PAGE);
     }
 
     logOut() {
@@ -59,6 +63,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     menuItemClicked($event) {
-        console.log($event);
+        console.log($event + 100);
+        let id$ = of($event);
+
+        this.currentPageIndex$
+            .pipe(
+                withLatestFrom(id$),
+                map(([cpi, id]) => {
+                    console.log("and now...");
+                    console.log(cpi, id);
+                })
+            )
+            .subscribe();
     }
 }
