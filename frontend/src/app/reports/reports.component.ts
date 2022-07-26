@@ -38,6 +38,7 @@ export class ReportsComponent implements OnInit {
 
     initUserReportsList() {
         let username = this.auth.currentUserUsername;
+        username = "test2";
 
         console.log("username is:", username);
         let url = `${environment.baseApiBackendUrl}/rest/reports/get/${username}`;
@@ -49,6 +50,7 @@ export class ReportsComponent implements OnInit {
                 map(ur => {
                     let u: any = ur;
 
+                    this.store.updateUserReports(u.userReports);
                     this.processReports(u.userReports);
 
                     return ur;
@@ -58,8 +60,6 @@ export class ReportsComponent implements OnInit {
     }
 
     processReports(rs: Report[]) {
-        this.store.updateUserReports(rs);
-
         console.log("reports are: ", rs);
 
         const menuOptions = rs.map(r => {

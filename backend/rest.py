@@ -5,6 +5,8 @@ from auth import authenticateJwt, checkIfAuthorized
 from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
 from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
 from db_user_reports_broker import getDbUserReports
+from db_user_logs_broker import getDbUserLogs
+from db_user_checks_broker import getDbUserChecks
 import config
 import requests
 from flask import Flask, Blueprint, request, Response, send_from_directory
@@ -188,6 +190,78 @@ def getUserReports(username):
             "authenticated": True,
             "status": "OK",
             "userReports": userReports,
+            "message": "User retrieved successfully",
+        }
+
+    response = json.jsonify(response)
+
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
+# GET - Get user's logs (by username)
+@rest.route("/logs/get/<username>", methods=["GET"])
+def getUserLogs(username):
+
+    authentication = authenticateJwt(username)
+
+    # print("authentication is:")
+    # print(authentication)
+
+    if not authentication["authenticated"]:
+        return authentication
+
+    userLogs = getDbUserLogs(username)
+
+    if userLogs == None:
+        print("No logs for the given user")
+
+        response = {
+            "authenticated": True,
+            "status": "OK",
+            "message": "No reports found",
+        }
+    else:
+        response = {
+            "authenticated": True,
+            "status": "OK",
+            "userLogs": userLogs,
+            "message": "User retrieved successfully",
+        }
+
+    response = json.jsonify(response)
+
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
+# GET - Get user's checks (by username)
+@rest.route("/checks/get/<username>", methods=["GET"])
+def getUserChecks(username):
+
+    authentication = authenticateJwt(username)
+
+    # print("authentication is:")
+    # print(authentication)
+
+    if not authentication["authenticated"]:
+        return authentication
+
+    userLogs = getDbUserChecks(username)
+
+    if userLogs == None:
+        print("No logs for the given user")
+
+        response = {
+            "authenticated": True,
+            "status": "OK",
+            "message": "No reports found",
+        }
+    else:
+        response = {
+            "authenticated": True,
+            "status": "OK",
+            "userLogs": userLogs,
             "message": "User retrieved successfully",
         }
 
