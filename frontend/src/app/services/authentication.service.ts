@@ -8,6 +8,8 @@ import { ApplicationStateStoreService, INITIAL_APPLICATION_STATE } from "./appli
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
+    currentUserUsername;
+
     constructor(public http: HttpClient, private store: ApplicationStateStoreService, private router: Router) {
         this.store.setState(INITIAL_APPLICATION_STATE);
 
@@ -37,6 +39,7 @@ export class AuthenticationService {
                     console.log("user from pipe map is:", user);
                     if (user.authenticated && user.token) {
                         localStorage.setItem(storedObjectName, JSON.stringify(user));
+                        this.currentUserUsername = u;
 
                         this.store.updateUsername(u);
                         this.store.updateIsSidenavOpened(true);

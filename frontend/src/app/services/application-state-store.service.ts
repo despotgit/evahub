@@ -83,6 +83,7 @@ export const INITIAL_USER_REPORTS_STATE = {
 export interface Check {
     checkUserId?: number;
     checkId?: number;
+    checkName?: string;
     checkContent?: string;
 }
 

@@ -7,6 +7,7 @@ import {
     EvahubSidenavMenuOption,
     Report
 } from "../services/application-state-store.service";
+import { AuthenticationService } from "../services/authentication.service";
 
 @Component({
     selector: "app-reports",
@@ -17,7 +18,11 @@ export class ReportsComponent implements OnInit {
     userReports$: Observable<Report[]> = this.store.userReports$;
     selectedUserReport$: Observable<Report> = this.store.selectedUserReport$;
 
-    constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {
+    constructor(
+        private store: ApplicationStateStoreService,
+        private httpClient: HttpClient,
+        private auth: AuthenticationService
+    ) {
         setTimeout(() => {
             this.store.updateIsSidenavOpened(true);
         }, 100);
@@ -32,8 +37,9 @@ export class ReportsComponent implements OnInit {
     }
 
     initUserReportsList() {
-        let username = "test2";
+        let username = this.auth.currentUserUsername;
 
+        console.log("username is:", username);
         let url = `${environment.baseApiBackendUrl}/rest/reports/get/${username}`;
         console.log("CHECKPOINT 1");
 

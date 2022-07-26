@@ -1,1 +1,14 @@
-<p>logs works!</p>
+<div
+    id="user-logs-wrapper"
+    *ngIf="{
+        selectedUserLog: selectedUserLog$ | async
+    } as asyncData"
+>
+    <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
+        <mat-grid-tile colspan="6">
+            <mat-card>
+                {{ asyncData.selectedUserLog.logContent }}
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
