@@ -214,6 +214,16 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.updateState("sidenav", "sidenavMenuOptions", sidenavMenuOptions);
     }
 
+    // LOGS:
+
+    updateUserLogs(ul: Log[]) {
+        this.updateState("userLogs", "userLogs", ul);
+    }
+
+    updateSelectedUserLog(sul: Log) {
+        this.updateState("userLogs", "selectedUserLog", sul);
+    }
+
     // REPORTS:
 
     updateUserReports(ur: Report[]) {
@@ -222,6 +232,16 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     updateSelectedUserReport(sur: Report) {
         this.updateState("userReports", "selectedUserReport", sur);
+    }
+
+    // CHECKS:
+
+    updateUserChecks(uc: Check[]) {
+        this.updateState("userChecks", "userChecks", uc);
+    }
+
+    updateSelectedUserCheck(suc: Check) {
+        this.updateState("userChecks", "selectedUserCheck", suc);
     }
 
     // APPLICATION STATE:

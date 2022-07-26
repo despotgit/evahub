@@ -76,13 +76,23 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.reportSelectedSub = this.currentPageIndex$
             .pipe(
                 withLatestFrom(documentId$, this.userReports$),
-                map(([cpi, documentId, reports]) => {
+                map(([cpi, documentId, docs]) => {
                     console.log("and now...");
                     console.log(cpi, documentId);
+
+                    let selectedDoc;
                     switch (cpi) {
                         case PageIndex.REPORTS_PAGE:
-                            const selectedRep = reports.filter(r => r.reportId == documentId);
-                            this.store.updateSelectedUserReport(selectedRep[0]);
+                            selectedDoc = docs.filter(d => d.reportId == documentId);
+                            this.store.updateSelectedUserReport(selectedDoc[0]);
+                            break;
+                        case PageIndex.LOGS_PAGE:
+                            selectedDoc = docs.filter(d => d.reportId == documentId);
+                            this.store.updateSelectedUserLog(selectedDoc[0]);
+                            break;
+                        case PageIndex.CHECKS_PAGE:
+                            selectedDoc = docs.filter(d => d.reportId == documentId);
+                            this.store.updateSelectedUserCheck(selectedDoc[0]);
                         //console.log("selectedRep is:", selectedRep);
                     }
                 })
