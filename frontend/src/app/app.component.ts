@@ -63,10 +63,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     menuItemClicked($event) {
-        console.log($event + 100);
         let id$ = of($event);
 
-        this.currentPageIndex$
+        let sub = this.currentPageIndex$
             .pipe(
                 withLatestFrom(id$),
                 map(([cpi, id]) => {
@@ -75,5 +74,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                 })
             )
             .subscribe();
+
+        sub.unsubscribe();
     }
 }
