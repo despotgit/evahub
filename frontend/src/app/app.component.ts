@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { map, Observable, of, Subscription, withLatestFrom } from "rxjs";
 import { PageIndex } from "./common/constants";
@@ -14,7 +14,8 @@ import { AuthenticationService } from "./services/authentication.service";
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.scss"]
+    styleUrls: ["./app.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, AfterViewInit {
     username$: Observable<string> = this.store.username$;

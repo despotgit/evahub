@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { PageIndex } from "../common/constants";
@@ -13,7 +13,8 @@ import { AuthenticationService } from "../services/authentication.service";
 @Component({
     selector: "app-reports",
     templateUrl: "./reports.component.html",
-    styleUrls: ["./reports.component.scss"]
+    styleUrls: ["./reports.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportsComponent implements OnInit {
     userReports$: Observable<Report[]> = this.store.userReports$;
