@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { combineLatest, map, Observable, of, Subscription, tap, withLatestFrom } from "rxjs";
+import { map, Observable, of, Subscription, withLatestFrom } from "rxjs";
 import { PageIndex } from "./common/constants";
 import {
     ApplicationStateStoreService,

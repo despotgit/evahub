@@ -190,7 +190,7 @@ def getUserReports(username):
             "authenticated": True,
             "status": "OK",
             "userReports": userReports,
-            "message": "User retrieved successfully",
+            "message": "Reports retrieved successfully",
         }
 
     response = json.jsonify(response)
@@ -226,7 +226,7 @@ def getUserLogs(username):
             "authenticated": True,
             "status": "OK",
             "userLogs": userLogs,
-            "message": "User retrieved successfully",
+            "message": "Logs retrieved successfully",
         }
 
     response = json.jsonify(response)
@@ -247,9 +247,9 @@ def getUserChecks(username):
     if not authentication["authenticated"]:
         return authentication
 
-    userLogs = getDbUserChecks(username)
+    userChecks = getDbUserChecks(username)
 
-    if userLogs == None:
+    if userChecks == None:
         print("No logs for the given user")
 
         response = {
@@ -261,8 +261,8 @@ def getUserChecks(username):
         response = {
             "authenticated": True,
             "status": "OK",
-            "userLogs": userLogs,
-            "message": "User retrieved successfully",
+            "userChecks": userChecks,
+            "message": "Checks retrieved successfully",
         }
 
     response = json.jsonify(response)

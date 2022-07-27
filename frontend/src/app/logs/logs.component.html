@@ -7,7 +7,11 @@
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
             <mat-card>
-                {{ asyncData.selectedUserLog.logContent }}
+                {{
+                    asyncData && asyncData.selectedUserLog && asyncData.selectedUserLog.logContent
+                        ? asyncData.selectedUserLog.logContent
+                        : ""
+                }}
             </mat-card>
         </mat-grid-tile>
     </mat-grid-list>

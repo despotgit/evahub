@@ -217,8 +217,8 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // LOGS:
 
-    updateUserLogs(ul: Log[]) {
-        this.updateState("userLogs", "userLogs", ul);
+    updateUserLogs(uls: Log[]) {
+        this.updateState("userLogs", "userLogs", uls);
     }
 
     updateSelectedUserLog(sul: Log) {
@@ -227,8 +227,8 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // REPORTS:
 
-    updateUserReports(ur: Report[]) {
-        this.updateState("userReports", "userReports", ur);
+    updateUserReports(urs: Report[]) {
+        this.updateState("userReports", "userReports", urs);
     }
 
     updateSelectedUserReport(sur: Report) {
@@ -237,8 +237,8 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // CHECKS:
 
-    updateUserChecks(uc: Check[]) {
-        this.updateState("userChecks", "userChecks", uc);
+    updateUserChecks(ucs: Check[]) {
+        this.updateState("userChecks", "userChecks", ucs);
     }
 
     updateSelectedUserCheck(suc: Check) {

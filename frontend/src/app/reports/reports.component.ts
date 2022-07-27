@@ -27,6 +27,8 @@ export class ReportsComponent implements OnInit {
         setTimeout(() => {
             this.store.updateIsSidenavOpened(true);
         }, 100);
+
+        this.ngOnInit();
     }
 
     ngOnInit(): void {
@@ -39,8 +41,7 @@ export class ReportsComponent implements OnInit {
     }
 
     initUserReportsList() {
-        let username = this.auth.currentUserUsername;
-        username = "test2";
+        let username = "test2";
 
         console.log("username is:", username);
         let url = `${environment.baseApiBackendUrl}/rest/reports/get/${username}`;
@@ -77,6 +78,8 @@ export class ReportsComponent implements OnInit {
         console.log("menuOptions is:", menuOptions);
 
         this.store.updateSidenavMenuOptions(menuOptions);
+
+        console.log("rs[0] is", rs[0]);
         this.store.updateSelectedUserReport(rs[0]);
     }
 }

@@ -17,19 +17,16 @@ def getDbUserLogs(username):
     return [
         {
             "logId": 1,
-            "logUserId": 1,
             "logContent": "aaa",
             "logName": "first log",
         },
         {
             "logId": 2,
-            "logUserId": 1,
             "logContent": "bbb",
             "logName": "second log",
         },
         {
             "logId": 3,
-            "logUserId": 1,
             "logContent": "ccc",
             "logName": "third log",
         },

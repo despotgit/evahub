@@ -29,7 +29,7 @@ export class LogsComponent implements OnInit {
         this.store.updateCurrentPageIndex(PageIndex.LOGS_PAGE);
     }
 
-    userReportSelected(logId: number) {
+    userLogSelected(logId: number) {
         console.log("doing something with", logId);
     }
 
@@ -71,6 +71,8 @@ export class LogsComponent implements OnInit {
         console.log("menuOptions is:", menuOptions);
 
         this.store.updateSidenavMenuOptions(menuOptions);
+
+        console.log("ls[0] is", ls[0]);
         this.store.updateSelectedUserLog(ls[0]);
     }
 }
