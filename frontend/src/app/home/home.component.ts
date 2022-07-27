@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { combineLatest, debounceTime, distinctUntilChanged, map, mergeMap, Observable, tap } from "rxjs";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
+import { PageIndex } from "../common/constants";
 
 @Component({
     selector: "app-home",
@@ -56,6 +57,7 @@ export class HomeComponent implements OnInit {
                 })
             )
             .subscribe();
+        this.store.updateCurrentPageIndex(PageIndex.HOME_PAGE);
     }
 
     doneStepper() {

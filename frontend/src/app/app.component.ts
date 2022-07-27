@@ -26,7 +26,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     userChecks$: Observable<Check[]> = this.store.userChecks$;
     userLogs$: Observable<Log[]> = this.store.userLogs$;
 
-    reportSelectedSub: Subscription;
+    docSelectedSub: Subscription;
+
+    currentPageIndex: number;
 
     @ViewChild("sidenav") sidenav;
 
@@ -48,22 +50,22 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     gotoLogs() {
         this.router.navigate(["/logs"]);
-        this.store.updateCurrentPageIndex(PageIndex.LOGS_PAGE);
+        this.updateCurrentPageIndex(PageIndex.LOGS_PAGE);
     }
 
     gotoReports() {
         this.router.navigate(["/reports"]);
-        this.store.updateCurrentPageIndex(PageIndex.REPORTS_PAGE);
+        this.updateCurrentPageIndex(PageIndex.REPORTS_PAGE);
     }
 
     gotoChecks() {
         this.router.navigate(["/checks"]);
-        this.store.updateCurrentPageIndex(PageIndex.CHECKS_PAGE);
+        this.updateCurrentPageIndex(PageIndex.CHECKS_PAGE);
     }
 
     gotoHome() {
         this.router.navigate(["/home"]);
-        this.store.updateCurrentPageIndex(PageIndex.HOME_PAGE);
+        this.updateCurrentPageIndex(PageIndex.HOME_PAGE);
     }
 
     logOut() {
@@ -73,9 +75,22 @@ export class AppComponent implements OnInit, AfterViewInit {
     menuItemClicked($event) {
         let documentId$ = of($event);
 
-        this.reportSelectedSub = this.currentPageIndex$
+        let currentlySelectedUserDocs$: Observable<any[]>;
+        switch (this.currentPageIndex) {
+            case PageIndex.REPORTS_PAGE:
+                currentlySelectedUserDocs$ = this.userReports$;
+                break;
+            case PageIndex.LOGS_PAGE:
+                currentlySelectedUserDocs$ = this.userLogs$;
+                break;
+            case PageIndex.CHECKS_PAGE:
+                currentlySelectedUserDocs$ = this.userChecks$;
+                break;
+        }
+
+        this.docSelectedSub = this.currentPageIndex$
             .pipe(
-                withLatestFrom(documentId$, this.userReports$),
+                withLatestFrom(documentId$, currentlySelectedUserDocs$),
                 map(([cpi, documentId, docs]) => {
                     console.log("and now...");
                     console.log(cpi, documentId);
@@ -87,20 +102,24 @@ export class AppComponent implements OnInit, AfterViewInit {
                             this.store.updateSelectedUserReport(selectedDoc[0]);
                             break;
                         case PageIndex.LOGS_PAGE:
-                            selectedDoc = docs.filter(d => d.reportId == documentId);
+                            selectedDoc = docs.filter(d => d.logId == documentId);
                             this.store.updateSelectedUserLog(selectedDoc[0]);
                             break;
                         case PageIndex.CHECKS_PAGE:
                             selectedDoc = docs.filter(d => d.reportId == documentId);
                             this.store.updateSelectedUserCheck(selectedDoc[0]);
-                        //console.log("selectedRep is:", selectedRep);
                     }
                 })
             )
             .subscribe();
     }
 
+    updateCurrentPageIndex(cpi: number) {
+        this.currentPageIndex = cpi;
+        this.store.updateCurrentPageIndex(cpi);
+    }
+
     ngOnDestroy() {
-        this.reportSelectedSub.unsubscribe();
+        this.docSelectedSub.unsubscribe();
     }
 }

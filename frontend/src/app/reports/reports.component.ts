@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { PageIndex } from "../common/constants";
 import {
     ApplicationStateStoreService,
     EvahubSidenavMenuOption,
@@ -30,6 +31,7 @@ export class ReportsComponent implements OnInit {
 
     ngOnInit(): void {
         this.initUserReportsList();
+        this.store.updateCurrentPageIndex(PageIndex.REPORTS_PAGE);
     }
 
     userReportSelected(reportId: number) {

@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
 import { first } from "rxjs/operators";
+import { PageIndex } from "../common/constants";
+import { ApplicationStateStoreService } from "../services/application-state-store.service";
 
 @Component({
     selector: "app-login",
@@ -20,7 +22,8 @@ export class LoginComponent implements OnInit, AfterViewChecked {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private store: ApplicationStateStoreService
     ) {
         this.loginForm = this.formBuilder.group({
             username: ["", Validators.required],
@@ -34,6 +37,8 @@ export class LoginComponent implements OnInit, AfterViewChecked {
             username: ["", Validators.required],
             password: ["", Validators.required]
         });
+
+        this.store.updateCurrentPageIndex(PageIndex.LOGIN_PAGE);
     }
 
     ngAfterViewChecked() {
