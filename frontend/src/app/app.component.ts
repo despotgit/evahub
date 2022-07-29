@@ -23,6 +23,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$;
     sidenavMenuOptions$: Observable<EvahubSidenavMenuOption[]> = this.store.sidenavMenuOptions$;
     currentPageIndex$: Observable<PageIndex> = this.store.currentPageIndex$;
+    currentPageIndexChanges$ = this.currentPageIndex$
+        .pipe(
+            map(a => {
+                console.log("catching a, a is:", a);
+                this.currentPageIndex = a;
+                return a;
+            })
+        )
+        .subscribe();
     userReports$: Observable<Report[]> = this.store.userReports$;
     userChecks$: Observable<Check[]> = this.store.userChecks$;
     userLogs$: Observable<Log[]> = this.store.userLogs$;

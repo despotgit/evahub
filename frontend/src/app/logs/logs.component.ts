@@ -25,6 +25,7 @@ export class LogsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log("in ngOnInit of Logs");
         this.initUserLogsList();
         this.store.updateCurrentPageIndex(PageIndex.LOGS_PAGE);
     }

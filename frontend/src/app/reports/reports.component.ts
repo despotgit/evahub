@@ -20,7 +20,7 @@ export class ReportsComponent implements OnInit {
     userReports$: Observable<Report[]> = this.store.userReports$;
     selectedUserReport$: Observable<Report> = this.store.selectedUserReport$.pipe(
         tap(a => {
-            console.log("in tap, a is:", a);
+            console.log("in tap in Reports, a is:", a);
         })
     );
 
@@ -33,6 +33,7 @@ export class ReportsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log("in ngOnInit of reports");
         this.initUserReportsList();
         this.store.updateCurrentPageIndex(PageIndex.REPORTS_PAGE);
     }
