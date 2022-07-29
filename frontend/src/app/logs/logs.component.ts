@@ -50,7 +50,7 @@ export class LogsComponent implements OnInit {
                 map(ur => {
                     let u: any = ur;
 
-                    this.store.updateUserReports(u.userReports);
+                    this.store.updateUserLogs(u.userLogs);
                     this.processLogs(u.userLogs);
 
                     return ur;

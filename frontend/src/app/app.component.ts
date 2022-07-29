@@ -67,23 +67,23 @@ export class AppComponent implements OnInit, AfterViewInit {
         console.log("in app in menuItemClicked");
         let documentId$ = of($event);
 
-        let currentlySelectedUserDocs$: Observable<any[]>;
+        let docs$: Observable<any[]>;
         console.log("this.currentPageIndex is:", this.currentPageIndex);
         switch (this.currentPageIndex) {
             case PageIndex.REPORTS_PAGE:
-                currentlySelectedUserDocs$ = this.userReports$;
+                docs$ = this.userReports$;
                 break;
             case PageIndex.LOGS_PAGE:
-                currentlySelectedUserDocs$ = this.userLogs$;
+                docs$ = this.userLogs$;
                 break;
             case PageIndex.CHECKS_PAGE:
-                currentlySelectedUserDocs$ = this.userChecks$;
+                docs$ = this.userChecks$;
                 break;
         }
 
         this.docSelectedSub = this.currentPageIndex$
             .pipe(
-                withLatestFrom(documentId$, currentlySelectedUserDocs$),
+                withLatestFrom(documentId$, docs$),
                 map(([cpi, documentId, docs]) => {
                     console.log("we are in docselected sub...");
                     console.log("cpi, documentId, docs are:", cpi, documentId, docs);
@@ -99,6 +99,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                             this.store.updateSelectedUserLog(selectedDoc[0]);
                             break;
                         case PageIndex.CHECKS_PAGE:
+                            break;
                         //selectedDoc = docs.filter(d => d.checkId == documentId);
                         //this.store.updateSelectedUserCheck(selectedDoc[0]);
                     }
