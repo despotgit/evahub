@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { map, Observable, of, Subscription, withLatestFrom } from "rxjs";
+import { map, Observable, of, shareReplay, Subscription, withLatestFrom, tap, share } from "rxjs";
 import { PageIndex, PageIndexDictionary } from "./common/constants";
 import {
     ApplicationStateStoreService,
@@ -78,17 +78,15 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         this.docSelectedSub = this.currentPageIndex$
             .pipe(
-                withLatestFrom(documentId$, currentlySelectedUserDocs$, this.userReports$),
-                map(([cpi, documentId, docs, rs]) => {
+                withLatestFrom(documentId$, currentlySelectedUserDocs$),
+                map(([cpi, documentId, docs]) => {
                     console.log("we are in docselected sub...");
-                    console.log("cpi, documentId, docs, and reports are:", cpi, documentId, docs, rs);
+                    console.log("cpi, documentId, docs are:", cpi, documentId, docs);
 
                     let selectedDoc;
                     switch (cpi) {
                         case PageIndex.REPORTS_PAGE:
                             selectedDoc = docs.filter(d => d.reportId == documentId);
-                            //console.log("docs are:", docs);
-                            //console.log("selectedDoc is:", selectedDoc);
                             this.store.updateSelectedUserReport(selectedDoc[0]);
                             break;
                         case PageIndex.LOGS_PAGE:
@@ -96,12 +94,14 @@ export class AppComponent implements OnInit, AfterViewInit {
                             this.store.updateSelectedUserLog(selectedDoc[0]);
                             break;
                         case PageIndex.CHECKS_PAGE:
-                            selectedDoc = docs.filter(d => d.checkId == documentId);
-                            this.store.updateSelectedUserCheck(selectedDoc[0]);
+                        //selectedDoc = docs.filter(d => d.checkId == documentId);
+                        //this.store.updateSelectedUserCheck(selectedDoc[0]);
                     }
                 })
             )
             .subscribe();
+
+        this.docSelectedSub.unsubscribe();
     }
 
     updateCurrentPageIndex(cpi: number) {
@@ -110,6 +110,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     ngOnDestroy() {
-        //this.docSelectedSub.unsubscribe();
+        this.docSelectedSub.unsubscribe();
     }
 }

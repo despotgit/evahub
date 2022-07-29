@@ -16,5 +16,6 @@ export const PageIndexDictionary = {
     login: PageIndex.LOGIN_PAGE,
     home: PageIndex.HOME_PAGE,
     logs: PageIndex.LOGS_PAGE,
+    reports: PageIndex.REPORTS_PAGE,
     checks: PageIndex.CHECKS_PAGE
 };
