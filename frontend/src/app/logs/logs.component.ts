@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { map, Observable } from "rxjs";
+import { map, tap, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { PageIndex } from "../common/constants";
 import {
@@ -16,7 +16,11 @@ import {
 })
 export class LogsComponent implements OnInit {
     userLogs$: Observable<Log[]> = this.store.userLogs$;
-    selectedUserLog$: Observable<Log> = this.store.selectedUserLog$;
+    selectedUserLog$: Observable<Log> = this.store.selectedUserLog$.pipe(
+        tap(a => {
+            console.log("in tap in Logs, a is:", a);
+        })
+    );
 
     constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {
         setTimeout(() => {
@@ -35,10 +39,9 @@ export class LogsComponent implements OnInit {
     }
 
     initUserLogsList() {
-        let username = "a";
-        username = "test2";
+        let username = "test2";
+
         let url = `${environment.baseApiBackendUrl}/rest/logs/get/${username}`;
-        console.log("CHECKPOINT 1");
 
         this.httpClient
             .get(url)
@@ -46,6 +49,7 @@ export class LogsComponent implements OnInit {
                 map(ur => {
                     let u: any = ur;
 
+                    this.store.updateUserReports(u.userReports);
                     this.processLogs(u.userLogs);
 
                     return ur;
@@ -55,8 +59,6 @@ export class LogsComponent implements OnInit {
     }
 
     processLogs(ls: Log[]) {
-        this.store.updateUserLogs(ls);
-
         console.log("logs are: ", ls);
 
         const menuOptions = ls.map(l => {
@@ -69,11 +71,11 @@ export class LogsComponent implements OnInit {
             //
         });
 
-        console.log("menuOptions is:", menuOptions);
+        //console.log("menuOptions is:", menuOptions);
 
         this.store.updateSidenavMenuOptions(menuOptions);
 
-        console.log("ls[0] is", ls[0]);
+        //console.log("ls[0] is", ls[0]);
         this.store.updateSelectedUserLog(ls[0]);
     }
 }

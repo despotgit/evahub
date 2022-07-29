@@ -28,8 +28,6 @@ export class ReportsComponent implements OnInit {
         setTimeout(() => {
             this.store.updateIsSidenavOpened(true);
         }, 100);
-
-        //this.ngOnInit();
     }
 
     ngOnInit(): void {

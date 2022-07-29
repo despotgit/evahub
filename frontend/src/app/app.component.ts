@@ -25,10 +25,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     currentPageIndex$: Observable<PageIndex> = this.store.currentPageIndex$;
     currentPageIndexChanges$ = this.currentPageIndex$
         .pipe(
-            map(a => {
+            tap(a => {
                 console.log("catching a, a is:", a);
                 this.currentPageIndex = a;
-                return a;
             })
         )
         .subscribe();
@@ -54,13 +53,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {}
 
-    ngAfterViewInit(): void {
-        //this.sidenav.close();
-    }
+    ngAfterViewInit(): void {}
 
     goTo(page) {
         this.router.navigate(["/" + page]);
-        //this.updateCurrentPageIndex(PageIndexDictionary[page]);
     }
 
     logOut() {
