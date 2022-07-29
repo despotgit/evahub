@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { map, tap, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { PageIndex } from "../common/constants";
@@ -12,7 +12,8 @@ import {
 @Component({
     selector: "app-logs",
     templateUrl: "./logs.component.html",
-    styleUrls: ["./logs.component.scss"]
+    styleUrls: ["./logs.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LogsComponent implements OnInit {
     userLogs$: Observable<Log[]> = this.store.userLogs$;
