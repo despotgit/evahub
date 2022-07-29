@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     goTo(page) {
         this.router.navigate(["/" + page]);
-        this.updateCurrentPageIndex(PageIndexDictionary[page]);
+        //this.updateCurrentPageIndex(PageIndexDictionary[page]);
     }
 
     logOut() {
@@ -120,5 +120,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     ngOnDestroy() {
         this.docSelectedSub.unsubscribe();
+        this.currentPageIndexChanges$.unsubscribe();
     }
 }
