@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { map, Observable, of, Subscription, withLatestFrom } from "rxjs";
-import { PageIndex } from "./common/constants";
+import { PageIndex, PageIndexDictionary } from "./common/constants";
 import {
     ApplicationStateStoreService,
     Check,
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     docSelectedSub: Subscription;
 
-    currentPageIndex: number;
+    currentPageIndex: number = PageIndex.NONE_PAGE;
 
     @ViewChild("sidenav") sidenav;
 
@@ -49,24 +49,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         //this.sidenav.close();
     }
 
-    gotoLogs() {
-        this.router.navigate(["/logs"]);
-        this.updateCurrentPageIndex(PageIndex.LOGS_PAGE);
-    }
-
-    gotoReports() {
-        this.router.navigate(["/reports"]);
-        this.updateCurrentPageIndex(PageIndex.REPORTS_PAGE);
-    }
-
-    gotoChecks() {
-        this.router.navigate(["/checks"]);
-        this.updateCurrentPageIndex(PageIndex.CHECKS_PAGE);
-    }
-
-    gotoHome() {
-        this.router.navigate(["/home"]);
-        this.updateCurrentPageIndex(PageIndex.HOME_PAGE);
+    goTo(page) {
+        this.router.navigate(["/" + page]);
+        this.updateCurrentPageIndex(PageIndexDictionary[page]);
     }
 
     logOut() {
@@ -74,9 +59,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     menuItemClicked($event) {
+        console.log("in app in menuItemClicked");
         let documentId$ = of($event);
 
         let currentlySelectedUserDocs$: Observable<any[]>;
+        console.log("this.currentPageIndex is:", this.currentPageIndex);
         switch (this.currentPageIndex) {
             case PageIndex.REPORTS_PAGE:
                 currentlySelectedUserDocs$ = this.userReports$;
@@ -91,15 +78,17 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         this.docSelectedSub = this.currentPageIndex$
             .pipe(
-                withLatestFrom(documentId$, currentlySelectedUserDocs$),
-                map(([cpi, documentId, docs]) => {
-                    console.log("and now...");
-                    console.log(cpi, documentId);
+                withLatestFrom(documentId$, currentlySelectedUserDocs$, this.userReports$),
+                map(([cpi, documentId, docs, rs]) => {
+                    console.log("we are in docselected sub...");
+                    console.log("cpi, documentId, docs, and reports are:", cpi, documentId, docs, rs);
 
                     let selectedDoc;
                     switch (cpi) {
                         case PageIndex.REPORTS_PAGE:
                             selectedDoc = docs.filter(d => d.reportId == documentId);
+                            //console.log("docs are:", docs);
+                            //console.log("selectedDoc is:", selectedDoc);
                             this.store.updateSelectedUserReport(selectedDoc[0]);
                             break;
                         case PageIndex.LOGS_PAGE:
@@ -107,7 +96,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                             this.store.updateSelectedUserLog(selectedDoc[0]);
                             break;
                         case PageIndex.CHECKS_PAGE:
-                            selectedDoc = docs.filter(d => d.reportId == documentId);
+                            selectedDoc = docs.filter(d => d.checkId == documentId);
                             this.store.updateSelectedUserCheck(selectedDoc[0]);
                     }
                 })
@@ -121,6 +110,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     ngOnDestroy() {
-        this.docSelectedSub.unsubscribe();
+        //this.docSelectedSub.unsubscribe();
     }
 }

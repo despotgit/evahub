@@ -8,7 +8,7 @@ import {
     EvahubSidenavMenuOption,
     Report
 } from "../services/application-state-store.service";
-import { AuthenticationService } from "../services/authentication.service";
+import { tap } from "rxjs";
 
 @Component({
     selector: "app-reports",
@@ -18,18 +18,18 @@ import { AuthenticationService } from "../services/authentication.service";
 })
 export class ReportsComponent implements OnInit {
     userReports$: Observable<Report[]> = this.store.userReports$;
-    selectedUserReport$: Observable<Report> = this.store.selectedUserReport$;
+    selectedUserReport$: Observable<Report> = this.store.selectedUserReport$.pipe(
+        tap(a => {
+            console.log("in tap, a is:", a);
+        })
+    );
 
-    constructor(
-        private store: ApplicationStateStoreService,
-        private httpClient: HttpClient,
-        private auth: AuthenticationService
-    ) {
+    constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {
         setTimeout(() => {
             this.store.updateIsSidenavOpened(true);
         }, 100);
 
-        this.ngOnInit();
+        //this.ngOnInit();
     }
 
     ngOnInit(): void {
@@ -44,9 +44,7 @@ export class ReportsComponent implements OnInit {
     initUserReportsList() {
         let username = "test2";
 
-        console.log("username is:", username);
         let url = `${environment.baseApiBackendUrl}/rest/reports/get/${username}`;
-        console.log("CHECKPOINT 1");
 
         this.httpClient
             .get(url)
@@ -76,11 +74,11 @@ export class ReportsComponent implements OnInit {
             //
         });
 
-        console.log("menuOptions is:", menuOptions);
+        //console.log("menuOptions is:", menuOptions);
 
         this.store.updateSidenavMenuOptions(menuOptions);
 
-        console.log("rs[0] is", rs[0]);
+        //console.log("rs[0] is", rs[0]);
         this.store.updateSelectedUserReport(rs[0]);
     }
 }

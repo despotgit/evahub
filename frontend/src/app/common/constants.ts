@@ -10,3 +10,11 @@ export const enum PageIndex {
     REPORTS_PAGE = 4,
     CHECKS_PAGE = 5
 }
+
+export const PageIndexDictionary = {
+    none: PageIndex.NONE_PAGE,
+    login: PageIndex.LOGIN_PAGE,
+    home: PageIndex.HOME_PAGE,
+    logs: PageIndex.LOGS_PAGE,
+    checks: PageIndex.CHECKS_PAGE
+};

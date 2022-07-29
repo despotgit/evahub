@@ -70,7 +70,14 @@ export interface UserReportsState {
 }
 
 export const INITIAL_USER_REPORTS_STATE = {
-    userReports: [],
+    userReports: [
+        {
+            reportUserId: 0,
+            reportId: 0,
+            reportName: "",
+            reportContent: ""
+        }
+    ],
     selectedUserReport: {
         reportUserId: 0,
         reportId: 0,
