@@ -1,6 +1,7 @@
 import time
 
 from db_config import getDb
+from db import getValuesFromDb
 
 db = getDb()
 
@@ -14,26 +15,23 @@ def getDbUserCheck(username, checkId):
 
 
 def getDbUserChecks(username):
-    return [
-        {
-            "checkId": 1,
-            "checkUserId": 1,
-            "checkContent": "ddd",
-            "checkName": "first check",
-        },
-        {
-            "checkId": 2,
-            "checkUserId": 1,
-            "checkContent": "eee",
-            "checkName": "second check",
-        },
-        {
-            "checkId": 3,
-            "checkUserId": 1,
-            "checkContent": "fff",
-            "checkName": "third check",
-        },
-    ]
+
+    results = getValuesFromDb(
+        "select check_id as checkId, user_id as checkUserId, check_name as checkName, check_content as checkContent from checks where check_username = '"
+        + str(username)
+        + "'"
+    )
+
+    print("results is:")
+    print(results)
+
+    toReturn = []
+    for r in results:
+        toReturn.append({"checkId": r[0], "checkName": r[2], "checkContent": r[3]})
+
+    print(toReturn)
+
+    return toReturn
 
 
 def updateDbUserCheck(username, checkId, checkContent):

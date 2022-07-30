@@ -85,8 +85,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             .pipe(
                 withLatestFrom(documentId$, docs$),
                 map(([cpi, documentId, docs]) => {
-                    console.log("we are in docselected sub...");
-                    console.log("cpi, documentId, docs are:", cpi, documentId, docs);
+                    //console.log("we are in docselected sub...");
+                    //console.log("cpi, documentId, docs are:", cpi, documentId, docs);
 
                     let selectedDoc;
                     switch (cpi) {
@@ -99,6 +99,9 @@ export class AppComponent implements OnInit, AfterViewInit {
                             this.store.updateSelectedUserLog(selectedDoc[0]);
                             break;
                         case PageIndex.CHECKS_PAGE:
+                            selectedDoc = docs.filter(d => d.checkId == documentId);
+                            this.store.updateSelectedUserCheck(selectedDoc[0]);
+
                             break;
                         //selectedDoc = docs.filter(d => d.checkId == documentId);
                         //this.store.updateSelectedUserCheck(selectedDoc[0]);

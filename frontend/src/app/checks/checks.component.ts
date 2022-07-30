@@ -1,22 +1,29 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { PageIndex } from "../common/constants";
 import {
     ApplicationStateStoreService,
+    Check,
     EvahubSidenavMenuOption,
-    Check
+    Report
 } from "../services/application-state-store.service";
+import { tap } from "rxjs";
 
 @Component({
     selector: "app-checks",
     templateUrl: "./checks.component.html",
-    styleUrls: ["./checks.component.scss"]
+    styleUrls: ["./checks.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChecksComponent implements OnInit {
     userChecks$: Observable<Check[]> = this.store.userChecks$;
-    selectedUserCheck$: Observable<Check> = this.store.selectedUserCheck$;
+    selectedUserChecks$: Observable<Check> = this.store.selectedUserCheck$.pipe(
+        tap(a => {
+            console.log("in tap in Checks, a is:", a);
+        })
+    );
 
     constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {
         setTimeout(() => {
@@ -25,7 +32,8 @@ export class ChecksComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.initUserLogsList();
+        console.log("in ngOnInit of checks");
+        this.initUserChecksList();
         this.store.updateCurrentPageIndex(PageIndex.CHECKS_PAGE);
     }
 
@@ -33,11 +41,10 @@ export class ChecksComponent implements OnInit {
         console.log("doing something with", checkId);
     }
 
-    initUserLogsList() {
-        let username = "a";
-        username = "test2";
+    initUserChecksList() {
+        let username = "test2";
+
         let url = `${environment.baseApiBackendUrl}/rest/checks/get/${username}`;
-        console.log("CHECKPOINT 1");
 
         this.httpClient
             .get(url)
@@ -45,6 +52,7 @@ export class ChecksComponent implements OnInit {
                 map(ur => {
                     let u: any = ur;
 
+                    this.store.updateUserChecks(u.userChecks);
                     this.processChecks(u.userChecks);
 
                     return ur;
@@ -54,23 +62,18 @@ export class ChecksComponent implements OnInit {
     }
 
     processChecks(cs: Check[]) {
-        this.store.updateUserChecks(cs);
-
         console.log("checks are: ", cs);
 
-        const menuOptions = cs.map(c => {
+        const menuOptions = cs.map(r => {
             let mo: EvahubSidenavMenuOption = {
-                id: c.checkId,
-                label: c.checkName
+                id: r.checkId,
+                label: r.checkName
             };
             return mo;
-
-            //
         });
 
-        console.log("menuOptions is:", menuOptions);
-
         this.store.updateSidenavMenuOptions(menuOptions);
+
         this.store.updateSelectedUserCheck(cs[0]);
     }
 }

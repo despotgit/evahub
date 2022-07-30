@@ -73,11 +73,8 @@ export class ReportsComponent implements OnInit {
             //
         });
 
-        //console.log("menuOptions is:", menuOptions);
-
         this.store.updateSidenavMenuOptions(menuOptions);
 
-        //console.log("rs[0] is", rs[0]);
         this.store.updateSelectedUserReport(rs[0]);
     }
 }
