@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { PageIndex } from "../common/constants";
 
 export interface ApplicationState {
@@ -130,6 +130,13 @@ export const INITIAL_USER_LOGS_STATE = {
     }
 };
 
+// General
+
+export interface EvahubDocument {
+    documentId: number;
+    document: Log | Check | Report;
+}
+
 // APP STATE:
 
 export const INITIAL_APPLICATION_STATE = {
@@ -148,29 +155,52 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // CURRENT USER
     username$: Observable<string> = this.select(state => state.currentUser.username);
     isloggedIn$: Observable<boolean> = this.select(state => state.currentUser.isLoggedIn);
-    currentPageIndex$: Observable<number> = this.select(state => state.currentUser.currentPageIndex);
+    currentPageIndex$: Observable<number> = this.select(
+        state => state.currentUser.currentPageIndex
+    );
 
     // HOMEPAGE
-    firstLastName$: Observable<string> = this.select(state => state.homepageData.firstLastName);
+    firstLastName$: Observable<string> = this.select(
+        state => state.homepageData.firstLastName
+    );
     address$: Observable<string> = this.select(state => state.homepageData.address);
 
     // SIDENAV
-    isSidenavOpened$: Observable<boolean> = this.select(state => state.sidenav.isSidenavOpened);
+    isSidenavOpened$: Observable<boolean> = this.select(
+        state => state.sidenav.isSidenavOpened
+    );
     sidenavMenuOptions$: Observable<EvahubSidenavMenuOption[]> = this.select(
         state => state.sidenav.sidenavMenuOptions
     );
 
     // REPORTS
-    userReports$: Observable<Report[]> = this.select(state => state.userReports.userReports);
-    selectedUserReport$: Observable<Report> = this.select(state => state.userReports.selectedUserReport);
+    userReports$: Observable<Report[]> = this.select(
+        state => state.userReports.userReports
+    );
+    selectedUserReport$: Observable<Report> = this.select(
+        state => state.userReports.selectedUserReport
+    );
 
     // LOGS
     userLogs$: Observable<Log[]> = this.select(state => state.userLogs.userLogs);
-    selectedUserLog$: Observable<Log> = this.select(state => state.userLogs.selectedUserLog);
+    selectedUserLog$: Observable<Log> = this.select(
+        state => state.userLogs.selectedUserLog
+    );
 
     // CHECKS
     userChecks$: Observable<Check[]> = this.select(state => state.userChecks.userChecks);
-    selectedUserCheck$: Observable<Check> = this.select(state => state.userChecks.selectedUserCheck);
+    selectedUserCheck$: Observable<Check> = this.select(
+        state => state.userChecks.selectedUserCheck
+    );
+
+    // General
+    selectedDocument$: Observable<any> = this.select(
+        this.currentPageIndex$,
+        this.userChecks$,
+        (a, b) => {
+            return a;
+        }
+    );
 
     constructor() {
         super();
