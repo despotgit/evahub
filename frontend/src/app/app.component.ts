@@ -1,4 +1,10 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+    ViewChild
+} from "@angular/core";
 import { Router } from "@angular/router";
 import { map, Observable, of, shareReplay, Subscription, withLatestFrom, tap, share } from "rxjs";
 import { PageIndex, PageIndexDictionary } from "./common/constants";
@@ -31,6 +37,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             })
         )
         .subscribe();
+    currentDocumentId$: Observable<number> = this.store.currentDocumentId$;
     userReports$: Observable<Report[]> = this.store.userReports$;
     userChecks$: Observable<Check[]> = this.store.userChecks$;
     userLogs$: Observable<Log[]> = this.store.userLogs$;
@@ -65,7 +72,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     menuItemClicked($event) {
         console.log("in app in menuItemClicked");
-        let documentId$ = of($event);
+
+        this.store.updateCurrentDocumentId($event);
 
         let docs$: Observable<any[]>;
         console.log("this.currentPageIndex is:", this.currentPageIndex);
@@ -83,7 +91,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         this.docSelectedSub = this.currentPageIndex$
             .pipe(
-                withLatestFrom(documentId$, docs$),
+                withLatestFrom(this.currentDocumentId$, docs$),
                 map(([cpi, documentId, docs]) => {
                     //console.log("we are in docselected sub...");
                     //console.log("cpi, documentId, docs are:", cpi, documentId, docs);

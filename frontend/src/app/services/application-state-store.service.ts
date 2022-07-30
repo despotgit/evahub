@@ -18,12 +18,14 @@ export interface UserState {
     username: string;
     isLoggedIn: boolean;
     currentPageIndex: PageIndex;
+    currentDocumentId: number;
 }
 
 export const INITIAL_USER_STATE = {
     username: "",
     isLoggedIn: false,
-    currentPageIndex: PageIndex.NONE_PAGE
+    currentPageIndex: PageIndex.NONE_PAGE,
+    currentDocumentId: 0
 };
 
 // HOMEPAGE
@@ -158,34 +160,29 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     currentPageIndex$: Observable<number> = this.select(
         state => state.currentUser.currentPageIndex
     );
+    currentDocumentId$: Observable<number> = this.select(
+        state => state.currentUser.currentDocumentId
+    );
 
     // HOMEPAGE
-    firstLastName$: Observable<string> = this.select(
-        state => state.homepageData.firstLastName
-    );
+    firstLastName$: Observable<string> = this.select(state => state.homepageData.firstLastName);
     address$: Observable<string> = this.select(state => state.homepageData.address);
 
     // SIDENAV
-    isSidenavOpened$: Observable<boolean> = this.select(
-        state => state.sidenav.isSidenavOpened
-    );
+    isSidenavOpened$: Observable<boolean> = this.select(state => state.sidenav.isSidenavOpened);
     sidenavMenuOptions$: Observable<EvahubSidenavMenuOption[]> = this.select(
         state => state.sidenav.sidenavMenuOptions
     );
 
     // REPORTS
-    userReports$: Observable<Report[]> = this.select(
-        state => state.userReports.userReports
-    );
+    userReports$: Observable<Report[]> = this.select(state => state.userReports.userReports);
     selectedUserReport$: Observable<Report> = this.select(
         state => state.userReports.selectedUserReport
     );
 
     // LOGS
     userLogs$: Observable<Log[]> = this.select(state => state.userLogs.userLogs);
-    selectedUserLog$: Observable<Log> = this.select(
-        state => state.userLogs.selectedUserLog
-    );
+    selectedUserLog$: Observable<Log> = this.select(state => state.userLogs.selectedUserLog);
 
     // CHECKS
     userChecks$: Observable<Check[]> = this.select(state => state.userChecks.userChecks);
@@ -196,9 +193,22 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // General
     selectedDocument$: Observable<any> = this.select(
         this.currentPageIndex$,
+        this.currentDocumentId$,
+        this.userLogs$,
+        this.userReports$,
         this.userChecks$,
-        (a, b) => {
-            return a;
+
+        (cpi, docId, ls, rs, cs) => {
+            switch (cpi) {
+                case PageIndex.LOGS_PAGE:
+                    return ls[docId];
+                case PageIndex.REPORTS_PAGE:
+                    return rs[docId];
+                case PageIndex.CHECKS_PAGE:
+                    return cs[docId];
+            }
+
+            return "nothing selected";
         }
     );
 
@@ -230,6 +240,10 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     updateCurrentPageIndex(currentPageIndex: number) {
         this.updateState("currentUser", "currentPageIndex", currentPageIndex);
+    }
+
+    updateCurrentDocumentId(id: number) {
+        this.updateState("currentUser", "currentDocumentId", id);
     }
 
     // HOMEPAGE:
