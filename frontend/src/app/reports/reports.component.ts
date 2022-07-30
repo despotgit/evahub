@@ -23,6 +23,7 @@ export class ReportsComponent implements OnInit {
             console.log("in tap in Reports, a is:", a);
         })
     );
+    selectedDocument$: Observable<any> = this.store.selectedDocument$;
 
     constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {
         setTimeout(() => {

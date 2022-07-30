@@ -205,7 +205,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
                 case PageIndex.REPORTS_PAGE:
                     return rs[docId];
                 case PageIndex.CHECKS_PAGE:
-                    return cs[docId];
+                    return rs[docId];
             }
 
             return "nothing selected";
