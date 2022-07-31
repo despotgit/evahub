@@ -14,12 +14,12 @@ import {
 import { tap } from "rxjs";
 
 @Component({
-    selector: "app-reports",
-    templateUrl: "./reports.component.html",
-    styleUrls: ["./reports.component.scss"],
+    selector: "app-evahub-documents",
+    templateUrl: "./evahub-documents.component.html",
+    styleUrls: ["./evahub-documents.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReportsComponent implements OnInit {
+export class EvahubDocumentsComponent implements OnInit {
     userReports$: Observable<Report[]> = this.store.userReports$;
     selectedUserReport$: Observable<Report> = this.store.selectedUserReport$.pipe(
         tap(a => {
@@ -60,7 +60,7 @@ export class ReportsComponent implements OnInit {
                         //const a = EvahubDocumentType[]
 
                         this.store.updateUserDocuments(u["user" + docType], u.userReports);
-                        this.processDocuments(u.userReports, docType);
+                        this.processDocuments(u.userReports, EvahubDocumentTypeDictionary[docType]);
 
                         return ud;
                     })

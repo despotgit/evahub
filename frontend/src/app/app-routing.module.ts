@@ -3,7 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "./guards/auth.guard";
 import { HomeComponent } from "./home/home.component";
 import { LoginComponent } from "./login/login.component";
-import { ReportsComponent } from "./reports/reports.component";
+import { EvahubDocumentsComponent } from "./documents/evahub-documents.component";
 
 const routes: Routes = [
     //{ path: "", redirectTo: "home", pathMatch: "full" },

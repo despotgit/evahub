@@ -11,6 +11,7 @@ import { PageIndex, PageIndexDictionary } from "./common/constants";
 import {
     ApplicationStateStoreService,
     Check,
+    EvahubDocumentType,
     EvahubSidenavMenuOption,
     Log,
     Report
@@ -100,15 +101,24 @@ export class AppComponent implements OnInit, AfterViewInit {
                     switch (cpi) {
                         case PageIndex.REPORTS_PAGE:
                             selectedDoc = docs.filter(d => d.reportId == documentId);
-                            this.store.updateSelectedUserDocumentCheck(selectedDoc[0]);
+                            this.store.updateSelectedUserDocument(
+                                EvahubDocumentType.EVAHUB_REPORT,
+                                selectedDoc[0]
+                            );
                             break;
                         case PageIndex.LOGS_PAGE:
                             selectedDoc = docs.filter(d => d.logId == documentId);
-                            this.store.updateSelectedUserLog(selectedDoc[0]);
+                            this.store.updateSelectedUserDocument(
+                                EvahubDocumentType.EVAHUB_LOG,
+                                selectedDoc[0]
+                            );
                             break;
                         case PageIndex.CHECKS_PAGE:
                             selectedDoc = docs.filter(d => d.checkId == documentId);
-                            this.store.updateSelectedUserCheck(selectedDoc[0]);
+                            this.store.updateSelectedUserDocument(
+                                EvahubDocumentType.EVAHUB_CHECK,
+                                selectedDoc[0]
+                            );
 
                             break;
                         //selectedDoc = docs.filter(d => d.checkId == documentId);

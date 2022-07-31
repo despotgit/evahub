@@ -10,9 +10,9 @@
         <span>EVAHUB</span>
 
         <button mat-button (click)="goTo('home')">Home</button>
-        <button mat-button (click)="goTo('logs')">Logs</button>
-        <button mat-button (click)="goTo('reports')">Reports</button>
-        <button mat-button (click)="goTo('checks')">Checks</button>
+        <button mat-button (click)="goTo('documents/logs')">Logs</button>
+        <button mat-button (click)="goTo('documents/reports')">Reports</button>
+        <button mat-button (click)="goTo('documents/checks')">Checks</button>
 
         <mat-icon
             *ngIf="asyncData.isLoggedIn"
@@ -29,7 +29,12 @@
         </button>
     </mat-toolbar>
     <mat-sidenav-container class="main-container">
-        <mat-sidenav class="main-sidenav" #sidenav mode="side" [(opened)]="asyncData.isSidenavOpened">
+        <mat-sidenav
+            class="main-sidenav"
+            #sidenav
+            mode="side"
+            [(opened)]="asyncData.isSidenavOpened"
+        >
             <evahub-sidenav
                 (emitItemClicked)="menuItemClicked($event)"
                 [menuOptions]="asyncData.menuOptions"
