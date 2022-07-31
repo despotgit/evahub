@@ -100,7 +100,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                     switch (cpi) {
                         case PageIndex.REPORTS_PAGE:
                             selectedDoc = docs.filter(d => d.reportId == documentId);
-                            this.store.updateSelectedUserReport(selectedDoc[0]);
+                            this.store.updateSelectedUserDocumentCheck(selectedDoc[0]);
                             break;
                         case PageIndex.LOGS_PAGE:
                             selectedDoc = docs.filter(d => d.logId == documentId);

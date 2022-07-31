@@ -5,6 +5,9 @@ import { environment } from "src/environments/environment";
 import { PageIndex } from "../common/constants";
 import {
     ApplicationStateStoreService,
+    EvahubDocument,
+    EvahubDocumentType,
+    EvahubDocumentTypeDictionary,
     EvahubSidenavMenuOption,
     Report
 } from "../services/application-state-store.service";
@@ -33,7 +36,8 @@ export class ReportsComponent implements OnInit {
 
     ngOnInit(): void {
         console.log("in ngOnInit of reports");
-        this.initUserReportsList();
+        this.initUserDocsList();
+
         this.store.updateCurrentPageIndex(PageIndex.REPORTS_PAGE);
     }
 
@@ -41,41 +45,45 @@ export class ReportsComponent implements OnInit {
         console.log("doing something with", reportId);
     }
 
-    initUserReportsList() {
-        let username = "test2";
+    initUserDocsList() {
+        for (let docType in ["log", "report", "check"]) {
+            let username = "test2";
 
-        let url = `${environment.baseApiBackendUrl}/rest/reports/get/${username}`;
+            let url = `${environment.baseApiBackendUrl}/rest/${docType}s/get/${username}`;
 
-        this.httpClient
-            .get(url)
-            .pipe(
-                map(ur => {
-                    let u: any = ur;
+            this.httpClient
+                .get(url)
+                .pipe(
+                    map(ud => {
+                        let u: any = ud;
 
-                    this.store.updateUserReports(u.userReports);
-                    this.processReports(u.userReports);
+                        //const a = EvahubDocumentType[]
 
-                    return ur;
-                })
-            )
-            .subscribe();
+                        this.store.updateUserDocuments(u["user" + docType], u.userReports);
+                        this.processDocuments(u.userReports, docType);
+
+                        return ud;
+                    })
+                )
+                .subscribe();
+        }
     }
 
-    processReports(rs: Report[]) {
-        console.log("reports are: ", rs);
+    initUserLogsList() {}
 
-        const menuOptions = rs.map(r => {
+    processDocuments(ds: EvahubDocument[], dt: EvahubDocumentType) {
+        console.log("docs are: ", ds);
+
+        const menuOptions = ds.map(r => {
             let mo: EvahubSidenavMenuOption = {
-                id: r.reportId,
-                label: r.reportName
+                id: r.getDocumentId(),
+                label: r.getDocumentName()
             };
             return mo;
-
-            //
         });
 
         this.store.updateSidenavMenuOptions(menuOptions);
 
-        this.store.updateSelectedUserReport(rs[0]);
+        this.store.updateSelectedUserDocument(dt, ds[0]);
     }
 }

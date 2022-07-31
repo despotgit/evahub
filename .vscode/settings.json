@@ -9,7 +9,7 @@
     "prettier.printWidth": 100,
     "prettier.tabWidth": 4,
     "editor.formatOnSave": true,
-    "editor.wordWrapColumn": 90,
+    "editor.wordWrapColumn": 95,
     "editor.wordWrap": "wordWrapColumn",
     "prettier.trailingComma": "none",
     "editor.tabSize": 2,

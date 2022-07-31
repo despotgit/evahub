@@ -1,19 +1,22 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ChecksComponent } from "./checks/checks.component";
 import { AuthGuard } from "./guards/auth.guard";
 import { HomeComponent } from "./home/home.component";
 import { LoginComponent } from "./login/login.component";
-import { LogsComponent } from "./logs/logs.component";
 import { ReportsComponent } from "./reports/reports.component";
 
 const routes: Routes = [
-    { path: "", redirectTo: "home", pathMatch: "full" },
-    { path: "login", component: LoginComponent },
-    { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
-    { path: "logs", component: LogsComponent, canActivate: [AuthGuard] },
-    { path: "checks", component: ChecksComponent, canActivate: [AuthGuard] },
-    { path: "reports", component: ReportsComponent, canActivate: [AuthGuard] },
+    //{ path: "", redirectTo: "home", pathMatch: "full" },
+    //{ path: "login", component: LoginComponent },
+    //{ path: "home", component: HomeComponent, canActivate: [AuthGuard] },
+    //{ path: "logs", component: LogsComponent, canActivate: [AuthGuard] },
+    //{ path: "checks", component: ChecksComponent, canActivate: [AuthGuard] },
+    //{ path: "reports", component: ReportsComponent, canActivate: [AuthGuard] },
+    {
+        path: "documents/:documentType",
+        component: EvahubDocumentsComponent,
+        canActivate: [AuthGuard]
+    },
     { path: "**", component: LoginComponent }
 ];
 

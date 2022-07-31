@@ -52,91 +52,128 @@ export const INITIAL_SIDENAV_STATE = {
     sidenavMenuOptions: []
 };
 
-export interface EvahubSidenavMenuOption {
+export class EvahubSidenavMenuOption {
     id: number;
     label?: string;
     action?: string;
 }
 
 // REPORTS:
-export interface Report {
+export class Report implements EvahubDocument {
     reportUserId?: number;
     reportId?: number;
     reportName?: string;
     reportContent?: string;
+
+    documentType: EvahubDocumentType = EvahubDocumentType.EVAHUB_REPORT;
+
+    getDocumentId() {
+        return this.reportId;
+    }
+
+    getDocumentName() {
+        return this.reportName;
+    }
+
+    getDocumentContent() {
+        return this.reportContent;
+    }
 }
 
-export interface UserReportsState {
+export class UserReportsState {
     userReports: Report[];
     selectedUserReport: Report;
 }
 
 export const INITIAL_USER_REPORTS_STATE = {
-    userReports: [
-        {
-            reportUserId: 0,
-            reportId: 0,
-            reportName: "",
-            reportContent: ""
-        }
-    ],
-    selectedUserReport: {
-        reportUserId: 0,
-        reportId: 0,
-        reportName: "",
-        reportContent: ""
-    }
+    userReports: [],
+    selectedUserReport: new Report()
 };
 
 // CHECKS:
-export interface Check {
+export class Check {
     checkUserId?: number;
     checkId?: number;
     checkName?: string;
     checkContent?: string;
+
+    documentType: EvahubDocumentType = EvahubDocumentType.EVAHUB_CHECK;
+
+    getDocumentId() {
+        return this.checkId;
+    }
+
+    getDocumentName() {
+        return this.checkName;
+    }
+
+    getDocumentContent() {
+        return this.checkContent;
+    }
 }
 
-export interface UserChecksState {
+export class UserChecksState {
     userChecks: Check[];
     selectedUserCheck: Check;
 }
 
 export const INITIAL_USER_CHECKS_STATE = {
     userChecks: [],
-    selectedUserCheck: {
-        checkUserId: 0,
-        checkId: 0,
-        checkContent: ""
-    }
+    selectedUserCheck: new Check()
 };
 
 // LOGS:
-export interface Log {
+export class Log implements EvahubDocument {
     logUserId?: number;
     logId?: number;
     logName?: string;
     logContent?: string;
+
+    documentType: EvahubDocumentType = EvahubDocumentType.EVAHUB_LOG;
+
+    getDocumentId() {
+        return this.logId;
+    }
+
+    getDocumentName() {
+        return this.logName;
+    }
+
+    getDocumentContent() {
+        return this.logContent;
+    }
 }
 
-export interface UserLogsState {
+export class UserLogsState {
     userLogs: Log[];
     selectedUserLog: Log;
 }
 
 export const INITIAL_USER_LOGS_STATE = {
     userLogs: [],
-    selectedUserLog: {
-        logUserId: 0,
-        logId: 0,
-        logContent: ""
-    }
+    selectedUserLog: new Log()
 };
 
 // General
 
+export const EvahubDocumentTypeDictionary = {
+    log: EvahubDocumentType.EVAHUB_LOG,
+    report: EvahubDocumentType.EVAHUB_REPORT,
+    check: EvahubDocumentType.EVAHUB_CHECK
+};
+
+export const enum EvahubDocumentType {
+    EVAHUB_LOG = 1,
+    EVAHUB_REPORT = 2,
+    EVAHUB_CHECK = 3
+}
+
 export interface EvahubDocument {
-    documentId: number;
-    document: Log | Check | Report;
+    documentType: EvahubDocumentType;
+
+    getDocumentId();
+    getDocumentName();
+    getDocumentContent();
 }
 
 // APP STATE:
@@ -205,7 +242,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
                 case PageIndex.REPORTS_PAGE:
                     return rs[docId];
                 case PageIndex.CHECKS_PAGE:
-                    return rs[docId];
+                    return cs[docId];
             }
 
             return "nothing selected";
@@ -266,34 +303,15 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.updateState("sidenav", "sidenavMenuOptions", sidenavMenuOptions);
     }
 
-    // LOGS:
+    // GENERAL:
 
-    updateUserLogs(uls: Log[]) {
-        this.updateState("userLogs", "userLogs", uls);
+    updateUserDocuments(documentType: string, documents: EvahubDocument) {
+        //
+        this.updateState("user" + documentType + "s", "user" + documentType + "s", documents);
     }
 
-    updateSelectedUserLog(sul: Log) {
-        this.updateState("userLogs", "selectedUserLog", sul);
-    }
-
-    // REPORTS:
-
-    updateUserReports(urs: Report[]) {
-        this.updateState("userReports", "userReports", urs);
-    }
-
-    updateSelectedUserReport(sur: Report) {
-        this.updateState("userReports", "selectedUserReport", sur);
-    }
-
-    // CHECKS:
-
-    updateUserChecks(ucs: Check[]) {
-        this.updateState("userChecks", "userChecks", ucs);
-    }
-
-    updateSelectedUserCheck(suc: Check) {
-        this.updateState("userChecks", "selectedUserCheck", suc);
+    updateSelectedUserDocument(documentType: EvahubDocumentType, doc: EvahubDocument) {
+        this.updateState("user" + documentType + "s", "selectedUserDocument", doc);
     }
 
     // APPLICATION STATE:
