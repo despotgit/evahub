@@ -5,10 +5,12 @@ import { environment } from "src/environments/environment";
 import { PageIndex } from "../common/constants";
 import {
     ApplicationStateStoreService,
+    Check,
     EvahubDocument,
     EvahubDocumentType,
     EvahubDocumentTypeDictionary,
     EvahubSidenavMenuOption,
+    Log,
     Report
 } from "../services/application-state-store.service";
 import { tap } from "rxjs";
@@ -35,7 +37,7 @@ export class EvahubDocumentsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log("in ngOnInit of reports");
+        console.log("in ngOnInit of documents");
         this.initUserDocsList();
 
         this.store.updateCurrentPageIndex(PageIndex.REPORTS_PAGE);
@@ -46,21 +48,28 @@ export class EvahubDocumentsComponent implements OnInit {
     }
 
     initUserDocsList() {
-        for (let docType in ["log", "report", "check"]) {
+        const docTypes = ["Log", "Report", "Check"];
+
+        for (let i = 0; i < docTypes.length; i++) {
+            let docType = docTypes[i];
+            let docTypeToLower = docType.toLowerCase();
+            console.log("docType is:", docType);
             let username = "test2";
 
-            let url = `${environment.baseApiBackendUrl}/rest/${docType}s/get/${username}`;
+            let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
 
             this.httpClient
                 .get(url)
                 .pipe(
                     map(ud => {
-                        let u: any = ud;
+                        console.log("ud is:", ud);
 
-                        //const a = EvahubDocumentType[]
+                        let ds = ud["user" + docType + "s"];
 
-                        this.store.updateUserDocuments(u["user" + docType], u.userReports);
-                        this.processDocuments(u.userReports, EvahubDocumentTypeDictionary[docType]);
+                        console.log("ds is:", ds);
+
+                        this.store.updateUserDocuments(docType, ds);
+                        this.processDocuments(ds, EvahubDocumentTypeDictionary[docTypeToLower]);
 
                         return ud;
                     })
@@ -71,13 +80,45 @@ export class EvahubDocumentsComponent implements OnInit {
 
     initUserLogsList() {}
 
-    processDocuments(ds: EvahubDocument[], dt: EvahubDocumentType) {
+    //processDocuments(ds: EvahubDocument[], dt: EvahubDocumentType) {
+    processDocuments(ds: any[], dt: EvahubDocumentType) {
         console.log("docs are: ", ds);
+        console.log("dt is: ", dt);
 
-        const menuOptions = ds.map(r => {
+        const menuOptions = ds.map(d => {
+            console.log("d is:", d);
+
+            let doc;
+            switch (dt) {
+                case EvahubDocumentType.EVAHUB_LOG:
+                    doc = new Log();
+
+                    console.log("keys are:");
+                    console.log(Object.keys(d));
+
+                    console.log("is a log");
+                    break;
+                case EvahubDocumentType.EVAHUB_REPORT:
+                    doc = new Report();
+                    console.log("is a report");
+                    break;
+                case EvahubDocumentType.EVAHUB_CHECK:
+                    doc = new Check();
+                    console.log("is a check");
+                    break;
+            }
+
+            Object.keys(d).forEach(p => {
+                //
+                doc[p] = d[p];
+            });
+
+            doc.documentType = dt;
+
+            //console.log();
             let mo: EvahubSidenavMenuOption = {
-                id: r.getDocumentId(),
-                label: r.getDocumentName()
+                id: doc.getDocumentId(),
+                label: doc.getDocumentName()
             };
             return mo;
         });

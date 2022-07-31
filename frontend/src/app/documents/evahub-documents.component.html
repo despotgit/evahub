@@ -1,0 +1,17 @@
+<div
+    id="user-reports-wrapper"
+    *ngIf="{
+        selectedUserDocument: selectedDocument$ | async
+    } as asyncData"
+>
+    <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
+        <mat-grid-tile colspan="6">
+            <mat-card>
+                <!--
+                {{ asyncData.selectedUserDocument.documentContent }}
+                -->
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+caruk
