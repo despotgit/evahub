@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { map, pipe, Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { PageIndex } from "../common/constants";
 import {
@@ -14,12 +14,6 @@ import {
     Report
 } from "../services/application-state-store.service";
 import { tap } from "rxjs";
-import { selectRouteParams } from "../common/router.selectors";
-import { createSelector } from "@ngrx/store";
-
-export const selectRouteParamsChange = createSelector(selectRouteParams, some => {
-    console.log(some);
-});
 
 @Component({
     selector: "app-evahub-documents",
@@ -68,7 +62,11 @@ export class EvahubDocumentsComponent implements OnInit {
                 .get(url)
                 .pipe(
                     map(ud => {
+                        console.log("ud is:", ud);
+
                         let ds = ud["user" + docType + "s"];
+
+                        console.log("ds is:", ds);
 
                         this.store.updateUserDocuments(docType, ds);
                         this.processDocuments(ds, EvahubDocumentTypeDictionary[docTypeToLower]);
@@ -82,21 +80,31 @@ export class EvahubDocumentsComponent implements OnInit {
 
     initUserLogsList() {}
 
+    //processDocuments(ds: EvahubDocument[], dt: EvahubDocumentType) {
     processDocuments(ds: any[], dt: EvahubDocumentType) {
+        console.log("docs are: ", ds);
+        console.log("dt is: ", dt);
+
         const menuOptions = ds.map(d => {
+            console.log("d is:", d);
+
             let doc;
             switch (dt) {
                 case EvahubDocumentType.EVAHUB_LOG:
                     doc = new Log();
 
+                    console.log("keys are:");
+                    console.log(Object.keys(d));
+
+                    console.log("is a log");
                     break;
                 case EvahubDocumentType.EVAHUB_REPORT:
                     doc = new Report();
-
+                    console.log("is a report");
                     break;
                 case EvahubDocumentType.EVAHUB_CHECK:
                     doc = new Check();
-
+                    console.log("is a check");
                     break;
             }
 
