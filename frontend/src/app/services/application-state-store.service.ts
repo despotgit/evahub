@@ -162,6 +162,12 @@ export const EvahubDocumentTypeDictionary = {
     check: EvahubDocumentType.EVAHUB_CHECK
 };
 
+export const EvahubDocumentTypeStringDictionary = {
+    log: "Log",
+    report: "Report",
+    check: "Check"
+};
+
 export const enum EvahubDocumentType {
     EVAHUB_LOG = 1,
     EVAHUB_REPORT = 2,
@@ -238,10 +244,15 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         (cpi, docId, ls, rs, cs) => {
             switch (cpi) {
                 case PageIndex.LOGS_PAGE:
+                    //console.log("d logs");
                     return ls[docId];
+
                 case PageIndex.REPORTS_PAGE:
+                    //console.log("d reports");
                     return rs[docId];
+
                 case PageIndex.CHECKS_PAGE:
+                    //console.log("d checks");
                     return cs[docId];
             }
 
@@ -310,7 +321,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.updateState("user" + documentType + "s", "user" + documentType + "s", documents);
     }
 
-    updateSelectedUserDocument(documentType: EvahubDocumentType, doc: EvahubDocument) {
+    updateSelectedUserDocument(documentType: string, doc: EvahubDocument) {
         this.updateState("user" + documentType + "s", "selectedUserDocument", doc);
     }
 

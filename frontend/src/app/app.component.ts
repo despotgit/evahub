@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -6,12 +7,16 @@ import {
     ViewChild
 } from "@angular/core";
 import { Router } from "@angular/router";
+
 import { map, Observable, of, shareReplay, Subscription, withLatestFrom, tap, share } from "rxjs";
+import { environment } from "src/environments/environment";
 import { PageIndex, PageIndexDictionary } from "./common/constants";
 import {
     ApplicationStateStoreService,
     Check,
+    EvahubDocument,
     EvahubDocumentType,
+    EvahubDocumentTypeDictionary,
     EvahubSidenavMenuOption,
     Log,
     Report
@@ -50,13 +55,16 @@ export class AppComponent implements OnInit, AfterViewInit {
     @ViewChild("sidenav") sidenav;
 
     title = "EVAHUB";
+    httpDocsCall: any;
 
     constructor(
         private router: Router,
         private store: ApplicationStateStoreService,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private httpClient: HttpClient
     ) {
         //
+        this.initUserDocsList();
     }
 
     ngOnInit(): void {}
@@ -64,16 +72,24 @@ export class AppComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {}
 
     goTo(isDocumentsPage, page) {
-        console.log("page is:", page);
+        console.log("in goto, page is:", page);
+        const pageToLower: string = page.toLowerCase();
+
+        let singularDocumentName = page.substring(0, page.length - 1);
+        console.log("singularDocumentname is:", singularDocumentName);
+
         let newPageIndex;
         if (isDocumentsPage) {
-            this.router.navigate(["/documents/" + page]);
-            newPageIndex = PageIndexDictionary[page];
+            this.router.navigate([
+                "/documents/" + pageToLower.substring(0, pageToLower.length - 1)
+            ]);
+            newPageIndex = PageIndexDictionary[pageToLower];
         } else {
-            this.router.navigate(["/" + page]);
-            newPageIndex = PageIndexDictionary[page];
+            this.router.navigate(["/" + pageToLower]);
+            newPageIndex = PageIndexDictionary[pageToLower];
         }
 
+        this.updateSelectedDocumentsStateFromApiCall(singularDocumentName);
         this.store.updateCurrentPageIndex(newPageIndex);
     }
 
@@ -111,24 +127,15 @@ export class AppComponent implements OnInit, AfterViewInit {
                     switch (cpi) {
                         case PageIndex.REPORTS_PAGE:
                             selectedDoc = docs.filter(d => d.reportId == documentId);
-                            this.store.updateSelectedUserDocument(
-                                EvahubDocumentType.EVAHUB_REPORT,
-                                selectedDoc[0]
-                            );
+                            this.store.updateSelectedUserDocument("Report", selectedDoc[0]);
                             break;
                         case PageIndex.LOGS_PAGE:
                             selectedDoc = docs.filter(d => d.logId == documentId);
-                            this.store.updateSelectedUserDocument(
-                                EvahubDocumentType.EVAHUB_LOG,
-                                selectedDoc[0]
-                            );
+                            this.store.updateSelectedUserDocument("Log", selectedDoc[0]);
                             break;
                         case PageIndex.CHECKS_PAGE:
                             selectedDoc = docs.filter(d => d.checkId == documentId);
-                            this.store.updateSelectedUserDocument(
-                                EvahubDocumentType.EVAHUB_CHECK,
-                                selectedDoc[0]
-                            );
+                            this.store.updateSelectedUserDocument("Check", selectedDoc[0]);
 
                             break;
                         //selectedDoc = docs.filter(d => d.checkId == documentId);
@@ -144,6 +151,91 @@ export class AppComponent implements OnInit, AfterViewInit {
     updateCurrentPageIndex(cpi: number) {
         this.currentPageIndex = cpi;
         this.store.updateCurrentPageIndex(cpi);
+    }
+
+    initUserDocsList() {
+        const docTypes = ["Log", "Report", "Check"];
+
+        for (let i = 0; i < docTypes.length; i++) {
+            let docType = docTypes[i];
+            this.updateSelectedDocumentsStateFromApiCall(docType);
+        }
+    }
+
+    // docType is document name as string, singular form
+    updateSelectedDocumentsStateFromApiCall(docType: string) {
+        console.log("in main function, docType is", docType);
+        let docTypeToLower = docType.toLowerCase();
+        //console.log("docType is:", docType);
+        let username = "test2";
+
+        let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
+
+        this.httpDocsCall = this.httpClient
+            .get(url)
+            .pipe(
+                map(ud => {
+                    console.log("in map, ud is:", ud);
+                    let ds = ud["user" + docType + "s"];
+
+                    this.store.updateUserDocuments(docType, ds);
+                    this.processDocuments(ds, docType);
+
+                    return ud;
+                }),
+                tap()
+            )
+            .subscribe();
+
+        //setTimeout(() => this.httpDocsCall.unsubscribe(), 1000);
+    }
+
+    processDocuments(ds: EvahubDocument[], dt: string) {
+        console.log("ds is:", ds);
+        console.log("dt is:", dt);
+
+        const dtToLower = dt.toLowerCase();
+        const menuOptions = ds.map(d => {
+            let doc;
+            switch (dtToLower) {
+                case "log":
+                    doc = new Log();
+
+                    //console.log("is a log");
+                    break;
+                case "report":
+                    doc = new Report();
+                    //console.log("is a report");
+                    break;
+                case "check":
+                    doc = new Check();
+                    //console.log("is a check");
+                    break;
+            }
+
+            Object.keys(d).forEach(p => {
+                //
+                doc[p] = d[p];
+            });
+
+            doc.documentType = EvahubDocumentTypeDictionary[dt];
+
+            console.log("doc is:", doc);
+            console.log("getDocumentId() is:", doc.getDocumentId());
+            console.log("getDocumentName() is:", doc.getDocumentName());
+
+            let mo: EvahubSidenavMenuOption = {
+                id: doc.getDocumentId(),
+                label: doc.getDocumentName()
+            };
+            return mo;
+        });
+
+        console.log("menuOptions are:", menuOptions);
+
+        this.store.updateSidenavMenuOptions(menuOptions);
+
+        this.store.updateSelectedUserDocument(dt, ds[0]);
     }
 
     ngOnDestroy() {

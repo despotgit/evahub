@@ -9,10 +9,10 @@
     <mat-toolbar>
         <span>EVAHUB</span>
 
-        <button mat-button (click)="goTo(false, 'home')">Home</button>
-        <button mat-button (click)="goTo(true, 'logs')">Logs</button>
-        <button mat-button (click)="goTo(true, 'reports')">Reports</button>
-        <button mat-button (click)="goTo(true, 'checks')">Checks</button>
+        <button mat-button (click)="goTo(false, 'Home')">Home</button>
+        <button mat-button (click)="goTo(true, 'Logs')">Logs</button>
+        <button mat-button (click)="goTo(true, 'Reports')">Reports</button>
+        <button mat-button (click)="goTo(true, 'Checks')">Checks</button>
 
         <mat-icon
             *ngIf="asyncData.isLoggedIn"
