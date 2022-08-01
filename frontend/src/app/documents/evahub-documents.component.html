@@ -1,14 +1,14 @@
 <div
-    id="user-reports-wrapper"
+    id="document-wrapper"
     *ngIf="{
-        selectedUserDocument: selectedDocument$ | async
+        selectedDocument: selectedDocument$ | async
     } as asyncData"
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
             <mat-card>
                 <!--
-                {{ asyncData.selectedUserDocument.documentContent }}
+                {{ asyncData.selectedDocument.documentContent }}
                 -->
             </mat-card>
         </mat-grid-tile>
