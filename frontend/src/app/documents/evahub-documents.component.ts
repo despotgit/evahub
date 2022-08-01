@@ -14,6 +14,7 @@ import {
     Report
 } from "../services/application-state-store.service";
 import { tap } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
     selector: "app-evahub-documents",
@@ -30,7 +31,11 @@ export class EvahubDocumentsComponent implements OnInit {
     );
     selectedDocument$: Observable<any> = this.store.selectedDocument$;
 
-    constructor(private store: ApplicationStateStoreService, private httpClient: HttpClient) {
+    constructor(
+        private store: ApplicationStateStoreService,
+        private httpClient: HttpClient,
+        private route: ActivatedRoute
+    ) {
         setTimeout(() => {
             this.store.updateIsSidenavOpened(true);
         }, 100);
@@ -41,6 +46,8 @@ export class EvahubDocumentsComponent implements OnInit {
         this.initUserDocsList();
 
         this.store.updateCurrentPageIndex(PageIndex.REPORTS_PAGE);
+
+        //console.log("snapshot is:", this.route.snapshot);
     }
 
     userReportSelected(reportId: number) {
@@ -53,7 +60,7 @@ export class EvahubDocumentsComponent implements OnInit {
         for (let i = 0; i < docTypes.length; i++) {
             let docType = docTypes[i];
             let docTypeToLower = docType.toLowerCase();
-            console.log("docType is:", docType);
+            //console.log("docType is:", docType);
             let username = "test2";
 
             let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
@@ -62,11 +69,7 @@ export class EvahubDocumentsComponent implements OnInit {
                 .get(url)
                 .pipe(
                     map(ud => {
-                        console.log("ud is:", ud);
-
                         let ds = ud["user" + docType + "s"];
-
-                        console.log("ds is:", ds);
 
                         this.store.updateUserDocuments(docType, ds);
                         this.processDocuments(ds, EvahubDocumentTypeDictionary[docTypeToLower]);
@@ -82,29 +85,26 @@ export class EvahubDocumentsComponent implements OnInit {
 
     //processDocuments(ds: EvahubDocument[], dt: EvahubDocumentType) {
     processDocuments(ds: any[], dt: EvahubDocumentType) {
-        console.log("docs are: ", ds);
-        console.log("dt is: ", dt);
+        //console.log("docs are: ", ds);
+        //console.log("dt is: ", dt);
 
         const menuOptions = ds.map(d => {
-            console.log("d is:", d);
+            //console.log("d is:", d);
 
             let doc;
             switch (dt) {
                 case EvahubDocumentType.EVAHUB_LOG:
                     doc = new Log();
 
-                    console.log("keys are:");
-                    console.log(Object.keys(d));
-
-                    console.log("is a log");
+                    //console.log("is a log");
                     break;
                 case EvahubDocumentType.EVAHUB_REPORT:
                     doc = new Report();
-                    console.log("is a report");
+                    //console.log("is a report");
                     break;
                 case EvahubDocumentType.EVAHUB_CHECK:
                     doc = new Check();
-                    console.log("is a check");
+                    //console.log("is a check");
                     break;
             }
 

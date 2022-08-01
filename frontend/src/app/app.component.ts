@@ -63,8 +63,18 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {}
 
-    goTo(page) {
-        this.router.navigate(["/" + page]);
+    goTo(isDocumentsPage, page) {
+        console.log("page is:", page);
+        let newPageIndex;
+        if (isDocumentsPage) {
+            this.router.navigate(["/documents/" + page]);
+            newPageIndex = PageIndexDictionary[page];
+        } else {
+            this.router.navigate(["/" + page]);
+            newPageIndex = PageIndexDictionary[page];
+        }
+
+        this.store.updateCurrentPageIndex(newPageIndex);
     }
 
     logOut() {
