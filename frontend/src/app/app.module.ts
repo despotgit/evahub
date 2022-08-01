@@ -12,6 +12,9 @@ import { EvahubDocumentsComponent } from "./documents/evahub-documents.component
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { IonicModule } from "@ionic/angular";
 import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.component";
+import { StoreRouterConnectingModule, routerReducer } from "@ngrx/router-store";
+import { StoreModule } from "@ngrx/store";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
     declarations: [
@@ -29,7 +32,14 @@ import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.componen
         FormsModule,
         ReactiveFormsModule,
         VladosMaterialModule,
-        IonicModule.forRoot()
+        IonicModule.forRoot(),
+        StoreRouterConnectingModule.forRoot(),
+        StoreModule.forRoot({
+            router: routerReducer
+        }),
+        RouterModule.forRoot([
+            // routes
+        ])
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
     bootstrap: [AppComponent],
