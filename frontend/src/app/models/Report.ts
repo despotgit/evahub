@@ -1,0 +1,23 @@
+import { EvahubDocument, EvahubDocumentType } from "./EvahubDocument";
+
+// REPORTS:
+export class Report implements EvahubDocument {
+    reportUserId?: number;
+    reportId?: number;
+    reportName?: string;
+    reportContent?: string;
+
+    documentType: EvahubDocumentType = EvahubDocumentType.EVAHUB_REPORT;
+
+    getDocumentId() {
+        return this.reportId;
+    }
+
+    getDocumentName() {
+        return this.reportName;
+    }
+
+    getDocumentContent() {
+        return this.reportContent;
+    }
+}

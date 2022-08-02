@@ -11,15 +11,14 @@ import { Router } from "@angular/router";
 import { map, Observable, of, shareReplay, Subscription, withLatestFrom, tap, share } from "rxjs";
 import { environment } from "src/environments/environment";
 import { PageIndex, PageIndexDictionary } from "./common/constants";
+import { Check } from "./models/Check";
+import { Log } from "./models/Log";
+import { Report } from "./models/Report";
 import {
     ApplicationStateStoreService,
-    Check,
-    EvahubDocument,
-    EvahubDocumentType,
     EvahubDocumentTypeDictionary,
-    EvahubSidenavMenuOption,
-    Log,
-    Report
+    EvahubDocumentTypeStringDictionary,
+    EvahubSidenavMenuOption
 } from "./services/application-state-store.service";
 import { AuthenticationService } from "./services/authentication.service";
 
@@ -89,7 +88,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             newPageIndex = PageIndexDictionary[pageToLower];
         }
 
-        this.updateSelectedDocumentsStateFromApiCall(singularDocumentName);
+        this.updateSelectedDocumentsStateFromApi(singularDocumentName);
         this.store.updateCurrentPageIndex(newPageIndex);
     }
 
@@ -120,26 +119,26 @@ export class AppComponent implements OnInit, AfterViewInit {
             .pipe(
                 withLatestFrom(this.currentDocumentId$, docs$),
                 map(([cpi, documentId, docs]) => {
-                    //console.log("we are in docselected sub...");
-                    //console.log("cpi, documentId, docs are:", cpi, documentId, docs);
+                    console.log("we are in docselected sub...");
+                    console.log("cpi, documentId, docs are:", cpi, documentId, docs);
 
-                    let selectedDoc;
+                    let sd;
                     switch (cpi) {
-                        case PageIndex.REPORTS_PAGE:
-                            selectedDoc = docs.filter(d => d.reportId == documentId);
-                            this.store.updateSelectedUserDocument("Report", selectedDoc[0]);
-                            break;
                         case PageIndex.LOGS_PAGE:
-                            selectedDoc = docs.filter(d => d.logId == documentId);
-                            this.store.updateSelectedUserDocument("Log", selectedDoc[0]);
+                            sd = docs.find(d => d.logId == documentId);
+                            this.store.updateSelectedUserDocument("Log", sd);
                             break;
+
+                        case PageIndex.REPORTS_PAGE:
+                            sd = docs.find(d => d.reportId == documentId);
+                            this.store.updateSelectedUserDocument("Report", sd);
+                            break;
+
                         case PageIndex.CHECKS_PAGE:
-                            selectedDoc = docs.filter(d => d.checkId == documentId);
-                            this.store.updateSelectedUserDocument("Check", selectedDoc[0]);
+                            sd = docs.find(d => d.checkId == documentId);
+                            this.store.updateSelectedUserDocument("Check", sd);
 
                             break;
-                        //selectedDoc = docs.filter(d => d.checkId == documentId);
-                        //this.store.updateSelectedUserCheck(selectedDoc[0]);
                     }
                 })
             )
@@ -158,13 +157,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         for (let i = 0; i < docTypes.length; i++) {
             let docType = docTypes[i];
-            this.updateSelectedDocumentsStateFromApiCall(docType);
+            this.updateSelectedDocumentsStateFromApi(docType);
         }
     }
 
     // docType is document name as string, singular form
-    updateSelectedDocumentsStateFromApiCall(docType: string) {
-        console.log("in main function, docType is", docType);
+    updateSelectedDocumentsStateFromApi(docType: string) {
         let docTypeToLower = docType.toLowerCase();
         //console.log("docType is:", docType);
         let username = "test2";
@@ -175,10 +173,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             .get(url)
             .pipe(
                 map(ud => {
-                    //console.log("in map, ud is:", ud);
                     let ds = ud["user" + docType + "s"];
 
-                    this.store.updateUserDocuments(docType, ds);
                     this.processDocuments(ds, docType);
 
                     return ud;
@@ -190,9 +186,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         //setTimeout(() => this.httpDocsCall.unsubscribe(), 1000);
     }
 
-    processDocuments(ds: EvahubDocument[], dt: string) {
+    processDocuments(ds: any[], dt: string) {
         //console.log("ds is:", ds);
         //console.log("dt is:", dt);
+        let docs = [];
 
         const dtToLower = dt.toLowerCase();
         const menuOptions = ds.map(d => {
@@ -200,7 +197,6 @@ export class AppComponent implements OnInit, AfterViewInit {
             switch (dtToLower) {
                 case "log":
                     doc = new Log();
-
                     //console.log("is a log");
                     break;
                 case "report":
@@ -214,15 +210,12 @@ export class AppComponent implements OnInit, AfterViewInit {
             }
 
             Object.keys(d).forEach(p => {
-                //
                 doc[p] = d[p];
             });
 
-            doc.documentType = EvahubDocumentTypeDictionary[dt];
+            doc.documentType = dtToLower;
 
-            //console.log("doc is:", doc);
-            //console.log("getDocumentId() is:", doc.getDocumentId());
-            //console.log("getDocumentName() is:", doc.getDocumentName());
+            docs.push(doc);
 
             let mo: EvahubSidenavMenuOption = {
                 id: doc.getDocumentId(),
@@ -231,11 +224,15 @@ export class AppComponent implements OnInit, AfterViewInit {
             return mo;
         });
 
-        console.log("menuOptions are:", menuOptions);
+        //console.log("menuOptions are:", menuOptions);
+
+        //console.log("almost there!!!", docs[0].getDocumentContent());
+
+        this.store.updateUserDocuments(dt, docs);
 
         this.store.updateSidenavMenuOptions(menuOptions);
 
-        this.store.updateSelectedUserDocument(dt, ds[0]);
+        this.store.updateSelectedUserDocument(dt, docs[0]);
     }
 
     ngOnDestroy() {

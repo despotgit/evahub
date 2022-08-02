@@ -1,8 +1,13 @@
-import { getInstructionStatements } from "@angular/compiler/src/render3/view/util";
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { tap, map, Observable } from "rxjs";
 import { PageIndex } from "../common/constants";
+import { Check } from "../models/Check";
+import { EvahubDocument, EvahubDocumentType } from "../models/EvahubDocument";
+export { EvahubDocument, EvahubDocumentType } from "../models/EvahubDocument";
+import { Log } from "../models/Log";
+import { Report } from "../models/Report";
+export { Report } from "../models/Report";
 
 export interface ApplicationState {
     currentUser: UserState;
@@ -43,28 +48,6 @@ export class EvahubSidenavMenuOption {
     action?: string;
 }
 
-// REPORTS:
-export class Report implements EvahubDocument {
-    reportUserId?: number;
-    reportId?: number;
-    reportName?: string;
-    reportContent?: string;
-
-    documentType: EvahubDocumentType = EvahubDocumentType.EVAHUB_REPORT;
-
-    getDocumentId() {
-        return this.reportId;
-    }
-
-    getDocumentName() {
-        return this.reportName;
-    }
-
-    getDocumentContent() {
-        return this.reportContent;
-    }
-}
-
 export class UserReportsState {
     userReports: Report[];
     selectedUserReport: Report;
@@ -75,28 +58,6 @@ export const INITIAL_USER_REPORTS_STATE = {
     selectedUserReport: new Report()
 };
 
-// CHECKS:
-export class Check {
-    checkUserId?: number;
-    checkId?: number;
-    checkName?: string;
-    checkContent?: string;
-
-    documentType: EvahubDocumentType = EvahubDocumentType.EVAHUB_CHECK;
-
-    getDocumentId() {
-        return this.checkId;
-    }
-
-    getDocumentName() {
-        return this.checkName;
-    }
-
-    getDocumentContent() {
-        return this.checkContent;
-    }
-}
-
 export class UserChecksState {
     userChecks: Check[];
     selectedUserCheck: Check;
@@ -106,28 +67,6 @@ export const INITIAL_USER_CHECKS_STATE = {
     userChecks: [],
     selectedUserCheck: new Check()
 };
-
-// LOGS:
-export class Log implements EvahubDocument {
-    logUserId?: number;
-    logId?: number;
-    logName?: string;
-    logContent?: string;
-
-    documentType: EvahubDocumentType = EvahubDocumentType.EVAHUB_LOG;
-
-    getDocumentId() {
-        return this.logId;
-    }
-
-    getDocumentName() {
-        return this.logName;
-    }
-
-    getDocumentContent() {
-        return this.logContent;
-    }
-}
 
 export class UserLogsState {
     userLogs: Log[];
@@ -147,8 +86,6 @@ export interface UserState {
     currentPageIndex: PageIndex;
     currentDocumentId: number;
 }
-
-//export const INITIAL_EMPTY_DOCUMENT: Log = new Log();
 
 export const INITIAL_USER_STATE = {
     username: "",
@@ -170,20 +107,6 @@ export const EvahubDocumentTypeStringDictionary = {
     report: "Report",
     check: "Check"
 };
-
-export const enum EvahubDocumentType {
-    EVAHUB_LOG = 1,
-    EVAHUB_REPORT = 2,
-    EVAHUB_CHECK = 3
-}
-
-export interface EvahubDocument {
-    documentType: EvahubDocumentType;
-
-    getDocumentId();
-    getDocumentName();
-    getDocumentContent();
-}
 
 // APP STATE:
 
@@ -237,7 +160,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     );
 
     // General
-    selectedDocument$: Observable<any> = this.select(
+    selectedDocument$: Observable<EvahubDocument> = this.select(
         this.currentPageIndex$,
         this.currentDocumentId$,
         this.userLogs$,
@@ -245,30 +168,44 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.userChecks$,
 
         (cpi, docId, ls, rs, cs) => {
-            switch (cpi) {
-                case PageIndex.LOGS_PAGE:
-                    console.log("d logs");
-                    return ls.find(l => l.logId == docId);
+            console.log("ZZZZ doing the old switcheroo, docId, and pageIndex is:", docId, cpi);
 
-                case PageIndex.REPORTS_PAGE:
-                    console.log("d reports");
-                    return rs.find(r => r.reportId == docId);
+            console.log("reports are:", rs);
 
-                case PageIndex.CHECKS_PAGE:
-                    console.log("d checks");
-                    return cs.find(c => c.checkId == docId);
-            }
+            const sr = rs.find(r => r.reportId == docId);
+            console.log("sr is:", sr);
+            try {
+                console.log("sr.getDocumentContent() is:", sr.getDocumentContent());
+            } catch (e) {}
+            //return sr;
 
-            return "nothing selected";
+            if (true)
+                switch (cpi) {
+                    case PageIndex.LOGS_PAGE:
+                        const sl = ls.find(l => l.logId == docId);
+                        console.log("d logs, sl is:", sl);
+                        return sl;
+
+                    case PageIndex.REPORTS_PAGE:
+                        const sr = rs.find(r => r.reportId == docId);
+                        console.log("d reports, sr is:", sr);
+                        return sr;
+
+                    case PageIndex.CHECKS_PAGE:
+                        const sc = cs.find(c => c.checkId == docId);
+                        console.log("d checks, sc is:", sc);
+                        return sc;
+                }
+
+            return new Log();
         }
     );
-    selectedDocumentChange$ = this.selectedDocument$
-        .pipe(
-            tap(a => {
-                console.log("and a is:", a);
-            })
-        )
-        .subscribe();
+    selectedDocumentChange$ = this.selectedDocument$.pipe(
+        tap(a => {
+            console.log("and a is:", a);
+        })
+    );
+    //.subscribe();
 
     constructor() {
         super();
@@ -326,14 +263,13 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // GENERAL:
 
-    updateUserDocuments(documentType: string, documents: EvahubDocument) {
-        //
+    updateUserDocuments(documentType: string, documents: any[]) {
         this.updateState("user" + documentType + "s", "user" + documentType + "s", documents);
     }
 
     updateSelectedUserDocument(documentType: string, doc: EvahubDocument) {
-        //const typ = "user" + documentType + "s";
-        //console.log("typ is:", typ);
+        const typ = "user" + documentType + "s";
+        console.log("typ is:", typ);
 
         this.updateState("user" + documentType + "s", "selectedUserDocument", doc);
     }

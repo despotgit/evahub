@@ -31,6 +31,7 @@ import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.componen
         VladosMaterialModule,
         IonicModule.forRoot()
     ],
+
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
