@@ -72,11 +72,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {}
 
     goTo(isDocumentsPage, page) {
-        console.log("in goto, page is:", page);
+        //console.log("in goto, page is:", page);
         const pageToLower: string = page.toLowerCase();
 
         let singularDocumentName = page.substring(0, page.length - 1);
-        console.log("singularDocumentname is:", singularDocumentName);
+        //console.log("singularDocumentname is:", singularDocumentName);
 
         let newPageIndex;
         if (isDocumentsPage) {
@@ -98,12 +98,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     menuItemClicked($event) {
-        console.log("in app in menuItemClicked");
+        console.log("in app in menuItemClicked, $event is:", $event);
 
         this.store.updateCurrentDocumentId($event);
 
         let docs$: Observable<any[]>;
-        console.log("this.currentPageIndex is:", this.currentPageIndex);
+        //console.log("this.currentPageIndex is:", this.currentPageIndex);
         switch (this.currentPageIndex) {
             case PageIndex.REPORTS_PAGE:
                 docs$ = this.userReports$;
@@ -175,7 +175,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             .get(url)
             .pipe(
                 map(ud => {
-                    console.log("in map, ud is:", ud);
+                    //console.log("in map, ud is:", ud);
                     let ds = ud["user" + docType + "s"];
 
                     this.store.updateUserDocuments(docType, ds);
@@ -191,8 +191,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     processDocuments(ds: EvahubDocument[], dt: string) {
-        console.log("ds is:", ds);
-        console.log("dt is:", dt);
+        //console.log("ds is:", ds);
+        //console.log("dt is:", dt);
 
         const dtToLower = dt.toLowerCase();
         const menuOptions = ds.map(d => {
@@ -220,9 +220,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
             doc.documentType = EvahubDocumentTypeDictionary[dt];
 
-            console.log("doc is:", doc);
-            console.log("getDocumentId() is:", doc.getDocumentId());
-            console.log("getDocumentName() is:", doc.getDocumentName());
+            //console.log("doc is:", doc);
+            //console.log("getDocumentId() is:", doc.getDocumentId());
+            //console.log("getDocumentName() is:", doc.getDocumentName());
 
             let mo: EvahubSidenavMenuOption = {
                 id: doc.getDocumentId(),

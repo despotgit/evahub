@@ -29,11 +29,14 @@ export class EvahubDocumentsComponent implements OnInit {
             console.log("in tap in documents, selected user report is:", a);
         })
     );
-    selectedDocument$: Observable<any> = this.store.selectedDocument$.pipe(
-        tap(a => {
-            console.log("in tap in documents, a is:", a);
+    selectedDocument$: Observable<EvahubDocument> = this.store.selectedDocument$.pipe(
+        map(a => {
+            console.log("in selectedDocument$ in documents component, a is:", a);
+            console.log("getContent is:", a.getDocumentContent());
+            return a;
         })
     );
+
     currentPageIndex$: Observable<any> = this.store.currentPageIndex$;
 
     httpDocsCall: any;

@@ -1,6 +1,7 @@
+import { getInstructionStatements } from "@angular/compiler/src/render3/view/util";
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
-import { map, Observable } from "rxjs";
+import { tap, map, Observable } from "rxjs";
 import { PageIndex } from "../common/constants";
 
 export interface ApplicationState {
@@ -11,22 +12,6 @@ export interface ApplicationState {
     userChecks: UserChecksState;
     sidenav: SidenavState;
 }
-
-// USER
-
-export interface UserState {
-    username: string;
-    isLoggedIn: boolean;
-    currentPageIndex: PageIndex;
-    currentDocumentId: number;
-}
-
-export const INITIAL_USER_STATE = {
-    username: "",
-    isLoggedIn: false,
-    currentPageIndex: PageIndex.NONE_PAGE,
-    currentDocumentId: 0
-};
 
 // HOMEPAGE
 
@@ -154,6 +139,24 @@ export const INITIAL_USER_LOGS_STATE = {
     selectedUserLog: new Log()
 };
 
+// USER
+
+export interface UserState {
+    username: string;
+    isLoggedIn: boolean;
+    currentPageIndex: PageIndex;
+    currentDocumentId: number;
+}
+
+//export const INITIAL_EMPTY_DOCUMENT: Log = new Log();
+
+export const INITIAL_USER_STATE = {
+    username: "",
+    isLoggedIn: false,
+    currentPageIndex: PageIndex.NONE_PAGE,
+    currentDocumentId: 0
+};
+
 // General
 
 export const EvahubDocumentTypeDictionary = {
@@ -244,21 +247,28 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         (cpi, docId, ls, rs, cs) => {
             switch (cpi) {
                 case PageIndex.LOGS_PAGE:
-                    //console.log("d logs");
-                    return ls[docId];
+                    console.log("d logs");
+                    return ls.find(l => l.logId == docId);
 
                 case PageIndex.REPORTS_PAGE:
-                    //console.log("d reports");
-                    return rs[docId];
+                    console.log("d reports");
+                    return rs.find(r => r.reportId == docId);
 
                 case PageIndex.CHECKS_PAGE:
-                    //console.log("d checks");
-                    return cs[docId];
+                    console.log("d checks");
+                    return cs.find(c => c.checkId == docId);
             }
 
             return "nothing selected";
         }
     );
+    selectedDocumentChange$ = this.selectedDocument$
+        .pipe(
+            tap(a => {
+                console.log("and a is:", a);
+            })
+        )
+        .subscribe();
 
     constructor() {
         super();
@@ -322,6 +332,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     }
 
     updateSelectedUserDocument(documentType: string, doc: EvahubDocument) {
+        //const typ = "user" + documentType + "s";
+        //console.log("typ is:", typ);
+
         this.updateState("user" + documentType + "s", "selectedUserDocument", doc);
     }
 
