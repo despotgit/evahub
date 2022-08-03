@@ -12,12 +12,11 @@ import { map, Observable, of, shareReplay, Subscription, withLatestFrom, tap, sh
 import { environment } from "src/environments/environment";
 import { PageIndex, PageIndexDictionary } from "./common/constants";
 import { Check } from "./models/Check";
+import { EvahubDocumentTypeDictionary } from "./models/EvahubDocument";
 import { Log } from "./models/Log";
 import { Report } from "./models/Report";
 import {
     ApplicationStateStoreService,
-    EvahubDocumentTypeDictionary,
-    EvahubDocumentTypeStringDictionary,
     EvahubSidenavMenuOption
 } from "./services/application-state-store.service";
 import { AuthenticationService } from "./services/authentication.service";
@@ -213,7 +212,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                 doc[p] = d[p];
             });
 
-            doc.documentType = dtToLower;
+            doc.documentType = EvahubDocumentTypeDictionary[dtToLower];
 
             docs.push(doc);
 

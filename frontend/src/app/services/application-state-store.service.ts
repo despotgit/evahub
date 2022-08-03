@@ -94,20 +94,6 @@ export const INITIAL_USER_STATE = {
     currentDocumentId: 0
 };
 
-// General
-
-export const EvahubDocumentTypeDictionary = {
-    log: EvahubDocumentType.EVAHUB_LOG,
-    report: EvahubDocumentType.EVAHUB_REPORT,
-    check: EvahubDocumentType.EVAHUB_CHECK
-};
-
-export const EvahubDocumentTypeStringDictionary = {
-    log: "Log",
-    report: "Report",
-    check: "Check"
-};
-
 // APP STATE:
 
 export const INITIAL_APPLICATION_STATE = {
@@ -257,7 +243,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     updateSelectedUserDocument(documentType: string, doc: EvahubDocument) {
         const typ = "user" + documentType + "s";
-        console.log("typ is:", typ);
+        //console.log("typ is:", typ);
 
         this.updateState("user" + documentType + "s", "selectedUserDocument", doc);
     }

@@ -18,6 +18,13 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class EvahubDocumentsComponent implements OnInit {
     selectedDocument$ = this.store.selectedDocument$;
+    selectedDocumentChange$ = this.selectedDocument$
+        .pipe(
+            map(sd => {
+                console.log("sd is:", sd);
+            })
+        )
+        .subscribe();
 
     constructor(private store: ApplicationStateStoreService) {
         setTimeout(() => {

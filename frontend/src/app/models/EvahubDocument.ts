@@ -11,3 +11,15 @@ export interface EvahubDocument {
     getDocumentName();
     getDocumentContent();
 }
+
+export const EvahubDocumentTypeDictionary = {
+    log: EvahubDocumentType.EVAHUB_LOG,
+    report: EvahubDocumentType.EVAHUB_REPORT,
+    check: EvahubDocumentType.EVAHUB_CHECK
+};
+
+export const EvahubDocumentTypeStringDictionary = {
+    log: "Log",
+    report: "Report",
+    check: "Check"
+};
