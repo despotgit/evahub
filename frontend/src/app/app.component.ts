@@ -112,9 +112,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     goTo(isDocumentsPage, page) {
         const pageToLower: string = page.toLowerCase();
 
-        let singularDocumentTypeName: string = page.substring(0, page.length - 1);
-        //console.log("singularDocumentname is:", singularDocumentName);
-
         let newPageIndex;
         if (isDocumentsPage) {
             this.router.navigate(["/documents/" + pageToLower]);
@@ -133,9 +130,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     menuItemClicked($event) {
         console.log("in app in menuItemClicked, $event is:", $event);
-
         this.store.updateCurrentDocumentId($event);
-
         return;
     }
 
