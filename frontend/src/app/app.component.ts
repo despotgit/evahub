@@ -76,7 +76,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         map(cds => {
             let d = cds[0];
             if (d !== undefined) {
-                console.log("first's getDocumentId is:", d.getDocumentId());
+                //console.log("first's getDocumentId is:", d.getDocumentId());
                 this.store.updateCurrentDocumentId(d.getDocumentId());
             }
 
@@ -128,7 +128,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     menuItemClicked($event) {
-        console.log("in app in menuItemClicked, $event is:", $event);
+        //console.log("in app in menuItemClicked, $event is:", $event);
         this.store.updateCurrentDocumentId($event);
         return;
     }

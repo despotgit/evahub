@@ -4,11 +4,18 @@ import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { storedObjectName, loginTokenExpiryTime } from "../common/constants";
 import { Router } from "@angular/router";
-import { ApplicationStateStoreService, INITIAL_APPLICATION_STATE } from "./application-state-store.service";
+import {
+    ApplicationStateStoreService,
+    INITIAL_APPLICATION_STATE
+} from "./application-state-store.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
-    constructor(public http: HttpClient, private store: ApplicationStateStoreService, private router: Router) {
+    constructor(
+        public http: HttpClient,
+        private store: ApplicationStateStoreService,
+        private router: Router
+    ) {
         this.store.setState(INITIAL_APPLICATION_STATE);
 
         let cu = localStorage.getItem(storedObjectName);
@@ -34,7 +41,7 @@ export class AuthenticationService {
             })
             .pipe(
                 map(user => {
-                    console.log("user from pipe map is:", user);
+                    //console.log("user from pipe map is:", user);
                     if (user.authenticated && user.token) {
                         localStorage.setItem(storedObjectName, JSON.stringify(user));
 

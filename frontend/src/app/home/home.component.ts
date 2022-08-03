@@ -1,6 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { combineLatest, debounceTime, distinctUntilChanged, map, mergeMap, Observable, tap } from "rxjs";
+import {
+    combineLatest,
+    debounceTime,
+    distinctUntilChanged,
+    map,
+    mergeMap,
+    Observable,
+    tap
+} from "rxjs";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { PageIndex } from "../common/constants";
@@ -43,9 +51,11 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const firstLastNameEvents: Observable<any> =
-            this.step1FormGroup.get("firstLastNameFormControl").valueChanges;
-        const addressEvents: Observable<any> = this.step2FormGroup.get("addressFormControl").valueChanges;
+        const firstLastNameEvents: Observable<any> = this.step1FormGroup.get(
+            "firstLastNameFormControl"
+        ).valueChanges;
+        const addressEvents: Observable<any> =
+            this.step2FormGroup.get("addressFormControl").valueChanges;
 
         combineLatest([firstLastNameEvents, addressEvents])
             .pipe(
@@ -65,6 +75,6 @@ export class HomeComponent implements OnInit {
     }
 
     onChangeFirstLastName($event: any) {
-        console.log("event is:", $event);
+        //console.log("event is:", $event);
     }
 }

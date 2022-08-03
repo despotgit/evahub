@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
         if (this.authenticationService.validateLoginToken()) {
             return true;
         } else {
-            console.log("in false branch");
+            //console.log("in false branch");
             this.router.navigate(["/login"], {
                 queryParams: { returnUrl: state.url }
             });
