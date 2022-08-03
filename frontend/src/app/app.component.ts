@@ -8,7 +8,17 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { map, Observable, of, shareReplay, Subscription, withLatestFrom, tap, share } from "rxjs";
+import {
+    map,
+    switchMap,
+    Observable,
+    of,
+    shareReplay,
+    Subscription,
+    withLatestFrom,
+    tap,
+    share
+} from "rxjs";
 import { environment } from "src/environments/environment";
 import { PageIndex, PageIndexDictionary } from "./common/constants";
 import { Check } from "./models/Check";
@@ -32,6 +42,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     isLoggedIn$: Observable<boolean> = this.store.isloggedIn$;
     isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$;
     sidenavMenuOptions$: Observable<EvahubSidenavMenuOption[]> = this.store.sidenavMenuOptions$;
+    userReports$: Observable<Report[]> = this.store.userReports$;
+    userChecks$: Observable<Check[]> = this.store.userChecks$;
+    userLogs$: Observable<Log[]> = this.store.userLogs$;
     currentPageIndex$: Observable<PageIndex> = this.store.currentPageIndex$;
     currentPageIndexChanges$ = this.currentPageIndex$
         .pipe(
@@ -42,10 +55,29 @@ export class AppComponent implements OnInit, AfterViewInit {
             })
         )
         .subscribe();
+    currentDocumentSet$ = this.currentPageIndex$.pipe(
+        switchMap(cpi => {
+            console.log("aaaaaaand the winner is....");
+            switch (cpi) {
+                case PageIndex.LOGS_PAGE:
+                    return this.userLogs$;
+
+                case PageIndex.REPORTS_PAGE:
+                    return this.userReports$;
+
+                case PageIndex.CHECKS_PAGE:
+                    return this.userChecks$;
+
+                default:
+                    return of([]);
+            }
+        }),
+        map(cds => {
+            console.log("and the winner is: ", cds);
+            return cds;
+        })
+    );
     currentDocumentId$: Observable<number> = this.store.currentDocumentId$;
-    userReports$: Observable<Report[]> = this.store.userReports$;
-    userChecks$: Observable<Check[]> = this.store.userChecks$;
-    userLogs$: Observable<Log[]> = this.store.userLogs$;
 
     docSelectedSub: Subscription;
 
@@ -73,7 +105,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     goTo(isDocumentsPage, page) {
         const pageToLower: string = page.toLowerCase();
 
-        let singularDocumentName = page.substring(0, page.length - 1);
+        let singularDocumentTypeName = page.substring(0, page.length - 1);
         //console.log("singularDocumentname is:", singularDocumentName);
 
         let newPageIndex;
@@ -87,7 +119,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             newPageIndex = PageIndexDictionary[pageToLower];
         }
 
-        this.updateDocumentsSetFromApi(singularDocumentName);
+        this.updateDocumentsSetFromApi(singularDocumentTypeName);
         this.store.updateCurrentPageIndex(newPageIndex);
     }
 

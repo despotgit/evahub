@@ -28,9 +28,9 @@ export class EvahubDocumentsComponent implements OnInit {
         }, 100);
 
         const urlEnd = route.snapshot.url[1].path;
-        console.log("urlEnd is:", urlEnd);
+        //console.log("urlEnd is:", urlEnd);
         const pageIndex = PageIndexDictionary[urlEnd + "s"];
-        console.log("pageIndex is:", pageIndex);
+        //console.log("pageIndex is:", pageIndex);
         this.store.updateCurrentPageIndex(pageIndex);
     }
 

@@ -157,17 +157,17 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
             switch (cpi) {
                 case PageIndex.LOGS_PAGE:
                     const sl = ls.find(l => l.logId == docId);
-                    console.log("d logs, sl is:", sl);
+                    //console.log("d logs, sl is:", sl);
                     return sl;
 
                 case PageIndex.REPORTS_PAGE:
                     const sr = rs.find(r => r.reportId == docId);
-                    console.log("d reports, sr is:", sr);
+                    //console.log("d reports, sr is:", sr);
                     return sr;
 
                 case PageIndex.CHECKS_PAGE:
                     const sc = cs.find(c => c.checkId == docId);
-                    console.log("d checks, sc is:", sc);
+                    //console.log("d checks, sc is:", sc);
                     return sc;
             }
 
@@ -176,7 +176,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     );
     selectedDocumentChange$ = this.selectedDocument$.pipe(
         tap(a => {
-            console.log("and a is:", a);
+            //console.log("and a is:", a);
         })
     );
     //.subscribe();
