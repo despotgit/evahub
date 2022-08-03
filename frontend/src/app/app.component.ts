@@ -57,7 +57,6 @@ export class AppComponent implements OnInit, AfterViewInit {
             //console.log("s is: ", s);
             this.updateDocumentsSetFromApi(s);
             this.currentPageIndex = a;
-            // TODO select first document of current doc set
         }),
         shareReplay()
     );
