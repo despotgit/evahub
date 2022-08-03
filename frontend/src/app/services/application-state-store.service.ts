@@ -175,12 +175,6 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
             return new Log();
         }
     );
-    selectedDocumentChange$ = this.selectedDocument$.pipe(
-        tap(a => {
-            //console.log("and a is:", a);
-        })
-    );
-    //.subscribe();
 
     constructor() {
         super();
