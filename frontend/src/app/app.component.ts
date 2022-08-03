@@ -52,7 +52,6 @@ export class AppComponent implements OnInit, AfterViewInit {
             // TODO select first document of current doc set
         })
     );
-
     currentDocumentSet$ = this.currentPageIndex$.pipe(
         switchMap(cpi => {
             switch (cpi) {
@@ -70,7 +69,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             }
         }),
         map(cds => {
-            console.log("and the winner is: ", cds);
+            console.log("cds is: ", cds);
             return cds;
         })
     );
@@ -217,10 +216,23 @@ export class AppComponent implements OnInit, AfterViewInit {
     processDocuments(ds: any[], dt: string) {
         //console.log("ds is:", ds);
         //console.log("dt is:", dt);
-        let docs = [];
 
         const dtToLower = dt.toLowerCase();
-        const menuOptions = ds.map(d => {
+
+        let [menuOptions, docs] = this.transformDbDocuments(ds, dtToLower);
+
+        this.store.updateUserDocuments(dt, docs);
+
+        this.store.updateSidenavMenuOptions(menuOptions);
+
+        this.store.updateSelectedUserDocument(dt, docs[0]);
+    }
+
+    transformDbDocuments(ds: any, dtToLower) {
+        let docs = [];
+        let menuOptions = [];
+
+        ds.map(d => {
             let doc;
             switch (dtToLower) {
                 case "log":
@@ -249,14 +261,11 @@ export class AppComponent implements OnInit, AfterViewInit {
                 id: doc.getDocumentId(),
                 label: doc.getDocumentName()
             };
-            return mo;
+
+            menuOptions.push(mo);
         });
 
-        this.store.updateUserDocuments(dt, docs);
-
-        this.store.updateSidenavMenuOptions(menuOptions);
-
-        this.store.updateSelectedUserDocument(dt, docs[0]);
+        return [menuOptions, docs];
     }
 
     ngOnDestroy() {
