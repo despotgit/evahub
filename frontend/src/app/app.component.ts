@@ -136,50 +136,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         this.store.updateCurrentDocumentId($event);
 
-        let docs$: Observable<any[]>;
-        //console.log("this.currentPageIndex is:", this.currentPageIndex);
-        switch (this.currentPageIndex) {
-            case PageIndex.REPORTS_PAGE:
-                docs$ = this.userReports$;
-                break;
-            case PageIndex.LOGS_PAGE:
-                docs$ = this.userLogs$;
-                break;
-            case PageIndex.CHECKS_PAGE:
-                docs$ = this.userChecks$;
-                break;
-        }
-
-        this.docSelectedSub = this.currentPageIndex$
-            .pipe(
-                withLatestFrom(this.currentDocumentId$, docs$),
-                map(([cpi, documentId, docs]) => {
-                    console.log("we are in docselected sub...");
-                    console.log("cpi, documentId, docs are:", cpi, documentId, docs);
-
-                    let sd;
-                    switch (cpi) {
-                        case PageIndex.LOGS_PAGE:
-                            sd = docs.find(d => d.logId == documentId);
-                            this.store.updateSelectedUserDocument("Log", sd);
-                            break;
-
-                        case PageIndex.REPORTS_PAGE:
-                            sd = docs.find(d => d.reportId == documentId);
-                            this.store.updateSelectedUserDocument("Report", sd);
-                            break;
-
-                        case PageIndex.CHECKS_PAGE:
-                            sd = docs.find(d => d.checkId == documentId);
-                            this.store.updateSelectedUserDocument("Check", sd);
-
-                            break;
-                    }
-                })
-            )
-            .subscribe();
-
-        this.docSelectedSub.unsubscribe();
+        return;
     }
 
     updateCurrentPageIndex(cpi: number) {
