@@ -20,7 +20,7 @@ import {
     share
 } from "rxjs";
 import { environment } from "src/environments/environment";
-import { PageIndex, PageIndexDictionary } from "./common/constants";
+import { getPageNameFromPageIndex, PageIndex, PageIndexDictionary } from "./common/constants";
 import { Check } from "./models/Check";
 import { EvahubDocumentTypeDictionary } from "./models/EvahubDocument";
 import { Log } from "./models/Log";
@@ -45,9 +45,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     userReports$: Observable<Report[]> = this.store.userReports$;
     userChecks$: Observable<Check[]> = this.store.userChecks$;
     userLogs$: Observable<Log[]> = this.store.userLogs$;
-    currentPageIndex$: Observable<PageIndex> = this.store.currentPageIndex$.pipe(
+    currentPageIndex$ = this.store.currentPageIndex$.pipe(
         tap(a => {
             console.log("still runs! catching a, a is:", a);
+            let s = getPageNameFromPageIndex(a);
+            let flc = s.toUpperCase().substring(0, 1);
+            s = flc + s.substring(1, s.length);
+            console.log("singularDocumentTypeName is: ", s);
+            this.updateDocumentsSetFromApi(s);
             this.currentPageIndex = a;
             // TODO select first document of current doc set
         })
@@ -91,7 +96,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         private httpClient: HttpClient
     ) {
         //
-        this.initUserDocsList();
     }
 
     ngOnInit(): void {}
@@ -101,21 +105,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     goTo(isDocumentsPage, page) {
         const pageToLower: string = page.toLowerCase();
 
-        let singularDocumentTypeName = page.substring(0, page.length - 1);
+        let singularDocumentTypeName: string = page.substring(0, page.length - 1);
         //console.log("singularDocumentname is:", singularDocumentName);
 
         let newPageIndex;
         if (isDocumentsPage) {
-            this.router.navigate([
-                "/documents/" + pageToLower.substring(0, pageToLower.length - 1)
-            ]);
+            this.router.navigate(["/documents/" + pageToLower]);
             newPageIndex = PageIndexDictionary[pageToLower];
         } else {
             this.router.navigate(["/" + pageToLower]);
             newPageIndex = PageIndexDictionary[pageToLower];
         }
 
-        this.updateDocumentsSetFromApi(singularDocumentTypeName);
         this.store.updateCurrentPageIndex(newPageIndex);
     }
 
@@ -179,17 +180,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.store.updateCurrentPageIndex(cpi);
     }
 
-    initUserDocsList() {
-        const docTypes = ["Log", "Report", "Check"];
-
-        for (let i = 0; i < docTypes.length; i++) {
-            let docType = docTypes[i];
-            this.updateDocumentsSetFromApi(docType);
-        }
-    }
-
     // docType is document name as string, singular form
     updateDocumentsSetFromApi(docType: string) {
+        if (docType == undefined) return;
+        console.log("!!!!!docType is:", docType);
         let docTypeToLower = docType.toLowerCase();
         //console.log("docType is:", docType);
         let username = "test2";
@@ -200,10 +194,10 @@ export class AppComponent implements OnInit, AfterViewInit {
             .get(url)
             .pipe(
                 map(ud => {
+                    console.log("ud is:", ud);
+                    console.log("prop name is:", "user" + docType + "s");
                     let ds = ud["user" + docType + "s"];
-
                     this.processDocuments(ds, docType);
-
                     return ud;
                 }),
                 tap()
@@ -214,20 +208,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     processDocuments(ds: any[], dt: string) {
-        //console.log("ds is:", ds);
-        //console.log("dt is:", dt);
+        console.log("in process ds is:", ds);
+        console.log("in process dt is:", dt);
 
         const dtToLower = dt.toLowerCase();
-
         let [menuOptions, docs] = this.transformDbDocuments(ds, dtToLower);
-
         this.store.updateUserDocuments(dt, docs);
-
         this.store.updateSidenavMenuOptions(menuOptions);
-
         this.store.updateSelectedUserDocument(dt, docs[0]);
     }
 
+    // Returns menuOptions[] and EvahubDocuments[]
     transformDbDocuments(ds: any, dtToLower) {
         let docs = [];
         let menuOptions = [];

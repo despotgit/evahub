@@ -15,7 +15,18 @@ export const PageIndexDictionary = {
     none: PageIndex.NONE_PAGE,
     login: PageIndex.LOGIN_PAGE,
     home: PageIndex.HOME_PAGE,
-    logs: PageIndex.LOGS_PAGE,
-    reports: PageIndex.REPORTS_PAGE,
-    checks: PageIndex.CHECKS_PAGE
+    log: PageIndex.LOGS_PAGE,
+    report: PageIndex.REPORTS_PAGE,
+    check: PageIndex.CHECKS_PAGE
 };
+
+export function getPageNameFromPageIndex(i) {
+    let res = "x";
+    Object.keys(PageIndexDictionary).forEach(k => {
+        if (PageIndexDictionary[k] == i) {
+            res = k;
+        }
+    });
+
+    return res;
+}
