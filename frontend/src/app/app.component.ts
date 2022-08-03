@@ -78,8 +78,6 @@ export class AppComponent implements OnInit, AfterViewInit {
             }
         }),
         map(cds => {
-            console.log("switchMap aftermath, cds is: ", cds);
-
             let d = cds[0];
             if (d !== undefined) {
                 console.log("first's getDocumentId is:", d.getDocumentId());
