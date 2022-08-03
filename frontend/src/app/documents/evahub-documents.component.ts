@@ -19,9 +19,7 @@ import { ActivatedRoute } from "@angular/router";
 export class EvahubDocumentsComponent implements OnInit {
     selectedDocument$ = this.store.selectedDocument$;
 
-    currentPageIndex$: Observable<any> = this.store.currentPageIndex$;
-
-    httpDocsCall: any;
+    currentPageIndex$ = this.store.currentPageIndex$;
 
     constructor(private store: ApplicationStateStoreService) {
         setTimeout(() => {

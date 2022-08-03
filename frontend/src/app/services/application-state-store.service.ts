@@ -168,34 +168,22 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.userChecks$,
 
         (cpi, docId, ls, rs, cs) => {
-            console.log("ZZZZ doing the old switcheroo, docId, and pageIndex is:", docId, cpi);
+            switch (cpi) {
+                case PageIndex.LOGS_PAGE:
+                    const sl = ls.find(l => l.logId == docId);
+                    console.log("d logs, sl is:", sl);
+                    return sl;
 
-            console.log("reports are:", rs);
+                case PageIndex.REPORTS_PAGE:
+                    const sr = rs.find(r => r.reportId == docId);
+                    console.log("d reports, sr is:", sr);
+                    return sr;
 
-            const sr = rs.find(r => r.reportId == docId);
-            console.log("sr is:", sr);
-            try {
-                console.log("sr.getDocumentContent() is:", sr.getDocumentContent());
-            } catch (e) {}
-            //return sr;
-
-            if (true)
-                switch (cpi) {
-                    case PageIndex.LOGS_PAGE:
-                        const sl = ls.find(l => l.logId == docId);
-                        console.log("d logs, sl is:", sl);
-                        return sl;
-
-                    case PageIndex.REPORTS_PAGE:
-                        const sr = rs.find(r => r.reportId == docId);
-                        console.log("d reports, sr is:", sr);
-                        return sr;
-
-                    case PageIndex.CHECKS_PAGE:
-                        const sc = cs.find(c => c.checkId == docId);
-                        console.log("d checks, sc is:", sc);
-                        return sc;
-                }
+                case PageIndex.CHECKS_PAGE:
+                    const sc = cs.find(c => c.checkId == docId);
+                    console.log("d checks, sc is:", sc);
+                    return sc;
+            }
 
             return new Log();
         }

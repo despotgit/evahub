@@ -39,6 +39,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             tap(a => {
                 console.log("catching a, a is:", a);
                 this.currentPageIndex = a;
+                // TODO select first document of current doc set
             })
         )
         .subscribe();
@@ -71,7 +72,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {}
 
     goTo(isDocumentsPage, page) {
-        //console.log("in goto, page is:", page);
         const pageToLower: string = page.toLowerCase();
 
         let singularDocumentName = page.substring(0, page.length - 1);
@@ -223,10 +223,6 @@ export class AppComponent implements OnInit, AfterViewInit {
             };
             return mo;
         });
-
-        //console.log("menuOptions are:", menuOptions);
-
-        //console.log("almost there!!!", docs[0].getDocumentContent());
 
         this.store.updateUserDocuments(dt, docs);
 
