@@ -77,24 +77,16 @@ export class AppComponent implements OnInit, AfterViewInit {
         }),
         map(cds => {
             console.log("switchMap aftermath, cds is: ", cds);
+
+            let d = cds[0];
+            if (d !== undefined) {
+                console.log("first's getDocumentId is:", d.getDocumentId());
+                this.store.updateCurrentDocumentId(d.getDocumentId());
+            }
+
             return cds;
         })
     );
-    selectFirstDocument$ = combineLatest([this.currentDocumentSet$, this.currentPageIndex$])
-        .pipe(
-            tap(([cds, cpi]) => {
-                console.log("in selectFirstDocument cds is:", cds);
-                console.log("cpi is:", cpi);
-                console.log("first is:", cds[0]);
-                let d = cds[0];
-                if (d !== undefined) {
-                    console.log("first's getDocumentId is:", d.getDocumentId());
-                    this.store.updateCurrentDocumentId(d.getDocumentId());
-                }
-                //this.store.up
-            })
-        )
-        .subscribe();
 
     currentDocumentId$ = this.store.currentDocumentId$;
 
