@@ -36,7 +36,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     currentPageIndexChanges$ = this.currentPageIndex$
         .pipe(
             tap(a => {
-                console.log("catching a, a is:", a);
+                console.log("in currentPageIndexChanges catching a, a is:", a);
                 this.currentPageIndex = a;
                 // TODO select first document of current doc set
             })
@@ -87,7 +87,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             newPageIndex = PageIndexDictionary[pageToLower];
         }
 
-        this.updateSelectedDocumentsStateFromApi(singularDocumentName);
+        this.updateDocumentsSetFromApi(singularDocumentName);
         this.store.updateCurrentPageIndex(newPageIndex);
     }
 
@@ -156,12 +156,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         for (let i = 0; i < docTypes.length; i++) {
             let docType = docTypes[i];
-            this.updateSelectedDocumentsStateFromApi(docType);
+            this.updateDocumentsSetFromApi(docType);
         }
     }
 
     // docType is document name as string, singular form
-    updateSelectedDocumentsStateFromApi(docType: string) {
+    updateDocumentsSetFromApi(docType: string) {
         let docTypeToLower = docType.toLowerCase();
         //console.log("docType is:", docType);
         let username = "test2";

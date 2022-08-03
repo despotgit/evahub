@@ -1,12 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { PageIndex } from "../common/constants";
-import {
-    ApplicationStateStoreService,
-    EvahubDocument,
-    Report
-} from "../services/application-state-store.service";
+import { PageIndex, PageIndexDictionary } from "../common/constants";
+import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { tap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 
@@ -26,10 +22,16 @@ export class EvahubDocumentsComponent implements OnInit {
         )
         .subscribe();
 
-    constructor(private store: ApplicationStateStoreService) {
+    constructor(private store: ApplicationStateStoreService, route: ActivatedRoute) {
         setTimeout(() => {
             this.store.updateIsSidenavOpened(true);
         }, 100);
+
+        const urlEnd = route.snapshot.url[1].path;
+        console.log("urlEnd is:", urlEnd);
+        const pageIndex = PageIndexDictionary[urlEnd + "s"];
+        console.log("pageIndex is:", pageIndex);
+        this.store.updateCurrentPageIndex(pageIndex);
     }
 
     ngOnInit(): void {}
