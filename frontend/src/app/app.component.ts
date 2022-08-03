@@ -45,19 +45,16 @@ export class AppComponent implements OnInit, AfterViewInit {
     userReports$: Observable<Report[]> = this.store.userReports$;
     userChecks$: Observable<Check[]> = this.store.userChecks$;
     userLogs$: Observable<Log[]> = this.store.userLogs$;
-    currentPageIndex$: Observable<PageIndex> = this.store.currentPageIndex$;
-    currentPageIndexChanges$ = this.currentPageIndex$
-        .pipe(
-            tap(a => {
-                console.log("in currentPageIndexChanges catching a, a is:", a);
-                this.currentPageIndex = a;
-                // TODO select first document of current doc set
-            })
-        )
-        .subscribe();
+    currentPageIndex$: Observable<PageIndex> = this.store.currentPageIndex$.pipe(
+        tap(a => {
+            console.log("still runs! catching a, a is:", a);
+            this.currentPageIndex = a;
+            // TODO select first document of current doc set
+        })
+    );
+
     currentDocumentSet$ = this.currentPageIndex$.pipe(
         switchMap(cpi => {
-            console.log("aaaaaaand the winner is....");
             switch (cpi) {
                 case PageIndex.LOGS_PAGE:
                     return this.userLogs$;
@@ -264,6 +261,5 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     ngOnDestroy() {
         this.docSelectedSub.unsubscribe();
-        this.currentPageIndexChanges$.unsubscribe();
     }
 }
