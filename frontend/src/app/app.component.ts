@@ -19,7 +19,8 @@ import {
     tap,
     share,
     merge,
-    combineLatest
+    combineLatest,
+    take
 } from "rxjs";
 import { environment } from "src/environments/environment";
 import { getPageNameFromPageIndex, PageIndex, PageIndexDictionary } from "./common/constants";
@@ -57,7 +58,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.updateDocumentsSetFromApi(s);
             this.currentPageIndex = a;
             // TODO select first document of current doc set
-        })
+        }),
+        shareReplay()
     );
     currentDocumentSet$ = this.currentPageIndex$.pipe(
         switchMap(cpi => {
