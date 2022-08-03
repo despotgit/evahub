@@ -55,8 +55,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             s = flc + s.substring(1, s.length);
             this.updateDocumentsSetFromApi(s);
             this.currentPageIndex = a;
-        }),
-        shareReplay()
+        })
     );
     currentDocumentSet$ = this.currentPageIndex$.pipe(
         switchMap(cpi => {
