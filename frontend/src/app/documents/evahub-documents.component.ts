@@ -19,15 +19,11 @@ import { ActivatedRoute } from "@angular/router";
 export class EvahubDocumentsComponent implements OnInit {
     selectedDocument$ = this.store.selectedDocument$;
 
-    //currentPageIndex$ = this.store.currentPageIndex$;
-
     constructor(private store: ApplicationStateStoreService) {
         setTimeout(() => {
             this.store.updateIsSidenavOpened(true);
         }, 100);
     }
 
-    ngOnInit(): void {
-        this.store.updateCurrentPageIndex(PageIndex.REPORTS_PAGE);
-    }
+    ngOnInit(): void {}
 }
