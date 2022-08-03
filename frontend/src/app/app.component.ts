@@ -47,11 +47,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     userLogs$: Observable<Log[]> = this.store.userLogs$;
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
         tap(a => {
-            console.log("still runs! catching a, a is:", a);
-            let s = getPageNameFromPageIndex(a);
-            let flc = s.toUpperCase().substring(0, 1);
+            //console.log("still runs! catching a, a is:", a);
+            let s = getPageNameFromPageIndex(a); // s : singularDocumentTypeName
+            let flc = s.toUpperCase().substring(0, 1); // First Letter Capitalized
             s = flc + s.substring(1, s.length);
-            console.log("singularDocumentTypeName is: ", s);
+            //console.log("s is: ", s);
             this.updateDocumentsSetFromApi(s);
             this.currentPageIndex = a;
             // TODO select first document of current doc set
@@ -74,11 +74,11 @@ export class AppComponent implements OnInit, AfterViewInit {
             }
         }),
         map(cds => {
-            console.log("cds is: ", cds);
+            console.log("switchMap aftermath, cds is: ", cds);
             return cds;
         })
     );
-    currentDocumentId$: Observable<number> = this.store.currentDocumentId$;
+    currentDocumentId$ = this.store.currentDocumentId$;
 
     docSelectedSub: Subscription;
 
@@ -183,7 +183,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     // docType is document name as string, singular form
     updateDocumentsSetFromApi(docType: string) {
         if (docType == undefined) return;
-        console.log("!!!!!docType is:", docType);
+        //console.log("!!!!!docType is:", docType);
         let docTypeToLower = docType.toLowerCase();
         //console.log("docType is:", docType);
         let username = "test2";
@@ -194,8 +194,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             .get(url)
             .pipe(
                 map(ud => {
-                    console.log("ud is:", ud);
-                    console.log("prop name is:", "user" + docType + "s");
+                    //console.log("ud is:", ud);
+                    //console.log("prop name is:", "user" + docType + "s");
                     let ds = ud["user" + docType + "s"];
                     this.processDocuments(ds, docType);
                     return ud;
@@ -207,9 +207,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         //setTimeout(() => this.httpDocsCall.unsubscribe(), 1000);
     }
 
+    // Runs as part of fetching the data from API backend
     processDocuments(ds: any[], dt: string) {
-        console.log("in process ds is:", ds);
-        console.log("in process dt is:", dt);
+        //console.log("in process ds is:", ds);
+        //console.log("in process dt is:", dt);
 
         const dtToLower = dt.toLowerCase();
         let [menuOptions, docs] = this.transformDbDocuments(ds, dtToLower);
