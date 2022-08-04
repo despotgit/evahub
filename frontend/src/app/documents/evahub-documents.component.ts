@@ -1,9 +1,6 @@
-import { HttpClient } from "@angular/common/http";
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { map, Observable } from "rxjs";
-import { PageIndex, PageIndexDictionary } from "../common/constants";
+import { PageIndexDictionary } from "../common/constants";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
-import { tap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
@@ -22,7 +19,7 @@ export class EvahubDocumentsComponent implements OnInit {
 
         const urlEnd = route.snapshot.url[1].path;
         //console.log("urlEnd is:", urlEnd);
-        const pageIndex = PageIndexDictionary[urlEnd];
+        const pageIndex = PageIndexDictionary[urlEnd].index;
         //console.log("pageIndex is:", pageIndex);
         this.store.updateCurrentPageIndex(pageIndex);
     }

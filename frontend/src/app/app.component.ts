@@ -113,10 +113,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         let newPageIndex;
         if (isDocumentsPage) {
             this.router.navigate(["/documents/" + pageToLower]);
-            newPageIndex = PageIndexDictionary[pageToLower];
+            newPageIndex = PageIndexDictionary[pageToLower].index;
         } else {
             this.router.navigate(["/" + pageToLower]);
-            newPageIndex = PageIndexDictionary[pageToLower];
+            newPageIndex = PageIndexDictionary[pageToLower].index;
         }
 
         this.store.updateCurrentPageIndex(newPageIndex);

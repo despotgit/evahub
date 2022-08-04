@@ -12,20 +12,21 @@ export const enum PageIndex {
     CHECKS_PAGE = 6
 }
 
+// Main page dictionary
 export const PageIndexDictionary = {
-    none: PageIndex.NONE_PAGE,
-    login: PageIndex.LOGIN_PAGE,
-    home: PageIndex.HOME_PAGE,
-    user_file_upload: PageIndex.USER_FILE_UPLOAD_PAGE,
-    log: PageIndex.LOGS_PAGE,
-    report: PageIndex.REPORTS_PAGE,
-    check: PageIndex.CHECKS_PAGE
+    none: { index: PageIndex.NONE_PAGE, isDocumentsPage: false },
+    login: { index: PageIndex.LOGIN_PAGE, isDocumentsPage: false },
+    home: { index: PageIndex.HOME_PAGE, isDocumentsPage: false },
+    user_file_upload: { index: PageIndex.USER_FILE_UPLOAD_PAGE, isDocumentsPage: false },
+    log: { index: PageIndex.LOGS_PAGE, isDocumentsPage: true },
+    report: { index: PageIndex.REPORTS_PAGE, isDocumentsPage: true },
+    check: { index: PageIndex.CHECKS_PAGE, isDocumentsPage: true }
 };
 
 export function getPageNameFromPageIndex(i) {
     let res = "x";
     Object.keys(PageIndexDictionary).forEach(k => {
-        if (PageIndexDictionary[k] == i) {
+        if (PageIndexDictionary[k].index == i) {
             res = k;
         }
     });
@@ -44,35 +45,35 @@ export class MainMenuItem {
 export const INITIAL_MAIN_MENU_ITEMS = [
     {
         label: "Home",
-        gotoParam: "Home",
+        gotoParam: "home",
         isDocumentsPage: false,
         isSelected: false,
         pageIndex: PageIndex.HOME_PAGE
     },
     {
         label: "Upload",
-        gotoParam: "Upload",
+        gotoParam: "user_file_upload",
         isDocumentsPage: false,
         isSelected: false,
         pageIndex: PageIndex.USER_FILE_UPLOAD_PAGE
     },
     {
         label: "Logs",
-        gotoParam: "Log",
+        gotoParam: "log",
         isDocumentsPage: true,
         isSelected: false,
         pageIndex: PageIndex.LOGS_PAGE
     },
     {
         label: "Reports",
-        gotoParam: "Report",
+        gotoParam: "report",
         isDocumentsPage: true,
         isSelected: false,
         pageIndex: PageIndex.REPORTS_PAGE
     },
     {
         label: "Checks",
-        gotoParam: "Check",
+        gotoParam: "check",
         isDocumentsPage: true,
         isSelected: false,
         pageIndex: PageIndex.CHECKS_PAGE

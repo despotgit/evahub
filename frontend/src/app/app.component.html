@@ -16,14 +16,6 @@
             </button>
         </div>
 
-        <!--
-        <button mat-button color="basic" (click)="goTo(false, 'Home')">Home</button>
-        <button mat-button color="basic" (click)="goTo(false, 'Upload')">Upload</button>
-        <button mat-button color="basic" (click)="goTo(true, 'Log')">Logs</button>
-        <button mat-button color="basic" (click)="goTo(true, 'Report')">Reports</button>
-        <button mat-button color="basic" (click)="goTo(true, 'Check')">Checks</button>
-        -->
-
         <mat-icon
             *ngIf="asyncData.isLoggedIn"
             (click)="sidenav.toggle()"
