@@ -10,7 +10,7 @@ const routes: Routes = [
     { path: "", redirectTo: "home", pathMatch: "full" },
     { path: "login", component: LoginComponent },
     { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
-    { path: "upload", component: UserFileUploadComponent, canActivate: [AuthGuard] },
+    { path: "user-file-upload", component: UserFileUploadComponent, canActivate: [AuthGuard] },
     //{ path: "logs", component: LogsComponent, canActivate: [AuthGuard] },
     //{ path: "checks", component: ChecksComponent, canActivate: [AuthGuard] },
     //{ path: "reports", component: ReportsComponent, canActivate: [AuthGuard] },

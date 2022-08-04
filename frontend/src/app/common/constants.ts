@@ -17,7 +17,7 @@ export const PageIndexDictionary = {
     none: { index: PageIndex.NONE_PAGE, isDocumentsPage: false },
     login: { index: PageIndex.LOGIN_PAGE, isDocumentsPage: false },
     home: { index: PageIndex.HOME_PAGE, isDocumentsPage: false },
-    user_file_upload: { index: PageIndex.USER_FILE_UPLOAD_PAGE, isDocumentsPage: false },
+    "user-file-upload": { index: PageIndex.USER_FILE_UPLOAD_PAGE, isDocumentsPage: false },
     log: { index: PageIndex.LOGS_PAGE, isDocumentsPage: true },
     report: { index: PageIndex.REPORTS_PAGE, isDocumentsPage: true },
     check: { index: PageIndex.CHECKS_PAGE, isDocumentsPage: true }
@@ -52,7 +52,7 @@ export const INITIAL_MAIN_MENU_ITEMS = [
     },
     {
         label: "Upload",
-        gotoParam: "user_file_upload",
+        gotoParam: "user-file-upload",
         isDocumentsPage: false,
         isSelected: false,
         pageIndex: PageIndex.USER_FILE_UPLOAD_PAGE
