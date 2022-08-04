@@ -12,6 +12,7 @@ import { map, switchMap, Observable, of, Subscription, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import {
     getPageNameFromPageIndex,
+    INITIAL_MAIN_MENU_ITEMS,
     MainMenuItem,
     PageIndex,
     PageIndexDictionary
@@ -89,13 +90,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     // Home, Upload, Logs, Reports, Checks
 
-    mainMenuItems: MainMenuItem[] = [
-        { label: "Home", gotoParam: "Home", isDocumentsPage: false, isSelected: false },
-        { label: "Upload", gotoParam: "Upload", isDocumentsPage: false, isSelected: false },
-        { label: "Logs", gotoParam: "Log", isDocumentsPage: true, isSelected: false },
-        { label: "Reports", gotoParam: "Report", isDocumentsPage: true, isSelected: false },
-        { label: "Checks", gotoParam: "Check", isDocumentsPage: true, isSelected: false }
-    ];
+    mainMenuItems: MainMenuItem[] = INITIAL_MAIN_MENU_ITEMS;
 
     constructor(
         private router: Router,

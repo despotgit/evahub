@@ -38,4 +38,43 @@ export class MainMenuItem {
     gotoParam: string;
     isDocumentsPage: boolean;
     isSelected: boolean;
+    pageIndex: PageIndex;
 }
+
+export const INITIAL_MAIN_MENU_ITEMS = [
+    {
+        label: "Home",
+        gotoParam: "Home",
+        isDocumentsPage: false,
+        isSelected: false,
+        pageIndex: PageIndex.HOME_PAGE
+    },
+    {
+        label: "Upload",
+        gotoParam: "Upload",
+        isDocumentsPage: false,
+        isSelected: false,
+        pageIndex: PageIndex.USER_FILE_UPLOAD_PAGE
+    },
+    {
+        label: "Logs",
+        gotoParam: "Log",
+        isDocumentsPage: true,
+        isSelected: false,
+        pageIndex: PageIndex.LOGS_PAGE
+    },
+    {
+        label: "Reports",
+        gotoParam: "Report",
+        isDocumentsPage: true,
+        isSelected: false,
+        pageIndex: PageIndex.REPORTS_PAGE
+    },
+    {
+        label: "Checks",
+        gotoParam: "Check",
+        isDocumentsPage: true,
+        isSelected: false,
+        pageIndex: PageIndex.CHECKS_PAGE
+    }
+];
