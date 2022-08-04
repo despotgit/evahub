@@ -43,10 +43,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     userLogs$: Observable<Log[]> = this.store.userLogs$;
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
         tap(a => {
-            let s = getPageNameFromPageIndex(a); // s : singularDocumentTypeName
-            let flc = s.toUpperCase().substring(0, 1); // First Letter Capitalized
-            s = flc + s.substring(1, s.length);
-            this.updateDocumentsSetFromApi(s);
+            const s = getPageNameFromPageIndex(a); // s : singularDocumentTypeName
+            const flc = s.toUpperCase().substring(0, 1); // First Letter Capitalized
+            const sc = flc + s.substring(1, s.length); // Capitalized page name
+
+            if (PageIndexDictionary[s].isDocumentsPage) {
+                this.updateDocumentsSetFromApi(sc);
+            }
             this.currentPageIndex = a;
         })
     );
