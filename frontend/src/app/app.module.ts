@@ -12,6 +12,7 @@ import { EvahubDocumentsComponent } from "./documents/evahub-documents.component
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { IonicModule } from "@ionic/angular";
 import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.component";
+import { UserFileUploadComponent } from './user-file-upload/user-file-upload.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.componen
         LoginComponent,
         HomeComponent,
         EvahubDocumentsComponent,
-        EvahubSidenavComponent
+        EvahubSidenavComponent,
+        UserFileUploadComponent
     ],
     imports: [
         BrowserModule,

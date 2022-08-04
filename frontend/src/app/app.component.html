@@ -10,11 +10,19 @@
 >
     <mat-toolbar>
         <span>EVAHUB</span>
+        <div *ngFor="let mi of mainMenuItems">
+            <button mat-button color="basic" (click)="goTo(mi.isDocumentsPage, mi.gotoParam)">
+                {{ mi.label }}
+            </button>
+        </div>
 
-        <button mat-button (click)="goTo(false, 'Home')">Home</button>
-        <button mat-button (click)="goTo(true, 'Log')">Logs</button>
-        <button mat-button (click)="goTo(true, 'Report')">Reports</button>
-        <button mat-button (click)="goTo(true, 'Check')">Checks</button>
+        <!--
+        <button mat-button color="basic" (click)="goTo(false, 'Home')">Home</button>
+        <button mat-button color="basic" (click)="goTo(false, 'Upload')">Upload</button>
+        <button mat-button color="basic" (click)="goTo(true, 'Log')">Logs</button>
+        <button mat-button color="basic" (click)="goTo(true, 'Report')">Reports</button>
+        <button mat-button color="basic" (click)="goTo(true, 'Check')">Checks</button>
+        -->
 
         <mat-icon
             *ngIf="asyncData.isLoggedIn"

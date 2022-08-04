@@ -8,22 +8,14 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 
-import {
-    map,
-    switchMap,
-    Observable,
-    of,
-    shareReplay,
-    Subscription,
-    withLatestFrom,
-    tap,
-    share,
-    merge,
-    combineLatest,
-    take
-} from "rxjs";
+import { map, switchMap, Observable, of, Subscription, tap } from "rxjs";
 import { environment } from "src/environments/environment";
-import { getPageNameFromPageIndex, PageIndex, PageIndexDictionary } from "./common/constants";
+import {
+    getPageNameFromPageIndex,
+    MainMenuItem,
+    PageIndex,
+    PageIndexDictionary
+} from "./common/constants";
 import { Check } from "./models/Check";
 import { EvahubDocumentTypeDictionary } from "./models/EvahubDocument";
 import { Log } from "./models/Log";
@@ -95,6 +87,16 @@ export class AppComponent implements OnInit, AfterViewInit {
     title = "EVAHUB";
     httpDocsCall: any;
 
+    // Home, Upload, Logs, Reports, Checks
+
+    mainMenuItems: MainMenuItem[] = [
+        { label: "Home", gotoParam: "Home", isDocumentsPage: false, isSelected: false },
+        { label: "Upload", gotoParam: "Upload", isDocumentsPage: false, isSelected: false },
+        { label: "Logs", gotoParam: "Log", isDocumentsPage: true, isSelected: false },
+        { label: "Reports", gotoParam: "Report", isDocumentsPage: true, isSelected: false },
+        { label: "Checks", gotoParam: "Check", isDocumentsPage: true, isSelected: false }
+    ];
+
     constructor(
         private router: Router,
         private store: ApplicationStateStoreService,
@@ -109,6 +111,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {}
 
     goTo(isDocumentsPage, page) {
+        console.log("isDocumentsPage is:", isDocumentsPage);
+        console.log("page is:", page);
         const pageToLower: string = page.toLowerCase();
 
         let newPageIndex;
