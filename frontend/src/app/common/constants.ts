@@ -79,3 +79,10 @@ export const INITIAL_MAIN_MENU_ITEMS = [
         pageIndex: PageIndex.CHECKS_PAGE
     }
 ];
+
+export function capitalizeWord(word: string) {
+    const flc = word.toUpperCase().substring(0, 1); // First Letter Capitalized
+    const sc = flc + word.substring(1, word.length); // Capitalized word
+
+    return sc;
+}

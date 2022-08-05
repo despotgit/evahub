@@ -6,8 +6,9 @@ import {
     OnInit,
     Output
 } from "@angular/core";
+import { Page } from "@ionic/core";
 
-import { EvahubMainMenuItem } from "../common/constants";
+import { EvahubMainMenuItem, PageIndex } from "../common/constants";
 
 @Component({
     selector: "evahub-main-menu",
@@ -20,6 +21,11 @@ export class MainMenuComponent implements OnInit {
     @Input() set menuItems(mis: any[]) {
         console.log("*******", mis);
         this.mainMenuItems = mis;
+    }
+
+    pageSelected: PageIndex;
+    @Input() setPageSelected(cpi: PageIndex) {
+        this.pageSelected = cpi;
     }
 
     @Output() itemClickedEmit: EventEmitter<any> = new EventEmitter();

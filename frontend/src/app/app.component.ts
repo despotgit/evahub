@@ -15,7 +15,8 @@ import {
     INITIAL_MAIN_MENU_ITEMS,
     EvahubMainMenuItem,
     PageIndex,
-    PageIndexDictionary
+    PageIndexDictionary,
+    capitalizeWord
 } from "./common/constants";
 import { Check } from "./models/Check";
 import { EvahubDocumentTypeDictionary } from "./models/EvahubDocument";
@@ -44,8 +45,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
         tap(a => {
             const s = getPageNameFromPageIndex(a); // s : singularDocumentTypeName
-            const flc = s.toUpperCase().substring(0, 1); // First Letter Capitalized
-            const sc = flc + s.substring(1, s.length); // Capitalized page name
+
+            const sc = capitalizeWord(s);
 
             if (PageIndexDictionary[s].isDocumentsPage) {
                 this.updateDocumentsSetFromApi(sc);
@@ -108,13 +109,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {}
 
-    //goTo(isDocumentsPage, page) {
     goTo(e) {
-        console.log("e is:", e);
         const isDocumentsPage = e.isDocumentsPage;
         const page = e.gotoParam;
-        console.log("isDocumentsPage is:", isDocumentsPage);
-        console.log("page is:", page);
+
         const pageToLower: string = page.toLowerCase();
 
         let newPageIndex;

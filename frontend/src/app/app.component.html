@@ -12,6 +12,7 @@
         <span>EVAHUB</span>
         <evahub-main-menu
             (itemClickedEmit)="goTo($event)"
+            [pageSelected]="asyncData.currentPageIndex"
             [menuItems]="mainMenuItems"
         ></evahub-main-menu>
 
