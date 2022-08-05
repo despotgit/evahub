@@ -34,7 +34,7 @@ export function getPageNameFromPageIndex(i) {
     return res;
 }
 
-export class MainMenuItem {
+export class EvahubMainMenuItem {
     label: string;
     gotoParam: string;
     isDocumentsPage: boolean;

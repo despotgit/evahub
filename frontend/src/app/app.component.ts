@@ -13,7 +13,7 @@ import { environment } from "src/environments/environment";
 import {
     getPageNameFromPageIndex,
     INITIAL_MAIN_MENU_ITEMS,
-    MainMenuItem,
+    EvahubMainMenuItem,
     PageIndex,
     PageIndexDictionary
 } from "./common/constants";
@@ -93,7 +93,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     // Home, Upload, Logs, Reports, Checks
 
-    mainMenuItems: MainMenuItem[] = INITIAL_MAIN_MENU_ITEMS;
+    mainMenuItems: EvahubMainMenuItem[] = INITIAL_MAIN_MENU_ITEMS;
 
     constructor(
         private router: Router,
