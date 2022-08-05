@@ -20,12 +20,10 @@ export class MainMenuComponent implements OnInit {
     mainMenuItems: EvahubMainMenuItem[];
     @Input() set menuItems(mis: any[]) {
         this.mainMenuItems = mis;
-        console.log("****** items are:", mis);
     }
 
     pageSelected: PageIndex;
     @Input() set cpi(cpi: PageIndex) {
-        console.log("^^^^^^^ cpi is:", cpi);
         this.pageSelected = cpi;
     }
 
