@@ -12,7 +12,8 @@ import { map, switchMap, Observable, of, Subscription, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import {
     getPageNameFromPageIndex,
-    INITIAL_MAIN_MENU_ITEMS,
+    getInitialMainMenuItems,
+    //INITIAL_MAIN_MENU_ITEMS,
     EvahubMainMenuItem,
     PageIndex,
     PageIndexDictionary,
@@ -94,7 +95,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     // Home, Upload, Logs, Reports, Checks
 
-    mainMenuItems: EvahubMainMenuItem[] = INITIAL_MAIN_MENU_ITEMS;
+    mainMenuItems: EvahubMainMenuItem[] = getInitialMainMenuItems();
 
     constructor(
         private router: Router,

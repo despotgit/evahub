@@ -12,15 +12,46 @@ export const enum PageIndex {
     CHECKS_PAGE = 6
 }
 
-// Main page dictionary
+// Main page dictionary, page data is:
+// handle, index, isDocumentsPage, label
 export const PageIndexDictionary = {
-    none: { index: PageIndex.NONE_PAGE, isDocumentsPage: false },
-    login: { index: PageIndex.LOGIN_PAGE, isDocumentsPage: false },
-    home: { index: PageIndex.HOME_PAGE, isDocumentsPage: false },
-    "user-file-upload": { index: PageIndex.USER_FILE_UPLOAD_PAGE, isDocumentsPage: false },
-    log: { index: PageIndex.LOGS_PAGE, isDocumentsPage: true },
-    report: { index: PageIndex.REPORTS_PAGE, isDocumentsPage: true },
-    check: { index: PageIndex.CHECKS_PAGE, isDocumentsPage: true }
+    none: { index: PageIndex.NONE_PAGE, isDocumentsPage: false, label: "None", gotoParam: "" },
+    login: {
+        index: PageIndex.LOGIN_PAGE,
+        isDocumentsPage: false,
+        label: "Login",
+        gotoParam: "login"
+    },
+    home: {
+        index: PageIndex.HOME_PAGE,
+        isDocumentsPage: false,
+        label: "Home",
+        gotoParam: "home"
+    },
+    "user-file-upload": {
+        index: PageIndex.USER_FILE_UPLOAD_PAGE,
+        isDocumentsPage: false,
+        label: "Upload",
+        gotoParam: "user-file-upload"
+    },
+    log: {
+        index: PageIndex.LOGS_PAGE,
+        isDocumentsPage: true,
+        label: "Logs",
+        gotoParam: "log"
+    },
+    report: {
+        index: PageIndex.REPORTS_PAGE,
+        isDocumentsPage: true,
+        label: "Reports",
+        gotoParam: "report"
+    },
+    check: {
+        index: PageIndex.CHECKS_PAGE,
+        isDocumentsPage: true,
+        label: "Checks",
+        gotoParam: "check"
+    }
 };
 
 export function getPageNameFromPageIndex(i) {
@@ -40,6 +71,17 @@ export class EvahubMainMenuItem {
     isDocumentsPage: boolean;
     isSelected: boolean;
     pageIndex: PageIndex;
+}
+
+export function getInitialMainMenuItems() {
+    let toRet = [];
+    Object.keys(PageIndexDictionary).forEach(k => {
+        let immi = PageIndexDictionary[k];
+        immi.isSelected = false;
+        toRet.push(immi);
+    });
+
+    return toRet;
 }
 
 export const INITIAL_MAIN_MENU_ITEMS = [
