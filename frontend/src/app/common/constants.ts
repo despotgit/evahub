@@ -82,7 +82,7 @@ export class EvahubMainMenuItem {
     gotoParam: string;
     isDocumentsPage: boolean;
     isSelected: boolean;
-    pageIndex: PageIndex;
+    index: PageIndex;
 }
 
 export function getInitialMainMenuItems() {
