@@ -1,0 +1,10 @@
+<div class="main-menu-wrapper">
+    <div *ngFor="let mi of mainMenuItems">
+        <button *ngIf="!mi.isSelected" mat-button color="basic" (click)="itemClicked(mi)">
+            {{ mi.label }}
+        </button>
+        <button *ngIf="mi.isSelected" mat-raised-button color="primary" (click)="itemClicked(mi)">
+            {{ mi.label }}
+        </button>
+    </div>
+</div>

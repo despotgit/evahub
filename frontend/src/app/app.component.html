@@ -10,11 +10,7 @@
 >
     <mat-toolbar>
         <span>EVAHUB</span>
-        <div *ngFor="let mi of mainMenuItems">
-            <button mat-button color="basic" (click)="goTo(mi.isDocumentsPage, mi.gotoParam)">
-                {{ mi.label }}
-            </button>
-        </div>
+        <evahub-main-menu [menuItems]="mainMenuItems"></evahub-main-menu>
 
         <mat-icon
             *ngIf="asyncData.isLoggedIn"

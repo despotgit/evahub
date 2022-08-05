@@ -54,7 +54,7 @@ export const INITIAL_MAIN_MENU_ITEMS = [
         label: "Upload",
         gotoParam: "user-file-upload",
         isDocumentsPage: false,
-        isSelected: false,
+        isSelected: true,
         pageIndex: PageIndex.USER_FILE_UPLOAD_PAGE
     },
     {
