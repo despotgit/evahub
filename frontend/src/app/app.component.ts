@@ -13,7 +13,6 @@ import { environment } from "src/environments/environment";
 import {
     getPageNameFromPageIndex,
     getInitialMainMenuItems,
-    //INITIAL_MAIN_MENU_ITEMS,
     EvahubMainMenuItem,
     PageIndex,
     PageIndexDictionary,
