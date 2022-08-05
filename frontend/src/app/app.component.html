@@ -10,7 +10,10 @@
 >
     <mat-toolbar>
         <span>EVAHUB</span>
-        <evahub-main-menu [menuItems]="mainMenuItems"></evahub-main-menu>
+        <evahub-main-menu
+            (itemClickedEmit)="goTo($event)"
+            [menuItems]="mainMenuItems"
+        ></evahub-main-menu>
 
         <mat-icon
             *ngIf="asyncData.isLoggedIn"

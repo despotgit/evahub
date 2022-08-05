@@ -21,7 +21,6 @@ export class MainMenuComponent implements OnInit {
         console.log("*******", mis);
         this.mainMenuItems = mis;
     }
-    //@Input() menuItems;
 
     @Output() itemClickedEmit: EventEmitter<any> = new EventEmitter();
 

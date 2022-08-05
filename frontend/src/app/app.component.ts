@@ -111,8 +111,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     //goTo(isDocumentsPage, page) {
     goTo(e) {
         console.log("e is:", e);
-
-        /*
+        const isDocumentsPage = e.isDocumentsPage;
+        const page = e.gotoParam;
         console.log("isDocumentsPage is:", isDocumentsPage);
         console.log("page is:", page);
         const pageToLower: string = page.toLowerCase();
@@ -127,7 +127,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
 
         this.store.updateCurrentPageIndex(newPageIndex);
-        */
     }
 
     logOut() {
