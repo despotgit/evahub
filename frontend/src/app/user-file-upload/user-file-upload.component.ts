@@ -1,13 +1,14 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpEventType } from "@angular/common/http";
 import { Component, Input } from "@angular/core";
 import { Subscription } from "rxjs";
+import { finalize } from "rxjs/operators";
 
 @Component({
     selector: "evahub-user-file-upload",
     templateUrl: "user-file-upload.component.html",
     styleUrls: ["user-file-upload.component.scss"]
 })
-export class UserFileUploadComponent {
+export class FileUploadComponent {
     @Input()
     requiredFileType: string;
 
