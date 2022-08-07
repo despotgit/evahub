@@ -1,5 +1,5 @@
 import { HttpClient, HttpEventType } from "@angular/common/http";
-import { Component, Input } from "@angular/core";
+import { Component, ElementRef, Input, ViewChild } from "@angular/core";
 import { Subscription } from "rxjs";
 import { finalize } from "rxjs/operators";
 
@@ -9,6 +9,9 @@ import { finalize } from "rxjs/operators";
     styleUrls: ["user-file-upload.component.scss"]
 })
 export class UserFileUploadComponent {
+    @ViewChild("fileUpload")
+    fileUpload: ElementRef;
+
     @Input()
     requiredFileType: string;
 
@@ -44,6 +47,11 @@ export class UserFileUploadComponent {
                 }
             });
         }
+    }
+
+    upload() {
+        this.fileUpload.value = "";
+        this.fileUpload.click();
     }
 
     cancelUpload() {
