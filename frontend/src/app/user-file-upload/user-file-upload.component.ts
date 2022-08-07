@@ -8,7 +8,7 @@ import { finalize } from "rxjs/operators";
     templateUrl: "user-file-upload.component.html",
     styleUrls: ["user-file-upload.component.scss"]
 })
-export class FileUploadComponent {
+export class UserFileUploadComponent {
     @Input()
     requiredFileType: string;
 
@@ -31,7 +31,12 @@ export class FileUploadComponent {
                     reportProgress: true,
                     observe: "events"
                 })
-                .pipe(finalize(() => this.reset()));
+                .pipe(
+                    finalize(() => {
+                        console.log("in finalize");
+                        this.reset();
+                    })
+                );
 
             this.uploadSub = upload$.subscribe(event => {
                 if (event.type == HttpEventType.UploadProgress) {
