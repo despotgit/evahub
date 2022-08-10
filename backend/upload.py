@@ -3,6 +3,8 @@ from flask import Flask, Blueprint, request, Response, send_from_directory
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 
+app = Flask(__name__)
+
 upload = Blueprint("upload", __name__)
 
 
@@ -10,11 +12,14 @@ upload = Blueprint("upload", __name__)
 def upload_file():
     if request.method == "POST":
         print("were in!!!")
-        # f = request.files["file"]
+
+        app.config["UPLOAD_FOLDER"] = "log_uploads"
+        app.config["MAX_CONTENT_PATH"] = 999999999999
+
         f = request.files["file"]
         print("f is:")
         print(f)
-        f.save("this_here.png")
+        f.save("log_uploads/" + f.filename)
 
         print("and yes!:")
         print(secure_filename(f.filename))

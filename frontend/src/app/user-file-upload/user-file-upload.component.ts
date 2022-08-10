@@ -20,7 +20,6 @@ export class UserFileUploadComponent {
     constructor(private http: HttpClient) {}
 
     onFileSelected(event) {
-        console.log("checkpoint 1 raught!!!");
         const file: File = event.target.files[0];
 
         if (file) {
@@ -31,7 +30,7 @@ export class UserFileUploadComponent {
             let url = `${environment.baseApiBackendUrl}/upload/user_log_upload`;
 
             const upload$ = this.http
-                //.post("/upload/user_log_upload", formData, {
+
                 .post(url, formData, {
                     reportProgress: true,
                     observe: "events"
