@@ -1,19 +1,37 @@
-from flask import Flask, render_template, request
-from werkzeug import secure_filename
+from flask import Flask, render_template, request, Blueprint, json
 
-app = Flask(__name__)
+# from werkzeug import secure_filename
+from flask import Flask, Blueprint, request, Response, send_from_directory
+
+upload = Blueprint("upload", __name__)
 
 
-@app.route("/user_log_upload", methods=["GET", "POST"])
+@upload.route("/user_log_upload", methods=["GET", "POST"])
 def upload_file():
     if request.method == "POST":
-        f = request.files["file"]
+        print("were in!!!")
+        # f = request.files["file"]
+        f = request.files["thumbnail"]
+        print("f is:")
+        print(f)
         f.save("this_here.png")
-        # print("and yes!:")
+
+        print("and yes!:")
         # print(secure_filename(f.filename))
         # f.save(secure_filename(f.filename))
-        return "file uploaded successfully"
+
+        response = {
+            "authenticated": "maybe",
+            "status": "maybe ok",
+            "user": "some maybe user",
+            "message": "cool",
+        }
+
+        response = json.jsonify(response)
+
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    upload.run(debug=True)

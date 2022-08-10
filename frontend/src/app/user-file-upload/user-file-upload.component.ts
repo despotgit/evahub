@@ -1,7 +1,8 @@
 import { HttpClient, HttpEventType } from "@angular/common/http";
-import { Component, ElementRef, Input, ViewChild } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Subscription } from "rxjs";
 import { finalize } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: "evahub-user-file-upload",
@@ -9,9 +10,6 @@ import { finalize } from "rxjs/operators";
     styleUrls: ["user-file-upload.component.scss"]
 })
 export class UserFileUploadComponent {
-    @ViewChild("fileUpload")
-    fileUpload: ElementRef;
-
     @Input()
     requiredFileType: string;
 
@@ -22,6 +20,7 @@ export class UserFileUploadComponent {
     constructor(private http: HttpClient) {}
 
     onFileSelected(event) {
+        console.log("checkpoint 1 raught!!!");
         const file: File = event.target.files[0];
 
         if (file) {
@@ -29,8 +28,11 @@ export class UserFileUploadComponent {
             const formData = new FormData();
             formData.append("thumbnail", file);
 
+            let url = `${environment.baseApiBackendUrl}/upload/user_log_upload`;
+
             const upload$ = this.http
-                .post("/api/thumbnail-upload", formData, {
+                //.post("/upload/user_log_upload", formData, {
+                .post(url, formData, {
                     reportProgress: true,
                     observe: "events"
                 })
@@ -47,11 +49,6 @@ export class UserFileUploadComponent {
                 }
             });
         }
-    }
-
-    upload() {
-        this.fileUpload.value = "";
-        this.fileUpload.click();
     }
 
     cancelUpload() {
