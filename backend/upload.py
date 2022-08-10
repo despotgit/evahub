@@ -11,10 +11,7 @@ upload = Blueprint("upload", __name__)
 @upload.route("/user_log_upload", methods=["GET", "POST"])
 def upload_file():
     if request.method == "POST":
-        print("were in!!!")
-
-        app.config["UPLOAD_FOLDER"] = "log_uploads"
-        app.config["MAX_CONTENT_PATH"] = 999999999999
+        print("we're in!!!")
 
         f = request.files["file"]
         print("f is:")
