@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, Blueprint, json
-
-# from werkzeug import secure_filename
 from flask import Flask, Blueprint, request, Response, send_from_directory
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import FileStorage
 
 upload = Blueprint("upload", __name__)
 
@@ -11,14 +11,14 @@ def upload_file():
     if request.method == "POST":
         print("were in!!!")
         # f = request.files["file"]
-        f = request.files["thumbnail"]
+        f = request.files["file"]
         print("f is:")
         print(f)
         f.save("this_here.png")
 
         print("and yes!:")
-        # print(secure_filename(f.filename))
-        # f.save(secure_filename(f.filename))
+        print(secure_filename(f.filename))
+        f.save(secure_filename(f.filename))
 
         response = {
             "authenticated": "maybe",

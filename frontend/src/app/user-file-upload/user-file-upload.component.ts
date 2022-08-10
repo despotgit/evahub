@@ -11,7 +11,7 @@ import { environment } from "src/environments/environment";
 })
 export class UserFileUploadComponent {
     @Input()
-    requiredFileType: string;
+    requiredFileType: string = "png";
 
     fileName = "";
     uploadProgress: number;
@@ -26,7 +26,7 @@ export class UserFileUploadComponent {
         if (file) {
             this.fileName = file.name;
             const formData = new FormData();
-            formData.append("thumbnail", file);
+            formData.append("file", file);
 
             let url = `${environment.baseApiBackendUrl}/upload/user_log_upload`;
 
