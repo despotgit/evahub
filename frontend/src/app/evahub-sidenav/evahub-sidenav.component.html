@@ -1,8 +1,7 @@
 <mat-list>
-    <span *ngFor="let menuOption of menuOptions">
+    <mat-card *ngFor="let menuOption of menuOptions">
         <mat-list-item (click)="menuItemClicked(menuOption.id)" class="sidenav-menu-item">
             {{ menuOption.label }}
         </mat-list-item>
-        <mat-divider></mat-divider>
-    </span>
+    </mat-card>
 </mat-list>
