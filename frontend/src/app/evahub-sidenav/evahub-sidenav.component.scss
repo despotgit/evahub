@@ -1,3 +1,5 @@
+@import "../../common.scss";
+
 .sidenav-menu-item {
     display: block;
     min-height: 70px;
@@ -9,5 +11,5 @@
 
 mat-card {
     margin-bottom: 8px;
-    border-radius: 8px;
+    border-radius: $small-rounded-border-radius;
 }
