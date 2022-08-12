@@ -15,7 +15,6 @@ def getDbUserReport(username, reportId):
 
 
 def getDbUserReports(username):
-
     results = getValuesFromDb(
         "select report_id as reportId, user_id as reportUserId, report_name as reportName, report_content as reportContent from reports where report_username = '"
         + str(username)

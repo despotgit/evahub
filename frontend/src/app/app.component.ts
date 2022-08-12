@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { map, switchMap, Observable, of, Subscription, tap } from "rxjs";
+import { map, switchMap, Observable, of, Subscription, tap, withLatestFrom } from "rxjs";
 import { environment } from "src/environments/environment";
 import {
     getPageNameFromPageIndex,
@@ -148,15 +148,35 @@ export class AppComponent implements OnInit, AfterViewInit {
         //console.log("!!!!!docType is:", docType);
         let docTypeToLower = docType.toLowerCase();
         //console.log("docType is:", docType);
-        let username = "test2";
 
-        let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
+        let un = "test2";
 
+        //let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${un}`;
+
+        this.httpDocsCall = this.username$
+            .pipe(
+                switchMap(username => {
+                    let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
+
+                    return this.httpClient.get(url);
+                }),
+                map(ud => {
+                    console.log("ud is:", ud);
+                    let ds = ud["user" + docType + "s"];
+                    this.processDocuments(ds, docType);
+                    return ud;
+                })
+            )
+            .subscribe();
+
+        /*
         this.httpDocsCall = this.httpClient
             .get(url)
             .pipe(
-                map(ud => {
-                    //console.log("ud is:", ud);
+                withLatestFrom(this.username$),
+                map(([ud, un]) => {
+                    console.log("ud is:", ud);
+                    console.log("un is:", un);
                     //console.log("prop name is:", "user" + docType + "s");
                     let ds = ud["user" + docType + "s"];
                     this.processDocuments(ds, docType);
@@ -165,6 +185,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                 tap()
             )
             .subscribe();
+        */
 
         //setTimeout(() => this.httpDocsCall.unsubscribe(), 1000);
     }

@@ -1,6 +1,7 @@
 import time
 
 from db_config import getDb
+from db import getValuesFromDb
 
 db = getDb()
 
@@ -14,23 +15,22 @@ def getDbUserLog(username, reportId):
 
 
 def getDbUserLogs(username):
-    return [
-        {
-            "logId": 1,
-            "logContent": "aaa",
-            "logName": "first log",
-        },
-        {
-            "logId": 2,
-            "logContent": "bbb",
-            "logName": "second log",
-        },
-        {
-            "logId": 3,
-            "logContent": "ccc",
-            "logName": "third log",
-        },
-    ]
+    results = getValuesFromDb(
+        "select log_id as logId, log_name as logName, log_content as logContent from logs where log_username = '"
+        + str(username)
+        + "'"
+    )
+
+    print("results is:")
+    print(results)
+
+    toReturn = []
+    for r in results:
+        toReturn.append({"logId": r[0], "logName": r[1], "logContent": r[2]})
+
+    print(toReturn)
+
+    return toReturn
 
 
 def updateDbUserLog(username, logId, logContent):
