@@ -1,7 +1,19 @@
 <mat-list>
-    <mat-card *ngFor="let menuOption of menuOptions">
-        <mat-list-item (click)="menuItemClicked(menuOption.id)" class="sidenav-menu-item">
-            {{ menuOption.label }}
+    <mat-card *ngFor="let mo of menuOptions">
+        selectedDocumentId is:
+        {{ selectedDocumentId }}
+        mo.id is:
+        {{ mo.id }}
+        <mat-list-item
+            [ngStyle]="
+                selectedDocumentId == mo.id
+                    ? { 'background-color': 'green' }
+                    : { 'background-color': 'red' }
+            "
+            (click)="menuItemClicked(mo.id)"
+            class="sidenav-menu-item"
+        >
+            {{ mo.label }}
         </mat-list-item>
     </mat-card>
 </mat-list>

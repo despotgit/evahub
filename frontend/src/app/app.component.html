@@ -5,7 +5,8 @@
         isSidenavOpened: isSidenavOpened$ | async,
         menuOptions: sidenavMenuOptions$ | async,
         currentDocumentSet: currentDocumentSet$ | async,
-        currentPageIndex: currentPageIndex$ | async
+        currentPageIndex: currentPageIndex$ | async,
+        currentDocumentId: currentDocumentId$ | async
     } as asyncData"
 >
     <mat-toolbar>
@@ -40,6 +41,7 @@
             <evahub-sidenav
                 (emitItemClicked)="menuItemClicked($event)"
                 [menuOptions]="asyncData.menuOptions"
+                [selectedDocumentId]="asyncData.currentDocumentId"
             ></evahub-sidenav>
         </mat-sidenav>
 

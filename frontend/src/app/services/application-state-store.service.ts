@@ -46,6 +46,7 @@ export class EvahubSidenavMenuOption {
     id: number;
     label?: string;
     action?: string;
+    selected: boolean;
 }
 
 export class UserReportsState {

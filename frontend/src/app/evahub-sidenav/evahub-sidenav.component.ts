@@ -11,6 +11,9 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
     @Input()
     menuOptions: EvahubSidenavMenuOption[];
 
+    @Input()
+    selectedDocumentId: number;
+
     @Output()
     emitItemClicked: EventEmitter<number> = new EventEmitter();
 

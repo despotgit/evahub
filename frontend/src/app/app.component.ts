@@ -213,7 +213,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
             let mo: EvahubSidenavMenuOption = {
                 id: doc.getDocumentId(),
-                label: doc.getDocumentName()
+                label: doc.getDocumentName(),
+                selected: false
             };
 
             menuOptions.push(mo);
