@@ -3,10 +3,6 @@
         *ngFor="let mo of menuOptions"
         [ngClass]="selectedDocumentId == mo.id ? 'selected-menu-item' : 'unselected-menu-item'"
     >
-        selectedDocumentId is:
-        {{ selectedDocumentId }}
-        mo.id is:
-        {{ mo.id }}
         <mat-list-item (click)="menuItemClicked(mo.id)" class="sidenav-menu-item">
             {{ mo.label }}
         </mat-list-item>

@@ -3,6 +3,7 @@
         <button
             *ngIf="!(mi.index == pageSelected)"
             mat-button
+            [ngClass]="['unselected-menu-item']"
             color="basic"
             (click)="itemClicked(mi)"
         >
@@ -11,6 +12,7 @@
         <button
             *ngIf="mi.index == pageSelected"
             mat-raised-button
+            [ngClass]="['selected-menu-item']"
             color="primary"
             (click)="itemClicked(mi)"
         >
