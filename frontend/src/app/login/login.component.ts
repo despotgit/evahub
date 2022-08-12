@@ -1,10 +1,17 @@
-import { Component, OnInit, AfterViewChecked } from "@angular/core";
+import {
+    Component,
+    OnInit,
+    AfterViewChecked,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
+} from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
-import { first } from "rxjs/operators";
+import { first, take } from "rxjs/operators";
 import { PageIndex } from "../common/constants";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
+import { of } from "rxjs";
 
 @Component({
     selector: "app-login",
@@ -16,14 +23,15 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     submitted = false;
     loading = false;
     returnUrl: string = "";
-    error = "";
+    error = "xyz";
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private store: ApplicationStateStoreService
+        private store: ApplicationStateStoreService,
+        private cd: ChangeDetectorRef
     ) {
         this.loginForm = this.formBuilder.group({
             username: ["", Validators.required],
@@ -62,14 +70,19 @@ export class LoginComponent implements OnInit, AfterViewChecked {
 
         this.authenticationService
             .login(this.f["username"].value, this.f["password"].value)
-            .pipe(first())
             .subscribe(data => {
                 if (data.authenticated) {
                     this.router.navigate([this.returnUrl]);
                 } else {
+                    console.log("just before Wrong cred entered");
                     this.error = "Wrong credentials entered.";
+                    console.log("error is:", this.error);
+                    this.cd.markForCheck();
                 }
                 this.loading = false;
+                return;
             });
+
+        //loginSubscription.unsubscribe();
     }
 }
