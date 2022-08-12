@@ -9,6 +9,13 @@
     border: 1px solid blue;
 }
 
+.selected-menu-item {
+    background-color: $selection-color;
+}
+
+.unselected-menu-item {
+}
+
 mat-card {
     margin-bottom: 8px;
     border-radius: $small-rounded-border-radius;
