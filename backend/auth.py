@@ -96,7 +96,7 @@ def login():
             status = "OK"
         else:
             # print("It does not match :(")
-            msg = "Login failed."
+            msg = "Wrong credentials."
             authenticated = False
             status = "Failed"
 

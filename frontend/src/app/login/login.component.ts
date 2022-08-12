@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     submitted = false;
     loading = false;
     returnUrl: string = "";
-    error = "xyz";
+    error = "";
 
     constructor(
         private formBuilder: FormBuilder,
@@ -71,11 +71,12 @@ export class LoginComponent implements OnInit, AfterViewChecked {
         this.authenticationService
             .login(this.f["username"].value, this.f["password"].value)
             .subscribe(data => {
+                console.log("data is:", data);
                 if (data.authenticated) {
                     this.router.navigate([this.returnUrl]);
                 } else {
                     console.log("just before Wrong cred entered");
-                    this.error = "Wrong credentials entered.";
+                    this.error = data.message;
                     console.log("error is:", this.error);
                     this.cd.markForCheck();
                 }
