@@ -3,6 +3,7 @@ import { Component, Input } from "@angular/core";
 import { Subscription } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { environment } from "src/environments/environment";
+import { ApplicationStateStoreService } from "../services/application-state-store.service";
 
 @Component({
     selector: "evahub-user-file-upload",
@@ -17,7 +18,9 @@ export class UserFileUploadComponent {
     uploadProgress: number;
     uploadSub: Subscription;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private store: ApplicationStateStoreService) {
+        this.store.updateSidenavMenuOptions([]);
+    }
 
     onFileSelected(event) {
         const file: File = event.target.files[0];
