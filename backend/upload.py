@@ -15,22 +15,19 @@ def upload_file():
         print("we're in!!!")
 
         rootDir = "log_uploads"
+        uploadLocation = secure_filename('rootDir + "/" + f.filename')
 
         f = request.files["file"]
         print("f is:")
         print(f)
-        f.save(rootDir + "/" + f.filename)
+        f.save(uploadLocation)
 
         if os.path.isdir(rootDir):
             print("yeahhhh")
         else:
             print("noahhhhh")
 
-        os.mkdir("svarog")
-
-        print("and yes!:")
-        print(secure_filename(f.filename))
-        f.save(secure_filename(f.filename))
+        # os.mkdir("svarog")
 
         response = {
             "authenticated": "maybe",
