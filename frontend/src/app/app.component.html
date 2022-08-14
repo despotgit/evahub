@@ -10,7 +10,7 @@
     } as asyncData"
 >
     <mat-toolbar>
-        <span>EVAHUB</span>
+        <span class="title">{{ title }}</span>
         <evahub-main-menu
             (itemClickedEmit)="goTo($event)"
             [cpi]="asyncData.currentPageIndex"
