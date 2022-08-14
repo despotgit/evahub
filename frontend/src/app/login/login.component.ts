@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-        this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/home";
+        this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/documents/log";
     }
 
     get f() {

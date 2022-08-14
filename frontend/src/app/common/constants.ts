@@ -34,7 +34,7 @@ export const PageIndexDictionary = {
         isDocumentsPage: false,
         label: "Home",
         gotoParam: "home",
-        isInMainMenu: true
+        isInMainMenu: false
     },
     "user-file-upload": {
         index: PageIndex.USER_FILE_UPLOAD_PAGE,
