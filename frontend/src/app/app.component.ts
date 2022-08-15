@@ -224,5 +224,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     ngOnDestroy() {
         this.docSelectedSub.unsubscribe();
+        this.httpDocsCall.unsubscribe();
     }
 }
