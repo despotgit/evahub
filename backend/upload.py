@@ -9,25 +9,30 @@ app = Flask(__name__)
 upload = Blueprint("upload", __name__)
 
 
-@upload.route("/user-log-upload", methods=["GET", "POST"])
-def upload_file():
+# PUT - Upload a file
+@upload.route("/user-log-upload/<username>", methods=["POST"])
+def upload_file(username):
     if request.method == "POST":
+        print("username is:" + username)
+
         print("we're in!!!")
 
-        rootDir = "log_uploads"
-        uploadLocation = secure_filename('rootDir + "/" + f.filename')
-
         f = request.files["file"]
+
+        rootDir = "log_uploads"
+        userDir = rootDir + "/" + username
+
+        if os.path.isdir(userDir):
+            print("exists already")
+        else:
+            os.mkdir(userDir)
+            print("dir created")
+
+        uploadLocation = userDir + "/" + secure_filename(f.filename)
+
         print("f is:")
         print(f)
         f.save(uploadLocation)
-
-        if os.path.isdir(rootDir):
-            print("yeahhhh")
-        else:
-            print("noahhhhh")
-
-        # os.mkdir("svarog")
 
         response = {
             "authenticated": "maybe",

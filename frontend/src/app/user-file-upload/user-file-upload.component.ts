@@ -30,7 +30,7 @@ export class UserFileUploadComponent {
             const formData = new FormData();
             formData.append("file", file);
 
-            let url = `${environment.baseApiBackendUrl}/upload/user-log-upload`;
+            let url = `${environment.baseApiBackendUrl}/upload/user-log-upload/test2`;
 
             const upload$ = this.http
 
