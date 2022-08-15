@@ -149,8 +149,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         let docTypeToLower = docType.toLowerCase();
         //console.log("docType is:", docType);
 
-        let un = "test2";
-
         //let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${un}`;
 
         this.httpDocsCall = this.username$
@@ -168,26 +166,6 @@ export class AppComponent implements OnInit, AfterViewInit {
                 })
             )
             .subscribe();
-
-        /*
-        this.httpDocsCall = this.httpClient
-            .get(url)
-            .pipe(
-                withLatestFrom(this.username$),
-                map(([ud, un]) => {
-                    console.log("ud is:", ud);
-                    console.log("un is:", un);
-                    //console.log("prop name is:", "user" + docType + "s");
-                    let ds = ud["user" + docType + "s"];
-                    this.processDocuments(ds, docType);
-                    return ud;
-                }),
-                tap()
-            )
-            .subscribe();
-        */
-
-        //setTimeout(() => this.httpDocsCall.unsubscribe(), 1000);
     }
 
     // Runs as part of fetching the data from API backend
