@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 import os
 from auth import authenticateJwt
+from db import executeCustomQuery
 
 app = Flask(__name__)
 
@@ -37,6 +38,8 @@ def upload_file(username):
     print("f is:")
     print(f)
     f.save(uploadLocation)
+
+    executeCustomQuery
 
     response = {
         "authenticated": "maybe",
