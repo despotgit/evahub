@@ -15,7 +15,7 @@ export class UserFileUploadComponent implements OnDestroy {
     requiredFileType: string = "png";
 
     fileName = "";
-    uploadProgress: number = 50;
+    uploadProgress: number;
     uploadSub$: Subscription;
     httpCall$: Subscription;
 
