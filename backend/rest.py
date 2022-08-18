@@ -1,7 +1,7 @@
 from flask import Blueprint, Flask, json, request
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
-from auth import authenticateJwt, checkIfAuthorized
+from auth import authenticateJwt
 from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
 from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
 from db_user_reports_broker import getDbUserReports

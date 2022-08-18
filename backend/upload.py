@@ -3,6 +3,7 @@ from flask import Flask, Blueprint, request, Response, send_from_directory
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 import os
+from auth import authenticateJwt
 
 app = Flask(__name__)
 
@@ -12,39 +13,45 @@ upload = Blueprint("upload", __name__)
 # PUT - Upload a file
 @upload.route("/user-log-upload/<username>", methods=["POST"])
 def upload_file(username):
-    if request.method == "POST":
-        print("username is:" + username)
+    authentication = authenticateJwt(username)
 
-        print("we're in!!!")
+    if not authentication["authenticated"]:
+        return authentication
+    else:
+        print("autorizado!!!!!!!")
 
-        f = request.files["file"]
+    print("username is:" + username)
 
-        rootDir = "log_uploads"
-        userDir = rootDir + "/" + username
+    print("we're in!!!")
 
-        if os.path.isdir(userDir):
-            print("exists already")
-        else:
-            os.mkdir(userDir)
-            print("dir created")
+    f = request.files["file"]
 
-        uploadLocation = userDir + "/" + secure_filename(f.filename)
+    rootDir = "log_uploads"
+    userDir = rootDir + "/" + username
 
-        print("f is:")
-        print(f)
-        f.save(uploadLocation)
+    if os.path.isdir(userDir):
+        print("exists already")
+    else:
+        os.mkdir(userDir)
+        print("dir created")
 
-        response = {
-            "authenticated": "maybe",
-            "status": "maybe ok",
-            "user": "some maybe user",
-            "message": "cool",
-        }
+    uploadLocation = userDir + "/" + secure_filename(f.filename)
 
-        response = json.jsonify(response)
+    print("f is:")
+    print(f)
+    f.save(uploadLocation)
 
-        response.headers.add("Access-Control-Allow-Origin", "*")
-        return response
+    response = {
+        "authenticated": "maybe",
+        "status": "maybe ok",
+        "user": "some maybe user",
+        "message": "cool",
+    }
+
+    response = json.jsonify(response)
+
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 
 if __name__ == "__main__":
