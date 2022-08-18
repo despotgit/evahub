@@ -12,3 +12,15 @@
 .progress-bar {
     min-width: 300px;
 }
+
+.file-upload {
+    display: block;
+    margin-bottom: 100px;
+}
+
+.progress,
+.file-upload {
+    display: block;
+    clear: both;
+    position: absolute;
+}
