@@ -17,12 +17,6 @@ def upload_file(username):
 
     if not authentication["authenticated"]:
         return authentication
-    else:
-        print("autorizado!!!!!!!")
-
-    print("username is:" + username)
-
-    print("we're in!!!")
 
     f = request.files["file"]
 
@@ -30,12 +24,15 @@ def upload_file(username):
     userDir = rootDir + "/" + username
 
     if os.path.isdir(userDir):
-        print("exists already")
+        print()
+        # print("exists already")
     else:
         os.mkdir(userDir)
-        print("dir created")
+        # print("dir created")
 
-    uploadLocation = userDir + "/" + secure_filename(f.filename)
+    finalFilename = secure_filename(f.filename)
+
+    uploadLocation = userDir + "/" + finalFilename
 
     print("f is:")
     print(f)

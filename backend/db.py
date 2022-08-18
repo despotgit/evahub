@@ -1,7 +1,7 @@
 from db_config import getDb
 
 
-def getValuesFromDb(sql):
+def executeCustomQuery(sql):
     connection = getDb()
     cursor = connection.cursor()
 

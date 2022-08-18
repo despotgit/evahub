@@ -1,7 +1,7 @@
 import time
 
 from db_config import getDb
-from db import getValuesFromDb
+from db import executeCustomQuery
 
 db = getDb()
 
@@ -16,7 +16,7 @@ def getDbUserCheck(username, checkId):
 
 def getDbUserChecks(username):
 
-    results = getValuesFromDb(
+    results = executeCustomQuery(
         "select check_id as checkId, user_id as checkUserId, check_name as checkName, check_content as checkContent from checks where check_username = '"
         + str(username)
         + "'"

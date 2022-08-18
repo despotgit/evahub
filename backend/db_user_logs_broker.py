@@ -1,7 +1,7 @@
 import time
 
 from db_config import getDb
-from db import getValuesFromDb
+from db import executeCustomQuery
 
 db = getDb()
 
@@ -15,7 +15,7 @@ def getDbUserLog(username, reportId):
 
 
 def getDbUserLogs(username):
-    results = getValuesFromDb(
+    results = executeCustomQuery(
         "select log_id as logId, log_name as logName, log_content as logContent from logs where log_username = '"
         + str(username)
         + "'"
