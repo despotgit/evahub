@@ -1,5 +1,5 @@
 import { HttpClient, HttpEventType } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Input } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnDestroy } from "@angular/core";
 import { Subscription, switchMap, map } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { environment } from "src/environments/environment";
@@ -10,7 +10,7 @@ import { ApplicationStateStoreService } from "../services/application-state-stor
     templateUrl: "user-file-upload.component.html",
     styleUrls: ["user-file-upload.component.scss"]
 })
-export class UserFileUploadComponent {
+export class UserFileUploadComponent implements OnDestroy {
     @Input()
     requiredFileType: string = "png";
 
@@ -49,11 +49,6 @@ export class UserFileUploadComponent {
                             observe: "events"
                         });
                     }),
-                    map(res => {
-                        console.log("step 2, res is:", res);
-
-                        return res;
-                    }),
                     finalize(() => {
                         console.log("step 3, in finalize");
                         this.reset();
@@ -71,12 +66,18 @@ export class UserFileUploadComponent {
     }
 
     cancelUpload() {
-        this.httpCall$.unsubscribe();
+        if (this.httpCall$) {
+            this.httpCall$.unsubscribe();
+        }
         this.reset();
     }
 
     reset() {
         this.uploadProgress = null;
         this.httpCall$ = null;
+    }
+
+    ngOnDestroy() {
+        this.cancelUpload();
     }
 }
