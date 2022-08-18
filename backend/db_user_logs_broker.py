@@ -7,6 +7,7 @@ db = getDb()
 
 
 def addDbUserLog(u):
+    results = executeCustomQuery("insert into ")
     return
 
 
@@ -16,7 +17,7 @@ def getDbUserLog(username, reportId):
 
 def getDbUserLogs(username):
     results = executeCustomQuery(
-        "select log_id as logId, log_name as logName, log_content as logContent from logs where log_username = '"
+        "select log_id as logId, log_name as logName, log_content as logContent from logs where username = '"
         + str(username)
         + "'"
     )

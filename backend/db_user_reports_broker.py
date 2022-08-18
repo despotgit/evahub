@@ -16,7 +16,7 @@ def getDbUserReport(username, reportId):
 
 def getDbUserReports(username):
     results = executeCustomQuery(
-        "select report_id as reportId, user_id as reportUserId, report_name as reportName, report_content as reportContent from reports where report_username = '"
+        "select report_id as reportId, user_id as reportUserId, report_name as reportName, report_content as reportContent from reports where username = '"
         + str(username)
         + "'"
     )
