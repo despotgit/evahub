@@ -17,7 +17,7 @@ def getDbUserCheck(username, checkId):
 def getDbUserChecks(username):
 
     results = executeCustomQuery(
-        "select check_id as checkId, user_id as checkUserId, check_name as checkName, check_content as checkContent from checks where username = '"
+        "select check_id as checkId, check_name as checkName, check_content as checkContent from checks where username = '"
         + str(username)
         + "'"
     )
@@ -27,7 +27,7 @@ def getDbUserChecks(username):
 
     toReturn = []
     for r in results:
-        toReturn.append({"checkId": r[0], "checkName": r[2], "checkContent": r[3]})
+        toReturn.append({"checkId": r[0], "checkName": r[1], "checkContent": r[2]})
 
     print(toReturn)
 

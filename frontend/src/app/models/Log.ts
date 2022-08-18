@@ -2,7 +2,6 @@ import { EvahubDocument, EvahubDocumentType } from "./EvahubDocument";
 
 // LOGS:
 export class Log implements EvahubDocument {
-    logUserId?: number;
     logId?: number;
     logName?: string;
     logContent?: string;

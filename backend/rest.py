@@ -21,14 +21,6 @@ def before_request():
     pass
 
 
-@rest.after_request
-def after_request(r):
-    print("in after_request, a is:")
-    print(r)
-
-    return r
-
-
 # A proxy
 @rest.route("/<path:path>", methods=["GET", "POST"])
 def proxy(path):

@@ -16,7 +16,7 @@ def getDbUserReport(username, reportId):
 
 def getDbUserReports(username):
     results = executeCustomQuery(
-        "select report_id as reportId, user_id as reportUserId, report_name as reportName, report_content as reportContent from reports where username = '"
+        "select report_id as reportId, report_name as reportName, report_content as reportContent from reports where username = '"
         + str(username)
         + "'"
     )
@@ -26,7 +26,7 @@ def getDbUserReports(username):
 
     toReturn = []
     for r in results:
-        toReturn.append({"reportId": r[0], "reportName": r[2], "reportContent": r[3]})
+        toReturn.append({"reportId": r[0], "reportName": r[1], "reportContent": r[2]})
 
     print(toReturn)
 

@@ -2,7 +2,6 @@ import { EvahubDocumentType } from "./EvahubDocument";
 
 // CHECKS:
 export class Check {
-    checkUserId?: number;
     checkId?: number;
     checkName?: string;
     checkContent?: string;
