@@ -1,5 +1,5 @@
 import { HttpClient, HttpEventType } from "@angular/common/http";
-import { Component, Input } from "@angular/core";
+import { ChangeDetectorRef, Component, Input } from "@angular/core";
 import { Subscription, switchMap, map } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { environment } from "src/environments/environment";
@@ -15,13 +15,17 @@ export class UserFileUploadComponent {
     requiredFileType: string = "png";
 
     fileName = "";
-    uploadProgress: number;
+    uploadProgress: number = 50;
     uploadSub$: Subscription;
     httpCall$: Subscription;
 
     username$ = this.store.username$;
 
-    constructor(private http: HttpClient, private store: ApplicationStateStoreService) {
+    constructor(
+        private http: HttpClient,
+        private store: ApplicationStateStoreService,
+        private cd: ChangeDetectorRef
+    ) {
         this.store.updateSidenavMenuOptions([]);
     }
 
@@ -46,35 +50,23 @@ export class UserFileUploadComponent {
                         });
                     }),
                     map(res => {
-                        console.log("res is:", res);
+                        console.log("step 2, res is:", res);
 
                         return res;
                     }),
                     finalize(() => {
-                        console.log("in finalize");
+                        console.log("step 3, in finalize");
                         this.reset();
                     })
                 )
                 .subscribe(event => {
                     if (event.type == HttpEventType.UploadProgress) {
-                        this.uploadProgress = Math.round(100 * (event.loaded / event.total));
+                        console.log("UPLOAD PROGRESS, event is:", event);
+                        const newProgress = Math.round(100 * (event.loaded / event.total));
+                        this.uploadProgress = newProgress;
+                        this.cd.markForCheck();
                     }
                 });
-
-            /*
-            const upload$ = this.http
-                .post(url, formData, {
-                    reportProgress: true,
-                    observe: "events"
-                })
-                .pipe();
-
-            this.uploadSub$ = upload$.subscribe(event => {
-                if (event.type == HttpEventType.UploadProgress) {
-                    this.uploadProgress = Math.round(100 * (event.loaded / event.total));
-                }
-            });
-            */
         }
     }
 

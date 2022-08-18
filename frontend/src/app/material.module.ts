@@ -13,6 +13,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatCardModule } from "@angular/material/card";
 import { MatDividerModule } from "@angular/material/divider";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { MatDividerModule } from "@angular/material/divider";
         MatGridListModule,
         MatCardModule,
         MatSidenavModule,
-        MatDividerModule
+        MatDividerModule,
+        MatProgressBarModule
     ],
     exports: [
         MatFormFieldModule,
@@ -47,7 +49,8 @@ import { MatDividerModule } from "@angular/material/divider";
         MatGridListModule,
         MatCardModule,
         MatSidenavModule,
-        MatDividerModule
+        MatDividerModule,
+        MatProgressBarModule
     ]
 })
 export class VladosMaterialModule {}
