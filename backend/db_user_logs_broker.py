@@ -42,9 +42,7 @@ def getUploadedUserLogs(username):
         with open(filePath, "r") as f:
 
             lines = f.readlines()
-            lines = [
-                line.strip() for line in lines
-            ]  # TO DO: CHANGE OMIT THE STRIPPING OF LINES
+
             for line in lines:
                 print("")
                 content = content + "\n" + str(line)
