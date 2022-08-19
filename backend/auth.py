@@ -44,7 +44,7 @@ def register():
     #  print(result[1])
 
     response = json.jsonify(
-        {"status": "OK", "message": "User successfully registered."}
+        {"status": "ok", "message": "User successfully registered."}
     )
 
     response.headers.add("Access-Control-Allow-Origin", "*")
@@ -93,7 +93,7 @@ def login():
             accessToken = create_access_token(
                 identity=username, additional_claims={"some": 123}
             )
-            status = "OK"
+            status = "ok"
         else:
             # print("It does not match :(")
             msg = "Wrong credentials."
@@ -121,7 +121,7 @@ def login():
 # GET - Test
 @auth.route("/test", methods=["GET"])
 def getTest():
-    response = json.jsonify({"authenticated": True, "status": "OK", "message": "Fine"})
+    response = json.jsonify({"authenticated": True, "status": "ok", "message": "Fine"})
 
     response.headers.add("Access-Control-Allow-Origin", "*")
 
@@ -188,7 +188,7 @@ def authenticateJwt(username):
         # 3. JWT is not expired
         # 4. JWT is not revoked
         return {
-            "status": "OK",
+            "status": "ok",
             "authenticated": True,
             "message": "Token successfully verified for given user.",
             "decodedToken": decodedToken,

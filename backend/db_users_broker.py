@@ -4,8 +4,9 @@ from db_config import getDb
 
 db = getDb()
 
+
 def addDbUser(u):
-    
+
     usersCollection = db["users"]
 
     u = {
@@ -14,7 +15,7 @@ def addDbUser(u):
         "last_name": u["lastName"],
         "email": u["email"],
         "domain": u["domain"],
-        "created-at": str(time.time())
+        "created-at": str(time.time()),
     }
 
     usersCollection.insert_one(u)
@@ -42,7 +43,7 @@ def updateDbUser(username, field, value):
 
     updateParameter = {"$set": {field: value, "modified-at": str(time.time())}}
 
-    usersCollection.update({"username": username}, updateParameter  )
+    usersCollection.update({"username": username}, updateParameter)
 
     return
 

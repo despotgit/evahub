@@ -76,7 +76,7 @@ def getUserData(username):
     else:
         response = {
             "authenticated": True,
-            "status": "OK",
+            "status": "ok",
             "user": user,
             "message": "User retrieved successfully",
         }
@@ -115,7 +115,7 @@ def setUserData(username):
         # Return response
         response = {
             "authenticated": True,
-            "status": "OK",
+            "status": "ok",
             "message": "User updated correctly.",
             "user": user,
         }
@@ -152,7 +152,7 @@ def deleteUserAccount():
         # Return response
         response = {
             "authenticated": True,
-            "status": "OK",
+            "status": "ok",
             "message": "All user data successfully deleted.",
             "username": username,
         }
@@ -182,13 +182,13 @@ def getUserReports(username):
 
         response = {
             "authenticated": True,
-            "status": "OK",
+            "status": "ok",
             "message": "No reports found",
         }
     else:
         response = {
             "authenticated": True,
-            "status": "OK",
+            "status": "ok",
             "userReports": userReports,
             "message": "Reports retrieved successfully",
         }
@@ -218,13 +218,13 @@ def getUserLogs(username):
 
         response = {
             "authenticated": True,
-            "status": "OK",
+            "status": "ok",
             "message": "No reports found",
         }
     else:
         response = {
             "authenticated": True,
-            "status": "OK",
+            "status": "ok",
             "userLogs": userLogs,
             "message": "Logs retrieved successfully",
         }
@@ -254,13 +254,13 @@ def getUserChecks(username):
 
         response = {
             "authenticated": True,
-            "status": "OK",
+            "status": "ok",
             "message": "No reports found",
         }
     else:
         response = {
             "authenticated": True,
-            "status": "OK",
+            "status": "ok",
             "userChecks": userChecks,
             "message": "Checks retrieved successfully",
         }
@@ -291,7 +291,7 @@ def getState(username, key):
         }
 
     else:
-        response = {"authenticated": True, "status": "OK", "state": state}
+        response = {"authenticated": True, "status": "ok", "state": state}
 
     response = json.jsonify(response)
 
@@ -331,7 +331,7 @@ def setState(username):
             response = json.jsonify(
                 {
                     "authenticated": True,
-                    "status": "OK",
+                    "status": "ok",
                     "message": "New state is successfully added.",
                     "state": state,
                 }
@@ -344,7 +344,7 @@ def setState(username):
             response = json.jsonify(
                 {
                     "authenticated": True,
-                    "status": "OK",
+                    "status": "ok",
                     "message": "State updated correctly.",
                     "state": state,
                 }
@@ -383,7 +383,7 @@ def deleteUserState():
         # Return response
         response = {
             "authenticated": True,
-            "status": "OK",
+            "status": "ok",
             "message": "State successfully deleted.",
             "key": key,
         }

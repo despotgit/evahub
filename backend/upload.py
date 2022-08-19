@@ -42,10 +42,9 @@ def upload_file(username):
     executeCustomQuery
 
     response = {
-        "authenticated": "maybe",
-        "status": "maybe ok",
-        "user": "some maybe user",
-        "message": "cool",
+        "authenticated": True,
+        "status": "ok",
+        "message": "File uploaded.",
     }
 
     response = json.jsonify(response)
