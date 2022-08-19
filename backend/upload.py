@@ -12,7 +12,7 @@ app = Flask(__name__)
 upload = Blueprint("upload", __name__)
 
 
-# PUT - Upload a file
+# PUT - Upload a log file
 @upload.route("/user-log-upload/<username>", methods=["POST"])
 def upload_file(username):
     authentication = authenticateJwt(username)
@@ -35,11 +35,22 @@ def upload_file(username):
 
     uploadLocation = userDir + "/" + finalFilename
 
+    print("uploadLocation is:")
+    print(uploadLocation)
+
     print("f is:")
     print(f)
     f.save(uploadLocation)
 
-    executeCustomQuery
+    executeCustomQuery(
+        "insert into logs (`log_name`,`log_location`,`username`) values ('"
+        + finalFilename
+        + "', '"
+        + finalFilename
+        + "', '"
+        + username
+        + "')"
+    )
 
     response = {
         "authenticated": True,
