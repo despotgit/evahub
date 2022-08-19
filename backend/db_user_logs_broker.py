@@ -44,11 +44,8 @@ def getUploadedUserLogs(username):
             lines = f.readlines()
 
             for line in lines:
-                print("")
                 content = content + "\n" + str(line)
-                # content = content + "x"
                 print(line)
-            # print(lst.readlines())
 
         # c = str(content)
         c = content
