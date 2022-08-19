@@ -1,4 +1,5 @@
 def getUserDocumentsDir(documentType, username):
-    rootDir = "documents/" + documentType + "s"
+    filePathPrefix = "/Applications/MAMP/htdocs/evahub/backend/"
+    rootDir = filePathPrefix + "documents/" + documentType + "s"
     userDir = rootDir + "/" + username
     return userDir

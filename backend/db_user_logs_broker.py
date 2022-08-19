@@ -36,15 +36,15 @@ def getUploadedUserLogs(username):
     for r in results:
         dir = getUserDocumentsDir("log", username)
         filePath = dir + "/" + r[2]
-        filePathPrefix = "/Applications/MAMP/htdocs/evahub/backend/"
-        filePath = filePathPrefix + filePath
 
         content = ""
 
         with open(filePath, "r") as f:
 
             lines = f.readlines()
-            lines = [line.strip() for line in lines]
+            lines = [
+                line.strip() for line in lines
+            ]  # TO DO: CHANGE OMIT THE STRIPPING OF LINES
             for line in lines:
                 print("")
                 content = content + "\n" + str(line)
