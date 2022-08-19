@@ -5,7 +5,7 @@ from auth import authenticateJwt
 from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
 from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
 from db_user_reports_broker import getDbUserReports
-from db_user_logs_broker import getDbUserLogs
+from db_user_logs_broker import getUploadedUserLogs
 from db_user_checks_broker import getDbUserChecks
 import config
 import requests
@@ -211,7 +211,7 @@ def getUserLogs(username):
     if not authentication["authenticated"]:
         return authentication
 
-    userLogs = getDbUserLogs(username)
+    userLogs = getUploadedUserLogs(username)
 
     if userLogs == None:
         print("No logs for the given user")

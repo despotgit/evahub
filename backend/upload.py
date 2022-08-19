@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 import os
 from auth import authenticateJwt
+from common import getUserDocumentsDir
 from db import executeCustomQuery
 
 app = Flask(__name__)
@@ -21,8 +22,7 @@ def upload_file(username):
 
     f = request.files["file"]
 
-    rootDir = "log_uploads"
-    userDir = rootDir + "/" + username
+    userDir = getUserDocumentsDir("log", username)
 
     if os.path.isdir(userDir):
         print()
