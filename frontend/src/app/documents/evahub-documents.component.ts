@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { PageIndexDictionary } from "../common/constants";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { ActivatedRoute } from "@angular/router";
+import { map, startWith } from "rxjs";
+import { Log } from "../models/Log";
 
 @Component({
     selector: "app-evahub-documents",
@@ -10,7 +12,10 @@ import { ActivatedRoute } from "@angular/router";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EvahubDocumentsComponent implements OnInit {
-    selectedDocument$ = this.store.selectedDocument$;
+    selectedDocument$ = this.store.selectedDocument$.pipe(
+        map(a => a),
+        startWith(new Log())
+    );
 
     constructor(private store: ApplicationStateStoreService, route: ActivatedRoute) {
         setTimeout(() => {

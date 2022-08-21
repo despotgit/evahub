@@ -3,8 +3,8 @@ import { EvahubDocument, EvahubDocumentType } from "./EvahubDocument";
 // LOGS:
 export class Log implements EvahubDocument {
     logId?: number;
-    logName?: string;
-    logContent?: string;
+    logName?: string = "";
+    logContent?: string = "";
 
     documentType: EvahubDocumentType = EvahubDocumentType.EVAHUB_LOG;
 

@@ -18,3 +18,8 @@ $global-background-color: whitesmoke;
 .mat-grid-tile-content {
     padding: 20px !important;
 }
+
+// BUTTONS
+.mat-raised-button {
+    border-radius: $small-rounded-border-radius;
+}

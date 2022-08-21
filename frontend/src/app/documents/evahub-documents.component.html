@@ -5,6 +5,10 @@
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
+            <!--
+            {{ asyncData.selectedDocument.getDocumentContent() }}
+            -->
+
             {{
                 asyncData && asyncData.selectedDocument
                     ? asyncData.selectedDocument.getDocumentContent()
