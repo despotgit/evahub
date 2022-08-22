@@ -33,10 +33,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
         private store: ApplicationStateStoreService,
         private cd: ChangeDetectorRef
     ) {
-        this.loginForm = this.formBuilder.group({
-            username: ["", Validators.required],
-            password: ["", Validators.required]
-        });
+        this.ngOnInit();
     }
 
     ngOnInit() {
