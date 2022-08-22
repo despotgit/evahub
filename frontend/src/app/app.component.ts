@@ -8,7 +8,18 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { map, switchMap, Observable, of, Subscription, tap, withLatestFrom, merge } from "rxjs";
+import {
+    map,
+    switchMap,
+    Observable,
+    of,
+    Subscription,
+    tap,
+    withLatestFrom,
+    merge,
+    mergeWith,
+    combineLatest
+} from "rxjs";
 import { environment } from "src/environments/environment";
 import {
     getPageNameFromPageIndex,
@@ -81,10 +92,33 @@ export class AppComponent implements OnInit, AfterViewInit {
         })
     );
     currentDocumentId$ = this.store.currentDocumentId$;
-    mainMenuItems$ = this.store.mainMenuItems$
-        .pipe
-        //merge(curr)
-        ();
+    mainMenuItems$ = this.store.mainMenuItems$;
+    shouldDisplayRegisterButton$ = combineLatest([
+        this.store.isloggedIn$,
+        this.store.currentPageIndex$
+    ]).pipe(
+        map(([ili, cpi]) => {
+            console.log("ili and cpi is:", ili, cpi);
+            if (!ili && cpi != PageIndex.REGISTER_PAGE) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+    );
+    shouldDisplayLoginButton$ = combineLatest([
+        this.store.isloggedIn$,
+        this.store.currentPageIndex$
+    ]).pipe(
+        map(([ili, cpi]) => {
+            console.log("ili and cpi is:", ili, cpi);
+            if (!ili && cpi != PageIndex.LOGIN_PAGE) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+    );
 
     docSelectedSub: Subscription;
 
@@ -108,7 +142,13 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {}
 
+    // e can be string or a full PageIndexDictionary property
     goTo(e) {
+        if (typeof e == "string") {
+            console.log("iyeag"!);
+            e = PageIndexDictionary[e];
+            console.log("e is:", e);
+        }
         const isDocumentsPage = e.isDocumentsPage;
         const page = e.gotoParam;
 
@@ -128,6 +168,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     logOut() {
         this.authenticationService.logOut();
+    }
+
+    goRegister() {
+        this.goTo;
     }
 
     menuItemClicked($event) {

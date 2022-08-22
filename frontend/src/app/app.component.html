@@ -7,7 +7,9 @@
         currentDocumentSet: currentDocumentSet$ | async,
         currentPageIndex: currentPageIndex$ | async,
         currentDocumentId: currentDocumentId$ | async,
-        mainMenuItems: mainMenuItems$ | async
+        mainMenuItems: mainMenuItems$ | async,
+        shouldDisplayRegisterButton: shouldDisplayRegisterButton$ | async,
+        shouldDisplayLoginButton: shouldDisplayLoginButton$ | async
     } as asyncData"
 >
     <mat-toolbar>
@@ -31,6 +33,22 @@
         <div class="username mat-button">{{ asyncData.username }}</div>
         <button *ngIf="asyncData.isLoggedIn" mat-raised-button color="primary" (click)="logOut()">
             Log out
+        </button>
+        <button
+            *ngIf="asyncData.shouldDisplayRegisterButton"
+            mat-raised-button
+            color="primary"
+            (click)="goTo('register')"
+        >
+            Register
+        </button>
+        <button
+            *ngIf="asyncData.shouldDisplayLoginButton"
+            mat-raised-button
+            color="primary"
+            (click)="goTo('login')"
+        >
+            Login
         </button>
     </mat-toolbar>
     <mat-sidenav-container class="main-container">

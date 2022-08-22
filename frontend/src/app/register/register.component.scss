@@ -1,0 +1,24 @@
+@import "../../common.scss";
+
+.login-page {
+    text-align: center;
+}
+
+.invalid-feedback {
+    color: red;
+}
+
+.alert {
+    color: red;
+}
+
+.form-group {
+    margin-top: 10px;
+}
+
+.login-field {
+    border-radius: $regular-rounded-border-radius;
+    border: 0px;
+    padding: 5px;
+    margin-left: 10px;
+}

@@ -18,7 +18,7 @@ import { EvahubMainMenuItem, PageIndex } from "../common/constants";
 })
 export class MainMenuComponent implements OnInit {
     mainMenuItems: EvahubMainMenuItem[];
-    @Input() set menuItems(mis: any[]) {
+    @Input() set menuItems(mis: EvahubMainMenuItem[]) {
         this.mainMenuItems = mis;
     }
 

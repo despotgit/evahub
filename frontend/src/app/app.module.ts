@@ -4,6 +4,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LoginComponent } from "./login/login.component";
+import { RegisterComponent } from "./register/register.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HomeComponent } from "./home/home.component";
@@ -12,13 +13,14 @@ import { EvahubDocumentsComponent } from "./documents/evahub-documents.component
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { IonicModule } from "@ionic/angular";
 import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.component";
-import { UserFileUploadComponent } from './user-file-upload/user-file-upload.component';
-import { MainMenuComponent } from './main-menu/main-menu.component';
+import { UserFileUploadComponent } from "./user-file-upload/user-file-upload.component";
+import { MainMenuComponent } from "./main-menu/main-menu.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
+        RegisterComponent,
         HomeComponent,
         EvahubDocumentsComponent,
         EvahubSidenavComponent,

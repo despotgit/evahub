@@ -4,12 +4,13 @@ export const loginTokenExpiryTime = 60; // In minutes
 
 export const enum PageIndex {
     NONE_PAGE = 0,
-    LOGIN_PAGE = 1,
-    HOME_PAGE = 2,
-    USER_FILE_UPLOAD_PAGE = 3,
-    LOGS_PAGE = 4,
-    REPORTS_PAGE = 5,
-    CHECKS_PAGE = 6
+    REGISTER_PAGE = 1,
+    LOGIN_PAGE = 2,
+    HOME_PAGE = 3,
+    USER_FILE_UPLOAD_PAGE = 4,
+    LOGS_PAGE = 5,
+    REPORTS_PAGE = 6,
+    CHECKS_PAGE = 7
 }
 
 // Main page dictionary, page data is:
@@ -20,6 +21,13 @@ export const PageIndexDictionary = {
         isDocumentsPage: false,
         label: "None",
         gotoParam: "",
+        isInMainMenu: false
+    },
+    register: {
+        index: PageIndex.REGISTER_PAGE,
+        isDocumentsPage: false,
+        label: "Register",
+        gotoParam: "register",
         isInMainMenu: false
     },
     login: {
