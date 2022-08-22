@@ -1,24 +1,41 @@
 @import "../../common.scss";
 
-.login-page {
-    text-align: center;
+.example-input-wrapper {
+    margin-bottom: 16px;
 }
 
-.invalid-feedback {
-    color: red;
+label {
+    margin-right: 4px;
 }
 
-.alert {
-    color: red;
+// Accordion:
+.example-action-buttons {
+    padding-bottom: 20px;
 }
 
-.form-group {
-    margin-top: 10px;
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
 }
 
-.login-field {
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+}
+
+// End accordion
+
+.home-page-stepper {
+    background: $global-background-color;
     border-radius: $regular-rounded-border-radius;
-    border: 0px;
-    padding: 5px;
-    margin-left: 10px;
+}
+
+.homepage-content-wrapper {
+    left: 9px;
+    position: relative;
+    top: 10px;
 }
