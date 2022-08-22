@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit, AfterViewChecked {
             password: ["", Validators.required]
         });
 
-        this.store.updateCurrentPageIndex(PageIndex.LOGIN_PAGE);
+        this.store.updateCurrentPageIndex(PageIndex.REGISTER_PAGE);
     }
 
     ngAfterViewChecked() {
