@@ -46,14 +46,8 @@ export class RegisterComponent implements OnInit {
         });
 
         this.step2FormGroup = this.formBuilder.group({
-            emailFormControl: [null, [Validators.required, Validators.email]]
+            emailFormControl: ["", [Validators.required, Validators.email]]
         });
-
-        /*
-        this.step2FormGroup = this.formBuilder.group({
-            emailFormControl: new FormControl("")
-        });
-        */
 
         this.ngOnInit();
     }
