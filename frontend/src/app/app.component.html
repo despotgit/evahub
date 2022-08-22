@@ -13,6 +13,7 @@
     <mat-toolbar>
         <span class="title">{{ title }}</span>
         <evahub-main-menu
+            *ngIf="asyncData.isLoggedIn"
             (itemClickedEmit)="goTo($event)"
             [cpi]="asyncData.currentPageIndex"
             [menuItems]="asyncData.mainMenuItems"

@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { map, switchMap, Observable, of, Subscription, tap, withLatestFrom } from "rxjs";
+import { map, switchMap, Observable, of, Subscription, tap, withLatestFrom, merge } from "rxjs";
 import { environment } from "src/environments/environment";
 import {
     getPageNameFromPageIndex,
@@ -81,7 +81,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         })
     );
     currentDocumentId$ = this.store.currentDocumentId$;
-    mainMenuItems$ = this.store.mainMenuItems$;
+    mainMenuItems$ = this.store.mainMenuItems$
+        .pipe
+        //merge(curr)
+        ();
 
     docSelectedSub: Subscription;
 
