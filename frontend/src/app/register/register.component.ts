@@ -9,7 +9,7 @@ import {
     Observable,
     tap
 } from "rxjs";
-import { FormBuilder, FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { PageIndex } from "../common/constants";
 
@@ -46,8 +46,14 @@ export class RegisterComponent implements OnInit {
         });
 
         this.step2FormGroup = this.formBuilder.group({
+            emailFormControl: [null, [Validators.required, Validators.email]]
+        });
+
+        /*
+        this.step2FormGroup = this.formBuilder.group({
             emailFormControl: new FormControl("")
         });
+        */
 
         this.ngOnInit();
     }
