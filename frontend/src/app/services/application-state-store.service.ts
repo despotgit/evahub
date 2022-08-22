@@ -11,7 +11,7 @@ export { Report } from "../models/Report";
 
 export interface ApplicationState {
     currentUser: UserState;
-    homepageData: HomePageDataState;
+    registerPageData: RegisterPageDataState;
     userLogs: UserLogsState;
     userReports: UserReportsState;
     userChecks: UserChecksState;
@@ -19,16 +19,16 @@ export interface ApplicationState {
     mainMenu: MainMenuState;
 }
 
-// HOMEPAGE
+// REGISTER
 
-export interface HomePageDataState {
+export interface RegisterPageDataState {
     firstLastName: string;
-    address: string;
+    email: string;
 }
 
-export const INITIAL_HOMEPAGE_STATE = {
+export const INITIAL_REGISTER_PAGE_STATE = {
     firstLastName: "",
-    address: ""
+    email: ""
 };
 
 // SIDENAV
@@ -109,7 +109,7 @@ export const INITIAL_USER_STATE = {
 
 export const INITIAL_APPLICATION_STATE = {
     currentUser: INITIAL_USER_STATE,
-    homepageData: INITIAL_HOMEPAGE_STATE,
+    registerPageData: INITIAL_REGISTER_PAGE_STATE,
     userLogs: INITIAL_USER_LOGS_STATE,
     userReports: INITIAL_USER_REPORTS_STATE,
     userChecks: INITIAL_USER_CHECKS_STATE,
@@ -131,9 +131,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         state => state.currentUser.currentDocumentId
     );
 
-    // HOMEPAGE
-    firstLastName$: Observable<string> = this.select(state => state.homepageData.firstLastName);
-    address$: Observable<string> = this.select(state => state.homepageData.address);
+    // REGISTER PAGE
+    firstLastName$: Observable<string> = this.select(state => state.registerPageData.firstLastName);
+    email$: Observable<string> = this.select(state => state.registerPageData.email);
 
     // SIDENAV
     isSidenavOpened$: Observable<boolean> = this.select(state => state.sidenav.isSidenavOpened);
@@ -227,14 +227,14 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.updateState("currentUser", "currentDocumentId", id);
     }
 
-    // HOMEPAGE:
+    // REGISTER PAGE:
 
     updateFirstLastName(firstLastName: string) {
-        this.updateState("homepageData", "firstLastName", firstLastName);
+        this.updateState("registerPageData", "firstLastName", firstLastName);
     }
 
-    updateAddress(address: string) {
-        this.updateState("homepageData", "address", address);
+    updateEmail(email: string) {
+        this.updateState("registerPageData", "email", email);
     }
 
     // SIDENAV:

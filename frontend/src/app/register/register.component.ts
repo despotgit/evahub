@@ -30,9 +30,9 @@ export class RegisterComponent implements OnInit {
             this.step1FormGroup.get("firstLastNameFormControl").setValue(newName);
         })
     );
-    address$: Observable<string> = this.store.address$.pipe(
-        tap(address => {
-            this.step2FormGroup.get("addressFormControl").setValue(address);
+    email$: Observable<string> = this.store.email$.pipe(
+        tap(email => {
+            this.step2FormGroup.get("emailFormControl").setValue(email);
         })
     );
 
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
         });
 
         this.step2FormGroup = this.formBuilder.group({
-            addressFormControl: new FormControl("")
+            emailFormControl: new FormControl("")
         });
 
         this.ngOnInit();
@@ -56,16 +56,16 @@ export class RegisterComponent implements OnInit {
         const firstLastNameEvents: Observable<any> = this.step1FormGroup.get(
             "firstLastNameFormControl"
         ).valueChanges;
-        const addressEvents: Observable<any> =
-            this.step2FormGroup.get("addressFormControl").valueChanges;
+        const emailEvents: Observable<any> =
+            this.step2FormGroup.get("emailFormControl").valueChanges;
 
-        combineLatest([firstLastNameEvents, addressEvents])
+        combineLatest([firstLastNameEvents, emailEvents])
             .pipe(
                 debounceTime(300),
                 distinctUntilChanged(),
-                map(([firstLastName, address]) => {
+                map(([firstLastName, email]) => {
                     this.store.updateFirstLastName(firstLastName);
-                    this.store.updateAddress(address);
+                    this.store.updateEmail(email);
                 })
             )
             .subscribe();

@@ -1,12 +1,12 @@
 <div
-    class="homepage-content-wrapper"
+    class="register-content-wrapper"
     *ngIf="{
         username: username$ | async,
         firstLastname: firstLastName$ | async,
-        address: address$ | async
+        email: email$ | async
     } as asyncData"
 >
-    <mat-vertical-stepper class="home-page-stepper" [linear]="false" #stepper>
+    <mat-vertical-stepper class="register-page-stepper" [linear]="false" #stepper>
         <mat-step [stepControl]="step1FormGroup">
             <form [formGroup]="step1FormGroup">
                 <ng-template matStepLabel>Fill out your name</ng-template>
@@ -25,13 +25,13 @@
 
         <mat-step [stepControl]="step2FormGroup">
             <form [formGroup]="step2FormGroup">
-                <ng-template matStepLabel>Fill out your address</ng-template>
+                <ng-template matStepLabel>Fill out your email</ng-template>
                 <mat-form-field>
                     <input
                         matInput
-                        placeholder="Address"
-                        formControlName="addressFormControl"
-                        value="address"
+                        placeholder="Email"
+                        formControlName="emailFormControl"
+                        value="email"
                         required
                     />
                 </mat-form-field>

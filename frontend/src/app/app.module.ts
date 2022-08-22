@@ -7,7 +7,6 @@ import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { HomeComponent } from "./home/home.component";
 import { VladosMaterialModule } from "./material.module";
 import { EvahubDocumentsComponent } from "./documents/evahub-documents.component";
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
@@ -21,7 +20,6 @@ import { MainMenuComponent } from "./main-menu/main-menu.component";
         AppComponent,
         LoginComponent,
         RegisterComponent,
-        HomeComponent,
         EvahubDocumentsComponent,
         EvahubSidenavComponent,
         UserFileUploadComponent,
