@@ -80,8 +80,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             return cds;
         })
     );
-
     currentDocumentId$ = this.store.currentDocumentId$;
+    mainMenuItems$ = this.store.mainMenuItems$;
 
     docSelectedSub: Subscription;
 
@@ -91,10 +91,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     title = "EVAHUB";
     httpDocsCall: any;
-
-    // Home, Upload, Logs, Reports, Checks
-
-    mainMenuItems: EvahubMainMenuItem[] = getInitialMainMenuItems();
 
     constructor(
         private router: Router,

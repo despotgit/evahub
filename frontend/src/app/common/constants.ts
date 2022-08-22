@@ -78,11 +78,15 @@ export function getPageNameFromPageIndex(i) {
 }
 
 export class EvahubMainMenuItem {
-    label: string;
-    gotoParam: string;
-    isDocumentsPage: boolean;
-    isSelected: boolean;
-    index: PageIndex;
+    constructor(
+        public label: string,
+        public gotoParam: string,
+        public isDocumentsPage: boolean,
+        public isSelected: boolean,
+        public index: PageIndex
+    ) {
+        this.label = label;
+    }
 }
 
 export function getInitialMainMenuItems() {

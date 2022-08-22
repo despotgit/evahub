@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { tap, map, Observable } from "rxjs";
-import { PageIndex } from "../common/constants";
+import { EvahubMainMenuItem, getInitialMainMenuItems, PageIndex } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument, EvahubDocumentType } from "../models/EvahubDocument";
 export { EvahubDocument, EvahubDocumentType } from "../models/EvahubDocument";
@@ -16,6 +16,7 @@ export interface ApplicationState {
     userReports: UserReportsState;
     userChecks: UserChecksState;
     sidenav: SidenavState;
+    mainMenu: MainMenuState;
 }
 
 // HOMEPAGE
@@ -79,6 +80,15 @@ export const INITIAL_USER_LOGS_STATE = {
     selectedUserLog: new Log()
 };
 
+// MAIN MENU
+export class MainMenuState {
+    mainMenuItems: EvahubMainMenuItem[];
+}
+
+export const INITIAL_MAIN_MENU = {
+    mainMenuItems: getInitialMainMenuItems()
+};
+
 // USER
 
 export interface UserState {
@@ -103,7 +113,8 @@ export const INITIAL_APPLICATION_STATE = {
     userLogs: INITIAL_USER_LOGS_STATE,
     userReports: INITIAL_USER_REPORTS_STATE,
     userChecks: INITIAL_USER_CHECKS_STATE,
-    sidenav: INITIAL_SIDENAV_STATE
+    sidenav: INITIAL_SIDENAV_STATE,
+    mainMenu: INITIAL_MAIN_MENU
 };
 
 @Injectable({
@@ -128,6 +139,11 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     isSidenavOpened$: Observable<boolean> = this.select(state => state.sidenav.isSidenavOpened);
     sidenavMenuOptions$: Observable<EvahubSidenavMenuOption[]> = this.select(
         state => state.sidenav.sidenavMenuOptions
+    );
+
+    // MAIN MENU
+    mainMenuItems$: Observable<EvahubMainMenuItem[]> = this.select(
+        state => state.mainMenu.mainMenuItems
     );
 
     // REPORTS
@@ -229,6 +245,12 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     updateSidenavMenuOptions(sidenavMenuOptions: EvahubSidenavMenuOption[]) {
         this.updateState("sidenav", "sidenavMenuOptions", sidenavMenuOptions);
+    }
+
+    // MAIN MENU:
+
+    updateMainMenuItems(items: EvahubMainMenuItem[]) {
+        this.updateState("mainMenu", "mainMenuItems", items);
     }
 
     // GENERAL:
