@@ -9,6 +9,18 @@
     <mat-vertical-stepper class="register-page-stepper" [linear]="false" #stepper>
         <mat-step [stepControl]="step1FormGroup">
             <form [formGroup]="step1FormGroup">
+                <ng-template matStepLabel>Fill out your username</ng-template>
+                <mat-form-field>
+                    <input matInput placeholder="Username" formControlName="usernameFormControl" />
+                </mat-form-field>
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="step2FormGroup">
+            <form [formGroup]="step2FormGroup">
                 <ng-template matStepLabel>Fill out your name</ng-template>
                 <mat-form-field>
                     <input
@@ -23,8 +35,8 @@
             </form>
         </mat-step>
 
-        <mat-step [stepControl]="step2FormGroup">
-            <form [formGroup]="step2FormGroup">
+        <mat-step [stepControl]="step3FormGroup">
+            <form [formGroup]="step3FormGroup">
                 <ng-template matStepLabel>Fill out your email</ng-template>
                 <mat-form-field>
                     <input

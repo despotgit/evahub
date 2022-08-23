@@ -22,17 +22,22 @@ import { PageIndex } from "../common/constants";
 export class RegisterComponent implements OnInit {
     step1FormGroup: any;
     step2FormGroup: any;
+    step3FormGroup: any;
 
-    username$: Observable<string> = this.store.username$;
+    username$: Observable<string> = this.store.username$.pipe(
+        tap(newUsername => {
+            this.step1FormGroup.get("username").setValue(newUsername);
+        })
+    );
     firstLastName$: Observable<string> = this.store.firstLastName$.pipe(
         tap(newName => {
             //console.log("CHECKPOINT 2");
-            this.step1FormGroup.get("firstLastNameFormControl").setValue(newName);
+            this.step2FormGroup.get("firstLastNameFormControl").setValue(newName);
         })
     );
     email$: Observable<string> = this.store.email$.pipe(
         tap(email => {
-            this.step2FormGroup.get("emailFormControl").setValue(email);
+            this.step3FormGroup.get("emailFormControl").setValue(email);
         })
     );
 
@@ -41,11 +46,11 @@ export class RegisterComponent implements OnInit {
         private store: ApplicationStateStoreService,
         private formBuilder: FormBuilder
     ) {
-        this.step1FormGroup = this.formBuilder.group({
+        this.step2FormGroup = this.formBuilder.group({
             firstLastNameFormControl: new FormControl("")
         });
 
-        this.step2FormGroup = this.formBuilder.group({
+        this.step3FormGroup = this.formBuilder.group({
             emailFormControl: ["", [Validators.required, Validators.email]]
         });
 
@@ -53,11 +58,11 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const firstLastNameEvents: Observable<any> = this.step1FormGroup.get(
+        const firstLastNameEvents: Observable<any> = this.step2FormGroup.get(
             "firstLastNameFormControl"
         ).valueChanges;
         const emailEvents: Observable<any> =
-            this.step2FormGroup.get("emailFormControl").valueChanges;
+            this.step3FormGroup.get("emailFormControl").valueChanges;
 
         combineLatest([firstLastNameEvents, emailEvents])
             .pipe(

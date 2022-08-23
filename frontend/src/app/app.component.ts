@@ -8,23 +8,10 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 
-import {
-    map,
-    switchMap,
-    Observable,
-    of,
-    Subscription,
-    tap,
-    withLatestFrom,
-    merge,
-    mergeWith,
-    combineLatest
-} from "rxjs";
+import { map, switchMap, Observable, of, Subscription, tap, combineLatest } from "rxjs";
 import { environment } from "src/environments/environment";
 import {
     getPageNameFromPageIndex,
-    getInitialMainMenuItems,
-    EvahubMainMenuItem,
     PageIndex,
     PageIndexDictionary,
     capitalizeWord
