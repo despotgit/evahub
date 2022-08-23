@@ -11,7 +11,11 @@
             <form [formGroup]="step1FormGroup">
                 <ng-template matStepLabel>Fill out your username</ng-template>
                 <mat-form-field>
-                    <input matInput placeholder="Username" formControlName="usernameFormControl" />
+                    <input
+                        matInput
+                        placeholder="Username"
+                        formControlName="registerUsernameFormControl"
+                    />
                 </mat-form-field>
                 <div>
                     <button mat-button matStepperNext>Next</button>
