@@ -24,9 +24,9 @@ export class RegisterComponent implements OnInit {
     step2FormGroup: any;
     step3FormGroup: any;
 
-    username$: Observable<string> = this.store.username$.pipe(
-        tap(newUsername => {
-            this.step1FormGroup.get("username").setValue(newUsername);
+    registerUsername$: Observable<string> = this.store.registerUsername$.pipe(
+        tap(newRegisterUsername => {
+            this.step1FormGroup.get("registerUsername").setValue(newRegisterUsername);
         })
     );
     firstLastName$: Observable<string> = this.store.firstLastName$.pipe(
