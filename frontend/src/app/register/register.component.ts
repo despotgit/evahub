@@ -1,6 +1,7 @@
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     OnInit,
@@ -60,11 +61,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     @ViewChild("done") done: MatButton;
 
+    isPosted = false;
+
     constructor(
         private router: Router,
         private store: ApplicationStateStoreService,
         private formBuilder: FormBuilder,
-        private http: HttpClient
+        private http: HttpClient,
+        private cd: ChangeDetectorRef
     ) {
         this.step1FormGroup = this.formBuilder.group({
             registerUsernameFormControl: new FormControl("")
@@ -147,6 +151,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             )
             .subscribe(event => {
                 console.log(event);
+                console.log("in registration subscribe");
+                this.isPosted = true;
+                this.cd.markForCheck();
             });
     }
 

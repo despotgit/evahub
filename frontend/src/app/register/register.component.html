@@ -6,7 +6,7 @@
         email: email$ | async
     } as asyncData"
 >
-    <mat-vertical-stepper class="register-page-stepper" [linear]="false" #stepper>
+    <mat-vertical-stepper *ngIf="!isPosted" class="register-page-stepper" [linear]="false" #stepper>
         <mat-step [stepControl]="step1FormGroup">
             <form [formGroup]="step1FormGroup">
                 <ng-template matStepLabel>Fill out your username</ng-template>
@@ -68,4 +68,8 @@
             </div>
         </mat-step>
     </mat-vertical-stepper>
+    <div *ngIf="isPosted">
+        Thanks. In order to confirm your registration, please click on the link in the confirmation
+        email.
+    </div>
 </div>
