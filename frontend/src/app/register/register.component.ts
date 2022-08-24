@@ -81,10 +81,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.ngOnInit();
     }
 
-    ngAfterViewInit(): void {
-        this.doneStepper();
-    }
-
     ngOnInit(): void {
         const registerUsernameEvents$: Observable<any> = this.step1FormGroup.get(
             "registerUsernameFormControl"
@@ -109,6 +105,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.store.updateCurrentPageIndex(PageIndex.REGISTER_PAGE);
     }
 
+    ngAfterViewInit(): void {
+        this.doneStepper();
+    }
+
     doneStepper() {
         console.log("v1 is:", this.step1FormGroup.value);
         console.log("v2 is:", this.step2FormGroup.value);
@@ -128,16 +128,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                 switchMap(([e, data]) => {
                     console.log("data is:", data);
                     console.log("e is:", e);
-
-                    /*
-                    console.log("un is:", un);
-                    console.log("fln is:", fln);
-                    console.log("email", email);
-
-                    formData.append("username", un);
-                    formData.append("firstLastName", fln);
-                    formData.append("email", email);
-                    */
 
                     url = `${environment.baseApiBackendUrl}/register/user`;
 
@@ -166,8 +156,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         if (this.registerHttpCall$) {
             this.registerHttpCall$.unsubscribe();
         }
-
-        // Add exception in http interceptor, for the register user request.
     }
 
     reset() {

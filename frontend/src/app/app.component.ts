@@ -101,10 +101,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             console.log("ili and cpi is:", ili, cpi);
             console.log("login page index is:", PageIndex.LOGIN_PAGE);
             if (!ili && cpi != PageIndex.LOGIN_PAGE) {
-                console.log("should display login button is true");
                 return true;
             } else {
-                console.log("should display login button is false");
                 return false;
             }
         })
