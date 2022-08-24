@@ -153,6 +153,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                 console.log(event);
                 console.log("in registration subscribe");
                 this.isPosted = true;
+                this.store.resetRegisterPage();
                 this.cd.markForCheck();
             });
     }
