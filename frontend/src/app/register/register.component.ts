@@ -129,6 +129,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     console.log("data is:", data);
                     console.log("e is:", e);
 
+                    formData["run"] = data[0];
+                    formData["fln"] = data[1];
+                    formData["email"] = data[2];
+
                     url = `${environment.baseApiBackendUrl}/register/user`;
 
                     return this.http.post(url, formData, {
