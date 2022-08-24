@@ -26,6 +26,7 @@ import { ApplicationStateStoreService } from "../services/application-state-stor
 import { PageIndex } from "../common/constants";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpEventType } from "@angular/common/http";
+import { MatButton } from "@angular/material/button";
 
 @Component({
     selector: "app-register",
@@ -57,9 +58,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         })
     );
 
-    @ViewChild("done") done: ElementRef;
-
-    private doneButtonClick$ = new Subject();
+    @ViewChild("done") done: MatButton;
 
     constructor(
         private router: Router,
@@ -83,10 +82,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        setTimeout(() => {
-            this.doneStepper();
-        }, 2000);
-        //throw new Error("Method not implemented.");
+        this.doneStepper();
     }
 
     ngOnInit(): void {
@@ -122,7 +118,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
         const formData = new FormData();
 
-        this.registerHttpCall$ = this.doneButtonClick$
+        const clicks$ = fromEvent(this.done._elementRef.nativeElement, "click");
+
+        this.registerHttpCall$ = clicks$
             .pipe(
                 withLatestFrom(
                     combineLatest([this.registerUsername$, this.firstLastName$, this.email$])
@@ -156,10 +154,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             .subscribe(event => {
                 console.log(event);
             });
-    }
-
-    do($event) {
-        this.doneButtonClick$.next($event);
     }
 
     cancelRequest() {

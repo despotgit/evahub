@@ -64,7 +64,7 @@
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button (click)="stepper.reset()">Reset</button>
-                <button (click)="do($event)" mat-button>Done</button>
+                <button #done mat-button>Done</button>
             </div>
         </mat-step>
     </mat-vertical-stepper>
