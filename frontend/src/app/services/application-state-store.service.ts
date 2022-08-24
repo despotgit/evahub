@@ -237,12 +237,18 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.updateState("registerPageData", "registerUsername", registerUsername);
     }
 
-    updateFirstLastName(firstLastName: string) {
+    updateRegisterFirstLastName(firstLastName: string) {
         this.updateState("registerPageData", "firstLastName", firstLastName);
     }
 
-    updateEmail(email: string) {
+    updateRegisterEmail(email: string) {
         this.updateState("registerPageData", "email", email);
+    }
+
+    resetRegisterPage() {
+        this.updateRegisterUsername("");
+        this.updateRegisterFirstLastName("");
+        this.updateRegisterEmail("");
     }
 
     // SIDENAV:

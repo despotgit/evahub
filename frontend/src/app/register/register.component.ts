@@ -101,8 +101,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                 distinctUntilChanged(),
                 map(([registerUsername, firstLastName, email]) => {
                     this.store.updateRegisterUsername(registerUsername);
-                    this.store.updateFirstLastName(firstLastName);
-                    this.store.updateEmail(email);
+                    this.store.updateRegisterFirstLastName(firstLastName);
+                    this.store.updateRegisterEmail(email);
                 })
             )
             .subscribe();
