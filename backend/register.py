@@ -10,7 +10,7 @@ register = Blueprint("register", __name__)
 
 
 # POST
-@register.route("/", methods=["POST"])
+@register.route("/user", methods=["POST"])
 def register_user():
 
     print("request is:")
@@ -29,4 +29,4 @@ def register_user():
 
 
 if __name__ == "__main__":
-    upload.run(debug=True)
+    register.run(debug=True)

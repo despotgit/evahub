@@ -40,14 +40,20 @@ export class JwtInterceptor implements HttpInterceptor {
         } else {
             console.log("in when false validateLoginToken in jwt interceptor");
 
-            let state = this.router.routerState;
-            let snapshot = state.snapshot;
-            let activatedRouteSnapshot = snapshot.root;
+            console.log("request is:", request);
 
-            this.router.navigate(["/login"], {
-                queryParams: activatedRouteSnapshot.queryParams
-                //queryParams: { returnUrl: "country-fiches" }
-            });
+            if (request.url == "http://127.0.0.1:5000/register/user") {
+                console.log("thats fine");
+            } else {
+                let state = this.router.routerState;
+                let snapshot = state.snapshot;
+                let activatedRouteSnapshot = snapshot.root;
+
+                this.router.navigate(["/login"], {
+                    queryParams: activatedRouteSnapshot.queryParams
+                    //queryParams: { returnUrl: "country-fiches" }
+                });
+            }
         }
 
         //console.log("in intercept of JwtInterceptor, next is:");

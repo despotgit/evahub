@@ -101,11 +101,11 @@ export class RegisterComponent implements OnInit {
 
         const formData = new FormData();
 
-        this.registerHttpCall$ = combineLatest(
+        this.registerHttpCall$ = combineLatest([
             this.registerUsername$,
             this.firstLastName$,
             this.email$
-        )
+        ])
             .pipe(
                 switchMap(([un, fln, email]) => {
                     console.log("un is:", un);
@@ -116,7 +116,7 @@ export class RegisterComponent implements OnInit {
                     formData.append("firstLastName", fln);
                     formData.append("email", email);
 
-                    url = `${environment.baseApiBackendUrl}/register`;
+                    url = `${environment.baseApiBackendUrl}/register/user`;
 
                     return this.http.post(url, formData, {
                         reportProgress: true,
@@ -131,13 +131,22 @@ export class RegisterComponent implements OnInit {
             .subscribe(event => {
                 console.log(event);
             });
+
+        this.unsubscribeFromRegisterRequest();
     }
 
-    cancelUpload() {
+    cancelRequest() {
+        this.unsubscribeFromRegisterRequest();
+
+        this.reset();
+    }
+
+    unsubscribeFromRegisterRequest() {
         if (this.registerHttpCall$) {
             this.registerHttpCall$.unsubscribe();
         }
-        this.reset();
+
+        // Add exception in http interceptor, for the register user request.
     }
 
     reset() {
@@ -145,6 +154,6 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.cancelUpload();
+        this.cancelRequest();
     }
 }
