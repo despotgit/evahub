@@ -12,7 +12,7 @@ app = Flask(__name__)
 upload = Blueprint("upload", __name__)
 
 
-# PUT - Upload a log file
+# POST - Upload a log file
 @upload.route("/user-log-upload/<username>", methods=["POST"])
 def upload_file(username):
     authentication = authenticateJwt(username)

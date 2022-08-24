@@ -100,13 +100,22 @@ export class RegisterComponent implements OnInit {
         let url;
 
         const formData = new FormData();
-        formData.append("username", "cazzo");
-        formData.append("firstLastName", "cazzo");
-        formData.append("email", "cazzo");
 
-        this.registerHttpCall$ = this.registerUsername$
+        this.registerHttpCall$ = combineLatest(
+            this.registerUsername$,
+            this.firstLastName$,
+            this.email$
+        )
             .pipe(
-                switchMap(un => {
+                switchMap(([un, fln, email]) => {
+                    console.log("un is:", un);
+                    console.log("fln is:", fln);
+                    console.log("email", email);
+
+                    formData.append("username", un);
+                    formData.append("firstLastName", fln);
+                    formData.append("email", email);
+
                     url = `${environment.baseApiBackendUrl}/register`;
 
                     return this.http.post(url, formData, {
