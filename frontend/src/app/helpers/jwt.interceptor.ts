@@ -43,7 +43,7 @@ export class JwtInterceptor implements HttpInterceptor {
             console.log("request is:", request);
 
             if (request.url == "http://127.0.0.1:5000/register/user") {
-                console.log("thats fine");
+                console.log("Interceptor: that's fine");
             } else {
                 let state = this.router.routerState;
                 let snapshot = state.snapshot;

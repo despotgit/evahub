@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    OnInit,
+    ViewChild
+} from "@angular/core";
 import { Router } from "@angular/router";
 import {
     combineLatest,
@@ -8,9 +15,12 @@ import {
     Observable,
     Subscription,
     tap,
-    switchMap
+    switchMap,
+    of,
+    fromEvent,
+    Subject
 } from "rxjs";
-import { finalize } from "rxjs/operators";
+import { finalize, startWith, withLatestFrom } from "rxjs/operators";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { PageIndex } from "../common/constants";
@@ -23,7 +33,7 @@ import { HttpClient, HttpEventType } from "@angular/common/http";
     styleUrls: ["./register.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, AfterViewInit {
     registerHttpCall$: Subscription;
 
     step1FormGroup: any;
@@ -47,6 +57,10 @@ export class RegisterComponent implements OnInit {
         })
     );
 
+    @ViewChild("done") done: ElementRef;
+
+    private doneButtonClick$ = new Subject();
+
     constructor(
         private router: Router,
         private store: ApplicationStateStoreService,
@@ -68,17 +82,24 @@ export class RegisterComponent implements OnInit {
         this.ngOnInit();
     }
 
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.doneStepper();
+        }, 2000);
+        //throw new Error("Method not implemented.");
+    }
+
     ngOnInit(): void {
-        const registerUsernameEvents: Observable<any> = this.step1FormGroup.get(
+        const registerUsernameEvents$: Observable<any> = this.step1FormGroup.get(
             "registerUsernameFormControl"
         ).valueChanges;
-        const firstLastNameEvents: Observable<any> = this.step2FormGroup.get(
+        const firstLastNameEvents$: Observable<any> = this.step2FormGroup.get(
             "firstLastNameFormControl"
         ).valueChanges;
-        const emailEvents: Observable<any> =
+        const emailEvents$: Observable<any> =
             this.step3FormGroup.get("emailFormControl").valueChanges;
 
-        combineLatest([registerUsernameEvents, firstLastNameEvents, emailEvents])
+        combineLatest([registerUsernameEvents$, firstLastNameEvents$, emailEvents$])
             .pipe(
                 debounceTime(300),
                 distinctUntilChanged(),
@@ -101,13 +122,16 @@ export class RegisterComponent implements OnInit {
 
         const formData = new FormData();
 
-        this.registerHttpCall$ = combineLatest([
-            this.registerUsername$,
-            this.firstLastName$,
-            this.email$
-        ])
+        this.registerHttpCall$ = this.doneButtonClick$
             .pipe(
-                switchMap(([un, fln, email]) => {
+                withLatestFrom(
+                    combineLatest([this.registerUsername$, this.firstLastName$, this.email$])
+                ),
+                switchMap(([e, data]) => {
+                    console.log("data is:", data);
+                    console.log("e is:", e);
+
+                    /*
                     console.log("un is:", un);
                     console.log("fln is:", fln);
                     console.log("email", email);
@@ -115,6 +139,7 @@ export class RegisterComponent implements OnInit {
                     formData.append("username", un);
                     formData.append("firstLastName", fln);
                     formData.append("email", email);
+                    */
 
                     url = `${environment.baseApiBackendUrl}/register/user`;
 
@@ -131,8 +156,10 @@ export class RegisterComponent implements OnInit {
             .subscribe(event => {
                 console.log(event);
             });
+    }
 
-        this.unsubscribeFromRegisterRequest();
+    do($event) {
+        this.doneButtonClick$.next($event);
     }
 
     cancelRequest() {
