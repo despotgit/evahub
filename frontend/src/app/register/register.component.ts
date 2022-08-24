@@ -1,17 +1,21 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import {
     combineLatest,
     debounceTime,
     distinctUntilChanged,
     map,
-    mergeMap,
     Observable,
-    tap
+    Subscription,
+    tap,
+    switchMap
 } from "rxjs";
+import { finalize } from "rxjs/operators";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { PageIndex } from "../common/constants";
+import { environment } from "src/environments/environment";
+import { HttpClient, HttpEventType } from "@angular/common/http";
 
 @Component({
     selector: "app-register",
@@ -20,6 +24,8 @@ import { PageIndex } from "../common/constants";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent implements OnInit {
+    registerHttpCall$: Subscription;
+
     step1FormGroup: any;
     step2FormGroup: any;
     step3FormGroup: any;
@@ -44,7 +50,8 @@ export class RegisterComponent implements OnInit {
     constructor(
         private router: Router,
         private store: ApplicationStateStoreService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private http: HttpClient
     ) {
         this.step1FormGroup = this.formBuilder.group({
             registerUsernameFormControl: new FormControl("")
@@ -86,10 +93,49 @@ export class RegisterComponent implements OnInit {
     }
 
     doneStepper() {
-        //console.log('v is:', this.firstFormGroup.value);
+        console.log("v1 is:", this.step1FormGroup.value);
+        console.log("v2 is:", this.step2FormGroup.value);
+        console.log("v3 is:", this.step3FormGroup.value);
+
+        let url;
+
+        const formData = new FormData();
+        formData.append("username", "cazzo");
+        formData.append("firstLastName", "cazzo");
+        formData.append("email", "cazzo");
+
+        this.registerHttpCall$ = this.registerUsername$
+            .pipe(
+                switchMap(un => {
+                    url = `${environment.baseApiBackendUrl}/register`;
+
+                    return this.http.post(url, formData, {
+                        reportProgress: true,
+                        observe: "events"
+                    });
+                }),
+                finalize(() => {
+                    console.log("step 3, in finalize");
+                    this.reset();
+                })
+            )
+            .subscribe(event => {
+                console.log(event);
+            });
     }
 
-    onChangeFirstLastName($event: any) {
-        //console.log("event is:", $event);
+    cancelUpload() {
+        if (this.registerHttpCall$) {
+            this.registerHttpCall$.unsubscribe();
+        }
+        this.reset();
+    }
+
+    reset() {
+        this.registerHttpCall$ = null;
+    }
+
+    ngOnDestroy() {
+        this.cancelUpload();
     }
 }
