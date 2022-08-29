@@ -24,7 +24,7 @@ import {
 import { finalize, startWith, withLatestFrom } from "rxjs/operators";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
-import { PageIndex } from "../common/constants";
+import { getRegisterUrl, PageIndex } from "../common/constants";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { MatButton } from "@angular/material/button";
@@ -138,17 +138,24 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.registerHttpCall$ = clicks$
             .pipe(
                 withLatestFrom(
-                    combineLatest([this.registerUsername$, this.firstLastName$, this.email$])
+                    combineLatest([
+                        this.registerUsername$,
+                        this.registerPassword$,
+                        this.firstLastName$,
+                        this.email$
+                    ])
                 ),
                 switchMap(([e, data]) => {
                     console.log("data is:", data);
                     console.log("e is:", e);
 
-                    formData["run"] = data[0];
-                    formData["fln"] = data[1];
-                    formData["email"] = data[2];
+                    formData["username"] = data[0];
+                    formData["password"] = data[1];
+                    formData["name"] = data[2];
+                    formData["email"] = data[3];
 
-                    url = `${environment.baseApiBackendUrl}/register/user`;
+                    //url = `${environment.baseApiBackendUrl}/register/user`;
+                    url = getRegisterUrl();
 
                     return this.http.post(url, formData, {
                         reportProgress: true,

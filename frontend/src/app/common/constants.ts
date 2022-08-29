@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment";
+
 export const storedObjectName = "powerJwt";
 
 export const loginTokenExpiryTime = 60; // In minutes
@@ -115,4 +117,11 @@ export function capitalizeWord(word: string) {
     const sc = flc + word.substring(1, word.length); // Capitalized word
 
     return sc;
+}
+
+export function getRegisterUrl() {
+    let url = environment.baseApiBackendUrl + "/auth/register";
+    console.log("url is: ", url);
+    //let base = environment.baseApiBackendUrl + '/register/user'
+    return url;
 }
