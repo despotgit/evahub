@@ -22,6 +22,10 @@ auth = Blueprint("auth", __name__)
 def register():
     username = request.form["username"]
     password = request.form["password"]
+
+    print("username is:", username)
+    print("password is:", password)
+
     encoding = "utf-8"
     passwordEncoded = password.encode(encoding)
 

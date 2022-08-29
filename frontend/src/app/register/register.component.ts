@@ -41,21 +41,27 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     step1FormGroup: any;
     step2FormGroup: any;
     step3FormGroup: any;
+    step4FormGroup: any;
 
     registerUsername$: Observable<string> = this.store.registerUsername$.pipe(
         tap(newRegisterUsername => {
             this.step1FormGroup.get("registerUsernameFormControl").setValue(newRegisterUsername);
         })
     );
+    registerPassword$: Observable<string> = this.store.registerPassword$.pipe(
+        tap(newRegisterPassword => {
+            this.step2FormGroup.get("registerPasswordFormControl").setValue(newRegisterPassword);
+        })
+    );
     firstLastName$: Observable<string> = this.store.firstLastName$.pipe(
         tap(newName => {
             //console.log("CHECKPOINT 2");
-            this.step2FormGroup.get("firstLastNameFormControl").setValue(newName);
+            this.step3FormGroup.get("firstLastNameFormControl").setValue(newName);
         })
     );
     email$: Observable<string> = this.store.email$.pipe(
         tap(email => {
-            this.step3FormGroup.get("emailFormControl").setValue(email);
+            this.step4FormGroup.get("emailFormControl").setValue(email);
         })
     );
 
@@ -75,10 +81,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         });
 
         this.step2FormGroup = this.formBuilder.group({
-            firstLastNameFormControl: new FormControl("")
+            registerPasswordFormControl: new FormControl("")
         });
 
         this.step3FormGroup = this.formBuilder.group({
+            firstLastNameFormControl: new FormControl("")
+        });
+
+        this.step4FormGroup = this.formBuilder.group({
             emailFormControl: ["", [Validators.required, Validators.email]]
         });
 
@@ -89,11 +99,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         const registerUsernameEvents$: Observable<any> = this.step1FormGroup.get(
             "registerUsernameFormControl"
         ).valueChanges;
-        const firstLastNameEvents$: Observable<any> = this.step2FormGroup.get(
+        const firstLastNameEvents$: Observable<any> = this.step3FormGroup.get(
             "firstLastNameFormControl"
         ).valueChanges;
         const emailEvents$: Observable<any> =
-            this.step3FormGroup.get("emailFormControl").valueChanges;
+            this.step4FormGroup.get("emailFormControl").valueChanges;
 
         combineLatest([registerUsernameEvents$, firstLastNameEvents$, emailEvents$])
             .pipe(
@@ -115,8 +125,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     doneStepper() {
         console.log("v1 is:", this.step1FormGroup.value);
-        console.log("v2 is:", this.step2FormGroup.value);
-        console.log("v3 is:", this.step3FormGroup.value);
+        console.log("v1 is:", this.step2FormGroup.value);
+        console.log("v2 is:", this.step3FormGroup.value);
+        console.log("v3 is:", this.step4FormGroup.value);
 
         let url;
 
