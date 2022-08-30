@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/c
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
-import { storedObjectName } from "../common/constants";
+import { getRegisterUrl, storedObjectName } from "../common/constants";
 
 /*
 The JWT interceptor intercepts the incoming requests from the application/user and adds JWT token to the request's Authorization header,
@@ -42,7 +42,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
             console.log("request is:", request);
 
-            if (request.url == "http://127.0.0.1:5000/register/user") {
+            if (request.url == getRegisterUrl()) {
                 console.log("Interceptor: that's fine");
             } else {
                 let state = this.router.routerState;

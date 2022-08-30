@@ -22,14 +22,14 @@ def getDbUserChecks(username):
         + "'"
     )
 
-    print("results is:")
-    print(results)
+    # print("results is:")
+    # print(results)
 
     toReturn = []
     for r in results:
         toReturn.append({"checkId": r[0], "checkName": r[1], "checkLocation": r[2]})
 
-    print(toReturn)
+    # print(toReturn)
 
     return toReturn
 

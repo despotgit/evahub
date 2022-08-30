@@ -242,6 +242,10 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.updateState("registerPageData", "registerUsername", registerUsername);
     }
 
+    updateRegisterPassword(registerPassword: string) {
+        this.updateState("registerPageData", "registerPassword", registerPassword);
+    }
+
     updateRegisterFirstLastName(firstLastName: string) {
         this.updateState("registerPageData", "firstLastName", firstLastName);
     }
@@ -252,6 +256,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     resetRegisterPage() {
         this.updateRegisterUsername("");
+        this.updateRegisterPassword("");
         this.updateRegisterFirstLastName("");
         this.updateRegisterEmail("");
     }

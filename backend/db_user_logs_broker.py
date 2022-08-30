@@ -49,11 +49,11 @@ def getUploadedUserLogs(username):
 
         # c = str(content)
         c = content
-        print("content is:!!!!!")
-        print(c)
+        # print("content is:!!!!!")
+        # print(c)
         toReturn.append({"logId": r[0], "logName": r[1], "logContent": c})
 
-    print(toReturn)
+    # print(toReturn)
 
     return toReturn
 

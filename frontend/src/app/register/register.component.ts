@@ -99,18 +99,27 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         const registerUsernameEvents$: Observable<any> = this.step1FormGroup.get(
             "registerUsernameFormControl"
         ).valueChanges;
+        const registerPasswordEvents$: Observable<any> = this.step2FormGroup.get(
+            "registerPasswordFormControl"
+        ).valueChanges;
         const firstLastNameEvents$: Observable<any> = this.step3FormGroup.get(
             "firstLastNameFormControl"
         ).valueChanges;
         const emailEvents$: Observable<any> =
             this.step4FormGroup.get("emailFormControl").valueChanges;
 
-        combineLatest([registerUsernameEvents$, firstLastNameEvents$, emailEvents$])
+        combineLatest([
+            registerUsernameEvents$,
+            registerPasswordEvents$,
+            firstLastNameEvents$,
+            emailEvents$
+        ])
             .pipe(
                 debounceTime(300),
                 distinctUntilChanged(),
-                map(([registerUsername, firstLastName, email]) => {
+                map(([registerUsername, registerPassword, firstLastName, email]) => {
                     this.store.updateRegisterUsername(registerUsername);
+                    this.store.updateRegisterPassword(registerPassword);
                     this.store.updateRegisterFirstLastName(firstLastName);
                     this.store.updateRegisterEmail(email);
                 })
@@ -156,6 +165,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
                     //url = `${environment.baseApiBackendUrl}/register/user`;
                     url = getRegisterUrl();
+                    console.log("aaaand url is:", url);
 
                     return this.http.post(url, formData, {
                         reportProgress: true,
@@ -171,7 +181,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                 console.log(event);
                 console.log("in registration subscribe");
                 this.isPosted = true;
-                this.store.resetRegisterPage();
+                //DEV:  this.store.resetRegisterPage();
                 this.cd.markForCheck();
             });
     }

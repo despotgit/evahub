@@ -21,14 +21,14 @@ def getDbUserReports(username):
         + "'"
     )
 
-    print("results is:")
-    print(results)
+    # print("results is:")
+    # print(results)
 
     toReturn = []
     for r in results:
         toReturn.append({"reportId": r[0], "reportName": r[1], "reportLocation": r[2]})
 
-    print(toReturn)
+    # print(toReturn)
 
     return toReturn
 
