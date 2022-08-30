@@ -23,8 +23,8 @@ def getUploadedUserLogs(username):
         + "'"
     )
 
-    print("results is:")
-    print(results)
+    # print("results is:")
+    # print(results)
 
     # with open('textfile.txt', 'r') as f:
     #    return text=f.read()

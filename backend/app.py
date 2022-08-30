@@ -21,7 +21,7 @@ app.secret_key = config.SECRET_KEY
 app.register_blueprint(rest, url_prefix="/rest")
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(upload, url_prefix="/upload")
-app.register_blueprint(register, url_prefix="/pregister")
+app.register_blueprint(register, url_prefix="/register")  # DEV:
 
 if config.FLASK_ENV == "dev":
     cors = CORS(app, resources={r"/*": {"origins": "*"}})
