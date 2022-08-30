@@ -18,7 +18,7 @@ from db_config import getDb
 auth = Blueprint("auth", __name__)
 
 
-@auth.route("auth/register", methods=["POST"])
+@auth.route("/register", methods=["POST"])
 def register():
     print("in the beginning of it")
     username = request.form["username"]
