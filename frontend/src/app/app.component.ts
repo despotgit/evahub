@@ -133,7 +133,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     // e can be string or a full PageIndexDictionary property
     goTo(e) {
         if (typeof e == "string") {
-            console.log("iyeag"!);
             e = PageIndexDictionary[e];
             console.log("e is:", e);
         }

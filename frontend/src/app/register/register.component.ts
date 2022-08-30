@@ -158,10 +158,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     console.log("data is:", data);
                     console.log("e is:", e);
 
-                    formData["username"] = data[0];
-                    formData["password"] = data[1];
-                    formData["name"] = data[2];
-                    formData["email"] = data[3];
+                    const formData = new FormData();
+
+                    formData.append("username", data[0]);
+                    formData.append("password", data[1]);
+                    formData.append("name", data[2]);
+                    formData.append("email", data[3]);
 
                     console.log("formData is: ", formData);
 
@@ -169,10 +171,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     url = getRegisterUrl();
                     console.log("aaaand url is:", url);
 
-                    return this.http.post(url, formData, {
-                        reportProgress: true,
-                        observe: "events"
-                    });
+                    return this.http.post(url, formData);
                 }),
                 finalize(() => {
                     console.log("step 3, in finalize");

@@ -22,31 +22,32 @@ auth = Blueprint("auth", __name__)
 def register():
     print("in the beginning of it")
 
-    print("request.form is:")
-    print(request.form)
+    print("request is:")
+    print(request.get_data())
 
-    username = request.form["username"]
-    password = request.form["password"]
+    if False:
+        username = request.form["username"]
+        password = request.form["password"]
 
-    print("username is:", username)
-    print("password is:", password)
+        print("username is:", username)
+        print("password is:", password)
 
-    encoding = "utf-8"
-    passwordEncoded = password.encode(encoding)
+        encoding = "utf-8"
+        passwordEncoded = password.encode(encoding)
 
-    hashed = bcrypt.hashpw(passwordEncoded, bcrypt.gensalt())
+        hashed = bcrypt.hashpw(passwordEncoded, bcrypt.gensalt())
 
-    hashedDecoded = hashed.decode(encoding)
+        hashedDecoded = hashed.decode(encoding)
 
-    connection = getDb()
-    cursor = connection.cursor()
-    cursor.execute(
-        "INSERT INTO users (`username`, `password`) VALUES ('"
-        + username
-        + "', '"
-        + hashedDecoded
-        + "')"
-    )
+        connection = getDb()
+        cursor = connection.cursor()
+        cursor.execute(
+            "INSERT INTO users (`username`, `password`) VALUES ('"
+            + username
+            + "', '"
+            + hashedDecoded
+            + "')"
+        )
 
     # results = cursor.fetchall()
     # for result in results:

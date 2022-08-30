@@ -39,11 +39,10 @@ export class JwtInterceptor implements HttpInterceptor {
             //console.log(request);
         } else {
             console.log("in when false validateLoginToken in jwt interceptor");
-
             console.log("request is:", request);
 
             if (request.url == getRegisterUrl()) {
-                console.log("Interceptor: that's fine");
+                console.log("Interceptor: that's fine, don't redirect");
             } else {
                 let state = this.router.routerState;
                 let snapshot = state.snapshot;
