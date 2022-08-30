@@ -163,6 +163,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     formData["name"] = data[2];
                     formData["email"] = data[3];
 
+                    console.log("formData is: ", formData);
+
                     //url = `${environment.baseApiBackendUrl}/register/user`;
                     url = getRegisterUrl();
                     console.log("aaaand url is:", url);

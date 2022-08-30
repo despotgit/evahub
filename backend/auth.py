@@ -21,6 +21,10 @@ auth = Blueprint("auth", __name__)
 @auth.route("/register", methods=["POST"])
 def register():
     print("in the beginning of it")
+
+    print("request.form is:")
+    print(request.form)
+
     username = request.form["username"]
     password = request.form["password"]
 
