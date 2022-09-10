@@ -24,6 +24,7 @@ export interface ApplicationState {
 export interface RegisterPageDataState {
     registerUsername: string;
     registerPassword: string;
+    registerPasswordConfirmation: string;
     firstLastName: string;
     email: string;
 }
@@ -31,6 +32,7 @@ export interface RegisterPageDataState {
 export const INITIAL_REGISTER_PAGE_STATE = {
     registerUsername: "",
     registerPassword: "",
+    registerPasswordConfirmation: "",
     firstLastName: "",
     email: ""
 };
@@ -142,6 +144,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     registerPassword$: Observable<string> = this.select(
         state => state.registerPageData.registerPassword
     );
+    registerPasswordConfirmation$: Observable<string> = this.select(
+        state => state.registerPageData.registerPasswordConfirmation
+    );
     firstLastName$: Observable<string> = this.select(state => state.registerPageData.firstLastName);
     email$: Observable<string> = this.select(state => state.registerPageData.email);
 
@@ -244,6 +249,14 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     updateRegisterPassword(registerPassword: string) {
         this.updateState("registerPageData", "registerPassword", registerPassword);
+    }
+
+    updateRegisterPasswordConfirmation(registerPasswordConfirmation: string) {
+        this.updateState(
+            "registerPageData",
+            "registerPasswordConfirmation",
+            registerPasswordConfirmation
+        );
     }
 
     updateRegisterFirstLastName(firstLastName: string) {

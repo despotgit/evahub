@@ -85,7 +85,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.store.currentPageIndex$
     ]).pipe(
         map(([ili, cpi]) => {
-            console.log("ili and cpi is:", ili, cpi);
+            //console.log("ili and cpi is:", ili, cpi);
             if (!ili && cpi != PageIndex.REGISTER_PAGE) {
                 return true;
             } else {
@@ -98,8 +98,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.store.currentPageIndex$
     ]).pipe(
         map(([ili, cpi]) => {
-            console.log("ili and cpi is:", ili, cpi);
-            console.log("login page index is:", PageIndex.LOGIN_PAGE);
+            //console.log("ili and cpi is:", ili, cpi);
+            //console.log("login page index is:", PageIndex.LOGIN_PAGE);
             if (!ili && cpi != PageIndex.LOGIN_PAGE) {
                 return true;
             } else {
@@ -123,7 +123,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         private authenticationService: AuthenticationService,
         private httpClient: HttpClient
     ) {
-        //
+        var t: any = 99;
+        t = "Turing";
+        console.log(t);
     }
 
     ngOnInit(): void {}

@@ -53,6 +53,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.step2FormGroup.get("registerPasswordFormControl").setValue(newRegisterPassword);
         })
     );
+    registerPasswordConfirmation$: Observable<string> =
+        this.store.registerPasswordConfirmation$.pipe(
+            tap(newRPC => {
+                this.step2FormGroup.get("registerPasswordConfirmationFormControl").setValue(newRPC);
+            })
+        );
     firstLastName$: Observable<string> = this.store.firstLastName$.pipe(
         tap(newName => {
             //console.log("CHECKPOINT 2");
@@ -81,7 +87,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         });
 
         this.step2FormGroup = this.formBuilder.group({
-            registerPasswordFormControl: new FormControl("")
+            registerPasswordFormControl: new FormControl(""),
+            registerPasswordConfirmationFormControl: new FormControl("")
         });
 
         this.step3FormGroup = this.formBuilder.group({
@@ -102,6 +109,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         const registerPasswordEvents$: Observable<any> = this.step2FormGroup.get(
             "registerPasswordFormControl"
         ).valueChanges;
+        const registerPasswordConfirmationEvents$: Observable<any> = this.step2FormGroup.get(
+            "registerPasswordConfirmationFormControl"
+        ).valueChanges;
         const firstLastNameEvents$: Observable<any> = this.step3FormGroup.get(
             "firstLastNameFormControl"
         ).valueChanges;
@@ -111,18 +121,28 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         combineLatest([
             registerUsernameEvents$,
             registerPasswordEvents$,
+            registerPasswordConfirmationEvents$,
             firstLastNameEvents$,
             emailEvents$
         ])
             .pipe(
                 debounceTime(300),
                 distinctUntilChanged(),
-                map(([registerUsername, registerPassword, firstLastName, email]) => {
-                    this.store.updateRegisterUsername(registerUsername);
-                    this.store.updateRegisterPassword(registerPassword);
-                    this.store.updateRegisterFirstLastName(firstLastName);
-                    this.store.updateRegisterEmail(email);
-                })
+                map(
+                    ([
+                        registerUsername,
+                        registerPassword,
+                        registerPasswordConfirmation,
+                        firstLastName,
+                        email
+                    ]) => {
+                        this.store.updateRegisterUsername(registerUsername);
+                        this.store.updateRegisterPassword(registerPassword);
+                        this.store.updateRegisterPasswordConfirmation(registerPasswordConfirmation);
+                        this.store.updateRegisterFirstLastName(firstLastName);
+                        this.store.updateRegisterEmail(email);
+                    }
+                )
             )
             .subscribe();
         this.store.updateCurrentPageIndex(PageIndex.REGISTER_PAGE);
@@ -150,13 +170,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     combineLatest([
                         this.registerUsername$,
                         this.registerPassword$,
+                        this.registerPasswordConfirmation$,
                         this.firstLastName$,
                         this.email$
                     ])
                 ),
                 switchMap(([e, data]) => {
-                    console.log("data is:", data);
-                    console.log("e is:", e);
+                    //console.log("data is:", data);
+                    //console.log("e is:", e);
 
                     const formData = new FormData();
 
@@ -165,16 +186,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     formData.append("name", data[2]);
                     formData.append("email", data[3]);
 
-                    console.log("formData is: ", formData);
+                    //console.log("formData is: ", formData);
 
-                    //url = `${environment.baseApiBackendUrl}/register/user`;
                     url = getRegisterUrl();
-                    console.log("aaaand url is:", url);
+                    //console.log("aaaand url is:", url);
 
                     return this.http.post(url, formData);
                 }),
                 finalize(() => {
-                    console.log("step 3, in finalize");
+                    //console.log("step 3, in finalize");
                     this.reset();
                 })
             )
@@ -182,7 +202,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                 console.log(event);
                 console.log("in registration subscribe");
                 this.isPosted = true;
-                //DEV:  this.store.resetRegisterPage();
+                this.store.resetRegisterPage();
                 this.cd.markForCheck();
             });
     }

@@ -26,11 +26,18 @@
         <mat-step [stepControl]="step2FormGroup">
             <form [formGroup]="step2FormGroup">
                 <ng-template matStepLabel>Fill out your password</ng-template>
-                <mat-form-field>
+                <mat-form-field class="password-fields">
                     <input
                         matInput
                         placeholder="Password"
                         formControlName="registerPasswordFormControl"
+                    />
+                </mat-form-field>
+                <mat-form-field class="password-fields">
+                    <input
+                        matInput
+                        placeholder="Confirm password"
+                        formControlName="registerPasswordConfirmationFormControl"
                     />
                 </mat-form-field>
                 <div>
