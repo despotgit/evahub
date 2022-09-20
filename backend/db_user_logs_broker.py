@@ -18,7 +18,7 @@ def getDbUserLog(username, reportId):
 
 def getUploadedUserLogs(username):
     results = executeCustomQuery(
-        "select log_id, log_name, log_location from logs where username = '"
+        "select log_id, log_name, log_filename from logs where username = '"
         + str(username)
         + "'"
     )

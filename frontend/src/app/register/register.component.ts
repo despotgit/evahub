@@ -22,23 +22,30 @@ import {
     Subject
 } from "rxjs";
 import { finalize, startWith, withLatestFrom } from "rxjs/operators";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { getRegisterUrl, PageIndex } from "../common/constants";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { MatButton } from "@angular/material/button";
+import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 
 @Component({
     selector: "app-register",
     templateUrl: "./register.component.html",
     styleUrls: ["./register.component.scss"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { showError: true }
+        }
+    ]
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
     registerHttpCall$: Subscription;
 
-    step1FormGroup: any;
+    step1FormGroup: FormGroup;
     step2FormGroup: any;
     step3FormGroup: any;
     step4FormGroup: any;
@@ -83,12 +90,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private cd: ChangeDetectorRef
     ) {
         this.step1FormGroup = this.formBuilder.group({
-            registerUsernameFormControl: new FormControl("")
+            registerUsernameFormControl: ["", [Validators.required]]
         });
 
         this.step2FormGroup = this.formBuilder.group({
-            registerPasswordFormControl: new FormControl(""),
-            registerPasswordConfirmationFormControl: new FormControl("")
+            registerPasswordFormControl: ["", [Validators.required]],
+            registerPasswordConfirmationFormControl: ["", [Validators.required]]
         });
 
         this.step3FormGroup = this.formBuilder.group({
@@ -100,6 +107,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         });
 
         this.ngOnInit();
+    }
+
+    isDisabl() {
+        if (this.step2FormGroup.controls["registerPasswordFormControl"].errors) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     ngOnInit(): void {

@@ -2,6 +2,8 @@
     class="register-content-wrapper"
     *ngIf="{
         registerUsername: registerUsername$ | async,
+        registerPassword: registerPassword$ | async,
+        registerPasswordConfirmation: registerPasswordConfirmation$ | async,
         firstLastname: firstLastName$ | async,
         email: email$ | async
     } as asyncData"
@@ -41,7 +43,11 @@
                     />
                 </mat-form-field>
                 <div>
-                    <button type="button" mat-button matStepperNext>Next</button>
+                    {{ isDisabl() ? true : false }}
+
+                    <button type="button" [disabled]="isDisabl()" mat-button matStepperNext>
+                        Next
+                    </button>
                 </div>
             </form>
         </mat-step>
@@ -71,7 +77,6 @@
                         placeholder="Email"
                         formControlName="emailFormControl"
                         value="email"
-                        required
                     />
                 </mat-form-field>
                 <div>

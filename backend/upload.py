@@ -43,7 +43,7 @@ def upload_file(username):
     f.save(uploadLocation)
 
     executeCustomQuery(
-        "insert into logs (`log_name`,`log_location`,`username`) values ('"
+        "insert into logs (`log_name`,`log_filename`,`username`) values ('"
         + finalFilename
         + "', '"
         + finalFilename
