@@ -43,9 +43,14 @@
                     />
                 </mat-form-field>
                 <div>
-                    {{ isDisabl() ? true : false }}
-
-                    <button type="button" [disabled]="isDisabl()" mat-button matStepperNext>
+                    <button
+                        type="button"
+                        [disabled]="
+                            this.step2FormGroup.controls['registerPasswordFormControl'].errors
+                        "
+                        mat-button
+                        matStepperNext
+                    >
                         Next
                     </button>
                 </div>

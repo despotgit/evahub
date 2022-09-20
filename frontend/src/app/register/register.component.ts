@@ -109,14 +109,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.ngOnInit();
     }
 
-    isDisabl() {
-        if (this.step2FormGroup.controls["registerPasswordFormControl"].errors) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     ngOnInit(): void {
         const registerUsernameEvents$: Observable<any> = this.step1FormGroup.get(
             "registerUsernameFormControl"
