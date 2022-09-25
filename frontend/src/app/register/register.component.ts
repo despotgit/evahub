@@ -45,36 +45,33 @@ import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 export class RegisterComponent implements OnInit, AfterViewInit {
     registerHttpCall$: Subscription;
 
-    step1FormGroup: FormGroup;
-    step2FormGroup: any;
-    step3FormGroup: any;
-    step4FormGroup: any;
+    forma: any;
 
     registerUsername$: Observable<string> = this.store.registerUsername$.pipe(
         tap(newRegisterUsername => {
-            this.step1FormGroup.get("registerUsernameFormControl").setValue(newRegisterUsername);
+            this.forma.get("registerUsernameFormControl").setValue(newRegisterUsername);
         })
     );
     registerPassword$: Observable<string> = this.store.registerPassword$.pipe(
         tap(newRegisterPassword => {
-            this.step2FormGroup.get("registerPasswordFormControl").setValue(newRegisterPassword);
+            this.forma.get("registerPasswordFormControl").setValue(newRegisterPassword);
         })
     );
     registerPasswordConfirmation$: Observable<string> =
         this.store.registerPasswordConfirmation$.pipe(
             tap(newRPC => {
-                this.step2FormGroup.get("registerPasswordConfirmationFormControl").setValue(newRPC);
+                this.forma.get("registerPasswordConfirmationFormControl").setValue(newRPC);
             })
         );
     firstLastName$: Observable<string> = this.store.firstLastName$.pipe(
         tap(newName => {
             //console.log("CHECKPOINT 2");
-            this.step3FormGroup.get("firstLastNameFormControl").setValue(newName);
+            this.forma.get("firstLastNameFormControl").setValue(newName);
         })
     );
     email$: Observable<string> = this.store.email$.pipe(
         tap(email => {
-            this.step4FormGroup.get("emailFormControl").setValue(email);
+            this.forma.get("emailFormControl").setValue(email);
         })
     );
 
@@ -89,20 +86,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private http: HttpClient,
         private cd: ChangeDetectorRef
     ) {
-        this.step1FormGroup = this.formBuilder.group({
-            registerUsernameFormControl: ["", [Validators.required]]
-        });
-
-        this.step2FormGroup = this.formBuilder.group({
+        this.forma = this.formBuilder.group({
+            registerUsernameFormControl: ["", [Validators.required]],
             registerPasswordFormControl: ["", [Validators.required]],
-            registerPasswordConfirmationFormControl: ["", [Validators.required]]
-        });
-
-        this.step3FormGroup = this.formBuilder.group({
-            firstLastNameFormControl: new FormControl("")
-        });
-
-        this.step4FormGroup = this.formBuilder.group({
+            registerPasswordConfirmationFormControl: ["", [Validators.required]],
+            firstLastNameFormControl: new FormControl(""),
             emailFormControl: ["", [Validators.required, Validators.email]]
         });
 
@@ -110,20 +98,19 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        const registerUsernameEvents$: Observable<any> = this.step1FormGroup.get(
+        const registerUsernameEvents$: Observable<any> = this.forma.get(
             "registerUsernameFormControl"
         ).valueChanges;
-        const registerPasswordEvents$: Observable<any> = this.step2FormGroup.get(
+        const registerPasswordEvents$: Observable<any> = this.forma.get(
             "registerPasswordFormControl"
         ).valueChanges;
-        const registerPasswordConfirmationEvents$: Observable<any> = this.step2FormGroup.get(
+        const registerPasswordConfirmationEvents$: Observable<any> = this.forma.get(
             "registerPasswordConfirmationFormControl"
         ).valueChanges;
-        const firstLastNameEvents$: Observable<any> = this.step3FormGroup.get(
+        const firstLastNameEvents$: Observable<any> = this.forma.get(
             "firstLastNameFormControl"
         ).valueChanges;
-        const emailEvents$: Observable<any> =
-            this.step4FormGroup.get("emailFormControl").valueChanges;
+        const emailEvents$: Observable<any> = this.forma.get("emailFormControl").valueChanges;
 
         combineLatest([
             registerUsernameEvents$,
@@ -160,10 +147,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     finish() {
-        console.log("v1 is:", this.step1FormGroup.value);
-        console.log("v1 is:", this.step2FormGroup.value);
-        console.log("v2 is:", this.step3FormGroup.value);
-        console.log("v3 is:", this.step4FormGroup.value);
+        console.log("v1 is:", this.forma.value);
+        console.log("v1 is:", this.forma.value);
+        console.log("v2 is:", this.forma.value);
+        console.log("v3 is:", this.forma.value);
 
         let url;
 
@@ -231,7 +218,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     displ() {
-        console.log(this.step2FormGroup.controls["registerPasswordFormControl"]);
+        console.log(this.forma.controls["registerPasswordFormControl"]);
     }
 
     ngOnDestroy() {

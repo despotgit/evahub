@@ -29,11 +29,6 @@ label {
 
 // End accordion
 
-.register-page-stepper {
-    background: $global-background-color;
-    border-radius: $regular-rounded-border-radius;
-}
-
 .register-content-wrapper {
     left: 9px;
     position: relative;
@@ -42,4 +37,8 @@ label {
 
 .password-fields {
     display: flex;
+}
+
+.registration-area {
+    margin-left: 0px;
 }
