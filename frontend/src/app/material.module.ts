@@ -3,7 +3,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSliderModule } from "@angular/material/slider";
 import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatStepperModule } from "@angular/material/stepper";
+
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatExpansionModule } from "@angular/material/expansion";
@@ -22,7 +22,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
         MatButtonModule,
         MatSliderModule,
         MatSidenavModule,
-        MatStepperModule,
+
         MatInputModule,
         MatExpansionModule,
         MatDatepickerModule,
@@ -40,7 +40,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
         MatButtonModule,
         MatSliderModule,
         MatSidenavModule,
-        MatStepperModule,
+
         MatInputModule,
         MatExpansionModule,
         MatDatepickerModule,

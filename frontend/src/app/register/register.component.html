@@ -13,9 +13,6 @@
         <mat-form-field>
             <input matInput placeholder="Username" formControlName="registerUsernameFormControl" />
         </mat-form-field>
-        <div>
-            <button mat-button matStepperNext>Next</button>
-        </div>
     </form>
 
     <button (click)="displ()">DISPLAY PASSWORD FIELD ERRORS</button>
@@ -59,9 +56,6 @@
                 formControlName="firstLastNameFormControl"
             />
         </mat-form-field>
-        <div>
-            <button mat-button matStepperNext>Next</button>
-        </div>
     </form>
 
     <form [formGroup]="step4FormGroup">
@@ -69,17 +63,11 @@
         <mat-form-field>
             <input matInput placeholder="Email" formControlName="emailFormControl" value="email" />
         </mat-form-field>
-        <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-        </div>
     </form>
 
     <ng-template matStepLabel>Done</ng-template>
     You are now done.
     <div>
-        <button mat-button matStepperPrevious>Back</button>
-
         <button #done mat-button>Done</button>
     </div>
 
