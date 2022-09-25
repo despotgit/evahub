@@ -28,6 +28,7 @@ import { getRegisterUrl, PageIndex } from "../common/constants";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { MatButton } from "@angular/material/button";
+import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 
 @Component({
     selector: "app-register",
@@ -36,7 +37,7 @@ import { MatButton } from "@angular/material/button";
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
-            provide: [],
+            provide: STEPPER_GLOBAL_OPTIONS,
             useValue: { showError: true }
         }
     ]
