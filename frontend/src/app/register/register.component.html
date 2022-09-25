@@ -20,7 +20,7 @@
             </mat-form-field>
 
             <ng-template matStepLabel>Fill out your password</ng-template>
-            <mat-form-field class="password-fields">
+            <mat-form-field class="registration-field">
                 <input
                     matInput
                     placeholder="Password"
@@ -34,7 +34,7 @@
             >
                 {{ this.forma.controls["registerPasswordFormControl"].errors.required }}
             </div>
-            <mat-form-field class="password-fields">
+            <mat-form-field class="registration-field">
                 <input
                     matInput
                     placeholder="Confirm password"
@@ -43,7 +43,7 @@
             </mat-form-field>
 
             <ng-template matStepLabel>Fill out your name</ng-template>
-            <mat-form-field>
+            <mat-form-field class="registration-field">
                 <input
                     matInput
                     placeholder="Last name, First name"
@@ -60,8 +60,6 @@
                     value="email"
                 />
             </mat-form-field>
-
-            <ng-template matStepLabel>Done</ng-template>
 
             <div>
                 <button #done mat-button>Done</button>
