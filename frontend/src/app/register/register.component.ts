@@ -28,7 +28,6 @@ import { getRegisterUrl, PageIndex } from "../common/constants";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { MatButton } from "@angular/material/button";
-import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 
 @Component({
     selector: "app-register",
@@ -37,7 +36,7 @@ import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
-            provide: STEPPER_GLOBAL_OPTIONS,
+            provide: [],
             useValue: { showError: true }
         }
     ]
@@ -156,10 +155,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.doneStepper();
+        this.finish();
     }
 
-    doneStepper() {
+    finish() {
         console.log("v1 is:", this.step1FormGroup.value);
         console.log("v1 is:", this.step2FormGroup.value);
         console.log("v2 is:", this.step3FormGroup.value);
@@ -228,6 +227,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     reset() {
         this.registerHttpCall$ = null;
+    }
+
+    displ() {
+        console.log(this.step2FormGroup.controls["registerPasswordFormControl"]);
     }
 
     ngOnDestroy() {

@@ -8,99 +8,82 @@
         email: email$ | async
     } as asyncData"
 >
-    <mat-vertical-stepper *ngIf="!isPosted" class="register-page-stepper" [linear]="false" #stepper>
-        <mat-step [stepControl]="step1FormGroup">
-            <form [formGroup]="step1FormGroup">
-                <ng-template matStepLabel>Fill out your username</ng-template>
-                <mat-form-field>
-                    <input
-                        matInput
-                        placeholder="Username"
-                        formControlName="registerUsernameFormControl"
-                    />
-                </mat-form-field>
-                <div>
-                    <button mat-button matStepperNext>Next</button>
-                </div>
-            </form>
-        </mat-step>
+    <form [formGroup]="step1FormGroup">
+        <ng-template matStepLabel>Fill out your username</ng-template>
+        <mat-form-field>
+            <input matInput placeholder="Username" formControlName="registerUsernameFormControl" />
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </form>
 
-        <mat-step [stepControl]="step2FormGroup">
-            <form [formGroup]="step2FormGroup">
-                <ng-template matStepLabel>Fill out your password</ng-template>
-                <mat-form-field class="password-fields">
-                    <input
-                        matInput
-                        placeholder="Password"
-                        formControlName="registerPasswordFormControl"
-                    />
-                </mat-form-field>
-                <mat-form-field class="password-fields">
-                    <input
-                        matInput
-                        placeholder="Confirm password"
-                        formControlName="registerPasswordConfirmationFormControl"
-                    />
-                </mat-form-field>
-                <div>
-                    <button
-                        type="button"
-                        [disabled]="
-                            this.step2FormGroup.controls['registerPasswordFormControl'].errors
-                        "
-                        mat-button
-                        matStepperNext
-                    >
-                        Next
-                    </button>
-                </div>
-            </form>
-        </mat-step>
+    <button (click)="displ()">DISPLAY PASSWORD FIELD ERRORS</button>
+    <form [formGroup]="step2FormGroup">
+        <ng-template matStepLabel>Fill out your password</ng-template>
+        <mat-form-field class="password-fields">
+            <input matInput placeholder="Password" formControlName="registerPasswordFormControl" />
+        </mat-form-field>
 
-        <mat-step [stepControl]="step3FormGroup">
-            <form [formGroup]="step3FormGroup">
-                <ng-template matStepLabel>Fill out your name</ng-template>
-                <mat-form-field>
-                    <input
-                        matInput
-                        placeholder="Last name, First name"
-                        formControlName="firstLastNameFormControl"
-                    />
-                </mat-form-field>
-                <div>
-                    <button mat-button matStepperNext>Next</button>
-                </div>
-            </form>
-        </mat-step>
+        <div
+            *ngIf="true && this.step2FormGroup.controls['registerPasswordFormControl'].errors"
+            class="invalid-feedback"
+        >
+            {{ this.step2FormGroup.controls["registerPasswordFormControl"].errors.required }}
+        </div>
+        <mat-form-field class="password-fields">
+            <input
+                matInput
+                placeholder="Confirm password"
+                formControlName="registerPasswordConfirmationFormControl"
+            />
+        </mat-form-field>
 
-        <mat-step [stepControl]="step4FormGroup">
-            <form [formGroup]="step4FormGroup">
-                <ng-template matStepLabel>Fill out your email</ng-template>
-                <mat-form-field>
-                    <input
-                        matInput
-                        placeholder="Email"
-                        formControlName="emailFormControl"
-                        value="email"
-                    />
-                </mat-form-field>
-                <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button matStepperNext>Next</button>
-                </div>
-            </form>
-        </mat-step>
+        <div>
+            <button
+                type="button"
+                [disabled]="this.step2FormGroup.controls['registerPasswordFormControl'].errors"
+                mat-button
+                matStepperNext
+            >
+                Next
+            </button>
+        </div>
+    </form>
 
-        <mat-step>
-            <ng-template matStepLabel>Done</ng-template>
-            You are now done.
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-                <button #done mat-button>Done</button>
-            </div>
-        </mat-step>
-    </mat-vertical-stepper>
+    <form [formGroup]="step3FormGroup">
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        <mat-form-field>
+            <input
+                matInput
+                placeholder="Last name, First name"
+                formControlName="firstLastNameFormControl"
+            />
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </form>
+
+    <form [formGroup]="step4FormGroup">
+        <ng-template matStepLabel>Fill out your email</ng-template>
+        <mat-form-field>
+            <input matInput placeholder="Email" formControlName="emailFormControl" value="email" />
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </form>
+
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+        <button mat-button matStepperPrevious>Back</button>
+
+        <button #done mat-button>Done</button>
+    </div>
+
     <div *ngIf="isPosted">
         Thanks. In order to confirm your registration, please click on the link in the confirmation
         email.
