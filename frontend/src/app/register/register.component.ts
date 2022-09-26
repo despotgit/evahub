@@ -45,33 +45,33 @@ import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 export class RegisterComponent implements OnInit, AfterViewInit {
     registerHttpCall$: Subscription;
 
-    forma: any;
+    theForm: any;
 
     registerUsername$: Observable<string> = this.store.registerUsername$.pipe(
         tap(newRegisterUsername => {
-            this.forma.get("registerUsernameFormControl").setValue(newRegisterUsername);
+            this.theForm.get("registerUsernameFormControl").setValue(newRegisterUsername);
         })
     );
     registerPassword$: Observable<string> = this.store.registerPassword$.pipe(
         tap(newRegisterPassword => {
-            this.forma.get("registerPasswordFormControl").setValue(newRegisterPassword);
+            this.theForm.get("registerPasswordFormControl").setValue(newRegisterPassword);
         })
     );
     registerPasswordConfirmation$: Observable<string> =
         this.store.registerPasswordConfirmation$.pipe(
             tap(newRPC => {
-                this.forma.get("registerPasswordConfirmationFormControl").setValue(newRPC);
+                this.theForm.get("registerPasswordConfirmationFormControl").setValue(newRPC);
             })
         );
     firstLastName$: Observable<string> = this.store.firstLastName$.pipe(
         tap(newName => {
             //console.log("CHECKPOINT 2");
-            this.forma.get("firstLastNameFormControl").setValue(newName);
+            this.theForm.get("firstLastNameFormControl").setValue(newName);
         })
     );
     email$: Observable<string> = this.store.email$.pipe(
         tap(email => {
-            this.forma.get("emailFormControl").setValue(email);
+            this.theForm.get("emailFormControl").setValue(email);
         })
     );
 
@@ -86,7 +86,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private http: HttpClient,
         private cd: ChangeDetectorRef
     ) {
-        this.forma = this.formBuilder.group({
+        this.theForm = this.formBuilder.group({
             registerUsernameFormControl: ["", [Validators.required]],
             registerPasswordFormControl: ["", [Validators.required]],
             registerPasswordConfirmationFormControl: ["", [Validators.required]],
@@ -98,19 +98,19 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        const registerUsernameEvents$: Observable<any> = this.forma.get(
+        const registerUsernameEvents$: Observable<any> = this.theForm.get(
             "registerUsernameFormControl"
         ).valueChanges;
-        const registerPasswordEvents$: Observable<any> = this.forma.get(
+        const registerPasswordEvents$: Observable<any> = this.theForm.get(
             "registerPasswordFormControl"
         ).valueChanges;
-        const registerPasswordConfirmationEvents$: Observable<any> = this.forma.get(
+        const registerPasswordConfirmationEvents$: Observable<any> = this.theForm.get(
             "registerPasswordConfirmationFormControl"
         ).valueChanges;
-        const firstLastNameEvents$: Observable<any> = this.forma.get(
+        const firstLastNameEvents$: Observable<any> = this.theForm.get(
             "firstLastNameFormControl"
         ).valueChanges;
-        const emailEvents$: Observable<any> = this.forma.get("emailFormControl").valueChanges;
+        const emailEvents$: Observable<any> = this.theForm.get("emailFormControl").valueChanges;
 
         combineLatest([
             registerUsernameEvents$,
@@ -147,10 +147,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     finish() {
-        console.log("v1 is:", this.forma.value);
-        console.log("v1 is:", this.forma.value);
-        console.log("v2 is:", this.forma.value);
-        console.log("v3 is:", this.forma.value);
+        console.log("v1 is:", this.theForm.value);
+        console.log("v1 is:", this.theForm.value);
+        console.log("v2 is:", this.theForm.value);
+        console.log("v3 is:", this.theForm.value);
 
         let url;
 
@@ -179,8 +179,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     formData.append("password", data[1]);
                     formData.append("name", data[2]);
                     formData.append("email", data[3]);
-
-                    //console.log("formData is: ", formData);
 
                     url = getRegisterUrl();
                     //console.log("aaaand url is:", url);
@@ -218,7 +216,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     displ() {
-        console.log(this.forma.controls["registerPasswordFormControl"]);
+        console.log(this.theForm.controls["registerPasswordFormControl"]);
     }
 
     ngOnDestroy() {
