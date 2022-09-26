@@ -219,11 +219,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
         //console.log(this.theForm.invalid);
         console.log(doesMaterialFormHaveErrors(this.theForm));
-        return;
-    }
 
-    isFormValid() {
-        //return !this.theForm.controls["registerPasswordFormControl"].hasErrors();
+        return;
     }
 
     ngOnDestroy() {

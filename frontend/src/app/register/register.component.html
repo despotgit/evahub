@@ -28,14 +28,7 @@
                 />
             </mat-form-field>
             <button (click)="displ()">DOIT</button>
-            <!--
-            <div
-                *ngIf="true && this.theForm.controls['registerPasswordFormControl'].errors"
-                class="invalid-feedback"
-            >
-                {{ this.theForm.controls["registerPasswordFormControl"].errors.required }}
-            </div>
-            -->
+
             <mat-form-field class="registration-field">
                 <input
                     matInput
@@ -64,7 +57,7 @@
             </mat-form-field>
 
             <div>
-                <button #done mat-button>Done</button>
+                <button disabled="this.theForm.invalid" #done mat-button>Done</button>
             </div>
         </form>
 
