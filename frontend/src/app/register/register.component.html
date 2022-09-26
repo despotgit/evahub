@@ -57,7 +57,7 @@
             </mat-form-field>
 
             <div>
-                <button disabled="this.theForm.invalid" #done mat-button>Done</button>
+                <button [disabled]="this.theForm.invalid" #done mat-button>Done</button>
             </div>
         </form>
 
