@@ -6,7 +6,8 @@
             registerPassword: registerPassword$ | async,
             registerPasswordConfirmation: registerPasswordConfirmation$ | async,
             firstLastname: firstLastName$ | async,
-            email: email$ | async
+            email: email$ | async,
+            isFormValid: isFormValid$ | async
         } as asyncData"
     >
         <form *ngIf="!isPosted" [formGroup]="theForm">
@@ -40,7 +41,7 @@
             <mat-form-field class="registration-field">
                 <input
                     matInput
-                    placeholder="Last name, First name"
+                    placeholder="Your name"
                     formControlName="firstLastNameFormControl"
                 />
             </mat-form-field>
@@ -56,7 +57,7 @@
             </mat-form-field>
 
             <div>
-                <button [disabled]="this.theForm.invalid" #done mat-button>Done</button>
+                <button [disabled]="asyncData.isFormValid" #done mat-button>Done</button>
             </div>
         </form>
 

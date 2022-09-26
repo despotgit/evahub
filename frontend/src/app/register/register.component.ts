@@ -21,7 +21,7 @@ import {
     fromEvent,
     Subject
 } from "rxjs";
-import { finalize, startWith, withLatestFrom } from "rxjs/operators";
+import { combineLatestWith, finalize, startWith, withLatestFrom } from "rxjs/operators";
 import { Form, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndex } from "../common/constants";
@@ -74,6 +74,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.theForm.get("emailFormControl").setValue(email);
         })
     );
+    isFormValid$: Observable<boolean>;
 
     @ViewChild("done") done: MatButton;
 
@@ -93,6 +94,16 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             firstLastNameFormControl: new FormControl(""),
             emailFormControl: ["", [Validators.required, Validators.email]]
         });
+
+        this.isFormValid$ = of(this.theForm.invalid).pipe(
+            combineLatestWith([this.registerPassword$, this.registerPasswordConfirmation$]),
+            map((a, b) => {
+                //console.log("it...starts");
+                console.log(a);
+                console.log(b);
+                return true;
+            })
+        );
 
         this.ngOnInit();
     }
@@ -158,15 +169,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
         this.registerHttpCall$ = clicks$
             .pipe(
-                withLatestFrom(
-                    combineLatest([
-                        this.registerUsername$,
-                        this.registerPassword$,
-                        this.registerPasswordConfirmation$,
-                        this.firstLastName$,
-                        this.email$
-                    ])
-                ),
+                combineLatestWith([
+                    this.registerUsername$,
+                    this.registerPassword$,
+                    this.registerPasswordConfirmation$,
+                    this.firstLastName$,
+                    this.email$
+                ]),
                 switchMap(([e, data]) => {
                     //console.log("data is:", data);
                     //console.log("e is:", e);
@@ -211,6 +220,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     reset() {
         this.registerHttpCall$ = null;
+    }
+
+    isFormValid() {
+        return of(!this.theForm.invalid).pipe();
     }
 
     ngOnDestroy() {
