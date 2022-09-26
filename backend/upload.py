@@ -44,7 +44,7 @@ def upload_file(username):
 
     executeCustomQuery(
         "insert into logs (`log_name`,`log_filename`,`username`) values ('"
-        + finalFilename
+        + finalFilename[:25]
         + "', '"
         + finalFilename
         + "', '"
