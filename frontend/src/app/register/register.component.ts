@@ -213,16 +213,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.registerHttpCall$ = null;
     }
 
-    displ() {
-        //console.log(this.theForm.controls["registerPasswordFormControl"].hasErrors());
-        //console.log(this.theForm.controls["registerPasswordFormControl"].errors);
-
-        //console.log(this.theForm.invalid);
-        console.log(doesMaterialFormHaveErrors(this.theForm));
-
-        return;
-    }
-
     ngOnDestroy() {
         this.cancelRequest();
     }
