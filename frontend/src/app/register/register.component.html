@@ -9,7 +9,7 @@
             email: email$ | async
         } as asyncData"
     >
-        <form [formGroup]="theForm">
+        <form *ngIf="!isPosted" [formGroup]="theForm">
             <ng-template matStepLabel>Fill out your username</ng-template>
             <mat-form-field>
                 <input
@@ -27,7 +27,7 @@
                     formControlName="registerPasswordFormControl"
                 />
             </mat-form-field>
-
+            <button (click)="displ()">DOIT</button>
             <!--
             <div
                 *ngIf="true && this.theForm.controls['registerPasswordFormControl'].errors"

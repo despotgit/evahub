@@ -1,3 +1,4 @@
+import { FormGroup } from "@angular/forms";
 import { environment } from "src/environments/environment";
 
 export const storedObjectName = "powerJwt";
@@ -124,4 +125,18 @@ export function getRegisterUrl() {
     console.log("url is: ", url);
     //let base = environment.baseApiBackendUrl + '/register/user'
     return url;
+}
+
+export function doesMaterialFormHaveErrors(mf: any) {
+    //console.log("mf is:", mf);
+    //export function doesMaterialFormHaveErrors(mf: FormGroup) {
+    let keys = Object.keys(mf.controls);
+    for (let i = 0; i < keys.length; i++) {
+        let prop = mf.controls[keys[i]];
+        if (prop.errors) {
+            return true;
+        }
+    }
+
+    return false;
 }

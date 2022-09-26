@@ -22,9 +22,9 @@ import {
     Subject
 } from "rxjs";
 import { finalize, startWith, withLatestFrom } from "rxjs/operators";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Form, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
-import { getRegisterUrl, PageIndex } from "../common/constants";
+import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndex } from "../common/constants";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { MatButton } from "@angular/material/button";
@@ -45,7 +45,7 @@ import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 export class RegisterComponent implements OnInit, AfterViewInit {
     registerHttpCall$: Subscription;
 
-    theForm: any;
+    theForm: FormGroup;
 
     registerUsername$: Observable<string> = this.store.registerUsername$.pipe(
         tap(newRegisterUsername => {
@@ -154,8 +154,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
         let url;
 
-        const formData = new FormData();
-
         const clicks$ = fromEvent(this.done._elementRef.nativeElement, "click");
 
         this.registerHttpCall$ = clicks$
@@ -216,7 +214,16 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     displ() {
-        console.log(this.theForm.controls["registerPasswordFormControl"]);
+        //console.log(this.theForm.controls["registerPasswordFormControl"].hasErrors());
+        //console.log(this.theForm.controls["registerPasswordFormControl"].errors);
+
+        //console.log(this.theForm.invalid);
+        console.log(doesMaterialFormHaveErrors(this.theForm));
+        return;
+    }
+
+    isFormValid() {
+        //return !this.theForm.controls["registerPasswordFormControl"].hasErrors();
     }
 
     ngOnDestroy() {
