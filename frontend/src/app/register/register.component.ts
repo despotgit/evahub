@@ -95,13 +95,19 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             emailFormControl: ["", [Validators.required, Validators.email]]
         });
 
-        this.isFormValid$ = of(this.theForm.invalid).pipe(
+        this.isFormValid$ = this.theForm.valueChanges.pipe(
             combineLatestWith([this.registerPassword$, this.registerPasswordConfirmation$]),
-            map((a, b) => {
-                //console.log("it...starts");
+            map((a: any) => {
+                console.log("it...starts");
                 console.log(a);
-                console.log(b);
-                return true;
+
+                if (!this.theForm.invalid && a[1] == a[2]) {
+                    console.log("returning true");
+                    return true;
+                } else {
+                    console.log("returning false");
+                    return false;
+                }
             })
         );
 
@@ -220,10 +226,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     reset() {
         this.registerHttpCall$ = null;
-    }
-
-    isFormValid() {
-        return of(!this.theForm.invalid).pipe();
     }
 
     ngOnDestroy() {

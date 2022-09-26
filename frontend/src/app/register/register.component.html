@@ -57,7 +57,7 @@
             </mat-form-field>
 
             <div>
-                <button [disabled]="asyncData.isFormValid" #done mat-button>Done</button>
+                <button [disabled]="!asyncData.isFormValid" #done mat-button>Done</button>
             </div>
         </form>
 
