@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
         this.authenticationService
             .login(this.f["username"].value, this.f["password"].value)
             .subscribe(data => {
-                console.log("data is:", data);
+                console.log("login dat. is:", data);
                 if (data.authenticated) {
                     this.router.navigate([this.returnUrl]);
                 } else {

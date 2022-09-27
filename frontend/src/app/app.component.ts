@@ -122,11 +122,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         private store: ApplicationStateStoreService,
         private authenticationService: AuthenticationService,
         private httpClient: HttpClient
-    ) {
-        var t: any = 99;
-        t = "Turing";
-        console.log(t);
-    }
+    ) {}
 
     ngOnInit(): void {}
 

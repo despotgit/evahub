@@ -25,7 +25,7 @@ import { combineLatestWith, finalize, startWith, withLatestFrom } from "rxjs/ope
 import { Form, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndex } from "../common/constants";
-import { environment } from "src/environments/environment";
+
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { MatButton } from "@angular/material/button";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
@@ -80,6 +80,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     isPosted = false;
 
+    registrationData: any = {};
+
     constructor(
         private router: Router,
         private store: ApplicationStateStoreService,
@@ -98,14 +100,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.isFormValid$ = this.theForm.valueChanges.pipe(
             combineLatestWith([this.registerPassword$, this.registerPasswordConfirmation$]),
             map((a: any) => {
-                console.log("it...starts");
-                console.log(a);
-
                 if (!this.theForm.invalid && a[1] == a[2]) {
-                    console.log("returning true");
+                    //console.log("returning true");
                     return true;
                 } else {
-                    console.log("returning false");
+                    //console.log("returning false");
                     return false;
                 }
             })
@@ -152,6 +151,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                         this.store.updateRegisterPasswordConfirmation(registerPasswordConfirmation);
                         this.store.updateRegisterFirstLastName(firstLastName);
                         this.store.updateRegisterEmail(email);
+
+                        this.registrationData.registerUsername = registerUsername;
+                        this.registrationData.registerPassword = registerPassword;
+                        this.registrationData.registerPasswordConfirmation =
+                            registerPasswordConfirmation;
+                        this.registrationData.firstLastName = firstLastName;
+                        this.registrationData.email = email;
+
+                        console.log("regData is:", this.registrationData);
                     }
                 )
             )
@@ -160,38 +168,25 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.finish();
+        this.registerSubmit();
     }
 
-    finish() {
-        console.log("v1 is:", this.theForm.value);
-        console.log("v1 is:", this.theForm.value);
-        console.log("v2 is:", this.theForm.value);
-        console.log("v3 is:", this.theForm.value);
-
+    registerSubmit() {
         let url;
 
         const clicks$ = fromEvent(this.done._elementRef.nativeElement, "click");
 
         this.registerHttpCall$ = clicks$
             .pipe(
-                combineLatestWith([
-                    this.registerUsername$,
-                    this.registerPassword$,
-                    this.registerPasswordConfirmation$,
-                    this.firstLastName$,
-                    this.email$
-                ]),
-                switchMap(([e, data]) => {
-                    //console.log("data is:", data);
-                    //console.log("e is:", e);
-
+                switchMap(a => {
                     const formData = new FormData();
 
-                    formData.append("username", data[0]);
-                    formData.append("password", data[1]);
-                    formData.append("name", data[2]);
-                    formData.append("email", data[3]);
+                    formData.append("username", this.registrationData.registerUsername);
+                    formData.append("password", this.registrationData.registerPassword);
+                    formData.append("firstLastName", this.registrationData.firstLastName);
+                    formData.append("email", this.registrationData.email);
+
+                    console.log("******** formData is:", formData);
 
                     url = getRegisterUrl();
                     //console.log("aaaand url is:", url);
@@ -200,14 +195,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                 }),
                 finalize(() => {
                     //console.log("step 3, in finalize");
-                    this.reset();
+                    //this.reset();
+                    this.unsubscribeFromRegisterRequest();
                 })
             )
             .subscribe(event => {
                 console.log(event);
                 console.log("in registration subscribe");
                 this.isPosted = true;
-                this.store.resetRegisterPage();
+                // DEV:  this.store.resetRegisterPage();
                 this.cd.markForCheck();
             });
     }

@@ -270,6 +270,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     resetRegisterPage() {
         this.updateRegisterUsername("");
         this.updateRegisterPassword("");
+        this.updateRegisterPasswordConfirmation("");
         this.updateRegisterFirstLastName("");
         this.updateRegisterEmail("");
     }
