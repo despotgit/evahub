@@ -24,6 +24,11 @@ def register():
 
     username = request.form["username"]
     password = request.form["password"]
+    email = request.form["email"]
+    role = "client"
+
+    print("request.form is:")
+    print(request.form)
 
     print("username is:", username)
     print("password is:", password)
@@ -36,10 +41,14 @@ def register():
     connection = getDb()
     cursor = connection.cursor()
     cursor.execute(
-        "INSERT INTO users (`username`, `password`) VALUES ('"
+        "INSERT INTO users (`username`, `password`, `email`, `role`) VALUES ('"
         + username
         + "', '"
         + hashedDecoded
+        + "', '"
+        + email
+        + "', '"
+        + role
         + "')"
     )
 
