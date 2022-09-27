@@ -13,6 +13,6 @@ export const environment = {
 export const environment = {
     production: false,
     baseApiBackendUrl: "http://127.0.0.1:5000",
-    //baseApiBackendUrl: "http://localhost/power/backend-php",
+    //baseApiBackendUrl: "http://localhost/evahub/backend-php",
     baseApiFrontendUrl: "http://localhost/evahub/frontend/www"
 };

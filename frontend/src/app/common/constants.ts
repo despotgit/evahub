@@ -1,7 +1,7 @@
 import { FormGroup } from "@angular/forms";
 import { environment } from "src/environments/environment";
 
-export const storedObjectName = "powerJwt";
+export const storedObjectName = "evahubJwt";
 
 export const loginTokenExpiryTime = 60; // In minutes
 

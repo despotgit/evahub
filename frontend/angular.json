@@ -6,7 +6,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "power": {
+        "evahub": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -114,10 +114,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "power:build:production"
+                            "browserTarget": "evahub:build:production"
                         },
                         "development": {
-                            "browserTarget": "power:build:development"
+                            "browserTarget": "evahub:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -125,7 +125,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "power:build"
+                        "browserTarget": "evahub:build"
                     }
                 },
                 "test": {
@@ -155,29 +155,29 @@
                 "ionic-cordova-serve": {
                     "builder": "@ionic/angular-toolkit:cordova-serve",
                     "options": {
-                        "cordovaBuildTarget": "power:ionic-cordova-build",
-                        "devServerTarget": "power:serve"
+                        "cordovaBuildTarget": "evahub:ionic-cordova-build",
+                        "devServerTarget": "evahub:serve"
                     },
                     "configurations": {
                         "production": {
-                            "cordovaBuildTarget": "power:ionic-cordova-build:production",
-                            "devServerTarget": "power:serve:production"
+                            "cordovaBuildTarget": "evahub:ionic-cordova-build:production",
+                            "devServerTarget": "evahub:serve:production"
                         }
                     }
                 },
                 "ionic-cordova-build": {
                     "builder": "@ionic/angular-toolkit:cordova-build",
                     "options": {
-                        "browserTarget": "power:build"
+                        "browserTarget": "evahub:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "power:build:production"
+                            "browserTarget": "evahub:build:production"
                         }
                     }
                 }
             }
         }
     },
-    "defaultProject": "power"
+    "defaultProject": "evahub"
 }
