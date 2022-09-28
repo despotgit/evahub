@@ -8,6 +8,7 @@
                 (change)="onFileSelected($event)"
                 #fileUpload
             />
+            <button (click)="onUploadInitiated()">Upload</button>
 
             <div class="file-upload">
                 {{ fileName || "No file uploaded yet." }}
