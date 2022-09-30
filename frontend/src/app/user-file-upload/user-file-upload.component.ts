@@ -51,17 +51,6 @@ export class UserFileUploadComponent implements OnDestroy {
                     this.resetUpload();
                 })
             );
-
-            /*
-                .subscribe(event => {
-                    if (event.type == HttpEventType.UploadProgress) {
-                        console.log("UPLOAD PROGRESS, event is:", event);
-                        const newProgress = Math.round(100 * (event.loaded / event.total));
-                        this.uploadProgress = newProgress;
-                        this.cd.markForCheck();
-                    }
-                });
-                */
         }
     }
 
@@ -82,7 +71,7 @@ export class UserFileUploadComponent implements OnDestroy {
         if (this.uploadSub$) {
             this.uploadSub$.unsubscribe();
         }
-        this.resetUpload();
+
         this.uploadProgress = null;
         this.uploadSub$ = null;
     }

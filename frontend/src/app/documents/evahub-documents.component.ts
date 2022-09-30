@@ -1,8 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { AfterViewChecked, ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { PageIndexDictionary } from "../common/constants";
-import { ApplicationStateStoreService } from "../services/application-state-store.service";
+import {
+    ApplicationStateStoreService,
+    EvahubDocument
+} from "../services/application-state-store.service";
 import { ActivatedRoute } from "@angular/router";
-import { map, startWith } from "rxjs";
+import { map, Observable, of, startWith } from "rxjs";
 import { Log } from "../models/Log";
 
 @Component({
@@ -11,7 +14,7 @@ import { Log } from "../models/Log";
     styleUrls: ["./evahub-documents.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EvahubDocumentsComponent implements OnInit {
+export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
     selectedDocument$ = this.store.selectedDocument$.pipe(
         map(a => a),
         startWith(new Log())
@@ -22,6 +25,10 @@ export class EvahubDocumentsComponent implements OnInit {
             this.store.updateIsSidenavOpened(true);
         }, 100);
 
+        this.updatePageIndex(route);
+    }
+
+    updatePageIndex(route) {
         const urlEnd = route.snapshot.url[1].path;
         //console.log("urlEnd is:", urlEnd);
         let pageIndex = PageIndexDictionary.log.index;
@@ -35,4 +42,6 @@ export class EvahubDocumentsComponent implements OnInit {
     }
 
     ngOnInit(): void {}
+
+    ngAfterViewChecked() {}
 }

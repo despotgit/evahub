@@ -4,7 +4,9 @@
         [ngClass]="selectedDocumentId == mo.id ? 'selected-menu-item' : 'unselected-menu-item'"
     >
         <mat-list-item (click)="menuItemClicked(mo.id)" class="sidenav-menu-item">
-            {{ mo.label }}
+            <div class="document-name">{{ mo.label }}</div>
+
+            <!--<div class="delete-document">DELETE</div> -->
         </mat-list-item>
     </mat-card>
 </mat-list>

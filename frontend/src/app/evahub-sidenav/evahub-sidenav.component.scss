@@ -13,3 +13,16 @@ mat-card {
     margin-bottom: 8px;
     border-radius: $small-rounded-border-radius;
 }
+
+.delete-document {
+    display: inherit;
+}
+
+.document-name {
+    display: inherit;
+}
+
+.delete-document,
+.document-name {
+    float: left;
+}
