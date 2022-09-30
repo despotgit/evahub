@@ -48,7 +48,7 @@ export class UserFileUploadComponent implements OnDestroy {
                 }),
                 finalize(() => {
                     console.log("step 3, in finalize");
-                    this.reset();
+                    this.resetUpload();
                 })
             );
 
@@ -78,19 +78,16 @@ export class UserFileUploadComponent implements OnDestroy {
         });
     }
 
-    cancelUpload() {
+    resetUpload() {
         if (this.uploadSub$) {
             this.uploadSub$.unsubscribe();
         }
-        this.reset();
-    }
-
-    reset() {
+        this.resetUpload();
         this.uploadProgress = null;
         this.uploadSub$ = null;
     }
 
     ngOnDestroy() {
-        this.cancelUpload();
+        this.resetUpload();
     }
 }
