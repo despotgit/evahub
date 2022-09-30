@@ -98,9 +98,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         });
 
         this.isFormValid$ = this.theForm.valueChanges.pipe(
-            combineLatestWith([this.registerPassword$, this.registerPasswordConfirmation$]),
             map((a: any) => {
-                if (!this.theForm.invalid && a[1] == a[2]) {
+                console.log("a is:", a);
+                let rpfc = a.registerPasswordFormControl;
+                let rpcfc = a.registerPasswordConfirmationFormControl;
+                if (!this.theForm.invalid && rpfc == rpcfc) {
                     //console.log("returning true");
                     return true;
                 } else {
@@ -159,7 +161,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                         this.registrationData.firstLastName = firstLastName;
                         this.registrationData.email = email;
 
-                        console.log("regData is:", this.registrationData);
+                        //console.log("regData is:", this.registrationData);
                     }
                 )
             )
