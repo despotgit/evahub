@@ -165,6 +165,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         return;
     }
 
+    deleteMenuItemClicked($event) {
+        return;
+    }
+
     updateCurrentPageIndex(cpi: number) {
         this.currentPageIndex = cpi;
         this.store.updateCurrentPageIndex(cpi);
