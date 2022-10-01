@@ -39,7 +39,7 @@ def getUploadedUserLogs(username):
 
         content = ""
 
-        with open(filePath, "r") as f:
+        with open(filePath, "rb") as f:
 
             lines = f.readlines()
 
@@ -59,6 +59,10 @@ def getUploadedUserLogs(username):
 
 
 def deleteAllDbUserLogs(username):
+    return
+
+
+def deleteUserLog(username, logName):
     return
 
 
