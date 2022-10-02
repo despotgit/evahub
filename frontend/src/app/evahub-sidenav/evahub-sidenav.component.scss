@@ -25,6 +25,11 @@ mat-card {
     font-weight: bolder;
     align-items: center;
     height: 100px;
+    transition: transform 400ms;
+}
+
+.delete-document:hover {
+    transform: translateX(-40px);
 }
 
 .document-name {
