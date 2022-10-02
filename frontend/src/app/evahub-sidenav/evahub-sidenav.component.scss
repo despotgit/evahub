@@ -1,7 +1,8 @@
 @import "../../common.scss";
 
 .sidenav-menu-item {
-    display: block;
+    display: flex;
+    align-items: center;
     min-height: 70px;
 }
 
@@ -12,17 +13,40 @@
 mat-card {
     margin-bottom: 8px;
     border-radius: $small-rounded-border-radius;
+    overflow: hidden;
 }
 
 .delete-document {
     display: inherit;
+    position: relative;
+    left: 50px;
+    background-color: blue;
+    color: white;
+    font-weight: bolder;
+    align-items: center;
+    height: 100px;
 }
 
 .document-name {
     display: inherit;
+    width: -webkit-fill-available;
 }
 
 .delete-document,
 .document-name {
     float: left;
+}
+
+.selected-menu-item {
+    background-color: $selection-color;
+    color: black;
+}
+
+.unselected-menu-item {
+}
+
+.selected-menu-item,
+.unselected-menu-item {
+    padding-bottom: 0;
+    padding-top: 0;
 }
