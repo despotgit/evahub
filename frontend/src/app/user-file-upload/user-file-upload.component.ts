@@ -26,7 +26,7 @@ export class UserFileUploadComponent implements OnDestroy {
         private store: ApplicationStateStoreService,
         private cd: ChangeDetectorRef
     ) {
-        this.store.updateSidenavMenuOptions([]);
+        this.store.updateSidenavMenuItems([]);
     }
 
     onFileSelected(event) {

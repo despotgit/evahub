@@ -1,6 +1,6 @@
 <mat-list>
     <mat-card
-        *ngFor="let mo of menuOptions"
+        *ngFor="let mo of menuItems"
         [ngClass]="selectedDocumentId == mo.id ? 'selected-menu-item' : 'unselected-menu-item'"
     >
         <mat-list-item (click)="menuItemClicked(mo.id)" class="sidenav-menu-item">

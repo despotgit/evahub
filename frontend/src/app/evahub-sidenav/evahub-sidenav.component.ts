@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 
-import { EvahubSidenavMenuOption } from "../services/application-state-store.service";
+import { EvahubSidenavMenuItem } from "../services/application-state-store.service";
 
 @Component({
     selector: "evahub-sidenav",
@@ -9,7 +9,7 @@ import { EvahubSidenavMenuOption } from "../services/application-state-store.ser
 })
 export class EvahubSidenavComponent implements OnInit, OnDestroy {
     @Input()
-    menuOptions: EvahubSidenavMenuOption[];
+    menuItems: EvahubSidenavMenuItem[];
 
     @Input()
     selectedDocumentId: number;
