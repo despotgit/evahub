@@ -17,6 +17,9 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
     @Output()
     emitItemClicked: EventEmitter<number> = new EventEmitter();
 
+    @Output()
+    emitDeleteItemClicked: EventEmitter<number> = new EventEmitter();
+
     constructor() {
         //
     }
@@ -27,5 +30,11 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
 
     menuItemClicked(itemId) {
         this.emitItemClicked.emit(itemId);
+    }
+
+    deleteClicked(itemId: number) {
+        console.log("winner is:", itemId);
+
+        this.emitDeleteItemClicked.emit(itemId);
     }
 }

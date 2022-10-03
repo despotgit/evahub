@@ -166,6 +166,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     deleteMenuItemClicked($event) {
+        this.store.updateMainMenuItems([]);
+        console.log("event");
         return;
     }
 

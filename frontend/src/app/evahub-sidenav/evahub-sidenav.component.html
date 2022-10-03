@@ -6,7 +6,7 @@
         <mat-list-item (click)="menuItemClicked(mo.id)" class="sidenav-menu-item">
             <div class="document-name">{{ mo.label }}</div>
 
-            <div *ngIf="true" class="delete-document">DELETE</div>
+            <div *ngIf="true" class="delete-document" (click)="deleteClicked(mo.id)">DELETE</div>
         </mat-list-item>
     </mat-card>
 </mat-list>

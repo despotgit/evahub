@@ -60,6 +60,7 @@
         >
             <evahub-sidenav
                 (emitItemClicked)="menuItemClicked($event)"
+                (emitDeleteItemClicked)="deleteMenuItemClicked($event)"
                 [menuOptions]="asyncData.menuOptions"
                 [selectedDocumentId]="asyncData.currentDocumentId"
             ></evahub-sidenav>
