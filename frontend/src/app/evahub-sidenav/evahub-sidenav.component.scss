@@ -4,7 +4,6 @@
     display: flex;
     align-items: center;
     min-height: 70px;
-    overflow: hidden;
 }
 
 .menu-item-wrapper {
@@ -20,7 +19,7 @@ mat-card {
 .delete-document {
     display: inherit;
     position: relative;
-    left: 50px;
+    left: 65px;
     background-color: $color-button-general;
     color: white;
     font-weight: bolder;
@@ -28,11 +27,12 @@ mat-card {
     height: 100px;
     transition: transform 400ms;
     //overflow: hidden;
-    padding-left: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .delete-document:hover {
-    transform: translateX(-40px);
+    transform: translateX(-60px);
 }
 
 .document-name {
