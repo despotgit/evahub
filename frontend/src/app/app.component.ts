@@ -191,35 +191,35 @@ export class AppComponent implements OnInit, AfterViewInit {
 
                     return this.httpClient.get(url);
                 }),
-                map(ud => {
-                    console.log("ud is:", ud);
-                    let ds = ud["user" + docType + "s"];
-                    this.processDocuments(ds, docType);
-                    return ud;
+                map(userDocuments => {
+                    console.log("userDocuments is:", userDocuments);
+                    let documents = userDocuments["user" + docType + "s"];
+                    this.processDocuments(documents, docType);
+                    return userDocuments;
                 })
             )
             .subscribe();
     }
 
     // Runs as part of fetching the data from API backend
-    processDocuments(ds: any[] = [], dt: string) {
-        console.log("in processDocuments ds is:", ds);
+    processDocuments(documents: any[] = [], dt: string) {
+        console.log("in processDocuments documents is:", documents);
         console.log("in processDocuments dt is:", dt);
 
         const dtToLower = dt.toLowerCase();
-        let [menuItems, docs] = this.transformDbDocuments(ds, dtToLower);
+        let [menuItems, docs] = this.transformDbDocuments(documents, dtToLower);
         this.store.updateUserDocuments(dt, docs);
         this.store.updateSidenavMenuItems(menuItems);
         this.store.updateSelectedUserDocument(dt, docs[0]);
     }
 
     // Returns menuItems[] and EvahubDocuments[]
-    transformDbDocuments(ds: any, dtToLower) {
+    transformDbDocuments(documents: any, dtToLower) {
         let docs = [];
         let menuItems = [];
 
-        if (ds.length != 0) {
-            ds.map(d => {
+        if (documents.length != 0) {
+            documents.map(d => {
                 let doc;
                 switch (dtToLower) {
                     case "log":
