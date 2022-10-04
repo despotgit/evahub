@@ -38,7 +38,7 @@ def getDbUploadedUserLogs(username):
                 content = content + "\n" + str(line)
 
         c = content
-        toReturn.append({"logId": r[0], "logName": r[1], "logContent": c})
+        toReturn.append({"logId": r[0], "logName": r[1], "logContent": str(c)})
 
     return toReturn
 
