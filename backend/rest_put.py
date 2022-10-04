@@ -3,7 +3,6 @@ from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
 from auth import authenticateJwt
 from backend.db import executeCustomQuery
-from flask import Blueprint, request, json
 from werkzeug.utils import secure_filename
 from auth import authenticateJwt
 from common import getUserDocumentsDir
