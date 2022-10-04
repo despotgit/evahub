@@ -1,10 +1,6 @@
-from flask import Blueprint, Flask, json, request
-
+from flask import Blueprint, json, request
 from auth import authenticateJwt
-from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
-from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
-
-from flask import Flask, Blueprint, request, Response, send_from_directory
+from db_users_broker import deleteAllDbUserData, getDbUser
 
 rest_delete = Blueprint("rest_delete", __name__)
 
