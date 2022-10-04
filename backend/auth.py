@@ -80,7 +80,7 @@ def register():
 # create_access_token() function is used to actually generate the JWT.
 @auth.route("/login", methods=["POST"])
 def login():
-    print("cazzo duro")
+
     isPostman = False
 
     if not isPostman:

@@ -1,7 +1,7 @@
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Input, OnDestroy } from "@angular/core";
 import { Subscription, switchMap, map, Subject, BehaviorSubject, Observable } from "rxjs";
-import { finalize } from "rxjs/operators";
+import { combineLatestWith, finalize } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 
@@ -27,6 +27,7 @@ export class UserFileUploadComponent implements OnDestroy {
         private cd: ChangeDetectorRef
     ) {
         this.store.updateSidenavMenuItems([]);
+        this.store.updateIsSidenavOpened(false);
     }
 
     onFileSelected(event) {
@@ -39,9 +40,9 @@ export class UserFileUploadComponent implements OnDestroy {
 
             this.uploadObs$ = this.username$.pipe(
                 switchMap(username => {
-                    let url = `${environment.baseApiBackendUrl}/upload/user-log-upload/${username}`;
+                    let url = `${environment.baseApiBackendUrl}/rest/put/document/log/user/${username}`;
 
-                    return this.http.post(url, formData, {
+                    return this.http.put(url, formData, {
                         reportProgress: true,
                         observe: "events"
                     });

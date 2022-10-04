@@ -166,7 +166,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     deleteMenuItemClicked($event) {
-        this.store.updateSidenavMenuItems;
+        this.store.updateSidenavMenuItems([]);
         console.log("event");
         return;
     }
@@ -188,7 +188,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.httpDocsCall = this.username$
             .pipe(
                 switchMap(username => {
-                    let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
+                    //let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
+
+                    let url = `${environment.baseApiBackendUrl}/rest/get/${docTypeToLower}s/${username}`;
 
                     return this.httpClient.get(url);
                 }),
