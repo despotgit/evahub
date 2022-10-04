@@ -1,14 +1,11 @@
-from flask import Blueprint, Flask, json, request
-from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
-
+from flask import Blueprint, json
+from flask_jwt_extended import jwt_required
 from auth import authenticateJwt
-from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
-from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
+from db_users_broker import getDbUser
 from db_user_reports_broker import getDbUserReports
 from db_user_logs_broker import getUploadedUserLogs
 from db_user_checks_broker import getDbUserChecks
-import requests
-from flask import Flask, Blueprint, request, Response, send_from_directory
+
 
 rest_get = Blueprint("rest_get", __name__)
 

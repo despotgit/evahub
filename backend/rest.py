@@ -1,6 +1,5 @@
-from flask import Blueprint, Flask, json, request
+from flask import Blueprint, request, Response, send_from_directory
 from flask_jwt_extended import jwt_required
-from flask import Flask, Blueprint, request, Response, send_from_directory
 import requests
 import config
 
