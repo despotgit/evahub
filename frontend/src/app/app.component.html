@@ -3,7 +3,7 @@
         username: username$ | async,
         isLoggedIn: isLoggedIn$ | async,
         isSidenavOpened: isSidenavOpened$ | async,
-        menuOptions: sidenavMenuOptions$ | async,
+        menuItems: sidenavMenuItems$ | async,
         currentDocumentSet: currentDocumentSet$ | async,
         currentPageIndex: currentPageIndex$ | async,
         currentDocumentId: currentDocumentId$ | async,
@@ -60,7 +60,8 @@
         >
             <evahub-sidenav
                 (emitItemClicked)="menuItemClicked($event)"
-                [menuOptions]="asyncData.menuOptions"
+                (emitDeleteItemClicked)="deleteMenuItemClicked($event)"
+                [menuItems]="asyncData.menuItems"
                 [selectedDocumentId]="asyncData.currentDocumentId"
             ></evahub-sidenav>
         </mat-sidenav>

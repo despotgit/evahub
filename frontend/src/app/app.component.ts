@@ -22,7 +22,7 @@ import { Log } from "./models/Log";
 import { Report } from "./models/Report";
 import {
     ApplicationStateStoreService,
-    EvahubSidenavMenuOption
+    EvahubSidenavMenuItem
 } from "./services/application-state-store.service";
 import { AuthenticationService } from "./services/authentication.service";
 
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     username$: Observable<string> = this.store.username$;
     isLoggedIn$: Observable<boolean> = this.store.isloggedIn$;
     isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$;
-    sidenavMenuOptions$: Observable<EvahubSidenavMenuOption[]> = this.store.sidenavMenuOptions$;
+    sidenavMenuItems$: Observable<EvahubSidenavMenuItem[]> = this.store.sidenavMenuItems$;
     userReports$: Observable<Report[]> = this.store.userReports$;
     userChecks$: Observable<Check[]> = this.store.userChecks$;
     userLogs$: Observable<Log[]> = this.store.userLogs$;
@@ -165,6 +165,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         return;
     }
 
+    deleteMenuItemClicked($event) {
+        this.store.updateSidenavMenuItems([]);
+        console.log("event");
+        return;
+    }
+
     updateCurrentPageIndex(cpi: number) {
         this.currentPageIndex = cpi;
         this.store.updateCurrentPageIndex(cpi);
@@ -182,7 +188,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.httpDocsCall = this.username$
             .pipe(
                 switchMap(username => {
-                    let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
+                    //let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
+
+                    let url = `${environment.baseApiBackendUrl}/rest/get/${docTypeToLower}s/${username}`;
 
                     return this.httpClient.get(url);
                 }),
@@ -202,16 +210,16 @@ export class AppComponent implements OnInit, AfterViewInit {
         //console.log("in process dt is:", dt);
 
         const dtToLower = dt.toLowerCase();
-        let [menuOptions, docs] = this.transformDbDocuments(ds, dtToLower);
+        let [menuItems, docs] = this.transformDbDocuments(ds, dtToLower);
         this.store.updateUserDocuments(dt, docs);
-        this.store.updateSidenavMenuOptions(menuOptions);
+        this.store.updateSidenavMenuItems(menuItems);
         this.store.updateSelectedUserDocument(dt, docs[0]);
     }
 
-    // Returns menuOptions[] and EvahubDocuments[]
+    // Returns menuItems[] and EvahubDocuments[]
     transformDbDocuments(ds: any, dtToLower) {
         let docs = [];
-        let menuOptions = [];
+        let menuItems = [];
 
         ds.map(d => {
             let doc;
@@ -238,16 +246,16 @@ export class AppComponent implements OnInit, AfterViewInit {
 
             docs.push(doc);
 
-            let mo: EvahubSidenavMenuOption = {
+            let mo: EvahubSidenavMenuItem = {
                 id: doc.getDocumentId(),
                 label: doc.getDocumentName(),
                 selected: false
             };
 
-            menuOptions.push(mo);
+            menuItems.push(mo);
         });
 
-        return [menuOptions, docs];
+        return [menuItems, docs];
     }
 
     ngOnDestroy() {

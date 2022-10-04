@@ -1,10 +1,12 @@
 <mat-list>
     <mat-card
-        *ngFor="let mo of menuOptions"
+        *ngFor="let mo of menuItems"
         [ngClass]="selectedDocumentId == mo.id ? 'selected-menu-item' : 'unselected-menu-item'"
     >
         <mat-list-item (click)="menuItemClicked(mo.id)" class="sidenav-menu-item">
-            {{ mo.label }}
+            <div class="document-name">{{ mo.label }}</div>
+
+            <div *ngIf="true" class="delete-document" (click)="deleteClicked(mo.id)">DELETE</div>
         </mat-list-item>
     </mat-card>
 </mat-list>

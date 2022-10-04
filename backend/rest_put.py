@@ -1,18 +1,28 @@
 import os
-from flask import Flask, request, Blueprint, json
+from flask import Blueprint, json, request
+from flask_jwt_extended import jwt_required
+from auth import authenticateJwt
+from backend.db import executeCustomQuery
 from werkzeug.utils import secure_filename
 from auth import authenticateJwt
 from common import getUserDocumentsDir
 from db import executeCustomQuery
 
-app = Flask(__name__)
-
-upload = Blueprint("upload", __name__)
+rest_put = Blueprint("rest_post", __name__)
 
 
-# POST - Upload a log file
-@upload.route("/user-log-upload/<username>", methods=["POST"])
-def upload_file(username):
+@rest_put.before_request
+@jwt_required(locations=["headers"])
+def before_request():
+    print(
+        "************************************************* in rest_put in before_request"
+    )
+    pass
+
+
+# Set user data (by username, field name, and value)
+@rest_put.route("/document/<type>/user/<username>", methods=["PUT"])
+def uploadDocument(type, username):
     authentication = authenticateJwt(username)
 
     if not authentication["authenticated"]:
@@ -57,10 +67,5 @@ def upload_file(username):
     }
 
     response = json.jsonify(response)
-
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
-
-
-if __name__ == "__main__":
-    upload.run(debug=True)

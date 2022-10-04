@@ -1,6 +1,6 @@
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Input, OnDestroy } from "@angular/core";
-import { Subscription, switchMap, map } from "rxjs";
+import { Subscription, switchMap, map, Subject, BehaviorSubject, Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
@@ -16,8 +16,8 @@ export class UserFileUploadComponent implements OnDestroy {
 
     fileName = "";
     uploadProgress: number;
+    uploadObs$: Observable<any>;
     uploadSub$: Subscription;
-    httpCall$: Subscription;
 
     username$ = this.store.username$;
 
@@ -26,7 +26,8 @@ export class UserFileUploadComponent implements OnDestroy {
         private store: ApplicationStateStoreService,
         private cd: ChangeDetectorRef
     ) {
-        this.store.updateSidenavMenuOptions([]);
+        this.store.updateSidenavMenuItems([]);
+        this.store.updateIsSidenavOpened(false);
     }
 
     onFileSelected(event) {
@@ -37,47 +38,46 @@ export class UserFileUploadComponent implements OnDestroy {
             const formData = new FormData();
             formData.append("file", file);
 
-            let url;
+            this.uploadObs$ = this.username$.pipe(
+                switchMap(username => {
+                    let url = `${environment.baseApiBackendUrl}/rest/document/type/user/${username}`;
 
-            this.httpCall$ = this.username$
-                .pipe(
-                    switchMap(username => {
-                        url = `${environment.baseApiBackendUrl}/upload/user-log-upload/${username}`;
-
-                        return this.http.post(url, formData, {
-                            reportProgress: true,
-                            observe: "events"
-                        });
-                    }),
-                    finalize(() => {
-                        console.log("step 3, in finalize");
-                        this.reset();
-                    })
-                )
-                .subscribe(event => {
-                    if (event.type == HttpEventType.UploadProgress) {
-                        console.log("UPLOAD PROGRESS, event is:", event);
-                        const newProgress = Math.round(100 * (event.loaded / event.total));
-                        this.uploadProgress = newProgress;
-                        this.cd.markForCheck();
-                    }
-                });
+                    return this.http.post(url, formData, {
+                        reportProgress: true,
+                        observe: "events"
+                    });
+                }),
+                finalize(() => {
+                    console.log("step 3, in finalize");
+                    this.resetUpload();
+                })
+            );
         }
     }
 
-    cancelUpload() {
-        if (this.httpCall$) {
-            this.httpCall$.unsubscribe();
-        }
-        this.reset();
+    onUploadInitiated() {
+        console.log();
+
+        this.uploadSub$ = this.uploadObs$.subscribe(event => {
+            if (event.type == HttpEventType.UploadProgress) {
+                console.log("UPLOAD PROGRESS, event is:", event);
+                const newProgress = Math.round(100 * (event.loaded / event.total));
+                this.uploadProgress = newProgress;
+                this.cd.markForCheck();
+            }
+        });
     }
 
-    reset() {
+    resetUpload() {
+        if (this.uploadSub$) {
+            this.uploadSub$.unsubscribe();
+        }
+
         this.uploadProgress = null;
-        this.httpCall$ = null;
+        this.uploadSub$ = null;
     }
 
     ngOnDestroy() {
-        this.cancelUpload();
+        this.resetUpload();
     }
 }

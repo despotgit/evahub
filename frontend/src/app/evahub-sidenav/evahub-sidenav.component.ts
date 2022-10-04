@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 
-import { EvahubSidenavMenuOption } from "../services/application-state-store.service";
+import { EvahubSidenavMenuItem } from "../services/application-state-store.service";
 
 @Component({
     selector: "evahub-sidenav",
@@ -9,13 +9,16 @@ import { EvahubSidenavMenuOption } from "../services/application-state-store.ser
 })
 export class EvahubSidenavComponent implements OnInit, OnDestroy {
     @Input()
-    menuOptions: EvahubSidenavMenuOption[];
+    menuItems: EvahubSidenavMenuItem[];
 
     @Input()
     selectedDocumentId: number;
 
     @Output()
     emitItemClicked: EventEmitter<number> = new EventEmitter();
+
+    @Output()
+    emitDeleteItemClicked: EventEmitter<number> = new EventEmitter();
 
     constructor() {
         //
@@ -27,5 +30,11 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
 
     menuItemClicked(itemId) {
         this.emitItemClicked.emit(itemId);
+    }
+
+    deleteClicked(itemId: number) {
+        console.log("winner is:", itemId);
+
+        this.emitDeleteItemClicked.emit(itemId);
     }
 }

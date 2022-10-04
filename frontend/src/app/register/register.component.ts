@@ -79,6 +79,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     @ViewChild("done") done: MatButton;
 
     isPosted = false;
+    isBackendRegistrationSuccessful = false;
+    backendRegistrationError = "";
 
     registrationData: any = {};
 
@@ -98,9 +100,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         });
 
         this.isFormValid$ = this.theForm.valueChanges.pipe(
-            combineLatestWith([this.registerPassword$, this.registerPasswordConfirmation$]),
             map((a: any) => {
-                if (!this.theForm.invalid && a[1] == a[2]) {
+                console.log("a is:", a);
+                let rpfc = a.registerPasswordFormControl;
+                let rpcfc = a.registerPasswordConfirmationFormControl;
+                if (!this.theForm.invalid && rpfc == rpcfc) {
                     //console.log("returning true");
                     return true;
                 } else {
@@ -159,7 +163,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                         this.registrationData.firstLastName = firstLastName;
                         this.registrationData.email = email;
 
-                        console.log("regData is:", this.registrationData);
+                        //console.log("regData is:", this.registrationData);
                     }
                 )
             )
@@ -199,10 +203,18 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     this.unsubscribeFromRegisterRequest();
                 })
             )
-            .subscribe(event => {
-                console.log(event);
+            .subscribe((d: any) => {
+                console.log(d);
                 console.log("in registration subscribe");
                 this.isPosted = true;
+
+                if (d.status == "ok") {
+                    this.isBackendRegistrationSuccessful = true;
+                    this.backendRegistrationError = "";
+                } else {
+                    this.isBackendRegistrationSuccessful = false;
+                    this.backendRegistrationError = d.message;
+                }
                 // DEV:  this.store.resetRegisterPage();
                 this.cd.markForCheck();
             });
@@ -217,6 +229,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     unsubscribeFromRegisterRequest() {
         if (this.registerHttpCall$) {
             this.registerHttpCall$.unsubscribe();
+        }
+    }
+
+    isRegistrationSuccessful() {
+        if (this.isPosted && this.isBackendRegistrationSuccessful) {
+            return true;
+        } else {
+            return false;
         }
     }
 

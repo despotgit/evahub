@@ -41,15 +41,15 @@ export const INITIAL_REGISTER_PAGE_STATE = {
 
 export interface SidenavState {
     isSidenavOpened: boolean;
-    sidenavMenuOptions: EvahubSidenavMenuOption[];
+    sidenavMenuItems: EvahubSidenavMenuItem[];
 }
 
 export const INITIAL_SIDENAV_STATE = {
     isSidenavOpened: false,
-    sidenavMenuOptions: []
+    sidenavMenuItems: []
 };
 
-export class EvahubSidenavMenuOption {
+export class EvahubSidenavMenuItem {
     id: number;
     label?: string;
     action?: string;
@@ -152,8 +152,8 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // SIDENAV
     isSidenavOpened$: Observable<boolean> = this.select(state => state.sidenav.isSidenavOpened);
-    sidenavMenuOptions$: Observable<EvahubSidenavMenuOption[]> = this.select(
-        state => state.sidenav.sidenavMenuOptions
+    sidenavMenuItems$: Observable<EvahubSidenavMenuItem[]> = this.select(
+        state => state.sidenav.sidenavMenuItems
     );
 
     // MAIN MENU
@@ -281,8 +281,8 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.updateState("sidenav", "isSidenavOpened", isSidenavOpened);
     }
 
-    updateSidenavMenuOptions(sidenavMenuOptions: EvahubSidenavMenuOption[]) {
-        this.updateState("sidenav", "sidenavMenuOptions", sidenavMenuOptions);
+    updateSidenavMenuItems(sidenavMenuItems: EvahubSidenavMenuItem[]) {
+        this.updateState("sidenav", "sidenavMenuItems", sidenavMenuItems);
     }
 
     // MAIN MENU:
