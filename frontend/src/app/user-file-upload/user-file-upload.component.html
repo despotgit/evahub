@@ -8,6 +8,7 @@
                 (change)="onFileSelected($event)"
                 #fileUpload
             />
+            <button (click)="onUploadInitiated()">Upload</button>
 
             <div class="file-upload">
                 {{ fileName || "No file uploaded yet." }}
@@ -31,7 +32,7 @@
                 >
                 </mat-progress-bar>
 
-                <mat-icon class="cancel-upload" (click)="cancelUpload()" *ngIf="uploadProgress"
+                <mat-icon class="cancel-upload" (click)="resetUpload()" *ngIf="uploadProgress"
                     >delete_forever</mat-icon
                 >
             </div>

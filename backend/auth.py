@@ -39,22 +39,33 @@ def register():
     hashedDecoded = hashed.decode(encoding)
 
     connection = getDb()
+
     cursor = connection.cursor()
-    cursor.execute(
-        "INSERT INTO users (`username`, `password`, `email`, `role`) VALUES ('"
-        + username
-        + "', '"
-        + hashedDecoded
-        + "', '"
-        + email
-        + "', '"
-        + role
-        + "')"
-    )
+
+    try:
+        cursor.execute(
+            "INSERT INTO users (`username`, `password`, `email`, `role`) VALUES ('"
+            + username
+            + "', '"
+            + hashedDecoded
+            + "', '"
+            + email
+            + "', '"
+            + role
+            + "')"
+        )
+    except Exception as e:
+        msg = eval(str(e))[1]
+        if msg == "Duplicate entry 'a' for key 'username_UNIQUE'":
+            msg = "User with that username already exists"
+
+        return {"status": "error", "message": msg}
 
     # results = cursor.fetchall()
     # for result in results:
     #  print(result[1])
+
+    print("CHECKPOINT 1")
 
     response = json.jsonify(
         {"status": "ok", "message": "User successfully registered."}
@@ -69,7 +80,7 @@ def register():
 # create_access_token() function is used to actually generate the JWT.
 @auth.route("/login", methods=["POST"])
 def login():
-    print("cazzo duro")
+
     isPostman = False
 
     if not isPostman:

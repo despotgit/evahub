@@ -10,7 +10,7 @@
             isFormValid: isFormValid$ | async
         } as asyncData"
     >
-        <form *ngIf="!isPosted" [formGroup]="theForm">
+        <form *ngIf="!isRegistrationSuccessful()" [formGroup]="theForm">
             <ng-template matStepLabel>Fill out your username</ng-template>
             <mat-form-field>
                 <input
@@ -62,8 +62,11 @@
                 <button [disabled]="!asyncData.isFormValid" #done mat-button>Done</button>
             </div>
         </form>
+        <div class="invalid-feedback">
+            {{ backendRegistrationError }}
+        </div>
 
-        <div class="thanks" *ngIf="isPosted">
+        <div class="thanks" *ngIf="isRegistrationSuccessful()">
             Thanks for registering. In order to confirm your registration, please click on the link
             in the confirmation email.
         </div>
