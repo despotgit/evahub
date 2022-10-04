@@ -2,13 +2,12 @@ import os
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
 from auth import authenticateJwt
-from backend.db import executeCustomQuery
+from db import executeCustomQuery
 from werkzeug.utils import secure_filename
 from auth import authenticateJwt
 from common import getUserDocumentsDir
-from db import executeCustomQuery
 
-rest_put = Blueprint("rest_post", __name__)
+rest_put = Blueprint("rest_put", __name__)
 
 
 @rest_put.before_request
