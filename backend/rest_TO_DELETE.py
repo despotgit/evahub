@@ -42,8 +42,23 @@ def proxy(path):
             url + f'?{request.query_string.decode("utf-8")}',
             headers={"Authorization": request.headers["Authorization"]},
         )
-    else:
+
+    if request.method == "POST":
         r = requests.post(
+            url,
+            data=request.data,
+            headers={"Authorization": request.headers["Authorization"]},
+        )
+
+    if request.method == "PUT":
+        r = requests.put(
+            url,
+            data=request.data,
+            headers={"Authorization": request.headers["Authorization"]},
+        )
+
+    if request.method == "DELETE":
+        r = requests.delete(
             url,
             data=request.data,
             headers={"Authorization": request.headers["Authorization"]},

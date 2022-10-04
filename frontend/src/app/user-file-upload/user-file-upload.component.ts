@@ -42,7 +42,7 @@ export class UserFileUploadComponent implements OnDestroy {
                 switchMap(username => {
                     let url = `${environment.baseApiBackendUrl}/rest/put/document/log/user/${username}`;
 
-                    return this.http.post(url, formData, {
+                    return this.http.put(url, formData, {
                         reportProgress: true,
                         observe: "events"
                     });

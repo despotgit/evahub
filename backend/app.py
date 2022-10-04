@@ -2,7 +2,8 @@ from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from config import JWT_EXPIRY_INTERVAL
-from rest import rest
+
+# from rest import rest
 from rest_get import rest_get
 from rest_post import rest_post
 from rest_put import rest_put
@@ -21,7 +22,7 @@ jwt = JWTManager(app)
 
 app.secret_key = config.SECRET_KEY
 
-app.register_blueprint(rest, url_prefix="/rest")
+# app.register_blueprint(rest, url_prefix="/rest")
 
 app.register_blueprint(rest_get, url_prefix="/rest/get")
 app.register_blueprint(rest_post, url_prefix="/rest/post")

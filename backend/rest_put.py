@@ -13,15 +13,16 @@ rest_put = Blueprint("rest_put", __name__)
 @rest_put.before_request
 @jwt_required(locations=["headers"])
 def before_request():
-    print(
-        "************************************************* in rest_put in before_request"
-    )
+    print("************************************* in rest_put in before_request")
     pass
 
 
 # Set user data (by username, field name, and value)
 @rest_put.route("/document/<type>/user/<username>", methods=["PUT"])
 def uploadDocument(type, username):
+    print("type is:")
+    print(type)
+
     authentication = authenticateJwt(username)
 
     if not authentication["authenticated"]:
