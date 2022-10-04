@@ -203,8 +203,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     // Runs as part of fetching the data from API backend
     processDocuments(ds: any[], dt: string) {
-        //console.log("in process ds is:", ds);
-        //console.log("in process dt is:", dt);
+        console.log("in processDocuments ds is:", ds);
+        console.log("in processDocuments dt is:", dt);
 
         const dtToLower = dt.toLowerCase();
         let [menuItems, docs] = this.transformDbDocuments(ds, dtToLower);
@@ -218,40 +218,42 @@ export class AppComponent implements OnInit, AfterViewInit {
         let docs = [];
         let menuItems = [];
 
-        ds.map(d => {
-            let doc;
-            switch (dtToLower) {
-                case "log":
-                    doc = new Log();
-                    //console.log("is a log");
-                    break;
-                case "report":
-                    doc = new Report();
-                    //console.log("is a report");
-                    break;
-                case "check":
-                    doc = new Check();
-                    //console.log("is a check");
-                    break;
-            }
+        if (ds.length != 0) {
+            ds.map(d => {
+                let doc;
+                switch (dtToLower) {
+                    case "log":
+                        doc = new Log();
+                        //console.log("is a log");
+                        break;
+                    case "report":
+                        doc = new Report();
+                        //console.log("is a report");
+                        break;
+                    case "check":
+                        doc = new Check();
+                        //console.log("is a check");
+                        break;
+                }
 
-            Object.keys(d).forEach(p => {
-                doc[p] = d[p];
+                Object.keys(d).forEach(p => {
+                    doc[p] = d[p];
+                });
+
+                doc.documentType = EvahubDocumentTypeDictionary[dtToLower];
+
+                docs.push(doc);
+
+                let mo: EvahubSidenavMenuItem = {
+                    id: doc.getDocumentId(),
+                    label: doc.getDocumentName(),
+                    selected: false,
+                    type: dtToLower
+                };
+
+                menuItems.push(mo);
             });
-
-            doc.documentType = EvahubDocumentTypeDictionary[dtToLower];
-
-            docs.push(doc);
-
-            let mo: EvahubSidenavMenuItem = {
-                id: doc.getDocumentId(),
-                label: doc.getDocumentName(),
-                selected: false,
-                type: dtToLower
-            };
-
-            menuItems.push(mo);
-        });
+        }
 
         return [menuItems, docs];
     }
