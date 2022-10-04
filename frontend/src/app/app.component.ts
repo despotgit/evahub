@@ -202,7 +202,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     // Runs as part of fetching the data from API backend
-    processDocuments(ds: any[], dt: string) {
+    processDocuments(ds: any[] = [], dt: string) {
         console.log("in processDocuments ds is:", ds);
         console.log("in processDocuments dt is:", dt);
 
