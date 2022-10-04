@@ -14,8 +14,8 @@ def before_request():
 
 
 @rest.route("/faruk", methods=["GET"])
-def kurac():
-    return "FARUK MOJAAAAAAAAAAAAAAA!!!!!!"
+def faruk():
+    return "yes it is!!!!!!"
 
 
 @rest.route("/<path:path>", methods=["GET", "POST"])
