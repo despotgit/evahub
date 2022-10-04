@@ -62,8 +62,20 @@ def deleteAllDbUserLogs(username):
     return
 
 
-def deleteUserLog(username, logName):
-    return
+def deleteUserLog(username, logId):
+    query = (
+        "delete from logs where username='"
+        + str(username)
+        + "' and log_id="
+        + str(logId)
+    )
+
+    print("DELETE query is:")
+    print(query)
+
+    results = executeCustomQuery(query)
+
+    return "ok"
 
 
 def getLogContent(logLocation):
