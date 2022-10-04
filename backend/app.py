@@ -21,7 +21,7 @@ jwt = JWTManager(app)
 
 app.secret_key = config.SECRET_KEY
 
-app.register_blueprint(rest, url_prefix="/rest")
+# app.register_blueprint(rest, url_prefix="/rest")
 
 app.register_blueprint(rest_get, url_prefix="/rest/get")
 app.register_blueprint(rest_post, url_prefix="/rest/post")

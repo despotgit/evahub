@@ -59,29 +59,44 @@ export const PageIndexDictionary = {
         isDocumentsPage: true,
         label: "Logs",
         gotoParam: "log",
-        isInMainMenu: true
+        isInMainMenu: true,
+        associatedDocumentType: "log"
     },
     report: {
         index: PageIndex.REPORTS_PAGE,
         isDocumentsPage: true,
         label: "Reports",
         gotoParam: "report",
-        isInMainMenu: true
+        isInMainMenu: true,
+        associatedDocumentType: "report"
     },
     check: {
         index: PageIndex.CHECKS_PAGE,
         isDocumentsPage: true,
         label: "Checks",
         gotoParam: "check",
-        isInMainMenu: true
+        isInMainMenu: true,
+        associatedDocumentType: "check"
     }
 };
 
 export function getPageNameFromPageIndex(i) {
-    let res = "x";
+    let res = "";
     Object.keys(PageIndexDictionary).forEach(k => {
         if (PageIndexDictionary[k].index == i) {
             res = k;
+        }
+    });
+
+    return res;
+}
+
+// Maybe an overkill.....
+export function getAssociatedDocumentTypeFromPageIndex(i) {
+    let res = "";
+    Object.keys(PageIndexDictionary).forEach(k => {
+        if (PageIndexDictionary[k].index == i) {
+            res = PageIndexDictionary[k].associatedDocumentType;
         }
     });
 

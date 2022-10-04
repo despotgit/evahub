@@ -7,16 +7,17 @@ from db import executeCustomQuery
 db = getDb()
 
 
-def addDbUserLog(u):
-    results = executeCustomQuery("insert into logs values()")
+# type is one of the: ['log', 'report', 'check']
+def addDbUserDocument(type, u):
+    results = executeCustomQuery("insert into '" + type + "s' values()")
     return
 
 
-def getDbUserLog(username, reportId):
+def getDbUserDocumentLog(type, username, reportId):
     return
 
 
-def getDbUploadedUserLogs(username):
+def getDbUploadedUserDocuments(username):
     results = executeCustomQuery(
         "select log_id, log_name, log_filename from logs where username = '"
         + str(username)
@@ -27,7 +28,6 @@ def getDbUploadedUserLogs(username):
     for r in results:
         dir = getUserDocumentsDir("log", username)
         filePath = dir + "/" + r[2]
-
         content = ""
 
         with open(filePath, "rb") as f:

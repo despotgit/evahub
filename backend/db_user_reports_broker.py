@@ -33,5 +33,21 @@ def getDbUserReports(username):
     return toReturn
 
 
+def deleteDbReport(username, reportId):
+    query = (
+        "delete from reports where username='"
+        + str(username)
+        + "' and report_id="
+        + str(reportId)
+    )
+
+    print("DELETe query is:")
+    print(query)
+
+    results = executeCustomQuery(query)
+
+    return results
+
+
 def deleteAllDbUserReports(username):
     return

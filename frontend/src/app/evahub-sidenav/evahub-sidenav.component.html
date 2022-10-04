@@ -1,12 +1,14 @@
 <mat-list>
     <mat-card
-        *ngFor="let mo of menuItems"
-        [ngClass]="selectedDocumentId == mo.id ? 'selected-menu-item' : 'unselected-menu-item'"
+        *ngFor="let mi of menuItems"
+        [ngClass]="selectedDocumentId == mi.id ? 'selected-menu-item' : 'unselected-menu-item'"
     >
-        <mat-list-item (click)="menuItemClicked(mo.id)" class="sidenav-menu-item">
-            <div class="document-name">{{ mo.label }}</div>
+        <mat-list-item (click)="menuItemClicked(mi.id)" class="sidenav-menu-item">
+            <div class="document-name">{{ mi.label }}</div>
 
-            <div *ngIf="true" class="delete-document" (click)="deleteClicked(mo.id)">DELETE</div>
+            <div *ngIf="true" class="delete-document" (click)="deleteClicked(mi.type, mi.id)">
+                DELETE
+            </div>
         </mat-list-item>
     </mat-card>
 </mat-list>

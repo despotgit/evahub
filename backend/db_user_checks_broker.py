@@ -36,3 +36,19 @@ def getDbUserChecks(username):
 
 def deleteAllDbUserChecks(username):
     return
+
+
+def deleteDbCheck(username, checkId):
+    query = (
+        "delete from checks where username='"
+        + str(username)
+        + "' and report_id="
+        + str(checkId)
+    )
+
+    print("DELETe query is:")
+    print(query)
+
+    results = executeCustomQuery(query)
+
+    return results

@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required
 from auth import authenticateJwt
 from db_users_broker import getDbUser
 from db_user_reports_broker import getDbUserReports
-from db_user_logs_broker import getUploadedUserLogs
+from db_user_logs_broker import getDbUploadedUserLogs
 from db_user_checks_broker import getDbUserChecks
 
 
@@ -97,7 +97,7 @@ def getUserLogs(username):
     if not authentication["authenticated"]:
         return authentication
 
-    userLogs = getUploadedUserLogs(username)
+    userLogs = getDbUploadedUserLogs(username)
 
     if userLogs == None:
         print("No logs for the given user")

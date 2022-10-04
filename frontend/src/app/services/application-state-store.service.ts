@@ -54,6 +54,7 @@ export class EvahubSidenavMenuItem {
     label?: string;
     action?: string;
     selected: boolean;
+    type?: string; // represents document type for now (maybe in future versions more)
 }
 
 export class UserReportsState {

@@ -44,7 +44,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         tap(a => {
             const s = getPageNameFromPageIndex(a); // s : singularDocumentTypeName
 
-            const sc = capitalizeWord(s);
+            const sc = capitalizeWord(s); // (Only first letter of the word is capital)
 
             if (PageIndexDictionary[s].isDocumentsPage) {
                 this.updateDocumentsSetFromApi(sc);
@@ -166,8 +166,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     deleteMenuItemClicked($event) {
-        this.store.updateSidenavMenuItems([]);
-        console.log("event");
+        console.log("event is:", $event);
+
+        this.deleteDocument($event.type, $event.itemId);
+
         return;
     }
 
@@ -181,15 +183,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         if (docType == undefined) return;
         //console.log("!!!!!docType is:", docType);
         let docTypeToLower = docType.toLowerCase();
-        //console.log("docType is:", docType);
-
-        //let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${un}`;
 
         this.httpDocsCall = this.username$
             .pipe(
                 switchMap(username => {
-                    //let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
-
                     let url = `${environment.baseApiBackendUrl}/rest/get/${docTypeToLower}s/${username}`;
 
                     return this.httpClient.get(url);
@@ -249,13 +246,36 @@ export class AppComponent implements OnInit, AfterViewInit {
             let mo: EvahubSidenavMenuItem = {
                 id: doc.getDocumentId(),
                 label: doc.getDocumentName(),
-                selected: false
+                selected: false,
+                type: dtToLower
             };
 
             menuItems.push(mo);
         });
 
         return [menuItems, docs];
+    }
+
+    deleteDocument(type: string, id: number) {
+        if (type == undefined) return;
+        //console.log("!!!!!docType is:", docType);
+        let docTypeToLower = type.toLowerCase();
+
+        this.httpDocsCall = this.username$
+            .pipe(
+                switchMap(username => {
+                    let url = `${environment.baseApiBackendUrl}/rest/delete/document/type/${docTypeToLower}/id/${id}/user/${username}`;
+
+                    return this.httpClient.delete(url);
+                }),
+                map(result => {
+                    console.log("result is:", result);
+                    this.updateDocumentsSetFromApi(type);
+
+                    return result;
+                })
+            )
+            .subscribe();
     }
 
     ngOnDestroy() {

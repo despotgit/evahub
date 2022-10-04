@@ -1,4 +1,5 @@
 import time
+from db import executeCustomQuery
 
 from db_config import getDb
 
@@ -6,54 +7,23 @@ db = getDb()
 
 
 def addDbUser(u):
-
-    usersCollection = db["users"]
-
-    u = {
-        "username": u["uid"],
-        "first_name": u["firstName"],
-        "last_name": u["lastName"],
-        "email": u["email"],
-        "domain": u["domain"],
-        "created-at": str(time.time()),
-    }
-
-    usersCollection.insert_one(u)
-    return
+    return 1
 
 
 def getDbUser(username):
-    usersCollection = db["users"]
-    uq = {"username": username}
 
-    user = usersCollection.find_one(uq)
-    if user == None:
-        return None
-    else:
-        return user
+    results = executeCustomQuery(
+        "select username, email, role from users where username = '"
+        + str(username)
+        + "'"
+    )
+
+    return results[0]
 
 
 def updateDbUser(username, field, value):
-    usersCollection = db["users"]
-    userQuery = {"username": username}
-
-    user = usersCollection.find_one(userQuery)
-    if user == None:
-        return None
-
-    updateParameter = {"$set": {field: value, "modified-at": str(time.time())}}
-
-    usersCollection.update({"username": username}, updateParameter)
-
-    return
+    return 1
 
 
 def deleteAllDbUserData(username):
-    usersCollection = db["users"]
-    uq = {"username": username}
-
-    user = usersCollection.delete_many(uq)
-    if user == None:
-        return None
-    else:
-        return "ok"
+    return 1
