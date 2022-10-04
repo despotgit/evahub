@@ -181,7 +181,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     // docType is document name as string, singular form
     updateDocumentsSetFromApi(docType: string) {
         if (docType == undefined) return;
-        //console.log("!!!!!docType is:", docType);
+        console.log("!!!!!docType is:", docType);
         let docTypeToLower = docType.toLowerCase();
 
         this.httpDocsCall = this.username$
@@ -272,7 +272,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                 }),
                 map(result => {
                     console.log("result is:", result);
-                    this.updateDocumentsSetFromApi(type);
+                    this.updateDocumentsSetFromApi(capitalizeWord(type));
 
                     return result;
                 })
