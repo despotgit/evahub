@@ -18,7 +18,7 @@ def faruk():
     return "yes it is!!!!!!"
 
 
-@rest.route("/<path:path>", methods=["GET", "POST"])
+@rest.route("/<path:path>", methods=["GET", "POST", "PUT", "DELETE"])
 def proxy(path):
     print("********************************************************** in proxy")
     # print(request.__dict__.items())
