@@ -5,8 +5,8 @@ from db_users_broker import deleteAllDbUserData, getDbUser
 rest_delete = Blueprint("rest_delete", __name__)
 
 
-# Delete user (by username)
-@rest_delete.route("/document/delete", methods=["POST"])
+# Delete a document (by username, and ldocumentog id)
+@rest_delete.route("/document/delete", methods=["DELETE"])
 def deleteDocument():
     r = json.loads(request.data.decode("UTF-8"))
     username = r["username"]
@@ -38,6 +38,13 @@ def deleteDocument():
         }
 
     response = json.jsonify(response)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
+
+# Delete user (by username)
+@rest_delete.route("/user/<username>", methods=["DELETE"])
+def deleteUser():
+    response = json.jsonify({})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response

@@ -26,6 +26,7 @@ def uploadDocument(type, username):
     authentication = authenticateJwt(username)
 
     if not authentication["authenticated"]:
+        print("Not authenticated for the requested operation")
         return authentication
 
     f = request.files["file"]
