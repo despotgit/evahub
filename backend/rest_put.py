@@ -4,8 +4,8 @@ from flask_jwt_extended import jwt_required
 from auth import authenticateJwt
 from db import executeCustomQuery
 from werkzeug.utils import secure_filename
-from auth import authenticateJwt
 from common import getUserDocumentsDir
+from document_file_broker import writeDocumentToFile
 
 rest_put = Blueprint("rest_put", __name__)
 
@@ -29,6 +29,10 @@ def uploadDocument(type, username):
         print("Not authenticated for the requested operation")
         return authentication
 
+    writeDocumentToFile(username)
+
+    """"
+
     f = request.files["file"]
 
     userDir = getUserDocumentsDir("log", username)
@@ -50,6 +54,12 @@ def uploadDocument(type, username):
     print("f is:")
     print(f)
     f.save(uploadLocation)
+
+    """
+
+    f = request.files["file"]
+
+    finalFilename = secure_filename(f.filename)
 
     executeCustomQuery(
         "insert into logs (`log_name`,`log_filename`,`username`) values ('"
