@@ -12,3 +12,4 @@ flask_jwt_extended
 setproctitle
 pycryptodome
 bcrypt
+
