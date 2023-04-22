@@ -12,4 +12,5 @@ flask_jwt_extended
 setproctitle
 pycryptodome
 bcrypt
+Flask-MySQL==1.5.2
 
