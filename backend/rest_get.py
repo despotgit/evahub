@@ -1,11 +1,8 @@
 from flask import Blueprint, json
 from flask_jwt_extended import jwt_required
 from auth import authenticateJwt
+from db_user_documents_broker import getUploadedUserDocuments
 from db_users_broker import getDbUser
-from db_user_reports_broker import getDbUserReports
-from db_user_logs_broker import getUploadedUserLogs
-from db_user_checks_broker import getDbUserChecks
-
 
 rest_get = Blueprint("rest_get", __name__)
 
@@ -18,7 +15,8 @@ def before_request():
 
 
 # Get user (by username)
-@rest_get.route("/user/get/<username>", methods=["GET"])
+# will be used on Account page for user's data
+@rest_get.route("/user/username/<username>", methods=["GET"])
 def getUserData(username):
     authentication = authenticateJwt(username)
 
@@ -49,10 +47,9 @@ def getUserData(username):
     return response
 
 
-# Get user's reports (by username)
-@rest_get.route("/reports/<username>", methods=["GET"])
-def getUserReports(username):
-
+# Get user's documents (by username)
+@rest_get.route("documents/type/<documentType>/username/<username>", methods=["GET"])
+def getUserDocuments(documentType, username):
     authentication = authenticateJwt(username)
 
     # print("authentication is:")
@@ -61,43 +58,7 @@ def getUserReports(username):
     if not authentication["authenticated"]:
         return authentication
 
-    userReports = getDbUserReports(username)
-
-    if userReports == None:
-        print("No reports for the given user")
-
-        response = {
-            "authenticated": True,
-            "status": "ok",
-            "message": "No reports found",
-        }
-    else:
-        response = {
-            "authenticated": True,
-            "status": "ok",
-            "userReports": userReports,
-            "message": "Reports retrieved successfully",
-        }
-
-    response = json.jsonify(response)
-
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
-
-
-# Get user's logs (by username)
-@rest_get.route("/logs/<username>", methods=["GET"])
-def getUserLogs(username):
-
-    authentication = authenticateJwt(username)
-
-    # print("authentication is:")
-    # print(authentication)
-
-    if not authentication["authenticated"]:
-        return authentication
-
-    userLogs = getUploadedUserLogs(username)
+    userLogs = getUploadedUserDocuments(username, documentType)
 
     if userLogs == None:
         print("No logs for the given user")
@@ -113,42 +74,6 @@ def getUserLogs(username):
             "status": "ok",
             "userLogs": userLogs,
             "message": "Logs retrieved successfully",
-        }
-
-    response = json.jsonify(response)
-
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
-
-
-# Get user's checks (by username)
-@rest_get.route("/checks/<username>", methods=["GET"])
-def getUserChecks(username):
-
-    authentication = authenticateJwt(username)
-
-    # print("authentication is:")
-    # print(authentication)
-
-    if not authentication["authenticated"]:
-        return authentication
-
-    userChecks = getDbUserChecks(username)
-
-    if userChecks == None:
-        print("No logs for the given user")
-
-        response = {
-            "authenticated": True,
-            "status": "ok",
-            "message": "No reports found",
-        }
-    else:
-        response = {
-            "authenticated": True,
-            "status": "ok",
-            "userChecks": userChecks,
-            "message": "Checks retrieved successfully",
         }
 
     response = json.jsonify(response)

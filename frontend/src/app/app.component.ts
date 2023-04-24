@@ -190,7 +190,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                 switchMap(username => {
                     //let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
 
-                    let url = `${environment.baseApiBackendUrl}/rest/get/${docTypeToLower}s/${username}`;
+                    let url = `${environment.baseApiBackendUrl}/rest/get/documents/type/${docTypeToLower}/username/${username}`;
 
                     return this.httpClient.get(url);
                 }),
