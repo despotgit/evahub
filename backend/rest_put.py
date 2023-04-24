@@ -18,10 +18,12 @@ def before_request():
 
 
 # Set user data (by username, field name, and value)
-@rest_put.route("/document/<type>/user/<username>", methods=["PUT"])
-def uploadDocument(type, username):
+@rest_put.route(
+    "/document/documentType/<documentType>/username/<username>", methods=["PUT"]
+)
+def uploadDocument(documentType, username):
     print("type is:")
-    print(type)
+    print(documentType)
 
     authentication = authenticateJwt(username)
 
