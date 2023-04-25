@@ -17,7 +17,7 @@ def before_request():
 
 
 # Set user data (by username, field name, and value)
-# Will be used on Account page to edit user's data
+# Will be used on Account or Register page to edit user's data
 @rest_post.route("/user/set/<username>", methods=["POST"])
 def setUserData(username):
     authentication = authenticateJwt(username)

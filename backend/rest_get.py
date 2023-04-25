@@ -15,7 +15,7 @@ def before_request():
 
 
 # Get user (by username)
-# will be used on Account page for user's data
+# will be used on Account or Register page for getting the user's data
 @rest_get.route("/user/username/<username>", methods=["GET"])
 def getUserData(username):
     authentication = authenticateJwt(username)
@@ -47,7 +47,7 @@ def getUserData(username):
     return response
 
 
-# Get user's documents (by username)
+# Get user's documents (by username and document type)
 @rest_get.route("documents/type/<documentType>/username/<username>", methods=["GET"])
 def getUserDocuments(documentType, username):
     authentication = authenticateJwt(username)
@@ -58,22 +58,23 @@ def getUserDocuments(documentType, username):
     if not authentication["authenticated"]:
         return authentication
 
-    userLogs = getUploadedUserDocuments(username, documentType)
+    userDocuments = getUploadedUserDocuments(username, documentType)
 
-    if userLogs == None:
-        print("No logs for the given user")
+    if userDocuments == None:
+        print("No documents of given type for the user are found.")
 
         response = {
             "authenticated": True,
             "status": "ok",
-            "message": "No reports found",
+            "message": "No documents of given type found for the user.",
         }
     else:
         response = {
             "authenticated": True,
             "status": "ok",
-            "userLogs": userLogs,
-            "message": "Logs retrieved successfully",
+            "userDocuments": userDocuments,
+            "documentType": documentType,
+            "message": "Documents retrieved successfully.",
         }
 
     response = json.jsonify(response)

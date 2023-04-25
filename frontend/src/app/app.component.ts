@@ -183,20 +183,17 @@ export class AppComponent implements OnInit, AfterViewInit {
         let docTypeToLower = docType.toLowerCase();
         //console.log("docType is:", docType);
 
-        //let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${un}`;
-
         this.httpDocsCall = this.username$
             .pipe(
                 switchMap(username => {
-                    //let url = `${environment.baseApiBackendUrl}/rest/${docTypeToLower}s/get/${username}`;
-
                     let url = `${environment.baseApiBackendUrl}/rest/get/documents/type/${docTypeToLower}/username/${username}`;
 
                     return this.httpClient.get(url);
                 }),
                 map(ud => {
                     console.log("ud is:", ud);
-                    let ds = ud["user" + docType + "s"];
+                    //let ds = ud["user" + docType + "s"];
+                    let ds = ud["userDocuments"];
                     this.processDocuments(ds, docType);
                     return ud;
                 })
@@ -211,6 +208,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         const dtToLower = dt.toLowerCase();
         let [menuItems, docs] = this.transformDbDocuments(ds, dtToLower);
+        console.log("menuItems are: ", menuItems);
         this.store.updateUserDocuments(dt, docs);
         this.store.updateSidenavMenuItems(menuItems);
         this.store.updateSelectedUserDocument(dt, docs[0]);
@@ -220,6 +218,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     transformDbDocuments(ds: any, dtToLower) {
         let docs = [];
         let menuItems = [];
+
+        if (ds.count === 0) {
+            //return [[], []];
+        }
 
         ds.map(d => {
             let doc;

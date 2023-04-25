@@ -36,9 +36,12 @@ def getUploadedUserDocuments(username, documentType):
         + "'"
     )
 
+    # print("results are:")
+    # print(results)
+
     toReturn = []
     for r in results:
-        dir = getUserDocumentsDir("log", username)
+        dir = getUserDocumentsDir(documentType, username)
         filePath = dir + "/" + r[2]
 
         content = ""

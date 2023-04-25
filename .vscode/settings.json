@@ -13,5 +13,8 @@
     "editor.wordWrap": "wordWrapColumn",
     "prettier.trailingComma": "none",
     "editor.tabSize": 2,
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "none",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    }
 }
