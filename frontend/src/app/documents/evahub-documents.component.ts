@@ -1,11 +1,11 @@
 import { AfterViewChecked, ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { PageIndexDictionary } from "../common/constants";
+import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
 import {
     ApplicationStateStoreService,
     EvahubDocument
 } from "../services/application-state-store.service";
 import { ActivatedRoute } from "@angular/router";
-import { map, Observable, of, startWith } from "rxjs";
+import { map, Observable, of, startWith, tap } from "rxjs";
 import { Log } from "../models/Log";
 //import { Chart } from "chart.js";
 import Chart from "chart.js/auto";
@@ -23,6 +23,16 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
     selectedDocument$ = this.store.selectedDocument$.pipe(
         map(a => a),
         startWith(new Log())
+    );
+    currentPageIndex$ = this.store.currentPageIndex$.pipe(
+        tap(a => {
+            let pageName = getPageNameFromPageIndex(a);
+            if (pageName == "report") {
+                this.displayGraph = true;
+            } else {
+                this.displayGraph = false;
+            }
+        })
     );
 
     constructor(private store: ApplicationStateStoreService, route: ActivatedRoute) {
@@ -51,13 +61,16 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
     ngOnInit(): void {}
 
     ngAfterViewChecked() {
-        this.drawGraph();
+        if (this.displayGraph) {
+            this.drawGraph();
+        }
     }
 
     drawGraph() {
         const el = document.getElementById("graph") as HTMLCanvasElement;
         const ctx = el.getContext("2d");
 
+        // If graph exists, destroy it first
         if (this.reportGraph) {
             this.reportGraph.destroy();
         }

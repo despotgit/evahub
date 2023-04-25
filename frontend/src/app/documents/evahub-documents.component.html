@@ -1,9 +1,10 @@
-<div>
+<div *ngIf="displayGraph">
     <canvas id="graph"></canvas>
 </div>
 <div
     *ngIf="{
-        selectedDocument: selectedDocument$ | async
+        selectedDocument: selectedDocument$ | async,
+        currentPageIndex: currentPageIndex$ | async
     } as asyncData"
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
@@ -15,7 +16,6 @@
                         : ""
                 }}
             </div>
-            <!-- <div *ngIf="displayGraph"> -->
         </mat-grid-tile>
     </mat-grid-list>
 </div>
