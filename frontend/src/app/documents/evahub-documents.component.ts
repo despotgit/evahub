@@ -7,6 +7,8 @@ import {
 import { ActivatedRoute } from "@angular/router";
 import { map, Observable, of, startWith } from "rxjs";
 import { Log } from "../models/Log";
+//import { Chart } from "chart.js";
+import Chart from "chart.js/auto";
 
 @Component({
     selector: "app-evahub-documents",
@@ -15,6 +17,9 @@ import { Log } from "../models/Log";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
+    displayGraph: boolean;
+    reportGraph: any;
+
     selectedDocument$ = this.store.selectedDocument$.pipe(
         map(a => a),
         startWith(new Log())
@@ -26,6 +31,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
         }, 100);
 
         this.updatePageIndex(route);
+
+        this.displayGraph = true;
     }
 
     updatePageIndex(route) {
@@ -43,5 +50,37 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
 
     ngOnInit(): void {}
 
-    ngAfterViewChecked() {}
+    ngAfterViewChecked() {
+        this.drawGraph();
+    }
+
+    drawGraph() {
+        const el = document.getElementById("graph") as HTMLCanvasElement;
+        const ctx = el.getContext("2d");
+
+        if (this.reportGraph) {
+            this.reportGraph.destroy();
+        }
+
+        this.reportGraph = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                datasets: [
+                    {
+                        label: "# of Votes",
+                        data: [12, 19, 3, 5, 2, 3],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
 }

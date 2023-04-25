@@ -1,3 +1,6 @@
+<div>
+    <canvas id="graph"></canvas>
+</div>
 <div
     *ngIf="{
         selectedDocument: selectedDocument$ | async
@@ -5,11 +8,14 @@
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
-            {{
-                asyncData && asyncData.selectedDocument
-                    ? asyncData.selectedDocument.getDocumentContent()
-                    : ""
-            }}
+            <div *ngIf="!displayGraph">
+                {{
+                    asyncData && asyncData.selectedDocument
+                        ? asyncData.selectedDocument.getDocumentContent()
+                        : ""
+                }}
+            </div>
+            <!-- <div *ngIf="displayGraph"> -->
         </mat-grid-tile>
     </mat-grid-list>
 </div>
