@@ -20,8 +20,21 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
     displayGraph: boolean;
     reportGraph: any;
 
+    graphValues = [];
+    graphLabels = [];
+
     selectedDocument$ = this.store.selectedDocument$.pipe(
         map(a => a),
+        tap(a => {
+            console.log("and the a is:", a);
+            if (!a) {
+            } else {
+                a["reportContent"]["BalDura_sub_plot"].forEach(el => {
+                    this.graphValues.push(el[0]);
+                    this.graphLabels.push(el[1]);
+                });
+            }
+        }),
         startWith(new Log())
     );
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
@@ -29,7 +42,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
             let pageName = getPageNameFromPageIndex(a);
             if (pageName == "report") {
                 this.displayGraph = true;
-                this.displayGraph = false;
+                //this.displayGraph = false;
             } else {
                 this.displayGraph = false;
             }
@@ -76,13 +89,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
             this.reportGraph.destroy();
         }
 
-        let d = [12, 19, 3, 5, 2, 3];
-        let ls = [];
-
-        let currentLabel = 1;
-        d.forEach(da => {
-            ls.push(currentLabel++);
-        });
+        let d = this.graphValues;
+        let ls = this.graphLabels;
 
         this.reportGraph = new Chart(ctx, {
             type: "line",

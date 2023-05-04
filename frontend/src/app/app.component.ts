@@ -191,7 +191,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                     return this.httpClient.get(url);
                 }),
                 map(ud => {
-                    console.log("ud is:", ud);
+                    //console.log("ud is:", ud);
                     //let ds = ud["user" + docType + "s"];
                     let ds = ud["userDocuments"];
                     this.processDocuments(ds, docType);
@@ -208,7 +208,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         const dtToLower = dt.toLowerCase();
         let [menuItems, docs] = this.transformDbDocuments(ds, dtToLower);
-        console.log("menuItems are: ", menuItems);
+        //console.log("menuItems are: ", menuItems);
         this.store.updateUserDocuments(dt, docs);
         this.store.updateSidenavMenuItems(menuItems);
         this.store.updateSelectedUserDocument(dt, docs[0]);
