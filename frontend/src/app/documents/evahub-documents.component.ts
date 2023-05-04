@@ -98,7 +98,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
                 labels: ls,
                 datasets: [
                     {
-                        label: "# of Votes",
+                        label: "something",
                         data: d,
                         borderWidth: 1
                     }
