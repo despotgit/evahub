@@ -17,6 +17,6 @@ export class Report implements EvahubDocument {
     }
 
     getDocumentContent() {
-        return this.reportContent;
+        return JSON.stringify(this.reportContent);
     }
 }

@@ -3,6 +3,7 @@ from common import getUserDocumentsDir
 
 from db_config import getDb
 from db import executeCustomQuery
+import json
 
 db = getDb()
 
@@ -47,17 +48,8 @@ def getUploadedUserDocuments(username, documentType):
         content = ""
 
         with open(filePath, "rb") as f:
-            lines = f.readlines()
+            c = json.load(f)
 
-            for line in lines:
-                content = content + "\n" + str(line)
-                # print(line)
-
-        # c = str(content)
-        c = content
-        # c = c.decode("utf-8")
-        # print("content is:!!!!!")
-        # print(c)
         toReturn.append(
             {
                 documentType + "Id": r[0],
