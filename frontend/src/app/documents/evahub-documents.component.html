@@ -1,21 +1,23 @@
-<div *ngIf="displayGraph">
-    <canvas id="graph"></canvas>
-</div>
 <div
     *ngIf="{
         selectedDocument: selectedDocument$ | async,
         currentPageIndex: currentPageIndex$ | async
     } as asyncData"
 >
-    <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
-        <mat-grid-tile colspan="6">
-            <div *ngIf="!displayGraph">
-                {{
-                    asyncData && asyncData.selectedDocument
-                        ? asyncData.selectedDocument.getDocumentContent()
-                        : ""
-                }}
-            </div>
-        </mat-grid-tile>
-    </mat-grid-list>
+    <div *ngIf="displayGraph">
+        <canvas id="graph"></canvas>
+    </div>
+    <div>
+        <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
+            <mat-grid-tile colspan="6">
+                <div class="doc" *ngIf="!displayGraph">
+                    {{
+                        asyncData && asyncData.selectedDocument
+                            ? asyncData.selectedDocument.getDocumentContent()
+                            : ""
+                    }}
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
 </div>

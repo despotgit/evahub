@@ -29,6 +29,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
             let pageName = getPageNameFromPageIndex(a);
             if (pageName == "report") {
                 this.displayGraph = true;
+                this.displayGraph = false;
             } else {
                 this.displayGraph = false;
             }
@@ -75,14 +76,22 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
             this.reportGraph.destroy();
         }
 
+        let d = [12, 19, 3, 5, 2, 3];
+        let ls = [];
+
+        let currentLabel = 1;
+        d.forEach(da => {
+            ls.push(currentLabel++);
+        });
+
         this.reportGraph = new Chart(ctx, {
-            type: "bar",
+            type: "line",
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: ls,
                 datasets: [
                     {
                         label: "# of Votes",
-                        data: [12, 19, 3, 5, 2, 3],
+                        data: d,
                         borderWidth: 1
                     }
                 ]

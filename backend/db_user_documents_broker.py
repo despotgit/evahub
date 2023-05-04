@@ -55,6 +55,7 @@ def getUploadedUserDocuments(username, documentType):
 
         # c = str(content)
         c = content
+        # c = c.decode("utf-8")
         # print("content is:!!!!!")
         # print(c)
         toReturn.append(
