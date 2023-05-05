@@ -1,11 +1,18 @@
-import { AfterViewChecked, ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import {
+    AfterContentInit,
+    AfterViewChecked,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    OnInit
+} from "@angular/core";
 import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
 import {
     ApplicationStateStoreService,
     EvahubDocument
 } from "../services/application-state-store.service";
 import { ActivatedRoute } from "@angular/router";
-import { map, Observable, of, startWith, tap } from "rxjs";
+import { map, Observable, of, startWith, take, tap } from "rxjs";
 import { Log } from "../models/Log";
 //import { Chart } from "chart.js";
 import Chart from "chart.js/auto";
@@ -16,7 +23,7 @@ import Chart from "chart.js/auto";
     styleUrls: ["./evahub-documents.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
+export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, AfterViewInit {
     displayGraph: boolean;
     reportGraph: any;
 
@@ -26,7 +33,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
     selectedDocument$ = this.store.selectedDocument$.pipe(
         map(a => a),
         tap(a => {
-            console.log("and the a is:", a);
+            //console.log("and the a is:", a);
             if (!a || !a["reportContent"] || !a["reportContent"]["BalDura_sub_plot"]) {
             } else {
                 a["reportContent"]["BalDura_sub_plot"].forEach(el => {
@@ -40,9 +47,9 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
         tap(a => {
             let pageName = getPageNameFromPageIndex(a);
+            console.log("pageName is: ", pageName);
             if (pageName == "report") {
                 this.displayGraph = true;
-                //this.displayGraph = false;
             } else {
                 this.displayGraph = false;
             }
@@ -80,6 +87,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
         }
     }
 
+    ngAfterViewInit() {}
+
     drawGraph() {
         const el = document.getElementById("graph") as HTMLCanvasElement;
         const ctx = el.getContext("2d");
@@ -89,8 +98,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
             this.reportGraph.destroy();
         }
 
-        let d = this.graphValues;
-        let ls = this.graphLabels;
+        let d = [...this.graphValues];
+        let ls = [...this.graphLabels];
 
         this.reportGraph = new Chart(ctx, {
             type: "line",

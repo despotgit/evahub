@@ -8,7 +8,17 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { map, switchMap, Observable, of, Subscription, tap, combineLatest } from "rxjs";
+import {
+    map,
+    switchMap,
+    Observable,
+    of,
+    Subscription,
+    tap,
+    combineLatest,
+    distinctUntilChanged,
+    debounceTime
+} from "rxjs";
 import { environment } from "src/environments/environment";
 import {
     getPageNameFromPageIndex,
@@ -41,6 +51,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     userChecks$: Observable<Check[]> = this.store.userChecks$;
     userLogs$: Observable<Log[]> = this.store.userLogs$;
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
+        distinctUntilChanged(),
+        debounceTime(500),
         tap(a => {
             const s = getPageNameFromPageIndex(a); // s : singularDocumentTypeName
 
@@ -115,7 +127,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     @ViewChild("sidenav") sidenav;
 
     title = "EVAHUB";
-    httpDocsCall: any;
+    httpDocsCall: Subscription;
 
     constructor(
         private router: Router,
@@ -260,8 +272,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         return [menuItems, docs];
     }
 
-    ngOnDestroy() {
+    unSubscribe() {
         this.docSelectedSub.unsubscribe();
         this.httpDocsCall.unsubscribe();
+    }
+
+    ngOnDestroy() {
+        this.unSubscribe();
     }
 }
