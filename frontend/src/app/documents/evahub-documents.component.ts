@@ -27,7 +27,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked {
         map(a => a),
         tap(a => {
             console.log("and the a is:", a);
-            if (!a) {
+            if (!a || !a["reportContent"] || !a["reportContent"]["BalDura_sub_plot"]) {
             } else {
                 a["reportContent"]["BalDura_sub_plot"].forEach(el => {
                     this.graphValues.push(el[0]);

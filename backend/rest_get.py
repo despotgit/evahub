@@ -55,6 +55,8 @@ def getUserDocuments(documentType, username):
     # print("authentication is:")
     # print(authentication)
 
+    # DEV:  FOR TESTING PURPOSING NO LOGIN REQUIRED:
+    # if not authentication["authenticated"] and False:
     if not authentication["authenticated"]:
         return authentication
 

@@ -48,13 +48,19 @@ def getUploadedUserDocuments(username, documentType):
         content = ""
 
         with open(filePath, "rb") as f:
-            c = json.load(f)
+            if documentType == "report":
+                content = json.load(f)
+
+            if documentType == "log":
+                lines = f.readlines()
+                for line in lines:
+                    content = content + "\n" + str(line)
 
         toReturn.append(
             {
                 documentType + "Id": r[0],
                 documentType + "Name": r[1],
-                documentType + "Content": c,
+                documentType + "Content": content,
             }
         )
 
