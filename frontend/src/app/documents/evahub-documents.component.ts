@@ -36,6 +36,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
             //console.log("and the a is:", a);
             if (!a || !a["reportContent"] || !a["reportContent"]["BalDura_sub_plot"]) {
             } else {
+                this.graphValues = [];
+                this.graphLabels = [];
                 a["reportContent"]["BalDura_sub_plot"].forEach(el => {
                     this.graphValues.push(el[0]);
                     this.graphLabels.push(el[1]);
@@ -94,7 +96,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
         const ctx = el.getContext("2d");
 
         // If graph exists, destroy it first
-        if (this.reportGraph) {
+        if (this.reportGraph !== undefined) {
             this.reportGraph.destroy();
         }
 
