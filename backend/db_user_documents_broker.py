@@ -52,9 +52,8 @@ def getUploadedUserDocuments(username, documentType):
                 content = json.load(f)
 
             if documentType == "log":
-                lines = f.readlines()
-                for line in lines:
-                    content = content + "\n" + str(line)
+                text = f.read()
+                content = str(text, "utf-8")
 
         toReturn.append(
             {
