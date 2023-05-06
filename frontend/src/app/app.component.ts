@@ -52,7 +52,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     userLogs$: Observable<Log[]> = this.store.userLogs$;
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
         distinctUntilChanged(),
-        debounceTime(1000),
+        debounceTime(500),
         tap(a => {
             const s = getPageNameFromPageIndex(a); // s : singularDocumentTypeName
 
