@@ -186,7 +186,6 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.userChecks$,
 
         (cpi, docId, ls, rs, cs) => {
-            //console.log("in selectedDocument$ in store");
             switch (cpi) {
                 case PageIndex.LOGS_PAGE:
                     const sl = ls.find(l => l.logId == docId);

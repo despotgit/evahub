@@ -31,14 +31,13 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
     graphLabels = [];
 
     selectedDocument$ = this.store.selectedDocument$.pipe(
-        map(a => a),
-        tap(a => {
+        tap(d => {
             //console.log("and the a is:", a);
-            if (!a || !a["reportContent"] || !a["reportContent"]["BalDura_sub_plot"]) {
+            if (!d || !d["reportContent"] || !d["reportContent"]["BalDura_sub_plot"]) {
             } else {
                 this.graphValues = [];
                 this.graphLabels = [];
-                a["reportContent"]["BalDura_sub_plot"].forEach(el => {
+                d["reportContent"]["BalDura_sub_plot"].forEach(el => {
                     this.graphValues.push(el[0]);
                     this.graphLabels.push(el[1]);
                 });

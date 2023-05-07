@@ -33,8 +33,6 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
     }
 
     deleteClicked(itemId: number) {
-        console.log("winner is:", itemId);
-
         this.emitDeleteItemClicked.emit(itemId);
     }
 }
