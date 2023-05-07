@@ -13,7 +13,10 @@ import {
     combineLatest,
     combineLatestAll,
     switchMap,
-    exhaustMap
+    exhaustMap,
+    shareReplay,
+    observeOn,
+    asyncScheduler
 } from "rxjs";
 import { EvahubMainMenuItem, getInitialMainMenuItems, PageIndex } from "../common/constants";
 import { Check } from "../models/Check";
@@ -195,22 +198,30 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     //    })
     //);
 
-    selectedDocument$: Observable<any> = this.currentDocumentId$.pipe(
-        switchMap(cdi =>
-            this.currentPageIndex$.pipe(
-                tap(i => {
-                    console.log("i is:", i);
-                }),
-                combineLatestWith(this.userLogs$),
-                map(uls => {
-                    console.log("uls is:", uls);
-                    console.log("cdi is:", cdi);
-                    this.updateCurrentDocumentId(cdi);
-                    //return uls[this.switcher++ % 3];
-                    return uls[1].find(l => l.logId == cdi);
-                })
-            )
-        )
+    selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
+        withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
+        map(([docId, cpi, ls, rs, cs]) => {
+            switch (cpi) {
+                case PageIndex.LOGS_PAGE:
+                    const sl = ls.find(l => l.logId == docId);
+                    //console.log("d logs, sl is:", sl);
+                    return sl;
+
+                case PageIndex.REPORTS_PAGE:
+                    const sr = rs.find(r => r.reportId == docId);
+                    //console.log("d reports, sr is:", sr);
+                    return sr;
+
+                case PageIndex.CHECKS_PAGE:
+                    const sc = cs.find(c => c.checkId == docId);
+                    //console.log("d checks, sc is:", sc);
+                    return sc;
+            }
+
+            return new Log();
+        }),
+        shareReplay(1),
+        observeOn(asyncScheduler)
     );
 
     constructor() {
