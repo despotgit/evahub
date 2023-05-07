@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
-import { tap, map, Observable } from "rxjs";
+import { tap, map, Observable, withLatestFrom } from "rxjs";
 import { EvahubMainMenuItem, getInitialMainMenuItems, PageIndex } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument, EvahubDocumentType } from "../models/EvahubDocument";
@@ -163,29 +163,17 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // REPORTS
     userReports$: Observable<Report[]> = this.select(state => state.userReports.userReports);
-    selectedUserReport$: Observable<Report> = this.select(
-        state => state.userReports.selectedUserReport
-    );
 
     // LOGS
     userLogs$: Observable<Log[]> = this.select(state => state.userLogs.userLogs);
-    selectedUserLog$: Observable<Log> = this.select(state => state.userLogs.selectedUserLog);
 
     // CHECKS
     userChecks$: Observable<Check[]> = this.select(state => state.userChecks.userChecks);
-    selectedUserCheck$: Observable<Check> = this.select(
-        state => state.userChecks.selectedUserCheck
-    );
 
     // General
-    selectedDocument$: Observable<EvahubDocument> = this.select(
-        this.currentPageIndex$,
-        this.currentDocumentId$,
-        this.userLogs$,
-        this.userReports$,
-        this.userChecks$,
-
-        (cpi, docId, ls, rs, cs) => {
+    selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
+        withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
+        map(([docId, cpi, ls, rs, cs]) => {
             switch (cpi) {
                 case PageIndex.LOGS_PAGE:
                     const sl = ls.find(l => l.logId == docId);
@@ -204,7 +192,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
             }
 
             return new Log();
-        }
+        })
     );
 
     constructor() {

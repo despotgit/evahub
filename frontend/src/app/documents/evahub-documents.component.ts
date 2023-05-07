@@ -45,6 +45,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
         }),
         startWith(new Log())
     );
+
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
         tap(a => {
             let pageName = getPageNameFromPageIndex(a);
