@@ -1,6 +1,20 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
-import { tap, map, Observable, withLatestFrom } from "rxjs";
+import {
+    tap,
+    map,
+    Observable,
+    withLatestFrom,
+    mergeAll,
+    mergeMap,
+    merge,
+    exhaustAll,
+    combineLatestWith,
+    combineLatest,
+    combineLatestAll,
+    switchMap,
+    exhaustMap
+} from "rxjs";
 import { EvahubMainMenuItem, getInitialMainMenuItems, PageIndex } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument, EvahubDocumentType } from "../models/EvahubDocument";
@@ -170,29 +184,33 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // CHECKS
     userChecks$: Observable<Check[]> = this.select(state => state.userChecks.userChecks);
 
+    switcher = 0;
+
     // General
-    selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
-        withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
-        map(([docId, cpi, ls, rs, cs]) => {
-            switch (cpi) {
-                case PageIndex.LOGS_PAGE:
-                    const sl = ls.find(l => l.logId == docId);
-                    //console.log("d logs, sl is:", sl);
-                    return sl;
 
-                case PageIndex.REPORTS_PAGE:
-                    const sr = rs.find(r => r.reportId == docId);
-                    //console.log("d reports, sr is:", sr);
-                    return sr;
+    //selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
+    //    combineLatestWith(this.currentPageIndex$, this.userLogs$),
+    //    map(([docId, cpi, ls]) => {
+    //        return ls[this.switcher++ % 3];
+    //    })
+    //);
 
-                case PageIndex.CHECKS_PAGE:
-                    const sc = cs.find(c => c.checkId == docId);
-                    //console.log("d checks, sc is:", sc);
-                    return sc;
-            }
-
-            return new Log();
-        })
+    selectedDocument$: Observable<any> = this.currentDocumentId$.pipe(
+        switchMap(cdi =>
+            this.currentPageIndex$.pipe(
+                tap(i => {
+                    console.log("i is:", i);
+                }),
+                combineLatestWith(this.userLogs$),
+                map(uls => {
+                    console.log("uls is:", uls);
+                    console.log("cdi is:", cdi);
+                    this.updateCurrentDocumentId(cdi);
+                    //return uls[this.switcher++ % 3];
+                    return uls[1].find(l => l.logId == cdi);
+                })
+            )
+        )
     );
 
     constructor() {
@@ -296,4 +314,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     resetApplicationState() {
         this.setState(INITIAL_APPLICATION_STATE);
     }
+}
+function a(value: [number, number, Log[]], index: number): unknown {
+    throw new Error("Function not implemented.");
 }
