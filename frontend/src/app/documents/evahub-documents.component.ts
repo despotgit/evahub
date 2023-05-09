@@ -38,8 +38,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
                 this.graphValues = [];
                 this.graphLabels = [];
                 d["reportContent"]["BalDura_sub_plot"].forEach(el => {
-                    this.graphValues.push(el[0]);
-                    this.graphLabels.push(el[1]);
+                    this.graphLabels.push(el[0]);
+                    this.graphValues.push(el[1]);
                 });
             }
         }),
@@ -100,17 +100,14 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
             this.reportGraph.destroy();
         }
 
-        let d = this.graphValues;
-        let ls = this.graphLabels;
-
         this.reportGraph = new Chart(ctx, {
             type: "line",
             data: {
-                labels: ls,
+                labels: this.graphLabels,
                 datasets: [
                     {
-                        label: "something",
-                        data: d,
+                        label: "our first graph",
+                        data: this.graphValues,
                         borderWidth: 1
                     }
                 ]
