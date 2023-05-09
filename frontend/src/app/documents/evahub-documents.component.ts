@@ -81,7 +81,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
         this.store.updateCurrentPageIndex(pageIndex);
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     ngAfterViewChecked() {
         if (this.displayGraph) {
@@ -89,7 +89,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
         }
     }
 
-    ngAfterViewInit() {}
+    ngAfterViewInit() { }
 
     drawGraph() {
         const el = document.getElementById("graph") as HTMLCanvasElement;
@@ -100,8 +100,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
             this.reportGraph.destroy();
         }
 
-        let d = [...this.graphValues];
-        let ls = [...this.graphLabels];
+        let d = this.graphValues;
+        let ls = this.graphLabels;
 
         this.reportGraph = new Chart(ctx, {
             type: "line",
