@@ -1,0 +1,3 @@
+class GraphGenerator {
+    generateGraph() {}
+}

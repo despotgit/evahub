@@ -81,7 +81,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
         this.store.updateCurrentPageIndex(pageIndex);
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {}
 
     ngAfterViewChecked() {
         if (this.displayGraph) {
@@ -89,7 +89,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
         }
     }
 
-    ngAfterViewInit() { }
+    ngAfterViewInit() {}
 
     drawGraph() {
         const el = document.getElementById("graph") as HTMLCanvasElement;
@@ -100,15 +100,38 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
             this.reportGraph.destroy();
         }
 
+        console.log("values for graph is:", this.graphValues);
+
+        // generate labels, procedure:
+        /*
+            1. sort values.
+            2. go from minimum value to max. value
+            3. calculate the minimum interval
+            4.
+
+
+
+
+
+        */
+
         this.reportGraph = new Chart(ctx, {
-            type: "line",
+            type: "scatter",
             data: {
                 labels: this.graphLabels,
                 datasets: [
                     {
                         label: "our first graph",
                         data: this.graphValues,
-                        borderWidth: 1
+                        borderWidth: 1,
+                        borderColor: "black",
+                        pointBackgroundColor: ["#000", "#00bcd6", "#d300d6"],
+                        pointBorderColor: ["#000", "#00bcd6", "#d300d6"],
+                        pointRadius: 5,
+                        pointHoverRadius: 5,
+                        fill: false,
+                        tension: 0,
+                        showLine: true
                     }
                 ]
             },
