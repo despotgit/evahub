@@ -10,3 +10,8 @@
     overflow: scroll;
     height: 100%;
 }
+
+canvas {
+    display: initial !important;
+    width: 100%;
+}

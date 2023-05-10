@@ -25,7 +25,7 @@ import Chart from "chart.js/auto";
 })
 export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, AfterViewInit {
     displayGraph: boolean;
-    reportGraph: any;
+    reportGraph: Chart;
 
     graphValues = [];
     graphLabels = [];
@@ -100,20 +100,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
             this.reportGraph.destroy();
         }
 
-        console.log("values for graph is:", this.graphValues);
-
-        // generate labels, procedure:
-        /*
-            1. sort values.
-            2. go from minimum value to max. value
-            3. calculate the minimum interval
-            4.
-
-
-
-
-
-        */
+        let dotsColors = ["red", "green", "blue"];
+        //let dotsColors = ["#000", "#00bcd6", "#d300d6"]
 
         this.reportGraph = new Chart(ctx, {
             type: "scatter",
@@ -125,8 +113,9 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
                         data: this.graphValues,
                         borderWidth: 1,
                         borderColor: "black",
-                        pointBackgroundColor: ["#000", "#00bcd6", "#d300d6"],
-                        pointBorderColor: ["#000", "#00bcd6", "#d300d6"],
+                        //pointBackgroundColor: ["#000", "#00bcd6", "#d300d6"],
+                        pointBackgroundColor: dotsColors,
+                        pointBorderColor: dotsColors,
                         pointRadius: 5,
                         pointHoverRadius: 5,
                         fill: false,
@@ -136,6 +125,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
                 ]
             },
             options: {
+                maintainAspectRatio: true,
                 scales: {
                     y: {
                         beginAtZero: true
