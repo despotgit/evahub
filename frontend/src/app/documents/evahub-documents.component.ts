@@ -100,7 +100,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
             this.reportGraph.destroy();
         }
 
-        let dotsColors = ["red", "green", "blue"];
+        let dotsColors = ["green"];
         //let dotsColors = ["#000", "#00bcd6", "#d300d6"]
 
         this.reportGraph = new Chart(ctx, {
