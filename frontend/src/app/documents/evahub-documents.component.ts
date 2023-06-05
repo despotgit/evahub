@@ -101,7 +101,6 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
         }
 
         let dotsColors = ["green"];
-        //let dotsColors = ["#000", "#00bcd6", "#d300d6"]
 
         this.reportGraph = new Chart(ctx, {
             type: "scatter",
@@ -109,11 +108,10 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
                 labels: this.graphLabels,
                 datasets: [
                     {
-                        label: "our first graph",
+                        label: "",
                         data: this.graphValues,
                         borderWidth: 1,
                         borderColor: "black",
-                        //pointBackgroundColor: ["#000", "#00bcd6", "#d300d6"],
                         pointBackgroundColor: dotsColors,
                         pointBorderColor: dotsColors,
                         pointRadius: 5,
@@ -127,6 +125,14 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
             options: {
                 maintainAspectRatio: true,
                 scales: {
+                    x: {
+                        ticks: {
+                            callback: function (value, index, ticks) {
+                                console.log("value is: ", value, " index is: ", index);
+                                return value;
+                            }
+                        }
+                    },
                     y: {
                         beginAtZero: true
                     }
