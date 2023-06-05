@@ -36,6 +36,7 @@ import {
     EvahubSidenavMenuItem
 } from "./services/application-state-store.service";
 import { AuthenticationService } from "./services/authentication.service";
+import { RestApiService } from "./services/rest-api.service";
 
 @Component({
     selector: "app-root",
@@ -134,7 +135,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         private router: Router,
         private store: ApplicationStateStoreService,
         private authenticationService: AuthenticationService,
-        private httpClient: HttpClient
+        private restApiClient: RestApiService
     ) {}
 
     ngOnInit(): void {}
@@ -199,9 +200,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.httpDocsCall = this.username$
             .pipe(
                 switchMap(username => {
-                    let url = `${environment.baseApiBackendUrl}/rest/get/documents/type/${docTypeToLower}/username/${username}`;
-
-                    return this.httpClient.get(url);
+                    return this.restApiClient.getDocumentsSet(docTypeToLower, username);
                 }),
                 map(ud => {
                     //console.log("ud is:", ud);
