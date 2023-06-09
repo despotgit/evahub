@@ -5,7 +5,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef
 } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
 import { first, take } from "rxjs/operators";
@@ -19,14 +19,14 @@ import { of } from "rxjs";
     styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit, AfterViewChecked {
-    loginForm: FormGroup;
+    loginForm: UntypedFormGroup;
     submitted = false;
     loading = false;
     returnUrl: string = "";
     error = "";
 
     constructor(
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,

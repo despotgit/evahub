@@ -22,7 +22,7 @@ import {
     Subject
 } from "rxjs";
 import { combineLatestWith, finalize, startWith, withLatestFrom } from "rxjs/operators";
-import { Form, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Form, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndex } from "../common/constants";
 
@@ -45,7 +45,7 @@ import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 export class RegisterComponent implements OnInit, AfterViewInit {
     registerHttpCall$: Subscription;
 
-    theForm: FormGroup;
+    theForm: UntypedFormGroup;
 
     registerUsername$: Observable<string> = this.store.registerUsername$.pipe(
         tap(newRegisterUsername => {
@@ -87,7 +87,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     constructor(
         private router: Router,
         private store: ApplicationStateStoreService,
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private http: HttpClient,
         private cd: ChangeDetectorRef
     ) {
@@ -95,7 +95,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             registerUsernameFormControl: ["", [Validators.required]],
             registerPasswordFormControl: ["", [Validators.required]],
             registerPasswordConfirmationFormControl: ["", [Validators.required]],
-            firstLastNameFormControl: new FormControl(""),
+            firstLastNameFormControl: new UntypedFormControl(""),
             emailFormControl: ["", [Validators.required, Validators.email]]
         });
 
