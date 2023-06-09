@@ -3,7 +3,6 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSliderModule } from "@angular/material/slider";
 import { MatSidenavModule } from "@angular/material/sidenav";
-
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatExpansionModule } from "@angular/material/expansion";
@@ -14,15 +13,16 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatCardModule } from "@angular/material/card";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     imports: [
         MatFormFieldModule,
+        MatInputModule,
         MatToolbarModule,
         MatButtonModule,
         MatSliderModule,
         MatSidenavModule,
-
         MatInputModule,
         MatExpansionModule,
         MatDatepickerModule,
@@ -32,7 +32,8 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
         MatCardModule,
         MatSidenavModule,
         MatDividerModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        ReactiveFormsModule
     ],
     exports: [
         MatFormFieldModule,
@@ -40,7 +41,6 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
         MatButtonModule,
         MatSliderModule,
         MatSidenavModule,
-
         MatInputModule,
         MatExpansionModule,
         MatDatepickerModule,
@@ -50,7 +50,8 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
         MatCardModule,
         MatSidenavModule,
         MatDividerModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        ReactiveFormsModule
     ]
 })
 export class VladosMaterialModule {}
