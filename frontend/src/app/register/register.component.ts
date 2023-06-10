@@ -27,7 +27,7 @@ import { ApplicationStateStoreService } from "../services/application-state-stor
 import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndex } from "../common/constants";
 
 import { HttpClient, HttpEventType } from "@angular/common/http";
-import { MatButton } from "@angular/material/button";
+import { MatLegacyButton as MatButton } from "@angular/material/legacy-button";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 
 @Component({
