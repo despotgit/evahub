@@ -5,7 +5,8 @@ import {
     Component,
     ElementRef,
     OnInit,
-    ViewChild
+    ViewChild,
+    forwardRef
 } from "@angular/core";
 import { Router } from "@angular/router";
 import {
@@ -22,12 +23,21 @@ import {
     Subject
 } from "rxjs";
 import { combineLatestWith, finalize, startWith, withLatestFrom } from "rxjs/operators";
-import { Form, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
+import {
+    Form,
+    FormControl,
+    NG_VALUE_ACCESSOR,
+    UntypedFormBuilder,
+    UntypedFormControl,
+    UntypedFormGroup,
+    Validators
+} from "@angular/forms";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndex } from "../common/constants";
 
 import { HttpClient, HttpEventType } from "@angular/common/http";
-import { MatLegacyButton as MatButton } from "@angular/material/legacy-button";
+//import { MatLegacyButton as MatButton } from "@angular/material/legacy-button";
+import { MatButton } from "@angular/material/button";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 
 @Component({
@@ -84,6 +94,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     registrationData: any = {};
 
+    toppings = new FormControl("");
+
+    toppingList: string[] = ["kecap", "majonez", "pavlaka"];
+
     constructor(
         private router: Router,
         private store: ApplicationStateStoreService,
@@ -97,6 +111,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             registerPasswordConfirmationFormControl: ["", [Validators.required]],
             firstLastNameFormControl: new UntypedFormControl(""),
             emailFormControl: ["", [Validators.required, Validators.email]]
+            //toppings: new FormControl()
         });
 
         this.isFormValid$ = this.theForm.valueChanges.pipe(

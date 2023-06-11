@@ -14,6 +14,7 @@ import { IonicModule } from "@ionic/angular";
 import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.component";
 import { UserFileUploadComponent } from "./user-file-upload/user-file-upload.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
     declarations: [
