@@ -16,25 +16,28 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatSelectModule } from "@angular/material/select";
 
+let modules = [
+    MatFormFieldModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSliderModule,
+    MatSidenavModule,
+    MatInputModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatMenuModule,
+    MatGridListModule,
+    MatCardModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatProgressBarModule,
+    ReactiveFormsModule,
+    MatSelectModule
+];
+
 @NgModule({
-    exports: [
-        MatFormFieldModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatSliderModule,
-        MatSidenavModule,
-        MatInputModule,
-        MatExpansionModule,
-        MatDatepickerModule,
-        MatIconModule,
-        MatMenuModule,
-        MatGridListModule,
-        MatCardModule,
-        MatSidenavModule,
-        MatDividerModule,
-        MatProgressBarModule,
-        ReactiveFormsModule,
-        MatSelectModule
-    ]
+    imports: [...modules],
+    exports: [...modules]
 })
 export class VladosMaterialModule {}
