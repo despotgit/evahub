@@ -1,0 +1,41 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+// Define a dark theme
+$evahub-dark-theme: mat.define-dark-theme(
+    (
+        color: (
+            //primary: mat.define-palette(mat.$pink-palette),
+            //accent: mat.define-palette(mat.$blue-grey-palette),
+            primary: mat.define-palette(mat.$green-palette),
+            accent: mat.define-palette(mat.$green-palette)
+        ),
+        // Only include `typography` and `density` in the default dark theme.
+        typography: mat.define-typography-config(),
+        density: 0
+    )
+);
+
+// Define a light theme
+$evahub-light-theme: mat.define-light-theme(
+    (
+        color: (
+            //primary: mat.define-palette(mat.$indigo-palette),
+            primary: mat.define-palette(mat.$green-palette),
+            accent: mat.define-palette(mat.$green-palette)
+        )
+    )
+);
+
+// Apply the dark theme by default
+@include mat.core-theme($evahub-dark-theme);
+@include mat.button-theme($evahub-dark-theme);
+
+// Apply the light theme only when the user prefers light themes.
+@media (prefers-color-scheme: light) {
+    // Use the `-color` mixins to only apply color styles without reapplying the same
+    // typography and density styles.
+    @include mat.core-color($evahub-light-theme);
+    @include mat.button-color($evahub-light-theme);
+}
