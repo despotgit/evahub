@@ -230,7 +230,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     this.isBackendRegistrationSuccessful = false;
                     this.backendRegistrationError = d.message;
                 }
-                // DEV:  this.store.resetRegisterPage();
+                // DEV:  for testing purposes, reset page after the API call
+                // this.store.resetRegisterPage();
                 this.cd.markForCheck();
             });
     }

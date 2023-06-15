@@ -11,8 +11,17 @@
         } as asyncData"
     >
         <form *ngIf="!isRegistrationSuccessful()" [formGroup]="theForm">
+            <!-- MAT-SELECT example
+            <mat-form-field appearance="fill">
+                <mat-label>Toppings</mat-label>
+                <mat-select [formControl]="toppings" ngDefaultControl multiple>
+                    <mat-option *ngFor="let topping of toppingList">{{ topping }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            -->
+
             <ng-template matStepLabel>Fill out your username</ng-template>
-            <mat-form-field>
+            <mat-form-field class="registration-field">
                 <input
                     matInput
                     placeholder="Username"
@@ -49,7 +58,7 @@
             </mat-form-field>
 
             <ng-template matStepLabel>Fill out your email</ng-template>
-            <mat-form-field>
+            <mat-form-field class="registration-field">
                 <input
                     matInput
                     placeholder="Email"
