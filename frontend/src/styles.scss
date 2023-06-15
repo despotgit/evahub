@@ -72,10 +72,15 @@ body {
 
 // END REPORTS PAGE
 
+// START MATERIAL MODIFICATIONS
+
 .mat-drawer {
     background: $global-background-color !important;
 }
 
 .mat-mdc-raised-button.mat-primary {
     background-color: $color-button-general !important;
+    color: white;
 }
+
+// END MATERIAL MODIFICATIONS
