@@ -189,14 +189,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     switcher = 0;
 
-    // General
+    // GENERAL
 
-    //selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
-    //    combineLatestWith(this.currentPageIndex$, this.userLogs$),
-    //    map(([docId, cpi, ls]) => {
-    //        return ls[this.switcher++ % 3];
-    //    })
-    //);
+    // DERIVED OBSERVABLES:
 
     selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
         withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
@@ -230,7 +225,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // UPDATERS:
 
-    // Generic update (to test)
+    // Generic update
     updateState(sliceName, propertyName, newValue) {
         const oldStateSlice = this.get(state => state[sliceName]);
         const newStateSlice = { ...oldStateSlice };
@@ -325,7 +320,4 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     resetApplicationState() {
         this.setState(INITIAL_APPLICATION_STATE);
     }
-}
-function a(value: [number, number, Log[]], index: number): unknown {
-    throw new Error("Function not implemented.");
 }

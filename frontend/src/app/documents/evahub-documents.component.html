@@ -1,16 +1,16 @@
 <div
     *ngIf="{
         selectedDocument: selectedDocument$ | async,
-        currentPageIndex: currentPageIndex$ | async
+        displayGraph: displayGraph$ | async
     } as asyncData"
 >
-    <div *ngIf="displayGraph" class="chart-container">
+    <div *ngIf="asyncData.displayGraph" class="chart-container">
         <canvas id="graph"></canvas>
     </div>
-    <div>
+    <div class="text-document">
         <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
             <mat-grid-tile colspan="6">
-                <div class="doc" *ngIf="!displayGraph">
+                <div class="doc" *ngIf="!asyncData.displayGraph">
                     {{
                         asyncData && asyncData.selectedDocument
                             ? asyncData.selectedDocument.getDocumentContent()

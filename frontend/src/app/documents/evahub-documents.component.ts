@@ -33,6 +33,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
     selectedDocument$ = this.store.selectedDocument$.pipe(
         tap(d => {
             //console.log("and the a is:", a);
+            //if (!d["reportContent"]["BalDura_sub_plot"]) {
             if (!d || !d["reportContent"] || !d["reportContent"]["BalDura_sub_plot"]) {
             } else {
                 this.graphValues = [];
@@ -46,14 +47,16 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
         startWith(new Log())
     );
 
-    currentPageIndex$ = this.store.currentPageIndex$.pipe(
-        tap(a => {
+    displayGraph$ = this.store.currentPageIndex$.pipe(
+        map(a => {
             let pageName = getPageNameFromPageIndex(a);
             console.log("pageName is: ", pageName);
             if (pageName == "report") {
                 this.displayGraph = true;
+                return true;
             } else {
                 this.displayGraph = false;
+                return false;
             }
         })
     );
