@@ -15,6 +15,8 @@ import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.componen
 import { UserFileUploadComponent } from "./user-file-upload/user-file-upload.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { MatSelectModule } from "@angular/material/select";
+import { DocumentsGraphComponent } from './documents/documents-graph/documents-graph.component';
+import { DocumentsTextComponent } from './documents/documents-text/documents-text.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +26,9 @@ import { MatSelectModule } from "@angular/material/select";
         EvahubDocumentsComponent,
         EvahubSidenavComponent,
         UserFileUploadComponent,
-        MainMenuComponent
+        MainMenuComponent,
+        DocumentsGraphComponent,
+        DocumentsTextComponent
     ],
     imports: [
         BrowserModule,
