@@ -1,5 +1,5 @@
 <div class="main-menu-wrapper">
-    <div *ngFor="let mi of mainMenuItems">
+    <div class="main-menu-item" *ngFor="let mi of mainMenuItems">
         <button
             *ngIf="!(mi.index == pageSelected)"
             mat-button
