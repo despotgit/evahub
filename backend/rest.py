@@ -6,11 +6,15 @@ import config
 rest = Blueprint("rest", __name__)
 
 
-@rest.before_request
-@jwt_required(locations=["headers"])
-def before_request():
-    print("************************************************* in rest in before_request")
-    pass
+if False:  # DEV: for testing purposes, skip CORS check completely
+
+    @rest.before_request
+    @jwt_required(locations=["headers"])
+    def before_request():
+        print(
+            "************************************************* in rest in before_request"
+        )
+        pass
 
 
 @rest.route("/faruk", methods=["GET"])
