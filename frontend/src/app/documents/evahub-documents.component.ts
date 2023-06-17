@@ -23,10 +23,8 @@ import Chart from "chart.js/auto";
     styleUrls: ["./evahub-documents.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, AfterViewInit {
+export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
     displayGraph: boolean;
-    reportGraph: Chart;
-
     graphValues = [];
     graphLabels = [];
 
@@ -86,61 +84,5 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewChecked, After
 
     ngOnInit(): void {}
 
-    ngAfterViewChecked() {
-        if (this.displayGraph) {
-            this.drawGraph();
-        }
-    }
-
     ngAfterViewInit() {}
-
-    drawGraph() {
-        const el = document.getElementById("graph") as HTMLCanvasElement;
-        const ctx = el.getContext("2d");
-
-        // If graph exists, destroy it first
-        if (this.reportGraph !== undefined) {
-            this.reportGraph.destroy();
-        }
-
-        let dotsColors = ["green"];
-
-        this.reportGraph = new Chart(ctx, {
-            type: "scatter",
-            data: {
-                labels: this.graphLabels,
-                datasets: [
-                    {
-                        label: "",
-                        data: this.graphValues,
-                        borderWidth: 1,
-                        borderColor: "black",
-                        pointBackgroundColor: dotsColors,
-                        pointBorderColor: dotsColors,
-                        pointRadius: 5,
-                        pointHoverRadius: 5,
-                        fill: false,
-                        tension: 0,
-                        showLine: true
-                    }
-                ]
-            },
-            options: {
-                maintainAspectRatio: true,
-                scales: {
-                    x: {
-                        ticks: {
-                            callback: function (value, index, ticks) {
-                                console.log("value is: ", value, " index is: ", index);
-                                return value;
-                            }
-                        }
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
 }

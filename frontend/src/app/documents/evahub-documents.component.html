@@ -4,20 +4,23 @@
         displayGraph: displayGraph$ | async
     } as asyncData"
 >
-    <div *ngIf="asyncData.displayGraph" class="chart-container">
-        <canvas id="graph"></canvas>
-    </div>
-    <div class="text-document">
-        <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
-            <mat-grid-tile colspan="6">
-                <div class="doc" *ngIf="!asyncData.displayGraph">
+    <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
+        <mat-grid-tile colspan="6">
+            <div *ngIf="asyncData.displayGraph" class="chart-container">
+                <app-documents-graph
+                    [graphLabels]="graphLabels"
+                    [graphValues]="graphValues"
+                ></app-documents-graph>
+            </div>
+            <div *ngIf="!asyncData.displayGraph" class="text-document">
+                <div class="doc">
                     {{
                         asyncData && asyncData.selectedDocument
                             ? asyncData.selectedDocument.getDocumentContent()
                             : ""
                     }}
                 </div>
-            </mat-grid-tile>
-        </mat-grid-list>
-    </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
 </div>
