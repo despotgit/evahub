@@ -6,16 +6,16 @@
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
-            <div *ngIf="asyncData.displayGraph" class="chart-container">
+            <div *ngIf="asyncData.displayGraph" class="document-graph">
                 <app-documents-graph
                     [graphLabels]="graphLabels"
                     [graphValues]="graphValues"
                 ></app-documents-graph>
             </div>
-            <div *ngIf="!asyncData.displayGraph" class="text-document">
+            <div *ngIf="!asyncData.displayGraph" class="document-text">
                 <div class="doc">
                     {{
-                        asyncData && asyncData.selectedDocument
+                        asyncData.selectedDocument
                             ? asyncData.selectedDocument.getDocumentContent()
                             : ""
                     }}

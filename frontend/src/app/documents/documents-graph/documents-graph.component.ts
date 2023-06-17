@@ -57,7 +57,7 @@ export class DocumentsGraphComponent implements AfterViewChecked {
                     x: {
                         ticks: {
                             callback: function (value, index, ticks) {
-                                console.log("value is: ", value, " index is: ", index);
+                                //console.log("value is: ", value, " index is: ", index);
                                 return value;
                             }
                         }
