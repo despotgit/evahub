@@ -1,6 +1,6 @@
 <div
     *ngIf="{
-        selectedDocument: selectedDocument$ | async,
+        sd: selectedDocument$ | async,
         displayGraph: displayGraph$ | async,
         shouldDisplaySpinner: shouldDisplaySpinner$ | async
     } as asyncData"
@@ -21,7 +21,7 @@
             </div>
             <div *ngIf="!asyncData.displayGraph" class="document-text">
                 <app-documents-text
-                    [documentContent]="asyncData.selectedDocument.getDocumentContent()"
+                    [documentContent]="asyncData.sd ? asyncData.sd.getDocumentContent() : ''"
                     [shouldDisplaySpinner]="asyncData.shouldDisplaySpinner"
                     (emitContentDisplayed)="onContentDisplayed()"
                 >
