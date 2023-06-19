@@ -7,6 +7,12 @@
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
             <div *ngIf="asyncData.displayGraph" class="document-graph">
+                <mat-form-field appearance="fill">
+                    <mat-label>Toppings</mat-label>
+                    <mat-select [formControl]="toppings" ngDefaultControl multiple>
+                        <mat-option *ngFor="let topping of toppingList">{{ topping }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
                 <app-documents-graph
                     [graphLabels]="graphLabels"
                     [graphValues]="graphValues"

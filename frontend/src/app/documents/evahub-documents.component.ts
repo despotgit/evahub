@@ -13,10 +13,11 @@ import {
     EvahubDocument
 } from "../services/application-state-store.service";
 import { ActivatedRoute } from "@angular/router";
-import { map, Observable, of, startWith, take, tap } from "rxjs";
+import { BehaviorSubject, from, map, Observable, of, startWith, take, tap } from "rxjs";
 import { Log } from "../models/Log";
 //import { Chart } from "chart.js";
 import Chart from "chart.js/auto";
+import { FormControl } from "@angular/forms";
 
 @Component({
     selector: "app-evahub-documents",
@@ -25,9 +26,7 @@ import Chart from "chart.js/auto";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
-    displayGraph: boolean;
-    graphValues = [];
-    graphLabels = [];
+    toppingList: string[] = ["kecap", "majonez", "pavlaka"];
 
     selectedDocument$ = this.store.selectedDocument$.pipe(
         tap(d => {
@@ -59,6 +58,12 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
             }
         })
     );
+
+    displayGraph: boolean;
+    graphValues = [];
+    graphLabels = [];
+
+    toppings = new FormControl("");
 
     constructor(private store: ApplicationStateStoreService, route: ActivatedRoute) {
         setTimeout(() => {

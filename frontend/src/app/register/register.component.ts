@@ -94,10 +94,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     registrationData: any = {};
 
-    toppings = new FormControl("");
-
-    toppingList: string[] = ["kecap", "majonez", "pavlaka"];
-
     constructor(
         private router: Router,
         private store: ApplicationStateStoreService,

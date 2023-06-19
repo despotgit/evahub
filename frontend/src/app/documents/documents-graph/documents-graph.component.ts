@@ -1,4 +1,13 @@
-import { AfterViewChecked, Component, Input } from "@angular/core";
+import {
+    AfterContentChecked,
+    AfterViewChecked,
+    AfterViewInit,
+    Component,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges
+} from "@angular/core";
 //import { Chart } from "chart.js";
 import Chart from "chart.js/auto";
 
@@ -7,7 +16,7 @@ import Chart from "chart.js/auto";
     templateUrl: "./documents-graph.component.html",
     styleUrls: ["./documents-graph.component.scss"]
 })
-export class DocumentsGraphComponent implements AfterViewChecked {
+export class DocumentsGraphComponent implements OnInit, OnChanges {
     @Input()
     graphLabels: any;
 
@@ -16,7 +25,11 @@ export class DocumentsGraphComponent implements AfterViewChecked {
 
     reportGraph: Chart;
 
-    ngAfterViewChecked() {
+    ngOnInit() {
+        this.drawGraph();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
         this.drawGraph();
     }
 
