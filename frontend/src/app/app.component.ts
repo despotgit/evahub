@@ -121,6 +121,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             }
         })
     );
+    shouldDisplayDocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
 
     docSelectedSub: Subscription;
 
@@ -176,6 +177,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     menuItemClicked($event) {
         //console.log("in app in menuItemClicked, $event is:", $event);
         this.store.updateCurrentDocumentId($event);
+        this.store.updateShouldEvahubDocumentsDisplaySpinner(true);
+
         return;
     }
 

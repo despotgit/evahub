@@ -1,6 +1,6 @@
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Input, OnDestroy } from "@angular/core";
-import { Subscription, switchMap, map, Subject, BehaviorSubject, Observable } from "rxjs";
+import { Subscription, switchMap, map, Subject, Observable } from "rxjs";
 import { combineLatestWith, finalize } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";

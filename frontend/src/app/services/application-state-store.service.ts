@@ -29,6 +29,7 @@ export { Report } from "../models/Report";
 export interface ApplicationState {
     currentUser: UserState;
     registerPageData: RegisterPageDataState;
+    documentContent: DocumentContentState;
     userLogs: UserLogsState;
     userReports: UserReportsState;
     userChecks: UserChecksState;
@@ -36,7 +37,7 @@ export interface ApplicationState {
     mainMenu: MainMenuState;
 }
 
-// REGISTER
+// REGISTER PAGE
 
 export interface RegisterPageDataState {
     registerUsername: string;
@@ -52,6 +53,16 @@ export const INITIAL_REGISTER_PAGE_STATE = {
     registerPasswordConfirmation: "",
     firstLastName: "",
     email: ""
+};
+
+// EVAHUB DOCUMENT CONTENT
+
+export interface DocumentContentState {
+    shouldDisplaySpinner: boolean;
+}
+
+export const INITIAL_DOCUMENT_CONTENT_STATE = {
+    shouldDisplaySpinner: false
 };
 
 // SIDENAV
@@ -133,6 +144,7 @@ export const INITIAL_USER_STATE = {
 export const INITIAL_APPLICATION_STATE = {
     currentUser: INITIAL_USER_STATE,
     registerPageData: INITIAL_REGISTER_PAGE_STATE,
+    documentContent: INITIAL_DOCUMENT_CONTENT_STATE,
     userLogs: INITIAL_USER_LOGS_STATE,
     userReports: INITIAL_USER_REPORTS_STATE,
     userChecks: INITIAL_USER_CHECKS_STATE,
@@ -166,6 +178,11 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     );
     firstLastName$: Observable<string> = this.select(state => state.registerPageData.firstLastName);
     email$: Observable<string> = this.select(state => state.registerPageData.email);
+
+    // EVAHUB DOCUMENT CONTENT
+    shouldDisplayDocumentSpinner$: Observable<boolean> = this.select(
+        state => state.documentContent.shouldDisplaySpinner
+    );
 
     // SIDENAV
     isSidenavOpened$: Observable<boolean> = this.select(state => state.sidenav.isSidenavOpened);
@@ -284,6 +301,12 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.updateRegisterPasswordConfirmation("");
         this.updateRegisterFirstLastName("");
         this.updateRegisterEmail("");
+    }
+
+    // EVAHUB DOCUMENTS CONTENT:
+
+    updateShouldEvahubDocumentsDisplaySpinner(should: boolean) {
+        this.updateState("documentContent", "shouldDisplaySpinner", should);
     }
 
     // SIDENAV:

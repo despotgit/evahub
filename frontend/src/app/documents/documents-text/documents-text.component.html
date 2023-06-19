@@ -1,3 +1,5 @@
-<div class="doc">
+<div *ngIf="!shouldDisplaySpinner" class="doc">
     {{ documentContent }}
 </div>
+
+<div *ngIf="shouldDisplaySpinner">Ide spiner sad</div>

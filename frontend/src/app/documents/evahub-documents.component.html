@@ -1,7 +1,8 @@
 <div
     *ngIf="{
         selectedDocument: selectedDocument$ | async,
-        displayGraph: displayGraph$ | async
+        displayGraph: displayGraph$ | async,
+        shouldDisplaySpinner: shouldDisplaySpinner$ | async
     } as asyncData"
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
@@ -21,6 +22,8 @@
             <div *ngIf="!asyncData.displayGraph" class="document-text">
                 <app-documents-text
                     [documentContent]="asyncData.selectedDocument.getDocumentContent()"
+                    [shouldDisplaySpinner]="asyncData.shouldDisplaySpinner"
+                    (emitContentDisplayed)="onContentDisplayed()"
                 >
                 </app-documents-text>
             </div>

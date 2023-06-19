@@ -13,7 +13,7 @@ import {
     EvahubDocument
 } from "../services/application-state-store.service";
 import { ActivatedRoute } from "@angular/router";
-import { BehaviorSubject, from, map, Observable, of, startWith, take, tap } from "rxjs";
+import { from, map, Observable, of, startWith, take, tap } from "rxjs";
 import { Log } from "../models/Log";
 //import { Chart } from "chart.js";
 import Chart from "chart.js/auto";
@@ -59,6 +59,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         })
     );
 
+    shouldDisplaySpinner$ = this.store.shouldDisplayDocumentSpinner$;
+
     displayGraph: boolean;
     graphValues = [];
     graphLabels = [];
@@ -86,6 +88,10 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         }
         //console.log("pageIndex is:", pageIndex);
         this.store.updateCurrentPageIndex(pageIndex);
+    }
+
+    onContentDisplayed() {
+        this.store.updateShouldEvahubDocumentsDisplaySpinner(false);
     }
 
     ngOnInit(): void {}
