@@ -1,19 +1,10 @@
 @import "../../common.scss";
 @import "../app.component.scss";
 
-.doc {
-    overflow: scroll;
-    height: 100%;
-}
-
 .document-graph {
     position: relative;
     margin: auto;
     height: 80vh;
     width: 80vw;
     margin-top: 0px;
-}
-
-.document-text {
-    display: contents;
 }

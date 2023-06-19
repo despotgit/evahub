@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 @Component({
-  selector: 'app-documents-text',
-  templateUrl: './documents-text.component.html',
-  styleUrls: ['./documents-text.component.scss']
+    selector: "app-documents-text",
+    templateUrl: "./documents-text.component.html",
+    styleUrls: ["./documents-text.component.scss"]
 })
 export class DocumentsTextComponent {
-
+    @Input()
+    documentContent;
 }
