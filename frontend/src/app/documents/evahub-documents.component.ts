@@ -116,17 +116,17 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         this.store.updateCurrentPageIndex(pageIndex);
     }
 
-    onContentDisplayed() {
+    onDocumentContentDisplayed() {
         this.store.updateShouldEvahubDocumentsDisplaySpinner(false);
     }
 
-    ngOnInit(): void {
-        this.graphDatasetsFormControl.valueChanges.pipe(
-            tap(b => {
-                console.log("b is:", b);
-            })
-        );
+    ngOnInit(): void {}
+
+    ngAfterViewInit() {
+        //
     }
 
-    ngAfterViewInit() {}
+    onGraphDatasetChange(e) {
+        console.log(e.value);
+    }
 }
