@@ -65,6 +65,7 @@ export class DocumentsGraphComponent implements OnInit, OnChanges {
                 ]
             },
             options: {
+                responsive: true,
                 maintainAspectRatio: true,
                 scales: {
                     x: {

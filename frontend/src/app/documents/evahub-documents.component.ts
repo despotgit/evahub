@@ -13,9 +13,18 @@ import {
     EvahubDocument
 } from "../services/application-state-store.service";
 import { ActivatedRoute } from "@angular/router";
-import { from, map, Observable, of, startWith, take, tap } from "rxjs";
+import {
+    debounceTime,
+    distinctUntilChanged,
+    from,
+    map,
+    Observable,
+    of,
+    startWith,
+    take,
+    tap
+} from "rxjs";
 import { Log } from "../models/Log";
-//import { Chart } from "chart.js";
 import Chart from "chart.js/auto";
 import { FormControl } from "@angular/forms";
 
@@ -26,11 +35,8 @@ import { FormControl } from "@angular/forms";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
-    toppingList: string[] = ["kecap", "majonez", "pavlaka"];
-
     selectedDocument$ = this.store.selectedDocument$.pipe(
         tap(d => {
-            //console.log("and the a is:", a);
             //if (!d["reportContent"]["BalDura_sub_plot"]) {
             if (!d || !d["reportContent"] || !d["reportContent"]["BalDura_sub_plot"]) {
             } else {
@@ -43,6 +49,26 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
             }
         }),
         startWith(new Log())
+    );
+
+    graphDatasets$: Observable<any> = this.store.selectedDocument$.pipe(
+        map(a => {
+            let dss = []; // datasets for the x and y axes
+
+            if (a && a["reportContent"]) {
+                let predefinedSets = ["BalDura_UIP_plot", "BalDura_sub_plot"];
+
+                for (let i = 0; i < predefinedSets.length; i++) {
+                    dss.push({
+                        datasetName: predefinedSets[i],
+                        value: a["reportContent"][predefinedSets[i]]
+                    });
+                    console.log("value is:", a["reportContent"][predefinedSets[i]]);
+                }
+            }
+            return dss;
+        }),
+        startWith([1, 3, 5])
     );
 
     displayGraph$ = this.store.currentPageIndex$.pipe(
@@ -65,7 +91,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
     graphValues = [];
     graphLabels = [];
 
-    toppings = new FormControl("");
+    graphDatasetsFormControl = new FormControl("");
 
     constructor(private store: ApplicationStateStoreService, route: ActivatedRoute) {
         setTimeout(() => {
@@ -94,7 +120,13 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         this.store.updateShouldEvahubDocumentsDisplaySpinner(false);
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.graphDatasetsFormControl.valueChanges.pipe(
+            tap(b => {
+                console.log("b is:", b);
+            })
+        );
+    }
 
     ngAfterViewInit() {}
 }

@@ -107,12 +107,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             registerPasswordConfirmationFormControl: ["", [Validators.required]],
             firstLastNameFormControl: new UntypedFormControl(""),
             emailFormControl: ["", [Validators.required, Validators.email]]
-            //toppings: new FormControl()
         });
 
         this.isFormValid$ = this.theForm.valueChanges.pipe(
             map((a: any) => {
-                console.log("a is:", a);
                 let rpfc = a.registerPasswordFormControl;
                 let rpcfc = a.registerPasswordConfirmationFormControl;
                 if (!this.theForm.invalid && rpfc == rpcfc) {
