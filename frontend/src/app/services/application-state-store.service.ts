@@ -1,23 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
-import {
-    tap,
-    map,
-    Observable,
-    withLatestFrom,
-    mergeAll,
-    mergeMap,
-    merge,
-    exhaustAll,
-    combineLatestWith,
-    combineLatest,
-    combineLatestAll,
-    switchMap,
-    exhaustMap,
-    shareReplay,
-    observeOn,
-    asyncScheduler
-} from "rxjs";
+import { map, Observable, withLatestFrom, shareReplay, observeOn, asyncScheduler } from "rxjs";
 import { EvahubMainMenuItem, getInitialMainMenuItems, PageIndex } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument, EvahubDocumentType } from "../models/EvahubDocument";

@@ -2,7 +2,16 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from "@angu
 import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
 import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { ActivatedRoute } from "@angular/router";
-import { map, Observable, startWith, Subject, tap, withLatestFrom } from "rxjs";
+import {
+    debounceTime,
+    distinctUntilChanged,
+    map,
+    Observable,
+    startWith,
+    Subject,
+    tap,
+    withLatestFrom
+} from "rxjs";
 import { Log } from "../models/Log";
 import { FormControl } from "@angular/forms";
 

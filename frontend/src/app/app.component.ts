@@ -176,8 +176,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     menuItemClicked($event) {
         //console.log("in app in menuItemClicked, $event is:", $event);
-        this.store.updateCurrentDocumentId($event);
         this.store.updateShouldEvahubDocumentsDisplaySpinner(true);
+        this.store.updateCurrentDocumentId($event);
 
         return;
     }
