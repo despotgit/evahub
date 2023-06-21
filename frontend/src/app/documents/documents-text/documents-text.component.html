@@ -2,4 +2,7 @@
     {{ documentContent }}
 </div>
 
-<div *ngIf="shouldDisplaySpinner">Ide spiner sad</div>
+<div *ngIf="shouldDisplaySpinner" class="loader-cogs">
+    <img src="../../../assets/images/loader.gif" />
+    <span>Fetching the document</span>
+</div>
