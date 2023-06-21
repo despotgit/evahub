@@ -66,6 +66,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         withLatestFrom(this.store.selectedDocument$),
         map(e => {
             console.log("e is:", e);
+            this.formGraphData(e[1], e[0]);
             return e;
         })
     );
