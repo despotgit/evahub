@@ -1,31 +1,9 @@
-import {
-    AfterContentInit,
-    AfterViewChecked,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    Input,
-    OnInit
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
-import {
-    ApplicationStateStoreService,
-    EvahubDocument
-} from "../services/application-state-store.service";
+import { ApplicationStateStoreService } from "../services/application-state-store.service";
 import { ActivatedRoute } from "@angular/router";
-import {
-    debounceTime,
-    distinctUntilChanged,
-    from,
-    map,
-    Observable,
-    of,
-    startWith,
-    take,
-    tap
-} from "rxjs";
+import { map, Observable, startWith, Subject, tap, withLatestFrom } from "rxjs";
 import { Log } from "../models/Log";
-import Chart from "chart.js/auto";
 import { FormControl } from "@angular/forms";
 
 @Component({
@@ -37,15 +15,9 @@ import { FormControl } from "@angular/forms";
 export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
     selectedDocument$ = this.store.selectedDocument$.pipe(
         tap(d => {
-            //if (!d["reportContent"]["BalDura_sub_plot"]) {
             if (!d || !d["reportContent"] || !d["reportContent"]["BalDura_sub_plot"]) {
             } else {
-                this.graphValues = [];
-                this.graphLabels = [];
-                d["reportContent"]["BalDura_sub_plot"].forEach(el => {
-                    this.graphLabels.push(el[0]);
-                    this.graphValues.push(el[1]);
-                });
+                this.formGraphData(d, "BalDura_sub_plot");
             }
         }),
         startWith(new Log())
@@ -71,7 +43,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         startWith([1, 3, 5])
     );
 
-    displayGraph$ = this.store.currentPageIndex$.pipe(
+    displayGraph$: Observable<boolean> = this.store.currentPageIndex$.pipe(
         map(a => {
             let pageName = getPageNameFromPageIndex(a);
             console.log("pageName is: ", pageName);
@@ -86,6 +58,17 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
     );
 
     shouldDisplaySpinner$ = this.store.shouldDisplayDocumentSpinner$;
+
+    gdsc$: Subject<any> = new Subject(); // Graph Data Set Change
+
+    // Document Change Derived observable
+    dcd$: Observable<any> = this.gdsc$.pipe(
+        withLatestFrom(this.store.selectedDocument$),
+        map(e => {
+            console.log("e is:", e);
+            return e;
+        })
+    );
 
     displayGraph: boolean;
     graphValues = [];
@@ -122,11 +105,18 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {}
 
-    ngAfterViewInit() {
-        //
-    }
+    ngAfterViewInit() {}
 
     onGraphDatasetChange(e) {
-        console.log(e.value);
+        this.gdsc$.next(e.value);
+    }
+
+    formGraphData(document, whichSet) {
+        this.graphValues = [];
+        this.graphLabels = [];
+        document["reportContent"][whichSet].forEach(el => {
+            this.graphLabels.push(el[0]);
+            this.graphValues.push(el[1]);
+        });
     }
 }

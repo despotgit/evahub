@@ -13,10 +13,6 @@ import {
     styleUrls: ["./documents-text.component.scss"]
 })
 export class DocumentsTextComponent implements AfterViewChecked {
-    ngAfterViewChecked(): void {
-        this.emitContentDisplayed.emit(true);
-    }
-
     @Input()
     documentContent;
 
@@ -25,4 +21,8 @@ export class DocumentsTextComponent implements AfterViewChecked {
 
     @Output()
     emitContentDisplayed: EventEmitter<boolean> = new EventEmitter();
+
+    ngAfterViewChecked(): void {
+        this.emitContentDisplayed.emit(true);
+    }
 }
