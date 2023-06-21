@@ -115,9 +115,11 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
     formGraphData(document, whichSet) {
         this.graphValues = [];
         this.graphLabels = [];
-        document["reportContent"][whichSet].forEach(el => {
-            this.graphLabels.push(el[0]);
-            this.graphValues.push(el[1]);
-        });
+        if (document["reportContent"] && document["reportContent"][whichSet]) {
+            document["reportContent"][whichSet].forEach(el => {
+                this.graphLabels.push(el[0]);
+                this.graphValues.push(el[1]);
+            });
+        }
     }
 }
