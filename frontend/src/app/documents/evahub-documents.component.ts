@@ -66,7 +66,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         })
     );
 
-    shouldDisplaySpinner$ = this.store.shouldDisplayDocumentSpinner$;
+    shouldDisplaySpinner$ = this.store.shouldDisplayDocumentSpinner$.pipe();
 
     gdsc$: Subject<any> = new Subject(); // Graph Data Set Change
 

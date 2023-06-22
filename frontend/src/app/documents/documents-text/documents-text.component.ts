@@ -13,11 +13,9 @@ import {
     styleUrls: ["./documents-text.component.scss"]
 })
 export class DocumentsTextComponent implements AfterViewChecked {
-    @Input()
-    documentContent;
+    @Input() documentContent;
 
-    @Input()
-    shouldDisplaySpinner;
+    @Input() shouldDisplaySpinner;
 
     @Output()
     emitContentDisplayed: EventEmitter<boolean> = new EventEmitter();

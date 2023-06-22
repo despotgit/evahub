@@ -18,7 +18,9 @@ import {
     combineLatest,
     distinctUntilChanged,
     debounceTime,
-    take
+    take,
+    Subject,
+    withLatestFrom
 } from "rxjs";
 import { environment } from "src/environments/environment";
 import {
@@ -122,6 +124,19 @@ export class AppComponent implements OnInit, AfterViewInit {
         })
     );
     shouldDisplayDocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
+    menuItemClickedSubject$: Subject<any> = new Subject();
+    micd$: Observable<any> = this.menuItemClickedSubject$.pipe(
+        withLatestFrom(this.currentDocumentId$),
+        map(([mic, cdi]) => {
+            if (mic == cdi) {
+            } else {
+                //console.log("mic is:", mic);
+                //console.log("cdi is:", cdi);
+                this.store.updateShouldEvahubDocumentsDisplaySpinner(true);
+                this.store.updateCurrentDocumentId(mic);
+            }
+        })
+    );
 
     docSelectedSub: Subscription;
 
@@ -176,8 +191,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     menuItemClicked($event) {
         //console.log("in app in menuItemClicked, $event is:", $event);
-        this.store.updateShouldEvahubDocumentsDisplaySpinner(true);
-        this.store.updateCurrentDocumentId($event);
+
+        this.menuItemClickedSubject$.next($event);
 
         return;
     }
