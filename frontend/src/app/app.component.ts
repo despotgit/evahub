@@ -126,6 +126,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     shouldDisplayDocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
     menuItemClickedSubject$: Subject<any> = new Subject();
     micd$: Observable<any> = this.menuItemClickedSubject$.pipe(
+        //distinctUntilChanged(), // this would be the other way to restrict if it's the same
         withLatestFrom(this.currentDocumentId$),
         map(([mic, cdi]) => {
             if (mic == cdi) {
