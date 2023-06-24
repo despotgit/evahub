@@ -138,6 +138,16 @@ export class AppComponent implements OnInit, AfterViewInit {
             }
         })
     );
+    documentDeleteClickedSubject$: Subject<any> = new Subject();
+    ddcd$: Observable<any> = this.documentDeleteClickedSubject$.pipe(
+        //document delete clicked derived
+        withLatestFrom(this.currentDocumentSet$),
+        map(([docId, cds]) => {
+            console.log("docId is:", docId);
+            console.log("cds is:", cds);
+            //this.store.updateSidenavMenuItems([]);
+        })
+    );
 
     docSelectedSub: Subscription;
 
@@ -199,8 +209,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     deleteMenuItemClicked($event) {
-        this.store.updateSidenavMenuItems([]);
-        console.log("event");
+        this.documentDeleteClickedSubject$.next($event);
+
         return;
     }
 

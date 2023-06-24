@@ -44,7 +44,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
                         datasetName: predefinedSets[i],
                         value: a["reportContent"][predefinedSets[i]]
                     });
-                    console.log("value is:", a["reportContent"][predefinedSets[i]]);
+                    //console.log("value is:", a["reportContent"][predefinedSets[i]]);
                 }
             }
             return dss;
