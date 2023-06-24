@@ -30,7 +30,11 @@ import {
     capitalizeWord
 } from "./common/constants";
 import { Check } from "./models/Check";
-import { EvahubDocumentTypeDictionary } from "./models/EvahubDocument";
+import {
+    EvahubDocument,
+    EvahubDocumentType,
+    EvahubDocumentTypeDictionary
+} from "./models/EvahubDocument";
 import { Log } from "./models/Log";
 import { Report } from "./models/Report";
 import {
@@ -141,11 +145,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     documentDeleteClickedSubject$: Subject<any> = new Subject();
     ddcd$: Observable<any> = this.documentDeleteClickedSubject$.pipe(
         //document delete clicked derived
-        withLatestFrom(this.currentDocumentSet$),
-        map(([docId, cds]) => {
-            console.log("docId is:", docId);
-            console.log("cds is:", cds);
-            //this.store.updateSidenavMenuItems([]);
+        withLatestFrom(this.sidenavMenuItems$),
+        map(([docId, snmi]) => {
+            for (let i = 0; i < snmi.length; i++) {
+                let doc: EvahubSidenavMenuItem = snmi[i];
+
+                if (doc.id == docId) {
+                    snmi.splice(i, 1);
+                    this.store.updateSidenavMenuItems(snmi);
+                    break;
+                }
+            }
         })
     );
 
