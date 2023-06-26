@@ -144,18 +144,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     );
     documentDeleteClickedSubject$: Subject<any> = new Subject();
     ddcd$: Observable<any> = this.documentDeleteClickedSubject$.pipe(
-        //document delete clicked derived
+        // document delete clicked derived observable
         withLatestFrom(this.sidenavMenuItems$),
         map(([docId, snmi]) => {
-            for (let i = 0; i < snmi.length; i++) {
-                let doc: EvahubSidenavMenuItem = snmi[i];
-
-                if (doc.id == docId) {
-                    snmi.splice(i, 1);
-                    this.store.updateSidenavMenuItems(snmi);
-                    break;
-                }
-            }
+            //console.log("docid is:", docId);
+            //console.log("snmi is:", snmi);
+            let newSnmi = snmi.filter(mi => mi.id != docId);
+            this.store.updateSidenavMenuItems(newSnmi);
         })
     );
 
