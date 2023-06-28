@@ -20,7 +20,8 @@ import {
     debounceTime,
     take,
     Subject,
-    withLatestFrom
+    withLatestFrom,
+    exhaustMap
 } from "rxjs";
 import { environment } from "src/environments/environment";
 import {
@@ -37,12 +38,11 @@ import {
 } from "./models/EvahubDocument";
 import { Log } from "./models/Log";
 import { Report } from "./models/Report";
-import {
-    ApplicationStateStoreService,
-    EvahubSidenavMenuItem
-} from "./services/application-state-store.service";
+import { ApplicationStateStoreService } from "./store/application-state-store.service";
+import { EvahubSidenavMenuItem } from "./store/application.state";
 import { AuthenticationService } from "./services/authentication.service";
 import { RestApiService } from "./services/rest-api.service";
+import { createEffect } from "@ngrx/effects";
 
 @Component({
     selector: "app-root",
@@ -152,6 +152,24 @@ export class AppComponent implements OnInit, AfterViewInit {
             let newSnmi = snmi.filter(mi => mi.id != docId);
             this.store.updateSidenavMenuItems(newSnmi);
         })
+    );
+
+    /*
+    search$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(BookActions.search),
+            exhaustMap(action => this.googleBooksService.search(action.query))
+        )
+    );
+    */
+
+    effect$ = createEffect(() =>
+        this.currentDocumentId$.pipe(
+            tap(b => {
+                console.log("effectus reachedus", b);
+            }),
+            exhaustMap(a => this.ddcd$)
+        )
     );
 
     docSelectedSub: Subscription;

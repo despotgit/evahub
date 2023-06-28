@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
 import { first, take } from "rxjs/operators";
 import { PageIndex } from "../common/constants";
-import { ApplicationStateStoreService } from "../services/application-state-store.service";
+import { ApplicationStateStoreService } from "../store/application-state-store.service";
 import { of } from "rxjs";
 
 @Component({

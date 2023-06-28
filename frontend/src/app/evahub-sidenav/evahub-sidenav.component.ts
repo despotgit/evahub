@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 
-import { EvahubSidenavMenuItem } from "../services/application-state-store.service";
+import { EvahubSidenavMenuItem } from "../store/application.state";
 
 @Component({
     selector: "evahub-sidenav",

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -15,8 +15,11 @@ import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.componen
 import { UserFileUploadComponent } from "./user-file-upload/user-file-upload.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { MatSelectModule } from "@angular/material/select";
-import { DocumentsGraphComponent } from './documents/documents-graph/documents-graph.component';
-import { DocumentsTextComponent } from './documents/documents-text/documents-text.component';
+import { DocumentsGraphComponent } from "./documents/documents-graph/documents-graph.component";
+import { DocumentsTextComponent } from "./documents/documents-text/documents-text.component";
+import { StoreModule } from "@ngrx/store";
+import { reducers, metaReducers } from "./reducers";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 @NgModule({
     declarations: [
@@ -40,7 +43,6 @@ import { DocumentsTextComponent } from './documents/documents-text/documents-tex
         VladosMaterialModule,
         IonicModule.forRoot()
     ],
-
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
