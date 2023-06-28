@@ -13,6 +13,7 @@ import {
     INITIAL_APPLICATION_STATE
 } from "./application.state";
 export { Report } from "../models/Report";
+import { updateState } from "./reducers/documents.reducer";
 
 @Injectable({
     providedIn: "root"
@@ -102,47 +103,36 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         super();
     }
 
-    // UPDATERS:
-
-    // Generic update
-    updateState(sliceName, propertyName, newValue) {
-        const oldStateSlice = this.get(state => state[sliceName]);
-        const newStateSlice = { ...oldStateSlice };
-        newStateSlice[propertyName] = newValue;
-        const toApply = {};
-        toApply[sliceName] = newStateSlice;
-        this.patchState(toApply);
-    }
-
     // CURRENT USER:
 
     updateUsername(username: string) {
-        this.updateState("currentUser", "username", username);
+        updateState(this, "currentUser", "username", username);
     }
 
     updateIsLoggedIn(isLoggedIn: boolean) {
-        this.updateState("currentUser", "isLoggedIn", isLoggedIn);
+        updateState(this, "currentUser", "isLoggedIn", isLoggedIn);
     }
 
     updateCurrentPageIndex(currentPageIndex: number) {
-        this.updateState("currentUser", "currentPageIndex", currentPageIndex);
+        updateState(this, "currentUser", "currentPageIndex", currentPageIndex);
     }
 
     updateCurrentDocumentId(id: number) {
-        this.updateState("currentUser", "currentDocumentId", id);
+        updateState(this, "currentUser", "currentDocumentId", id);
     }
 
     // REGISTER PAGE:
     updateRegisterUsername(registerUsername: string) {
-        this.updateState("registerPageData", "registerUsername", registerUsername);
+        updateState(this, "registerPageData", "registerUsername", registerUsername);
     }
 
     updateRegisterPassword(registerPassword: string) {
-        this.updateState("registerPageData", "registerPassword", registerPassword);
+        updateState(this, "registerPageData", "registerPassword", registerPassword);
     }
 
     updateRegisterPasswordConfirmation(registerPasswordConfirmation: string) {
-        this.updateState(
+        updateState(
+            this,
             "registerPageData",
             "registerPasswordConfirmation",
             registerPasswordConfirmation
@@ -150,11 +140,11 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     }
 
     updateRegisterFirstLastName(firstLastName: string) {
-        this.updateState("registerPageData", "firstLastName", firstLastName);
+        updateState(this, "registerPageData", "firstLastName", firstLastName);
     }
 
     updateRegisterEmail(email: string) {
-        this.updateState("registerPageData", "email", email);
+        updateState(this, "registerPageData", "email", email);
     }
 
     resetRegisterPage() {
@@ -168,36 +158,36 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // EVAHUB DOCUMENTS CONTENT:
 
     updateShouldEvahubDocumentsDisplaySpinner(should: boolean) {
-        this.updateState("documentContent", "shouldDisplaySpinner", should);
+        updateState(this, "documentContent", "shouldDisplaySpinner", should);
     }
 
     // SIDENAV:
 
     updateIsSidenavOpened(isSidenavOpened: boolean) {
-        this.updateState("sidenav", "isSidenavOpened", isSidenavOpened);
+        updateState(this, "sidenav", "isSidenavOpened", isSidenavOpened);
     }
 
     updateSidenavMenuItems(sidenavMenuItems: EvahubSidenavMenuItem[]) {
-        this.updateState("sidenav", "sidenavMenuItems", sidenavMenuItems);
+        updateState(this, "sidenav", "sidenavMenuItems", sidenavMenuItems);
     }
 
     // MAIN MENU:
 
     updateMainMenuItems(items: EvahubMainMenuItem[]) {
-        this.updateState("mainMenu", "mainMenuItems", items);
+        updateState(this, "mainMenu", "mainMenuItems", items);
     }
 
     // GENERAL:
 
     updateUserDocuments(documentType: string, documents: any[]) {
-        this.updateState("user" + documentType + "s", "user" + documentType + "s", documents);
+        updateState(this, "user" + documentType + "s", "user" + documentType + "s", documents);
     }
 
     updateSelectedUserDocument(documentType: string, doc: EvahubDocument) {
         const typ = "user" + documentType + "s";
         //console.log("typ is:", typ);
 
-        this.updateState("user" + documentType + "s", "selectedUserDocument", doc);
+        updateState(this, "user" + documentType + "s", "selectedUserDocument", doc);
     }
 
     // APPLICATION STATE:
