@@ -219,8 +219,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     deleteMenuItemClicked = this.store.effect<{
         source: Event;
         itemId: number;
-    }>(event$ => {
-        return event$.pipe(
+    }>(event$ =>
+        event$.pipe(
             tap<{ source: Event; itemId: number }>(event => {
                 // room for effect, to do DB stuff
                 event.source.stopPropagation();
@@ -235,8 +235,8 @@ export class AppComponent implements OnInit, AfterViewInit {
                 console.log("newSnmi is:", newSnmi);
                 this.store.updateSidenavMenuItems(newSnmi);
             })
-        );
-    });
+        )
+    );
 
     updateCurrentPageIndex(cpi: number) {
         this.currentPageIndex = cpi;
