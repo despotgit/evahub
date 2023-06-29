@@ -278,7 +278,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         //console.log("in process dt is:", dt);
 
         const dtToLower = dt.toLowerCase();
-        let [menuItems, docs] = this.transformDbDocuments(ds, dtToLower);
+        //let [menuItems, docs] = this.transformDbDocuments(ds, dtToLower);
+        let res = this.transformDbDocuments(ds, dtToLower);
+        let menuItems = res.menuItems;
+        let docs = res.docs;
         //console.log("menuItems are: ", menuItems);
         this.store.updateUserDocuments(dt, docs);
         this.store.updateSidenavMenuItems(menuItems);
@@ -286,11 +289,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     // Returns menuItems[] and EvahubDocuments[]
-    //transformDbDocuments(ds: any, dtToLower) {
-    transformDbDocuments(
-        ds: any,
-        dtToLower
-    ): [menuItems: EvahubSidenavMenuItem[], docs: EvahubDocument[]] {
+    transformDbDocuments(ds: any, dtToLower) {
         let docs: EvahubDocument[] = [];
         let menuItems: EvahubSidenavMenuItem[] = [];
 
@@ -332,7 +331,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             menuItems.push(mo);
         });
 
-        return [menuItems, docs];
+        return { menuItems, docs };
     }
 
     unSubscribe() {
