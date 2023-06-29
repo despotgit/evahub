@@ -229,13 +229,13 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         this.store.effect<{
             source: Event;
-            checked: boolean;
         }>(event$ => {
-            console.log("raught 1");
+            console.log("$event is:", $event);
+
             return event$.pipe(
-                tap<{ source: Event; checked: boolean }>(event => {
+                tap<{ source: Event }>(event => {
                     event.source.stopPropagation();
-                    //this.setChecked(!event.checked);
+
                     console.log("raught 2");
                 })
             );
