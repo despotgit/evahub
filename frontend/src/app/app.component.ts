@@ -227,8 +227,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         return event$.pipe(
             tap<{ source: Event; itemId: number }>(event => {
                 // room for effect, to do DB stuff
-                console.log("raught 2");
-                console.log("event is", event);
                 event.source.stopPropagation();
             }),
             withLatestFrom(this.sidenavMenuItems$),
