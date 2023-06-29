@@ -220,10 +220,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         source: Event;
         itemId: number;
     }>(event$ => {
-        console.log("raught 1");
-
-        console.log("event$ is:", event$);
-
         return event$.pipe(
             tap<{ source: Event; itemId: number }>(event => {
                 // room for effect, to do DB stuff
