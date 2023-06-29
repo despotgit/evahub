@@ -1,15 +1,20 @@
 // Generic update
-export function updateState(store, sliceName, propertyName, newValue) {
-    let toApply = reducer(store, sliceName, propertyName, newValue);
-    store.patchState(toApply);
-}
+import { createReducer, on } from "@ngrx/store";
+import { INITIAL_APPLICATION_STATE } from "../application.state";
+import { GenericAction } from "../actions/generic.actions";
+import { DeleteDocument } from "../actions/documents.actions";
 
-// Generic reducer by Vladimir Despotovic
-export function reducer(store, sliceName, propertyName, newValue) {
-    const oldStateSlice = store.get(state => state[sliceName]);
-    const newStateSlice = { ...oldStateSlice }; // deep copy
-    newStateSlice[propertyName] = newValue;
-    const toApply = {};
-    toApply[sliceName] = newStateSlice;
-    return toApply;
-}
+export const documentsReducer = createReducer(
+    INITIAL_APPLICATION_STATE,
+    on(DeleteDocument, (state, documentId) => {
+        let sidenav = { ...state.sidenav };
+
+        sidenav.sidenavMenuItems = sidenav.sidenavMenuItems.filter(sdmi => {
+            //let sdmiId = sdmi.id ? sdmi.id : 0;
+            //return sdmiId != documentId;
+            return sdmi.id != documentId;
+        });
+
+        return { ...state, sidenav };
+    })
+);

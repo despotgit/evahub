@@ -44,6 +44,13 @@ export const INITIAL_DOCUMENT_CONTENT_STATE = {
 
 // SIDENAV
 
+export class EvahubSidenavMenuItem {
+    id: number;
+    label?: string;
+    action?: string;
+    selected: boolean;
+}
+
 export interface SidenavState {
     isSidenavOpened: boolean;
     sidenavMenuItems: EvahubSidenavMenuItem[];
@@ -53,13 +60,6 @@ export const INITIAL_SIDENAV_STATE = {
     isSidenavOpened: false,
     sidenavMenuItems: []
 };
-
-export class EvahubSidenavMenuItem {
-    id: number;
-    label?: string;
-    action?: string;
-    selected: boolean;
-}
 
 export class UserReportsState {
     userReports: Report[];

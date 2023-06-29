@@ -18,8 +18,9 @@ import { MatSelectModule } from "@angular/material/select";
 import { DocumentsGraphComponent } from "./documents/documents-graph/documents-graph.component";
 import { DocumentsTextComponent } from "./documents/documents-text/documents-text.component";
 import { StoreModule } from "@ngrx/store";
-import { reducers, metaReducers } from "./reducers";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { documentsReducer } from "./store/reducers/documents.reducer";
+import { environment } from "../environments/environment";
 
 @NgModule({
     declarations: [
@@ -41,8 +42,11 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
         FormsModule,
         ReactiveFormsModule,
         VladosMaterialModule,
-        IonicModule.forRoot()
+        IonicModule.forRoot(),
+        StoreModule.forRoot({ documents: documentsReducer })
+        //StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
     ],
+
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

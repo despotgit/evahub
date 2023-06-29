@@ -150,23 +150,14 @@ export class AppComponent implements OnInit, AfterViewInit {
             //console.log("docid is:", docId);
             //console.log("snmi is:", snmi);
             let newSnmi = snmi.filter(mi => mi.id != docId);
-            this.store.updateSidenavMenuItems(newSnmi);
+            //this.store.updateSidenavMenuItems(newSnmi);
         })
     );
-
-    /*
-    search$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(BookActions.search),
-            exhaustMap(action => this.googleBooksService.search(action.query))
-        )
-    );
-    */
 
     effect$ = createEffect(() =>
         this.currentDocumentId$.pipe(
             tap(b => {
-                console.log("effectus reachedus", b);
+                console.log("effect reached", b);
             }),
             exhaustMap(a => this.ddcd$)
         )

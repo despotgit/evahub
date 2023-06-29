@@ -13,7 +13,8 @@ import {
     INITIAL_APPLICATION_STATE
 } from "./application.state";
 export { Report } from "../models/Report";
-import { updateState } from "./reducers/documents.reducer";
+import { updateState } from "./reducers/generic.quasi.reducer";
+import { Store } from "@ngrx/store";
 
 @Injectable({
     providedIn: "root"
@@ -68,8 +69,6 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     userChecks$: Observable<Check[]> = this.select(state => state.userChecks.userChecks);
 
     switcher = 0;
-
-    // GENERAL
 
     // DERIVED OBSERVABLES:
 
