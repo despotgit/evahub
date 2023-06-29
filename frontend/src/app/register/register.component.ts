@@ -32,7 +32,7 @@ import {
     UntypedFormGroup,
     Validators
 } from "@angular/forms";
-import { ApplicationStateStoreService } from "../store/application-state-store.service";
+import { ApplicationStateStoreService } from "../store/ApplicationStateStoreService";
 import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndex } from "../common/constants";
 
 import { HttpClient, HttpEventType } from "@angular/common/http";

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 
 import { EvahubSidenavMenuItem } from "../store/application.state";
+import { of } from "rxjs";
 
 @Component({
     selector: "evahub-sidenav",
@@ -18,7 +19,10 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
     emitItemClicked: EventEmitter<number> = new EventEmitter();
 
     @Output()
-    emitDeleteItemClicked: EventEmitter<number> = new EventEmitter();
+    emitDeleteItemClicked: EventEmitter<{ source: Event; itemId: number }> = new EventEmitter<{
+        source;
+        itemId;
+    }>();
 
     constructor() {
         //
@@ -32,7 +36,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
         this.emitItemClicked.emit(itemId);
     }
 
-    deleteClicked(itemId: number) {
-        this.emitDeleteItemClicked.emit(itemId);
+    deleteClicked($event, iid: number) {
+        this.emitDeleteItemClicked.emit({ source: $event, itemId: iid });
     }
 }

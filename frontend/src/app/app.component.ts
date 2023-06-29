@@ -18,7 +18,6 @@ import {
     combineLatest,
     distinctUntilChanged,
     debounceTime,
-    take,
     Subject,
     withLatestFrom,
     exhaustMap
@@ -31,18 +30,13 @@ import {
     capitalizeWord
 } from "./common/constants";
 import { Check } from "./models/Check";
-import {
-    EvahubDocument,
-    EvahubDocumentType,
-    EvahubDocumentTypeDictionary
-} from "./models/EvahubDocument";
+import { EvahubDocument, EvahubDocumentTypeDictionary } from "./models/EvahubDocument";
 import { Log } from "./models/Log";
 import { Report } from "./models/Report";
-import { ApplicationStateStoreService } from "./store/application-state-store.service";
+import { ApplicationStateStoreService } from "./store/ApplicationStateStoreService";
 import { EvahubSidenavMenuItem } from "./store/application.state";
 import { AuthenticationService } from "./services/authentication.service";
 import { RestApiService } from "./services/rest-api.service";
-import { createEffect } from "@ngrx/effects";
 
 @Component({
     selector: "app-root",
@@ -147,10 +141,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         // document delete clicked derived observable
         withLatestFrom(this.sidenavMenuItems$),
         map(([docId, snmi]) => {
-            //console.log("docid is:", docId);
-            //console.log("snmi is:", snmi);
-            let newSnmi = snmi.filter(mi => mi.id != docId);
-            this.store.updateSidenavMenuItems(newSnmi);
+            docId = docId.id;
+            console.log("snmi is:", snmi);
         })
     );
 
@@ -224,25 +216,23 @@ export class AppComponent implements OnInit, AfterViewInit {
         return;
     }
 
-    deleteMenuItemClicked($event) {
-        this.documentDeleteClickedSubject$.next($event);
+    deleteMenuItemClicked = this.store.effect<{
+        source: Event;
+        itemId: number;
+    }>(event$ => {
+        console.log("raught 1");
 
-        this.store.effect<{
-            source: Event;
-        }>(event$ => {
-            console.log("$event is:", $event);
+        console.log("event$ is:", event$);
 
-            return event$.pipe(
-                tap<{ source: Event }>(event => {
-                    event.source.stopPropagation();
+        return event$.pipe(
+            tap<{ source: Event; itemId: number }>(event => {
+                console.log("raught 2");
+                console.log("event is", event);
 
-                    console.log("raught 2");
-                })
-            );
-        });
-
-        return;
-    }
+                event.source.stopPropagation();
+            })
+        );
+    });
 
     updateCurrentPageIndex(cpi: number) {
         this.currentPageIndex = cpi;

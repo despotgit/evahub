@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, Input, OnDestroy } from "@angular/core";
 import { Subscription, switchMap, map, Subject, Observable } from "rxjs";
 import { combineLatestWith, finalize } from "rxjs/operators";
 import { environment } from "src/environments/environment";
-import { ApplicationStateStoreService } from "../store/application-state-store.service";
+import { ApplicationStateStoreService } from "../store/ApplicationStateStoreService";
 
 @Component({
     selector: "evahub-user-file-upload",

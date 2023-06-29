@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
-import { ApplicationStateStoreService } from "../store/application-state-store.service";
+import { ApplicationStateStoreService } from "../store/ApplicationStateStoreService";
 import { ActivatedRoute } from "@angular/router";
 import {
     debounceTime,
