@@ -294,42 +294,43 @@ export class AppComponent implements OnInit, AfterViewInit {
         let menuItems: EvahubSidenavMenuItem[] = [];
 
         if (ds.count === 0) {
-            //return [[], []];
-        }
+            menuItems = [];
+            docs = [];
+        } else {
+            ds.map(d => {
+                let doc;
+                switch (dtToLower) {
+                    case "log":
+                        doc = new Log();
+                        //console.log("is a log");
+                        break;
+                    case "report":
+                        doc = new Report();
+                        //console.log("is a report");
+                        break;
+                    case "check":
+                        doc = new Check();
+                        //console.log("is a check");
+                        break;
+                }
 
-        ds.map(d => {
-            let doc;
-            switch (dtToLower) {
-                case "log":
-                    doc = new Log();
-                    //console.log("is a log");
-                    break;
-                case "report":
-                    doc = new Report();
-                    //console.log("is a report");
-                    break;
-                case "check":
-                    doc = new Check();
-                    //console.log("is a check");
-                    break;
-            }
+                Object.keys(d).forEach(p => {
+                    doc[p] = d[p];
+                });
 
-            Object.keys(d).forEach(p => {
-                doc[p] = d[p];
+                doc.documentType = EvahubDocumentTypeDictionary[dtToLower];
+
+                docs.push(doc);
+
+                let mo: EvahubSidenavMenuItem = {
+                    id: doc.getDocumentId(),
+                    label: doc.getDocumentName(),
+                    selected: false
+                };
+
+                menuItems.push(mo);
             });
-
-            doc.documentType = EvahubDocumentTypeDictionary[dtToLower];
-
-            docs.push(doc);
-
-            let mo: EvahubSidenavMenuItem = {
-                id: doc.getDocumentId(),
-                label: doc.getDocumentName(),
-                selected: false
-            };
-
-            menuItems.push(mo);
-        });
+        }
 
         return { menuItems, docs };
     }
