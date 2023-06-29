@@ -226,10 +226,20 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         return event$.pipe(
             tap<{ source: Event; itemId: number }>(event => {
+                // room for effect, to do DB stuff
                 console.log("raught 2");
                 console.log("event is", event);
-
                 event.source.stopPropagation();
+            }),
+            withLatestFrom(this.sidenavMenuItems$),
+            map(data => {
+                // Remove UI element
+                let snmi = data[1];
+                let docId = data[0].itemId;
+
+                let newSnmi = snmi.filter(mi => mi.id != docId);
+                console.log("newSnmi is:", newSnmi);
+                this.store.updateSidenavMenuItems(newSnmi);
             })
         );
     });
