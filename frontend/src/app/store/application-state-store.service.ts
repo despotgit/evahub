@@ -4,7 +4,6 @@ import { map, Observable, withLatestFrom, shareReplay, observeOn, asyncScheduler
 import { EvahubMainMenuItem, getInitialMainMenuItems, PageIndex } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument, EvahubDocumentType } from "../models/EvahubDocument";
-export { EvahubDocument, EvahubDocumentType } from "../models/EvahubDocument";
 import { Log } from "../models/Log";
 import { Report } from "../models/Report";
 import {

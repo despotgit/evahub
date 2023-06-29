@@ -101,7 +101,7 @@ export class EvahubMainMenuItem {
 }
 
 export function getInitialMainMenuItems() {
-    let toRet = [];
+    let toRet: EvahubMainMenuItem[] = [];
     Object.keys(PageIndexDictionary).forEach(k => {
         let immi = PageIndexDictionary[k];
         if (immi.isInMainMenu) {

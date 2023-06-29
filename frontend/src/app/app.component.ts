@@ -150,10 +150,11 @@ export class AppComponent implements OnInit, AfterViewInit {
             //console.log("docid is:", docId);
             //console.log("snmi is:", snmi);
             let newSnmi = snmi.filter(mi => mi.id != docId);
-            //this.store.updateSidenavMenuItems(newSnmi);
+            this.store.updateSidenavMenuItems(newSnmi);
         })
     );
 
+    /* DEV:
     effect$ = createEffect(() =>
         this.currentDocumentId$.pipe(
             tap(b => {
@@ -162,6 +163,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             exhaustMap(a => this.ddcd$)
         )
     );
+    */
 
     docSelectedSub: Subscription;
 
@@ -225,6 +227,20 @@ export class AppComponent implements OnInit, AfterViewInit {
     deleteMenuItemClicked($event) {
         this.documentDeleteClickedSubject$.next($event);
 
+        this.store.effect<{
+            source: Event;
+            checked: boolean;
+        }>(event$ => {
+            console.log("raught 1");
+            return event$.pipe(
+                tap<{ source: Event; checked: boolean }>(event => {
+                    event.source.stopPropagation();
+                    //this.setChecked(!event.checked);
+                    console.log("raught 2");
+                })
+            );
+        });
+
         return;
     }
 
@@ -270,9 +286,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     // Returns menuItems[] and EvahubDocuments[]
-    transformDbDocuments(ds: any, dtToLower) {
-        let docs = [];
-        let menuItems = [];
+    //transformDbDocuments(ds: any, dtToLower) {
+    transformDbDocuments(
+        ds: any,
+        dtToLower
+    ): [menuItems: EvahubSidenavMenuItem[], docs: EvahubDocument[]] {
+        let docs: EvahubDocument[] = [];
+        let menuItems: EvahubSidenavMenuItem[] = [];
 
         if (ds.count === 0) {
             //return [[], []];
