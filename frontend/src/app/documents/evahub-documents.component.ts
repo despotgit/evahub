@@ -6,6 +6,8 @@ import {
     debounceTime,
     distinctUntilChanged,
     map,
+    NEVER,
+    never,
     Observable,
     startWith,
     Subject,
@@ -14,6 +16,7 @@ import {
 } from "rxjs";
 import { Log } from "../models/Log";
 import { FormControl } from "@angular/forms";
+import { GraphDataset } from "../common/datasets";
 
 @Component({
     selector: "app-evahub-documents",
@@ -34,16 +37,19 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
 
     graphDatasets$: Observable<any> = this.store.selectedDocument$.pipe(
         map(a => {
-            let dss = []; // datasets for the x and y axes
+            //let dss = <any>[]; // datasets for the x and y axes
+            let dss: Array<GraphDataset> = [];
 
             if (a && a["reportContent"]) {
                 let predefinedSets = ["BalDura_UIP_plot", "BalDura_sub_plot"];
 
                 for (let i = 0; i < predefinedSets.length; i++) {
-                    dss.push({
+                    let newDataset: GraphDataset = {
                         datasetName: predefinedSets[i],
                         value: a["reportContent"][predefinedSets[i]]
-                    });
+                    };
+
+                    dss.push(newDataset);
                     //console.log("value is:", a["reportContent"][predefinedSets[i]]);
                 }
             }
@@ -81,8 +87,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
     );
 
     displayGraph: boolean;
-    graphValues = [];
-    graphLabels = [];
+    graphValues: Array<number> = [];
+    graphLabels: Array<number> = [];
 
     graphDatasetsFormControl = new FormControl("");
 
@@ -125,6 +131,8 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         this.graphValues = [];
         this.graphLabels = [];
         if (document["reportContent"] && document["reportContent"][whichSet]) {
+            let arr = [...document["reportContent"][whichSet]];
+
             document["reportContent"][whichSet].forEach(el => {
                 this.graphLabels.push(el[0]);
                 this.graphValues.push(el[1]);
