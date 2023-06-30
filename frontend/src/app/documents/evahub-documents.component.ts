@@ -2,18 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from "@angu
 import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
 import { ApplicationStateStoreService } from "../store/ApplicationStateStoreService";
 import { ActivatedRoute } from "@angular/router";
-import {
-    debounceTime,
-    distinctUntilChanged,
-    map,
-    NEVER,
-    never,
-    Observable,
-    startWith,
-    Subject,
-    tap,
-    withLatestFrom
-} from "rxjs";
+import { map, Observable, startWith, Subject, tap, withLatestFrom } from "rxjs";
 import { Log } from "../models/Log";
 import { FormControl } from "@angular/forms";
 import { GraphDataset } from "../common/datasets";
@@ -27,6 +16,7 @@ import { GraphDataset } from "../common/datasets";
 export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
     selectedDocument$ = this.store.selectedDocument$.pipe(
         tap(d => {
+            console.log("d is:", d);
             if (!d || !d["reportContent"] || !d["reportContent"]["BalDura_sub_plot"]) {
             } else {
                 this.formGraphData(d, "BalDura_sub_plot");
