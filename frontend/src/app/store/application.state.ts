@@ -67,7 +67,7 @@ export const UserChecksState: Array<Check> = [];
 
 // MAIN MENU
 export class MainMenuState {
-    mainMenuItems: EvahubMainMenuItem[];
+    mainMenuItems: EvahubMainMenuItem[]; // can potentially be ommited of properties
 }
 
 export const INITIAL_MAIN_MENU = {
