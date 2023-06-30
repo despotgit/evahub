@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { map, Observable, withLatestFrom, shareReplay, observeOn, asyncScheduler } from "rxjs";
-import { EvahubMainMenuItem, PageIndex } from "../common/constants";
+import { EvahubMainMenuItem, PageIndex, capitalizeWord } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument } from "../models/EvahubDocument";
 import { Log } from "../models/Log";
@@ -170,6 +170,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // GENERAL:
     updateUserDocuments(documentType: string, documents: any[]) {
+        documentType = capitalizeWord(documentType);
         updateState(this, "user" + documentType + "s", "user" + documentType + "s", documents);
     }
 
