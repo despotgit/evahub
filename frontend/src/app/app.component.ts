@@ -287,7 +287,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         //console.log("menuItems are: ", menuItems);
         this.store.updateUserDocuments(dt, docs);
         this.store.updateSidenavMenuItems(menuItems);
-        this.store.updateSelectedUserDocument(dt, docs[0]);
     }
 
     // Returns menuItems[] and EvahubDocuments[]

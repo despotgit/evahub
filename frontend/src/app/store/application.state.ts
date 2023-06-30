@@ -7,9 +7,9 @@ export interface ApplicationState {
     currentUser: UserState;
     registerPageData: RegisterPageDataState;
     documentContent: DocumentContentState;
-    userLogs: UserLogsState;
-    userReports: UserReportsState;
-    userChecks: UserChecksState;
+    userLogs: Array<Log>;
+    userReports: Array<Report>;
+    userChecks: Array<Check>;
     sidenav: SidenavState;
     mainMenu: MainMenuState;
 }
@@ -61,29 +61,9 @@ export const INITIAL_SIDENAV_STATE = {
     sidenavMenuItems: []
 };
 
-export class UserReportsState {
-    userReports: Report[];
-}
-
-export const INITIAL_USER_REPORTS_STATE = {
-    userReports: []
-};
-
-export class UserChecksState {
-    userChecks: Check[];
-}
-
-export const INITIAL_USER_CHECKS_STATE = {
-    userChecks: []
-};
-
-export class UserLogsState {
-    userLogs: Log[];
-}
-
-export const INITIAL_USER_LOGS_STATE = {
-    userLogs: []
-};
+export const UserLogsState: Array<Log> = [];
+export const UserReportsState: Array<Report> = [];
+export const UserChecksState: Array<Check> = [];
 
 // MAIN MENU
 export class MainMenuState {
@@ -116,9 +96,9 @@ export const INITIAL_APPLICATION_STATE = {
     currentUser: INITIAL_USER_STATE,
     registerPageData: INITIAL_REGISTER_PAGE_STATE,
     documentContent: INITIAL_DOCUMENT_CONTENT_STATE,
-    userLogs: INITIAL_USER_LOGS_STATE,
-    userReports: INITIAL_USER_REPORTS_STATE,
-    userChecks: INITIAL_USER_CHECKS_STATE,
+    userLogs: [],
+    userReports: [],
+    userChecks: [],
     sidenav: INITIAL_SIDENAV_STATE,
     mainMenu: INITIAL_MAIN_MENU
 };

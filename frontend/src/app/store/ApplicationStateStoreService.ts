@@ -57,13 +57,13 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     );
 
     // REPORTS
-    userReports$: Observable<Report[]> = this.select(state => state.userReports.userReports);
+    userReports$: Observable<Report[]> = this.select(state => state.userReports);
 
     // LOGS
-    userLogs$: Observable<Log[]> = this.select(state => state.userLogs.userLogs);
+    userLogs$: Observable<Log[]> = this.select(state => state.userLogs);
 
     // CHECKS
-    userChecks$: Observable<Check[]> = this.select(state => state.userChecks.userChecks);
+    userChecks$: Observable<Check[]> = this.select(state => state.userChecks);
 
     switcher = 0;
 
@@ -171,13 +171,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // GENERAL:
     updateUserDocuments(documentType: string, documents: any[]) {
         documentType = capitalizeWord(documentType);
-        updateState(this, "user" + documentType + "s", "user" + documentType + "s", documents);
-    }
-
-    updateSelectedUserDocument(documentType: string, doc: EvahubDocument) {
-        const typ = "user" + documentType + "s";
-        //console.log("typ is:", typ);
-        updateState(this, "user" + documentType + "s", "selectedUserDocument", doc);
+        updateState(this, "user" + documentType + "s", null, documents);
     }
 
     // APPLICATION STATE:

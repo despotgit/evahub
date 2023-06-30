@@ -6,8 +6,13 @@ export function updateState(store, sliceName, propertyName, newValue) {
 // genericReducerFunction by Vladimir Despotovic
 export function genericStateUpdaterFunction(store, sliceName, propertyName, newValue) {
     const oldStateSlice = store.get(state => state[sliceName]);
-    const newStateSlice = { ...oldStateSlice }; // deep copy
-    newStateSlice[propertyName] = newValue;
+    let newStateSlice;
+    if (propertyName == null) {
+        newStateSlice = newValue;
+    } else {
+        newStateSlice = { ...oldStateSlice }; // deep copy
+        newStateSlice[propertyName] = newValue;
+    }
     const toApply = {};
     toApply[sliceName] = newStateSlice;
     return toApply;
