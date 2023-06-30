@@ -8,6 +8,7 @@ export function genericStateUpdaterFunction(store, sliceName, propertyName, newV
     const oldStateSlice = store.get(state => state[sliceName]);
     let newStateSlice;
     if (propertyName == null) {
+        // the slice doesn't have any properties, it is updated in its entirety
         newStateSlice = newValue;
     } else {
         newStateSlice = { ...oldStateSlice }; // deep copy
