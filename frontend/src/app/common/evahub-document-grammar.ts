@@ -2,8 +2,9 @@ import {
     EVAHUB_DOCUMENT_TYPE_LOG,
     EVAHUB_DOCUMENT_TYPE_REPORT,
     EVAHUB_DOCUMENT_TYPE_CHECK
-} from "../../app/common/constants";
+} from "./constants";
 
+/*
 export class EvahubDocumentTypeGrammar {
     static readonly LOG: EvahubGrammar = {
         singularNameCapitalized: "Log",
@@ -38,6 +39,8 @@ export class EvahubDocumentTypeGrammar {
     ];
 }
 
+
+
 export class EvahubGrammar {
     singularNameCapitalized: string;
     pluralNameCapitalized: string;
@@ -45,3 +48,5 @@ export class EvahubGrammar {
     pluralNameMiniscule: string;
     numberConstant: number;
 }
+
+*/
