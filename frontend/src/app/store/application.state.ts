@@ -63,32 +63,26 @@ export const INITIAL_SIDENAV_STATE = {
 
 export class UserReportsState {
     userReports: Report[];
-    selectedUserReport: Report;
 }
 
 export const INITIAL_USER_REPORTS_STATE = {
-    userReports: [],
-    selectedUserReport: new Report()
+    userReports: []
 };
 
 export class UserChecksState {
     userChecks: Check[];
-    selectedUserCheck: Check;
 }
 
 export const INITIAL_USER_CHECKS_STATE = {
-    userChecks: [],
-    selectedUserCheck: new Check()
+    userChecks: []
 };
 
 export class UserLogsState {
     userLogs: Log[];
-    selectedUserLog: Log;
 }
 
 export const INITIAL_USER_LOGS_STATE = {
-    userLogs: [],
-    selectedUserLog: new Log()
+    userLogs: []
 };
 
 // MAIN MENU
