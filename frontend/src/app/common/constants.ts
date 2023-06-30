@@ -1,5 +1,29 @@
-import { FormGroup } from "@angular/forms";
 import { environment } from "src/environments/environment";
+import { EvahubDocumentTypeGrammar, EvahubGrammar } from "./evahub.document.type.grammar";
+
+export const EVAHUB_DOCUMENT_TYPE_LOG = 1;
+export const EVAHUB_DOCUMENT_TYPE_REPORT = 2;
+export const EVAHUB_DOCUMENT_TYPE_CHECK = 3;
+
+export const enum EvahubDocumentTypeAsString {
+    EVAHUB_DOCUMENT_TYPE_LOG = "Log",
+    EVAHUB_DOCUMENT_TYPE_REPORT = "Report",
+    EVAHUB_DOCUMENT_TYPE_CHECK = "Check"
+}
+
+export const EvahubDocumentTypeWordToNumber = {
+    log: EVAHUB_DOCUMENT_TYPE_LOG,
+    report: EVAHUB_DOCUMENT_TYPE_REPORT,
+    check: EVAHUB_DOCUMENT_TYPE_CHECK
+};
+
+export function getDocumentTypeAsStringFromNumber(numberedDT: number) {
+    return Object.keys(EvahubDocumentTypeWordToNumber).filter(
+        dt => numberedDT == EvahubDocumentTypeWordToNumber[dt]
+    );
+}
+
+export const EvahubDocumentTypeStringArray = ["log", "report", "check"];
 
 export const storedObjectName = "evahubJwt";
 
@@ -96,7 +120,7 @@ export class EvahubMainMenuItem {
         public isSelected: boolean,
         public index: PageIndex
     ) {
-        this.label = label;
+        this.label = label; // DEV:  check later, if needed at all
     }
 }
 
@@ -113,7 +137,12 @@ export function getInitialMainMenuItems() {
     return toRet;
 }
 
-export function capitalizeWord(word: string) {
+export function capitalizeDocumentType(word: EvahubDocumentTypeAsString): string {
+    let res: EvahubGrammar = EvahubDocumentTypeGrammar[word];
+    return res.singularNameCapitalized;
+}
+
+export function capitalizeWord(word: string): string {
     const flc = word.toUpperCase().substring(0, 1); // First Letter Capitalized
     const sc = flc + word.substring(1, word.length); // Capitalized word
 
@@ -139,4 +168,10 @@ export function doesMaterialFormHaveErrors(mf: any) {
     }
 
     return false;
+}
+
+export const enum EvahubDocumentTypeNumber {
+    EVAHUB_DOCUMENT_TYPE_LOG,
+    EVAHUB_DOCUMENT_TYPE_REPORT,
+    EVAHUB_DOCUMENT_TYPE_CHECK
 }

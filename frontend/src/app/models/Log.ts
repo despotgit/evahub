@@ -1,4 +1,5 @@
-import { EvahubDocument, EvahubDocumentType } from "./EvahubDocument";
+import { EVAHUB_DOCUMENT_TYPE_LOG } from "../common/constants";
+import { EvahubDocument } from "./EvahubDocument";
 
 // LOGS:
 export class Log implements EvahubDocument {
@@ -6,7 +7,7 @@ export class Log implements EvahubDocument {
     logName?: string = "";
     logContent?: string = "";
 
-    documentType: EvahubDocumentType = EvahubDocumentType.EVAHUB_LOG;
+    documentType: number = EVAHUB_DOCUMENT_TYPE_LOG;
 
     getDocumentId() {
         return this.logId;

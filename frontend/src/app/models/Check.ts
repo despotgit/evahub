@@ -1,4 +1,4 @@
-import { EvahubDocumentType } from "./EvahubDocument";
+import { EVAHUB_DOCUMENT_TYPE_CHECK, EvahubDocumentTypeAsString } from "../common/constants";
 
 // CHECKS:
 export class Check {
@@ -6,7 +6,7 @@ export class Check {
     checkName?: string;
     checkContent?: string;
 
-    documentType: EvahubDocumentType = EvahubDocumentType.EVAHUB_CHECK;
+    documentType: number = EVAHUB_DOCUMENT_TYPE_CHECK;
 
     getDocumentId() {
         return this.checkId;

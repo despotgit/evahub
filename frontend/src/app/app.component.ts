@@ -27,10 +27,15 @@ import {
     getPageNameFromPageIndex,
     PageIndex,
     PageIndexDictionary,
-    capitalizeWord
+    capitalizeDocumentType,
+    EvahubDocumentTypeStringArray
 } from "./common/constants";
 import { Check } from "./models/Check";
-import { EvahubDocument, EvahubDocumentTypeDictionary } from "./models/EvahubDocument";
+import { EvahubDocument } from "./models/EvahubDocument";
+import {
+    EvahubDocumentTypeAsString,
+    EvahubDocumentTypeWordToNumber
+} from "../app/common/constants";
 import { Log } from "./models/Log";
 import { Report } from "./models/Report";
 import { ApplicationStateStoreService } from "./store/ApplicationStateStoreService";
@@ -58,11 +63,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         tap(a => {
             const s = getPageNameFromPageIndex(a); // s : singularDocumentTypeName
 
-            const sc = capitalizeWord(s);
-
             if (PageIndexDictionary[s].isDocumentsPage) {
-                this.updateDocumentsSetFromApi(sc);
+                this.updateDocumentsSetFromApi(s);
             }
+
             this.currentPageIndex = a;
         })
     );
@@ -223,6 +227,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         event$.pipe(
             tap<{ source: Event; itemId: number }>(event => {
                 // room for effect, to do DB stuff
+
                 event.source.stopPropagation();
             }),
             withLatestFrom(this.sidenavMenuItems$),
@@ -245,6 +250,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     // docType is document name as string, singular form
     updateDocumentsSetFromApi(docType: string) {
+        if (docType in EvahubDocumentTypeStringArray) {
+            return;
+        }
         if (docType == undefined) return;
         //console.log("!!!!!docType is:", docType);
         let docTypeToLower = docType.toLowerCase();
@@ -312,7 +320,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                     doc[p] = d[p];
                 });
 
-                doc.documentType = EvahubDocumentTypeDictionary[dtToLower];
+                doc.documentType = EvahubDocumentTypeWordToNumber[dtToLower];
 
                 docs.push(doc);
 
