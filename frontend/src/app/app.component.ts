@@ -22,7 +22,7 @@ import {
     withLatestFrom
 } from "rxjs";
 
-import { getPageNameFromPageIndex, PageIndex, PageIndexDictionary } from "./common/constants";
+import { getPageNameFromPageIndex, PageIndexEnum, PageIndexDictionary } from "./common/constants";
 import { Check } from "./models/Check";
 import { EvahubDocument } from "./models/EvahubDocument";
 import { EvahubDocumentTypeWordToNumber } from "../app/common/constants";
@@ -63,13 +63,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     currentDocumentSet$ = this.currentPageIndex$.pipe(
         switchMap(cpi => {
             switch (cpi) {
-                case PageIndex.LOGS_PAGE:
+                case PageIndexEnum.LOGS_PAGE:
                     return this.userLogs$;
 
-                case PageIndex.REPORTS_PAGE:
+                case PageIndexEnum.REPORTS_PAGE:
                     return this.userReports$;
 
-                case PageIndex.CHECKS_PAGE:
+                case PageIndexEnum.CHECKS_PAGE:
                     return this.userChecks$;
 
                 default:
@@ -94,7 +94,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     ]).pipe(
         map(([ili, cpi]) => {
             //console.log("ili and cpi is:", ili, cpi);
-            if (!ili && cpi != PageIndex.REGISTER_PAGE) {
+            if (!ili && cpi != PageIndexEnum.REGISTER_PAGE) {
                 return true;
             } else {
                 return false;
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         map(([ili, cpi]) => {
             //console.log("ili and cpi is:", ili, cpi);
             //console.log("login page index is:", PageIndex.LOGIN_PAGE);
-            if (!ili && cpi != PageIndex.LOGIN_PAGE) {
+            if (!ili && cpi != PageIndexEnum.LOGIN_PAGE) {
                 return true;
             } else {
                 return false;
@@ -142,7 +142,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     docSelectedSub: Subscription;
 
-    currentPageIndex: number = PageIndex.NONE_PAGE;
+    currentPageIndex: number = PageIndexEnum.NONE_PAGE;
 
     @ViewChild("sidenav") sidenav;
 
@@ -174,10 +174,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         let newPageIndex;
         if (isDocumentsPage) {
             this.router.navigate(["/documents/" + pageToLower]);
-            newPageIndex = PageIndexDictionary[pageToLower].index;
+            newPageIndex = PageIndexDictionary[pageToLower].pageIndex;
         } else {
             this.router.navigate(["/" + pageToLower]);
-            newPageIndex = PageIndexDictionary[pageToLower].index;
+            newPageIndex = PageIndexDictionary[pageToLower].pageIndex;
         }
 
         this.store.updateCurrentPageIndex(newPageIndex);

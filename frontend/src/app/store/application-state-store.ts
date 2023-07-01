@@ -4,8 +4,10 @@ import { map, Observable, withLatestFrom, shareReplay, observeOn, asyncScheduler
 import {
     EvahubMainMenuItem,
     EvahubSidenavMenuItem,
-    PageIndex,
-    capitalizeWord
+    PageIndexEnum,
+    PageIndexDictionary,
+    capitalizeWord,
+    getDocumentTypeAsStringFromNumber
 } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument } from "../models/EvahubDocument";
@@ -69,20 +71,22 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // DERIVED OBSERVABLES:
     selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
         withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
-        map(([docId, cpi, ls, rs, cs]) => {
+        map(([docId, cpi, logs, reports, checks]) => {
+            let documentType = PageIndexDictionary;
+
             switch (cpi) {
-                case PageIndex.LOGS_PAGE:
-                    const sl = ls.find(l => l.logId == docId);
+                case PageIndexEnum.LOGS_PAGE:
+                    const sl = logs.find(l => l.getDocumentId() == docId);
                     //console.log("d logs, sl is:", sl);
                     return sl;
 
-                case PageIndex.REPORTS_PAGE:
-                    const sr = rs.find(r => r.reportId == docId);
+                case PageIndexEnum.REPORTS_PAGE:
+                    const sr = reports.find(r => r.reportId == docId);
                     //console.log("d reports, sr is:", sr);
                     return sr;
 
-                case PageIndex.CHECKS_PAGE:
-                    const sc = cs.find(c => c.checkId == docId);
+                case PageIndexEnum.CHECKS_PAGE:
+                    const sc = checks.find(c => c.checkId == docId);
                     //console.log("d checks, sc is:", sc);
                     return sc;
             }

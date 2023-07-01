@@ -33,7 +33,7 @@ import {
     Validators
 } from "@angular/forms";
 import { ApplicationStateStoreService } from "../store/application-state-store";
-import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndex } from "../common/constants";
+import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndexEnum } from "../common/constants";
 
 import { HttpClient, HttpEventType } from "@angular/common/http";
 //import { MatLegacyButton as MatButton } from "@angular/material/legacy-button";
@@ -177,7 +177,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                 )
             )
             .subscribe();
-        this.store.updateCurrentPageIndex(PageIndex.REGISTER_PAGE);
+        this.store.updateCurrentPageIndex(PageIndexEnum.REGISTER_PAGE);
     }
 
     ngAfterViewInit(): void {

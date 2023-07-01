@@ -1,17 +1,17 @@
 // USER
 
-import { PageIndex } from "src/app/common/constants";
+import { PageIndexEnum } from "src/app/common/constants";
 
 export interface UserSessionState {
     username: string;
     isLoggedIn: boolean;
-    currentPageIndex: PageIndex;
+    currentPageIndex: PageIndexEnum;
     currentDocumentId: number;
 }
 
 export const INITIAL_USER_SESSION_STATE = {
     username: "",
     isLoggedIn: false,
-    currentPageIndex: PageIndex.NONE_PAGE,
+    currentPageIndex: PageIndexEnum.NONE_PAGE,
     currentDocumentId: 0
 };

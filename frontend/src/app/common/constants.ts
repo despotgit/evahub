@@ -28,7 +28,7 @@ export const storedObjectName = "evahubJwt";
 
 export const loginTokenExpiryTime = 60; // In minutes
 
-export const enum PageIndex {
+export const enum PageIndexEnum {
     NONE_PAGE = 0,
     REGISTER_PAGE = 1,
     LOGIN_PAGE = 2,
@@ -43,56 +43,56 @@ export const enum PageIndex {
 // handle, index, isDocumentsPage, label
 export const PageIndexDictionary = {
     none: {
-        index: PageIndex.NONE_PAGE,
+        pageIndex: PageIndexEnum.NONE_PAGE,
         isDocumentsPage: false,
         label: "None",
         gotoParam: "",
         isInMainMenu: false
     },
     register: {
-        index: PageIndex.REGISTER_PAGE,
+        pageIndex: PageIndexEnum.REGISTER_PAGE,
         isDocumentsPage: false,
         label: "Register",
         gotoParam: "register",
         isInMainMenu: false
     },
     login: {
-        index: PageIndex.LOGIN_PAGE,
+        pageIndex: PageIndexEnum.LOGIN_PAGE,
         isDocumentsPage: false,
         label: "Login",
         gotoParam: "login",
         isInMainMenu: false
     },
     home: {
-        index: PageIndex.HOME_PAGE,
+        pageIndex: PageIndexEnum.HOME_PAGE,
         isDocumentsPage: false,
         label: "Home",
         gotoParam: "home",
         isInMainMenu: false
     },
     "user-file-upload": {
-        index: PageIndex.USER_FILE_UPLOAD_PAGE,
+        pageIndex: PageIndexEnum.USER_FILE_UPLOAD_PAGE,
         isDocumentsPage: false,
         label: "Upload",
         gotoParam: "user-file-upload",
         isInMainMenu: true
     },
     log: {
-        index: PageIndex.LOGS_PAGE,
+        pageIndex: PageIndexEnum.LOGS_PAGE,
         isDocumentsPage: true,
         label: "Logs",
         gotoParam: "log",
         isInMainMenu: true
     },
     report: {
-        index: PageIndex.REPORTS_PAGE,
+        pageIndex: PageIndexEnum.REPORTS_PAGE,
         isDocumentsPage: true,
         label: "Reports",
         gotoParam: "report",
         isInMainMenu: true
     },
     check: {
-        index: PageIndex.CHECKS_PAGE,
+        pageIndex: PageIndexEnum.CHECKS_PAGE,
         isDocumentsPage: true,
         label: "Checks",
         gotoParam: "check",
@@ -103,7 +103,7 @@ export const PageIndexDictionary = {
 export function getPageNameFromPageIndex(i) {
     let res = "x";
     Object.keys(PageIndexDictionary).forEach(k => {
-        if (PageIndexDictionary[k].index == i) {
+        if (PageIndexDictionary[k].pageIndex == i) {
             res = k;
         }
     });
@@ -117,7 +117,7 @@ export class EvahubMainMenuItem {
         public gotoParam: string,
         public isDocumentsPage: boolean,
         public isSelected: boolean,
-        public index: PageIndex
+        public pageIndex: PageIndexEnum
     ) {}
 }
 

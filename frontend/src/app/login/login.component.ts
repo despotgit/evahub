@@ -8,10 +8,9 @@ import {
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
-import { first, take } from "rxjs/operators";
-import { PageIndex } from "../common/constants";
+
 import { ApplicationStateStoreService } from "../store/application-state-store";
-import { of } from "rxjs";
+import { PageIndexEnum } from "../common/constants";
 
 @Component({
     selector: "app-login",
@@ -43,7 +42,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
             password: ["", Validators.required]
         });
 
-        this.store.updateCurrentPageIndex(PageIndex.LOGIN_PAGE);
+        this.store.updateCurrentPageIndex(PageIndexEnum.LOGIN_PAGE);
     }
 
     ngAfterViewChecked() {

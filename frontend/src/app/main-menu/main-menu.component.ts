@@ -7,7 +7,7 @@ import {
     Output
 } from "@angular/core";
 
-import { EvahubMainMenuItem, PageIndex } from "../common/constants";
+import { EvahubMainMenuItem, PageIndexEnum } from "../common/constants";
 
 @Component({
     selector: "evahub-main-menu",
@@ -21,8 +21,8 @@ export class MainMenuComponent implements OnInit {
         this.mainMenuItems = mis;
     }
 
-    pageSelected: PageIndex;
-    @Input() set cpi(cpi: PageIndex) {
+    pageSelected: PageIndexEnum;
+    @Input() set cpi(cpi: PageIndexEnum) {
         this.pageSelected = cpi;
     }
 

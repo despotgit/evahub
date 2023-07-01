@@ -95,14 +95,14 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
     updatePageIndex(route) {
         const urlEnd = route.snapshot.url[1].path;
         //console.log("urlEnd is:", urlEnd);
-        let pageIndex = PageIndexDictionary.log.index;
+        let pi = PageIndexDictionary.log.pageIndex;
         try {
-            pageIndex = PageIndexDictionary[urlEnd].index;
+            pi = PageIndexDictionary[urlEnd].pageIndex;
         } catch (e) {
             console.log();
         }
         //console.log("pageIndex is:", pageIndex);
-        this.store.updateCurrentPageIndex(pageIndex);
+        this.store.updateCurrentPageIndex(pi);
     }
 
     onDocumentContentDisplayed() {

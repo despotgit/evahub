@@ -1,7 +1,7 @@
 <div class="main-menu-wrapper">
     <div class="main-menu-item" *ngFor="let mi of mainMenuItems">
         <button
-            *ngIf="!(mi.index == pageSelected)"
+            *ngIf="!(mi.pageIndex == pageSelected)"
             mat-button
             [ngClass]="['unselected-menu-item']"
             color="basic"
@@ -10,7 +10,7 @@
             {{ mi.label }}
         </button>
         <button
-            *ngIf="mi.index == pageSelected"
+            *ngIf="mi.pageIndex == pageSelected"
             mat-raised-button
             [ngClass]="['selected-menu-item']"
             color="primary"
