@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
-import { ApplicationStateStoreService } from "../store/ApplicationStateStoreService";
+import { ApplicationStateStoreService } from "../store/application-state-store";
 import { ActivatedRoute } from "@angular/router";
 import { map, Observable, startWith, Subject, tap, withLatestFrom } from "rxjs";
 import { Log } from "../models/Log";

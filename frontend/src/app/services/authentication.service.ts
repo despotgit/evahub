@@ -4,7 +4,7 @@ import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { storedObjectName, loginTokenExpiryTime } from "../common/constants";
 import { Router } from "@angular/router";
-import { ApplicationStateStoreService } from "../store/ApplicationStateStoreService";
+import { ApplicationStateStoreService } from "../store/application-state-store";
 import { INITIAL_APPLICATION_STATE } from "../store/state/application.state";
 
 @Injectable({ providedIn: "root" })

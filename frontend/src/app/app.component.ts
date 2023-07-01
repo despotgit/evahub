@@ -38,7 +38,7 @@ import {
 } from "../app/common/constants";
 import { Log } from "./models/Log";
 import { Report } from "./models/Report";
-import { ApplicationStateStoreService } from "./store/ApplicationStateStoreService";
+import { ApplicationStateStoreService } from "./store/application-state-store";
 import { EvahubSidenavMenuItem } from "./common/constants";
 import { AuthenticationService } from "./services/authentication.service";
 import { RestApiService } from "./services/rest-api.service";
