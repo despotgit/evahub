@@ -19,23 +19,18 @@ import {
     distinctUntilChanged,
     debounceTime,
     Subject,
-    withLatestFrom,
-    exhaustMap
+    withLatestFrom
 } from "rxjs";
-import { environment } from "src/environments/environment";
+
 import {
     getPageNameFromPageIndex,
     PageIndex,
     PageIndexDictionary,
-    capitalizeDocumentType,
     EvahubDocumentTypeStringArray
 } from "./common/constants";
 import { Check } from "./models/Check";
 import { EvahubDocument } from "./models/EvahubDocument";
-import {
-    EvahubDocumentTypeAsString,
-    EvahubDocumentTypeWordToNumber
-} from "../app/common/constants";
+import { EvahubDocumentTypeWordToNumber } from "../app/common/constants";
 import { Log } from "./models/Log";
 import { Report } from "./models/Report";
 import { ApplicationStateStoreService } from "./store/application-state-store";
@@ -150,17 +145,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         })
     );
 
-    /* DEV:
-    effect$ = createEffect(() =>
-        this.currentDocumentId$.pipe(
-            tap(b => {
-                console.log("effect reached", b);
-            }),
-            exhaustMap(a => this.ddcd$)
-        )
-    );
-    */
-
     docSelectedSub: Subscription;
 
     currentPageIndex: number = PageIndex.NONE_PAGE;
@@ -250,9 +234,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     // docType is document name as string, singular form
     updateDocumentsSetFromApi(docType: string) {
-        if (docType in EvahubDocumentTypeStringArray) {
-            return;
-        }
         if (docType == undefined) return;
         //console.log("!!!!!docType is:", docType);
         let docTypeToLower = docType.toLowerCase();

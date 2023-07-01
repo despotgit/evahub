@@ -6,7 +6,6 @@ import {
     OnInit,
     Output
 } from "@angular/core";
-import { Page } from "@ionic/core";
 
 import { EvahubMainMenuItem, PageIndex } from "../common/constants";
 
