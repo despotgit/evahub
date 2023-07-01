@@ -59,11 +59,14 @@ export const INITIAL_SIDENAV_STATE = {
     sidenavMenuItems: []
 };
 
+// DOCUMENTS
+
 export const UserLogsState: Array<Log> = [];
 export const UserReportsState: Array<Report> = [];
 export const UserChecksState: Array<Check> = [];
 
 // MAIN MENU
+
 export class MainMenuState {
     mainMenuItems: EvahubMainMenuItem[]; // can potentially be ommited of properties
 }
