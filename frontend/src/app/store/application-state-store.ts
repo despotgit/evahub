@@ -71,27 +71,45 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // DERIVED OBSERVABLES:
     selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
         withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
-        map(([docId, cpi, logs, reports, checks]) => {
-            let documentType = Object.keys(PageIndexDictionary).forEach(pid => {});
+        map(arr => {
+            let docId = arr[0];
+            let cpi = arr[1];
+            let logs = arr[2];
+            let reports = arr[3];
+            let checks = arr[4];
+            // [docId, cpi, logs, reports, checks]
+            //let documentType = PageIndexDictionary.filter(pid => {
+            //    return true;
+            //});
 
+            let res;
+            let pages = Object.keys(PageIndexDictionary).map(i => {
+                let pi = PageIndexDictionary[i];
+                if (pi.pageIndex == cpi) {
+                    //
+                }
+            });
+
+            let theDocs = null;
             switch (cpi) {
                 case PageIndexEnum.LOGS_PAGE:
-                    const sl = logs.find(l => l.getDocumentId() == docId);
-                    //console.log("d logs, sl is:", sl);
-                    return sl;
+                    theDocs = logs;
+                    break;
 
                 case PageIndexEnum.REPORTS_PAGE:
-                    const sr = reports.find(r => r.reportId == docId);
-                    //console.log("d reports, sr is:", sr);
-                    return sr;
+                    theDocs = reports;
+                    break;
 
                 case PageIndexEnum.CHECKS_PAGE:
-                    const sc = checks.find(c => c.checkId == docId);
-                    //console.log("d checks, sc is:", sc);
-                    return sc;
+                    theDocs = checks;
+                    break;
             }
 
-            return new Log();
+            if (theDocs == null) {
+                return new Log();
+            } else {
+                return theDocs.find(d => d.getDocumentId() == docId);
+            }
         }),
         shareReplay(1),
         observeOn(asyncScheduler)
