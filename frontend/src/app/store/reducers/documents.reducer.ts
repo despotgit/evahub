@@ -1,6 +1,6 @@
 // Generic update
 import { createReducer, on } from "@ngrx/store";
-import { INITIAL_APPLICATION_STATE } from "../application.state";
+import { INITIAL_APPLICATION_STATE } from "../state/application.state";
 import { GenericAction } from "../actions/generic.actions";
 import { DeleteDocument } from "../actions/documents.actions";
 

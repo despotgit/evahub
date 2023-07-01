@@ -11,7 +11,7 @@ import { Check } from "../models/Check";
 import { EvahubDocument } from "../models/EvahubDocument";
 import { Log } from "../models/Log";
 import { Report } from "../models/Report";
-import { ApplicationState, INITIAL_APPLICATION_STATE } from "./application.state";
+import { ApplicationState, INITIAL_APPLICATION_STATE } from "./state/application.state";
 import { updateState } from "./reducers/generic.quasi.reducer";
 
 @Injectable({
@@ -19,13 +19,13 @@ import { updateState } from "./reducers/generic.quasi.reducer";
 })
 export class ApplicationStateStoreService extends ComponentStore<ApplicationState> {
     // CURRENT USER
-    username$: Observable<string> = this.select(state => state.currentUser.username);
-    isloggedIn$: Observable<boolean> = this.select(state => state.currentUser.isLoggedIn);
+    username$: Observable<string> = this.select(state => state.currentUserSession.username);
+    isloggedIn$: Observable<boolean> = this.select(state => state.currentUserSession.isLoggedIn);
     currentPageIndex$: Observable<number> = this.select(
-        state => state.currentUser.currentPageIndex
+        state => state.currentUserSession.currentPageIndex
     );
     currentDocumentId$: Observable<number> = this.select(
-        state => state.currentUser.currentDocumentId
+        state => state.currentUserSession.currentDocumentId
     );
 
     // REGISTER PAGE
@@ -101,19 +101,19 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // CURRENT USER:
     updateUsername(username: string) {
-        updateState(this, "currentUser", "username", username);
+        updateState(this, "currentUserSession", "username", username);
     }
 
     updateIsLoggedIn(isLoggedIn: boolean) {
-        updateState(this, "currentUser", "isLoggedIn", isLoggedIn);
+        updateState(this, "currentUserSession", "isLoggedIn", isLoggedIn);
     }
 
     updateCurrentPageIndex(currentPageIndex: number) {
-        updateState(this, "currentUser", "currentPageIndex", currentPageIndex);
+        updateState(this, "currentUserSession", "currentPageIndex", currentPageIndex);
     }
 
     updateCurrentDocumentId(id: number) {
-        updateState(this, "currentUser", "currentDocumentId", id);
+        updateState(this, "currentUserSession", "currentDocumentId", id);
     }
 
     // REGISTER PAGE:

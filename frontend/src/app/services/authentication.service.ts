@@ -5,7 +5,7 @@ import { environment } from "../../environments/environment";
 import { storedObjectName, loginTokenExpiryTime } from "../common/constants";
 import { Router } from "@angular/router";
 import { ApplicationStateStoreService } from "../store/ApplicationStateStoreService";
-import { INITIAL_APPLICATION_STATE } from "../store/application.state";
+import { INITIAL_APPLICATION_STATE } from "../store/state/application.state";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
