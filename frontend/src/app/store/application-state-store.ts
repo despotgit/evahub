@@ -23,7 +23,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // CURRENT USER
     username$: Observable<string> = this.select(state => state.currentUserSession.username);
     isloggedIn$: Observable<boolean> = this.select(state => state.currentUserSession.isLoggedIn);
-    currentPageIndex$: Observable<number> = this.select(
+    currentPageIndex$: Observable<PageIndexEnum> = this.select(
         state => state.currentUserSession.currentPageIndex
     );
     currentDocumentId$: Observable<number> = this.select(
@@ -72,7 +72,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
         withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
         map(([docId, cpi, logs, reports, checks]) => {
-            let documentType = PageIndexDictionary;
+            let documentType = Object.keys(PageIndexDictionary).forEach(pid => {});
 
             switch (cpi) {
                 case PageIndexEnum.LOGS_PAGE:
