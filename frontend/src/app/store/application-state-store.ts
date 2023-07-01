@@ -72,23 +72,12 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
         withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
         map(arr => {
+            // arr -> [docId, cpi, logs, reports, checks]
             let docId = arr[0];
             let cpi = arr[1];
             let logs = arr[2];
             let reports = arr[3];
             let checks = arr[4];
-            // [docId, cpi, logs, reports, checks]
-            //let documentType = PageIndexDictionary.filter(pid => {
-            //    return true;
-            //});
-
-            let res;
-            let pages = Object.keys(PageIndexDictionary).map(i => {
-                let pi = PageIndexDictionary[i];
-                if (pi.pageIndex == cpi) {
-                    //
-                }
-            });
 
             let theDocs = null;
             switch (cpi) {
