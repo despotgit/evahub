@@ -1,4 +1,9 @@
-import { EvahubMainMenuItem, PageIndex, getInitialMainMenuItems } from "../common/constants";
+import {
+    EvahubMainMenuItem,
+    EvahubSidenavMenuItem,
+    PageIndex,
+    getInitialMainMenuItems
+} from "../common/constants";
 import { Check } from "../models/Check";
 import { Log } from "../models/Log";
 import { Report } from "../models/Report";
@@ -43,13 +48,6 @@ export const INITIAL_DOCUMENT_CONTENT_STATE = {
 };
 
 // SIDENAV
-
-export class EvahubSidenavMenuItem {
-    id: number;
-    label?: string;
-    action?: string;
-    selected: boolean;
-}
 
 export interface SidenavState {
     isSidenavOpened: boolean;

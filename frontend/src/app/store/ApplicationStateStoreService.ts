@@ -1,16 +1,17 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { map, Observable, withLatestFrom, shareReplay, observeOn, asyncScheduler } from "rxjs";
-import { EvahubMainMenuItem, PageIndex, capitalizeWord } from "../common/constants";
+import {
+    EvahubMainMenuItem,
+    EvahubSidenavMenuItem,
+    PageIndex,
+    capitalizeWord
+} from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument } from "../models/EvahubDocument";
 import { Log } from "../models/Log";
 import { Report } from "../models/Report";
-import {
-    ApplicationState,
-    EvahubSidenavMenuItem,
-    INITIAL_APPLICATION_STATE
-} from "./application.state";
+import { ApplicationState, INITIAL_APPLICATION_STATE } from "./application.state";
 import { updateState } from "./reducers/generic.quasi.reducer";
 
 @Injectable({

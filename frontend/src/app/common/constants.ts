@@ -216,3 +216,10 @@ export class EvahubGrammar {
     pluralNameMiniscule: string;
     numberConstant: number;
 }
+
+export class EvahubSidenavMenuItem {
+    id: number;
+    label?: string;
+    action?: string;
+    selected: boolean;
+}

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 
-import { EvahubSidenavMenuItem } from "../store/application.state";
+import { EvahubSidenavMenuItem } from "../common/constants";
 import { of } from "rxjs";
 
 @Component({
