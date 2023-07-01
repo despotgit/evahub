@@ -17,11 +17,6 @@ if False:  # DEV: for testing purposes, skip CORS check completely
         pass
 
 
-@rest.route("/faruk", methods=["GET"])
-def faruk():
-    return "yes it is!!!!!!"
-
-
 @rest.route("/<path:path>", methods=["GET", "POST", "PUT", "DELETE"])
 def proxy(path):
     print("********************************************************** in proxy")

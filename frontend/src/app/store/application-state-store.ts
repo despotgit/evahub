@@ -79,7 +79,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
             let reports = arr[3];
             let checks = arr[4];
 
-            let theDocs = null;
+            let theDocs = [new Log()];
             switch (cpi) {
                 case PageIndexEnum.LOGS_PAGE:
                     theDocs = logs;
@@ -94,11 +94,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
                     break;
             }
 
-            if (theDocs == null) {
-                return new Log();
-            } else {
-                return theDocs.find(d => d.getDocumentId() == cdi);
-            }
+            return theDocs.find(d => d.getDocumentId() == cdi);
         }),
         shareReplay(1),
         observeOn(asyncScheduler)

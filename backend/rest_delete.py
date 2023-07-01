@@ -5,8 +5,9 @@ from db_users_broker import deleteAllDbUserData, getDbUser
 rest_delete = Blueprint("rest_delete", __name__)
 
 
-# Delete a document (by username, and ldocumentog id)
+# Delete a document (by username, and document id)
 @rest_delete.route("/document/delete", methods=["DELETE"])
+# @rest_delete.route("/document/<documentId>/<username>", methods=["DELETE"])
 def deleteDocument():
     r = json.loads(request.data.decode("UTF-8"))
     username = r["username"]
