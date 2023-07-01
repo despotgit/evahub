@@ -72,8 +72,8 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
         withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
         map(arr => {
-            // arr -> [docId, cpi, logs, reports, checks]
-            let docId = arr[0];
+            // arr -> [cdi, cpi, logs, reports, checks]
+            let cdi = arr[0];
             let cpi = arr[1];
             let logs = arr[2];
             let reports = arr[3];
@@ -97,7 +97,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
             if (theDocs == null) {
                 return new Log();
             } else {
-                return theDocs.find(d => d.getDocumentId() == docId);
+                return theDocs.find(d => d.getDocumentId() == cdi);
             }
         }),
         shareReplay(1),
