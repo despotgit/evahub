@@ -66,8 +66,6 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // CHECKS
     userChecks$: Observable<Check[]> = this.select(state => state.userChecks);
 
-    switcher = 0;
-
     // DERIVED OBSERVABLES:
     selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
         withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
