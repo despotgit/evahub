@@ -22,12 +22,7 @@ import {
     withLatestFrom
 } from "rxjs";
 
-import {
-    getPageNameFromPageIndex,
-    PageIndex,
-    PageIndexDictionary,
-    EvahubDocumentTypeStringArray
-} from "./common/constants";
+import { getPageNameFromPageIndex, PageIndex, PageIndexDictionary } from "./common/constants";
 import { Check } from "./models/Check";
 import { EvahubDocument } from "./models/EvahubDocument";
 import { EvahubDocumentTypeWordToNumber } from "../app/common/constants";

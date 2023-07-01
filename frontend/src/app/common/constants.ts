@@ -118,9 +118,7 @@ export class EvahubMainMenuItem {
         public isDocumentsPage: boolean,
         public isSelected: boolean,
         public index: PageIndex
-    ) {
-        this.label = label; // DEV:  check later, if needed at all
-    }
+    ) {}
 }
 
 export function getInitialMainMenuItems() {
