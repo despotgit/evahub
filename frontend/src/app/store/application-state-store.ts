@@ -5,9 +5,7 @@ import {
     EvahubMainMenuItem,
     EvahubSidenavMenuItem,
     PageIndexEnum,
-    PageIndexDictionary,
-    capitalizeWord,
-    getDocumentTypeAsStringFromNumber
+    capitalizeWord
 } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument } from "../models/EvahubDocument";
@@ -79,7 +77,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
             let reports = arr[3];
             let checks = arr[4];
 
-            let theDocs = [new Log()];
+            let theDocs = [];
             switch (cpi) {
                 case PageIndexEnum.LOGS_PAGE:
                     theDocs = logs;
