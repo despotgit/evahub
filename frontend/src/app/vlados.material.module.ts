@@ -1,39 +1,77 @@
 import { NgModule } from "@angular/core";
-import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSliderModule } from "@angular/material/slider";
-import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
 import { MatExpansionModule } from "@angular/material/expansion";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatIconModule } from "@angular/material/icon";
-import { MatLegacyMenuModule as MatMenuModule } from "@angular/material/legacy-menu";
-import { MatGridListModule } from "@angular/material/grid-list";
-import { MatCardModule } from "@angular/material/card";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { ReactiveFormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { OverlayModule } from "@angular/cdk/overlay";
+import { CdkTreeModule } from "@angular/cdk/tree";
+import { PortalModule } from "@angular/cdk/portal";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatCardModule } from "@angular/material/card";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatRippleModule } from "@angular/material/core";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatListModule } from "@angular/material/list";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSelectModule } from "@angular/material/select";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatSortModule } from "@angular/material/sort";
+import { MatTableModule } from "@angular/material/table";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatTreeModule } from "@angular/material/tree";
+import { MatBadgeModule } from "@angular/material/badge";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 let modules = [
-    MatFormFieldModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSliderModule,
-    MatSidenavModule,
-    MatInputModule,
-    MatExpansionModule,
-    MatDatepickerModule,
-    MatIconModule,
-    MatMenuModule,
-    MatGridListModule,
-    MatCardModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatProgressBarModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatProgressBarModule,
+    MatSliderModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatDatepickerModule,
+    MatTooltipModule,
+    CdkTreeModule,
+    MatAutocompleteModule,
+    MatRadioModule,
+    MatButtonToggleModule,
+    MatTreeModule,
+    OverlayModule,
+    PortalModule,
+    MatBadgeModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatRippleModule,
+    //MatListModule // this one causes styles break
+    MatCheckboxModule,
+    MatChipsModule
 ];
 
 @NgModule({
