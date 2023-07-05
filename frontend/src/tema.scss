@@ -1,0 +1,51 @@
+@use "@angular/material" as mat;
+@import "common.scss";
+@include mat.all-legacy-component-typographies();
+@include mat.core();
+@include mat.legacy-core();
+
+$my-primary: mat.define-palette(mat.$orange-palette, 500);
+$my-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
+$my-warn: mat.define-palette(mat.$red-palette, A200, A100, A400);
+
+$tema: mat.define-light-theme(
+    (
+        color: (
+            primary: $my-primary,
+            accent: $my-accent,
+            warn: $my-warn
+        ),
+        density: 0
+    )
+);
+
+$power-primary: mat.define-palette(mat.$indigo-palette);
+$power-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$power-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$power-theme: mat.define-light-theme(
+    (
+        color: (
+            primary: $power-primary,
+            accent: $power-accent,
+            warn: $power-warn
+        )
+    )
+);
+
+// Emit theme-dependent styles for common features used across multiple components.
+@include mat.core-theme($tema);
+
+// Emit styles for MatButton based on `$my-theme`. Because the configuration
+// passed to `define-light-theme` omits typography, `button-theme` will not
+// emit any typography styles.
+@include mat.button-theme($tema);
+
+@include mat.all-legacy-component-themes($tema);
+
+@include mat.all-component-themes($tema);
+@include mat.all-legacy-component-themes($tema);
