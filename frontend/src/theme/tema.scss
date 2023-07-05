@@ -6,7 +6,7 @@
 @include mat.legacy-core();
 
 //$my-primary: mat.define-palette(mat.$deep-orange-palette, 500);
-$my-primary: mat.define-palette(mat.$amber-palette, 500);
+$my-primary: mat.define-palette($evahub-main-palette, 500);
 //$my-primary: mat.define-palette(mat.$evahub-main-palette);
 
 $my-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
