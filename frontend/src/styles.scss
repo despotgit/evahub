@@ -80,7 +80,41 @@ body {
 
 .mat-mdc-raised-button.mat-primary {
     background-color: $color-button-general !important;
-    color: white;
+
+    color: $regular-text-color;
+}
+
+.mat-mdc-text-field-wrapper {
+    background-color: $global-background-color !important;
+    box-shadow: 0 0 10px $box-shadow-color !important;
+    color: $regular-text-color;
+}
+
+.box-shadow-small {
+    box-shadow: 0 0 10px $box-shadow-color !important;
+}
+
+// select field
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: $regular-text-color !important;
+}
+
+.mat-mdc-select-value {
+    color: $regular-text-color !important;
+}
+
+.mat-primary
+    .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled)
+    .mdc-list-item__primary-text {
+    color: $unselected-item-color;
+}
+
+.mdc-text-field--filled .mdc-line-ripple::after {
+    display: none !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
 }
 
 // END MATERIAL MODIFICATIONS

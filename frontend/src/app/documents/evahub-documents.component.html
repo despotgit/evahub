@@ -11,7 +11,7 @@
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
             <div *ngIf="asyncData.displayGraph" class="document-graph">
-                <mat-form-field appearance="fill">
+                <mat-form-field class="box-shadow-small" appearance="fill">
                     <mat-label>Select graph dataset</mat-label>
                     <mat-select
                         [formControl]="graphDatasetsFormControl"
