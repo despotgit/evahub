@@ -39,7 +39,7 @@
                             }
                         ],
                         "styles": [
-                            "src/tema.scss",
+                            "src/theme/tema.scss",
                             "src/styles.scss",
                             {
                                 "input": "node_modules/@ionic/angular/css/core.css"
