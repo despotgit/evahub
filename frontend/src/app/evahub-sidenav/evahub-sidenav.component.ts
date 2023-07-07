@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angu
 
 import { EvahubSidenavMenuItem } from "../common/constants";
 import { of } from "rxjs";
+import { DeleteDocumentConfirmationDialogComponent } from "../dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
+import { Dialog } from "@angular/cdk/dialog";
 
 @Component({
     selector: "evahub-sidenav",
@@ -24,7 +26,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
         itemId;
     }>();
 
-    constructor() {
+    constructor(private dialog: Dialog) {
         //
     }
 
@@ -37,6 +39,20 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
     }
 
     deleteClicked($event, iid: number) {
-        this.emitDeleteItemClicked.emit({ source: $event, itemId: iid });
+        //this.emitDeleteItemClicked.emit({ source: $event, itemId: iid });
+        this.openDocumentDeleteConfirmationDialog(iid);
+    }
+
+    openDocumentDeleteConfirmationDialog(did) {
+        this.dialog.open(DeleteDocumentConfirmationDialogComponent, {
+            minWidth: "300px",
+            data: {
+                documentId: did
+            }
+        });
+    }
+
+    deleteConfirmed($event, iid: number) {
+        //this.emitDeleteItemClicked.emit({ source: $event, itemId: iid });
     }
 }

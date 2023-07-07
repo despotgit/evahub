@@ -1,8 +1,7 @@
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
 from auth import authenticateJwt
-from db_states_broker import addDbState, deleteDbState, getDbState, setDbState
-from db_users_broker import deleteAllDbUserData, getDbUser, updateDbUser
+from db_users_broker import getDbUser, updateDbUser
 
 rest_post = Blueprint("rest_post", __name__)
 
