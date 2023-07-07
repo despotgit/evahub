@@ -1,16 +1,19 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 
 import { EvahubSidenavMenuItem } from "../common/constants";
-import { of } from "rxjs";
-import { DeleteDocumentConfirmationDialogComponent } from "../dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
-import { Dialog } from "@angular/cdk/dialog";
+import { tap } from "rxjs";
+import {
+    DeleteDocumentConfirmationDialogComponent,
+    DeleteDocumentConfirmationDialogData
+} from "../dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
+import { Dialog, DialogRef } from "@angular/cdk/dialog";
 
 @Component({
     selector: "evahub-sidenav",
     templateUrl: "./evahub-sidenav.component.html",
     styleUrls: ["./evahub-sidenav.component.scss"]
 })
-export class EvahubSidenavComponent implements OnInit, OnDestroy {
+export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     @Input()
     menuItems: EvahubSidenavMenuItem[];
 
@@ -26,13 +29,14 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
         itemId;
     }>();
 
+    deleteDialog: DialogRef;
+    deleteSubscription: any;
+
     constructor(private dialog: Dialog) {
         //
     }
 
     ngOnInit(): void {}
-
-    ngOnDestroy() {}
 
     menuItemClicked(itemId) {
         this.emitItemClicked.emit(itemId);
@@ -44,15 +48,28 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy {
     }
 
     openDocumentDeleteConfirmationDialog(did) {
-        this.dialog.open(DeleteDocumentConfirmationDialogComponent, {
+        this.deleteDialog = this.dialog.open(DeleteDocumentConfirmationDialogComponent, {
             minWidth: "300px",
             data: {
                 documentId: did
             }
         });
+
+        this.deleteSubscription = this.deleteDialog.closed
+            .pipe(
+                tap(ax => {
+                    console.log("ax is:");
+                    console.log(ax);
+
+                    if (ax == "yes") {
+                        this.emitDeleteItemClicked.emit({ source: event, itemId: did });
+                    }
+                })
+            )
+            .subscribe();
     }
 
-    deleteConfirmed($event, iid: number) {
-        //this.emitDeleteItemClicked.emit({ source: $event, itemId: iid });
+    ngOnDestroy() {
+        this.deleteSubscription.unsubscribe();
     }
 }

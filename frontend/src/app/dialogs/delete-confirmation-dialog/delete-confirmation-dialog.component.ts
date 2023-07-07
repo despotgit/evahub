@@ -1,7 +1,8 @@
-import { Component, Inject, Input } from "@angular/core";
-import { Dialog, DIALOG_DATA, DialogModule } from "@angular/cdk/dialog";
+import { Component, Inject, Input, Output, EventEmitter } from "@angular/core";
+import { Dialog, DIALOG_DATA, DialogModule, DialogRef } from "@angular/cdk/dialog";
 
 export interface DeleteDocumentConfirmationDialogData {
+    toDeleteOrNotToDelete: string;
     documentId: number;
 }
 
@@ -12,11 +13,19 @@ export interface DeleteDocumentConfirmationDialogData {
 })
 export class DeleteDocumentConfirmationDialogComponent {
     @Input() set d(d) {
-        //d: DeleteDocumentConfirmationDialogComponent {
         this.data = d;
     }
 
-    constructor(@Inject(DIALOG_DATA) public data: DeleteDocumentConfirmationDialogData) {
+    @Output() emitAnswer: EventEmitter<string> = new EventEmitter();
+
+    constructor(
+        public dialogRef: DialogRef<string>,
+        @Inject(DIALOG_DATA) public data: DeleteDocumentConfirmationDialogData
+    ) {
         //
+    }
+
+    emitIt(ans = "no") {
+        this.dialogRef.close(ans);
     }
 }

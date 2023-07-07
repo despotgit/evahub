@@ -12,6 +12,7 @@ import { EvahubDocumentsComponent } from "./documents/evahub-documents.component
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { IonicModule } from "@ionic/angular";
 import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.component";
+import { DeleteDocumentConfirmationDialogComponent } from "./dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
 import { UserFileUploadComponent } from "./user-file-upload/user-file-upload.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { MatSelectModule } from "@angular/material/select";
@@ -32,7 +33,8 @@ import { environment } from "../environments/environment";
         UserFileUploadComponent,
         MainMenuComponent,
         DocumentsGraphComponent,
-        DocumentsTextComponent
+        DocumentsTextComponent,
+        DeleteDocumentConfirmationDialogComponent
     ],
     imports: [
         BrowserModule,
