@@ -35,6 +35,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { DialogModule } from "@angular/cdk/dialog";
 
 let modules = [
     ReactiveFormsModule,
@@ -71,7 +72,8 @@ let modules = [
     MatRippleModule,
     //MatListModule // this one causes styles break
     MatCheckboxModule,
-    MatChipsModule
+    MatChipsModule,
+    DialogModule
 ];
 
 @NgModule({
