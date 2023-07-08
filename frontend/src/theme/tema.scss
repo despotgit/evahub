@@ -6,7 +6,7 @@
 @include mat.legacy-core();
 
 $chosen-palette: $evahub-light-palette;
-//$chosen-palette: mat.$yellow-palette;
+//$chosen-palette: mat.$brown-palette;
 
 $evahub-light-primary: mat.define-palette($chosen-palette, 500);
 $evahub-light-accent: mat.define-palette(mat.$blue-palette, 500);
