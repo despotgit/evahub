@@ -1,5 +1,5 @@
-Really delete the document with id {{ data.documentId }}
-<mat-card>
-    <button mat-button (click)="emitIt('yes')">Yes</button>
-    <button mat-button (click)="emitIt('no')">No</button>
-</mat-card>
+Really delete the document with id {{ data.documentId }} ?
+<div class="wrapper">
+    <button class="button-yes-no" mat-button md-button matButton (click)="emitIt('yes')">Y</button>
+    <button class="button-yes-no" mat-button md-button matButton (click)="emitIt('no')">N</button>
+</div>
