@@ -52,8 +52,9 @@ mat-card {
 }
 
 .selected-menu-item {
-    background-color: mat.get-color-from-palette($evahub-light-accent, default);
-    color: black;
+    background-color: mat.get-color-from-palette($evahub-light-primary, default);
+    //background-color: mat.get-color-from-palette(mat.$yellow-palette, default);
+    color: mat.get-color-from-palette($evahub-light-primary, default-contrast) !important;
 }
 
 .unselected-menu-item {
