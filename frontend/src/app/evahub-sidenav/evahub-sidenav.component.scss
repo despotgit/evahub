@@ -26,7 +26,7 @@ mat-card {
     display: inherit;
     position: relative;
     left: 65px;
-    background-color: $color-button-general;
+    background-color: mat.get-color-from-palette($evahub-light-accent, 400);
     color: white;
     font-weight: bolder;
     align-items: center;
