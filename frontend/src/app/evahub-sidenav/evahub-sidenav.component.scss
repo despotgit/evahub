@@ -1,4 +1,8 @@
+@use "@angular/material/theming" as theming;
+@use "@angular/material" as mat;
+
 @import "../../common.scss";
+@import "../../theme/tema.scss";
 
 .sidenav-menu-item {
     display: flex;
@@ -48,7 +52,7 @@ mat-card {
 }
 
 .selected-menu-item {
-    background-color: $selection-color;
+    background-color: mat.get-color-from-palette($evahub-light-accent, default);
     color: black;
 }
 
