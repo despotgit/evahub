@@ -38,8 +38,13 @@ body {
 }
 
 .mat-mdc-raised-button.mat-primary {
-    background-color: $color-button-general !important;
     color: white;
+}
+
+.mat-mdc-button,
+.mat-mdc-outlined-button {
+    --mat-mdc-button-persistent-ripple-color: #000;
+    --mat-mdc-button-ripple-color: $hover-color;
 }
 
 // END MATERIAL MODIFICATIONS
