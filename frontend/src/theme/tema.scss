@@ -1,6 +1,6 @@
 @use "@angular/material" as mat;
 @import "../common.scss";
-@import "./tema-palettes.scss";
+@import "./evahub-palette.scss";
 @include mat.all-legacy-component-typographies();
 @include mat.core();
 @include mat.legacy-core();
