@@ -206,7 +206,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     this.isBackendRegistrationSuccessful = false;
                     this.backendRegistrationError = d.message;
                 }
-                // DEV:  for testing purposes, reset page after the API call:
+                // DEV:  for testing purposes, don't reset page after the API call:
                 // this.store.resetRegisterPage();
 
                 this.cd.markForCheck();
