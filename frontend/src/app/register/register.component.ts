@@ -3,10 +3,8 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ElementRef,
     OnInit,
-    ViewChild,
-    forwardRef
+    ViewChild
 } from "@angular/core";
 import { Router } from "@angular/router";
 import {
@@ -18,24 +16,19 @@ import {
     Subscription,
     tap,
     switchMap,
-    of,
-    fromEvent,
-    Subject
+    fromEvent
 } from "rxjs";
-import { combineLatestWith, finalize, startWith, withLatestFrom } from "rxjs/operators";
+import { finalize } from "rxjs/operators";
 import {
-    Form,
-    FormControl,
-    NG_VALUE_ACCESSOR,
     UntypedFormBuilder,
     UntypedFormControl,
     UntypedFormGroup,
     Validators
 } from "@angular/forms";
 import { ApplicationStateStoreService } from "../store/application-state-store";
-import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndexEnum } from "../common/constants";
+import { getRegisterUrl, PageIndexEnum } from "../common/constants";
 
-import { HttpClient, HttpEventType } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 //import { MatLegacyButton as MatButton } from "@angular/material/legacy-button";
 import { MatButton } from "@angular/material/button";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
@@ -85,6 +78,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         })
     );
     isFormValid$: Observable<boolean>;
+
+    submitClicked$: Observable<any>;
 
     @ViewChild("done") done: MatButton;
 
@@ -181,15 +176,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+        this.submitClicked$ = fromEvent(this.done._elementRef.nativeElement, "click");
         this.registerSubmit();
     }
 
     registerSubmit() {
         let url;
 
-        const clicks$ = fromEvent(this.done._elementRef.nativeElement, "click");
-
-        this.registerHttpCall$ = clicks$
+        this.registerHttpCall$ = this.submitClicked$
             .pipe(
                 switchMap(a => {
                     const formData = new FormData();
@@ -224,8 +218,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     this.isBackendRegistrationSuccessful = false;
                     this.backendRegistrationError = d.message;
                 }
-                // DEV:  for testing purposes, reset page after the API call
+                // DEV:  for testing purposes, reset page after the API call:
                 // this.store.resetRegisterPage();
+
                 this.cd.markForCheck();
             });
     }
