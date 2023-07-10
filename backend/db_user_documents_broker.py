@@ -72,11 +72,11 @@ def deleteAllDbUserDocuments(username, documentType):
     return
 
 
-def deleteUserDocument(username, documentType, id):
+def deleteUserDocument(id, username, documentType):
     tableName = documentType + "s"
     idField = documentType + "_id"
 
-    results = executeCustomQuery(
+    query = (
         "delete from "
         + tableName
         + " where username = "
@@ -86,6 +86,11 @@ def deleteUserDocument(username, documentType, id):
         + " = "
         + id
     )
+
+    print("query is:")
+    print(query)
+
+    results = executeCustomQuery(query)
 
     return results
 

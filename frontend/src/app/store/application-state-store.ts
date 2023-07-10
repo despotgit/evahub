@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { map, Observable, withLatestFrom, shareReplay, observeOn, asyncScheduler } from "rxjs";
 import {
+    EvahubDocumentTypeWordToNumber,
     EvahubMainMenuItem,
     EvahubSidenavMenuItem,
     PageIndexEnum,
@@ -26,6 +27,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     );
     currentDocumentId$: Observable<number> = this.select(
         state => state.currentUserSession.currentDocumentId
+    );
+    currentDocumentType$: Observable<EvahubDocumentTypeWordToNumber> = this.select(
+        state => state.currentUserSession.currentDocumentType
     );
 
     // REGISTER PAGE
@@ -117,6 +121,10 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     updateCurrentDocumentId(id: number) {
         updateState(this, "currentUserSession", "currentDocumentId", id);
+    }
+
+    updateCurrentDocumentType(type: EvahubDocumentTypeWordToNumber) {
+        updateState(this, "currentUserSession", "currentDocumentType", type);
     }
 
     // REGISTER PAGE:

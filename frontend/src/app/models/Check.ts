@@ -1,4 +1,4 @@
-import { EVAHUB_DOCUMENT_TYPE_CHECK, EvahubDocumentTypeAsString } from "../common/constants";
+import { EVAHUB_DOCUMENT_TYPE_CHECK } from "../common/constants";
 
 // CHECKS:
 export class Check {

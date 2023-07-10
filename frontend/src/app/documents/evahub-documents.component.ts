@@ -52,7 +52,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         map(a => {
             let pageName = getPageNameFromPageIndex(a);
             console.log("pageName is: ", pageName);
-            if (pageName == "report") {
+            if (pageName.toLowerCase() == "report") {
                 this.displayGraph = true;
                 return true;
             } else {

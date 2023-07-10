@@ -43,7 +43,6 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     }
 
     deleteClicked($event, iid: number) {
-        //this.emitDeleteItemClicked.emit({ source: $event, itemId: iid });
         this.openDocumentDeleteConfirmationDialog(iid);
     }
 
@@ -57,11 +56,11 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
 
         this.deleteSubscription = this.deleteDialog.closed
             .pipe(
-                tap(ax => {
-                    console.log("ax is:");
-                    console.log(ax);
+                tap(x => {
+                    console.log("x is:");
+                    console.log(x);
 
-                    if (ax == "yes") {
+                    if (x == "yes") {
                         this.emitDeleteItemClicked.emit({ source: event, itemId: did });
                     }
                 })

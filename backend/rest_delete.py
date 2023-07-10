@@ -1,14 +1,23 @@
 from flask import Blueprint, json, request
 from auth import authenticateJwt
 from db_users_broker import deleteAllDbUserData, getDbUser
+from db_user_documents_broker import deleteUserDocument
 
 rest_delete = Blueprint("rest_delete", __name__)
 
 
 # Delete a document (by username, and document id)
-@rest_delete.route("/document/delete", methods=["DELETE"])
-# @rest_delete.route("/document/<documentId>/<username>", methods=["DELETE"])
-def deleteDocument():
+@rest_delete.route(
+    "/document/id/<documentId>/username/<username>/document-type/<documentType>",
+    methods=["DELETE"],
+)
+def deleteDocument(documentId, username, documentType):
+    print("in deleteDocument")
+
+    print("documentId is:" + documentId)
+    print("username is:" + username)
+    print("documentType is:" + documentType)
+
     r = json.loads(request.data.decode("UTF-8"))
     username = r["username"]
 
@@ -28,13 +37,13 @@ def deleteDocument():
             "message": "User not found in DB.",
         }
     else:
-        deleteAllDbUserData(username)
+        deleteUserDocument(documentId, username, documentType)
 
         # Return response
         response = {
             "authenticated": True,
             "status": "ok",
-            "message": "All user data successfully deleted.",
+            "message": "Document with id " + documentId + " is  successfully deleted.",
             "username": username,
         }
 

@@ -13,11 +13,9 @@ export class RestApiService {
         return this.httpClient.get(url);
     }
 
-    /*
-    deleteDocument(documentType, documentId) {
-        let url = `${environment.baseApiBackendUrl}/rest/delete/documents/type/${docTypeToLower}/id/${username}`;
+    deleteDocument(documentId: number, username: string, documentType: string) {
+        let url = `${environment.baseApiBackendUrl}/rest/delete/document/id/${documentId}/username/${username}/document-type/${documentType}`;
 
-        return this.httpClient.get(url);
+        return this.httpClient.delete(url);
     }
-    */
 }
