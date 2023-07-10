@@ -6,7 +6,7 @@ import config
 rest = Blueprint("rest", __name__)
 
 
-if True:  # DEV: for testing purposes, skip CORS check completely
+if False:  # DEV: for testing purposes, skip CORS check completely
 
     @rest.before_request
     @jwt_required(locations=["headers"])

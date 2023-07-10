@@ -79,9 +79,9 @@ def deleteUserDocument(id, username, documentType):
     query = (
         "delete from "
         + tableName
-        + " where username = "
+        + " where username = '"
         + str(username)
-        + " and "
+        + "' and "
         + idField
         + " = "
         + id

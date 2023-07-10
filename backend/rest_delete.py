@@ -12,40 +12,38 @@ rest_delete = Blueprint("rest_delete", __name__)
     methods=["DELETE"],
 )
 def deleteDocument(documentId, username, documentType):
-    print("in deleteDocument")
-
-    print("documentId is:" + documentId)
-    print("username is:" + username)
-    print("documentType is:" + documentType)
-
-    r = json.loads(request.data.decode("UTF-8"))
-    username = r["username"]
-
     authentication = authenticateJwt(username)
 
     if not authentication["authenticated"]:
         return authentication
 
-    user = getDbUser(username)
+    # DEV:  check why this throws an error:
+    # START HERE
+    #
+    # user = getDbUser(username)
 
-    if user == None:
-        print("User not found in DB")
+    # if user == None:
+    #    print("User not found in DB")
 
-        response = {
-            "authenticated": True,
-            "status": "error",
-            "message": "User not found in DB.",
-        }
-    else:
-        deleteUserDocument(documentId, username, documentType)
+    #    response = {
+    #        "authenticated": True,
+    #        "status": "error",
+    #        "message": "User not found in DB.",
+    #    }
+    # else:
+    #    deleteUserDocument(documentId, username, documentType)
+    #
+    # END HERE
 
-        # Return response
-        response = {
-            "authenticated": True,
-            "status": "ok",
-            "message": "Document with id " + documentId + " is  successfully deleted.",
-            "username": username,
-        }
+    deleteUserDocument(documentId, username, documentType)
+
+    # Return response
+    response = {
+        "authenticated": True,
+        "status": "ok",
+        "message": "Document with id " + documentId + " is successfully deleted.",
+        "username": username,
+    }
 
     response = json.jsonify(response)
     response.headers.add("Access-Control-Allow-Origin", "*")

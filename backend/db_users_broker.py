@@ -6,7 +6,6 @@ db = getDb()
 
 
 def addDbUser(u):
-
     usersCollection = db["users"]
 
     u = {
@@ -35,9 +34,9 @@ def getDbUser(username):
 
 def updateDbUser(username, field, value):
     usersCollection = db["users"]
-    userQuery = {"username": username}
+    uq = {"username": username}
 
-    user = usersCollection.find_one(userQuery)
+    user = usersCollection.find_one(uq)
     if user == None:
         return None
 

@@ -51,13 +51,8 @@ def getUserData(username):
 @rest_get.route("documents/type/<documentType>/username/<username>", methods=["GET"])
 def getUserDocuments(documentType, username):
     authentication = authenticateJwt(username)
-    isAuthenticated = authentication["authenticated"]
 
-    # DEV:  FOR TESTING PURPOSING NO LOGIN REQUIRED:
-    # if not isAuthenticted and False:
-
-    # DEV:  FOR REAL SITUATION YES, LOGIN IS REQUIRED:
-    if not isAuthenticated:
+    if not authentication["authenticated"]:
         return authentication
 
     userDocuments = getUploadedUserDocuments(username, documentType)
