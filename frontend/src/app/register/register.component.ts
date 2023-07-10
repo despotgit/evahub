@@ -32,6 +32,7 @@ import { HttpClient } from "@angular/common/http";
 //import { MatLegacyButton as MatButton } from "@angular/material/legacy-button";
 import { MatButton } from "@angular/material/button";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
+import { RestApiService } from "../services/rest-api.service";
 
 @Component({
     selector: "app-register",
@@ -93,8 +94,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private router: Router,
         private store: ApplicationStateStoreService,
         private formBuilder: UntypedFormBuilder,
-        private http: HttpClient,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private restClient: RestApiService
     ) {
         this.theForm = this.formBuilder.group({
             registerUsernameFormControl: ["", [Validators.required]],
@@ -180,23 +181,16 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.registerHttpCall$ = this.submitClicked$
             .pipe(
                 switchMap(a => {
-                    const formData = new FormData();
-
-                    formData.append("username", this.registrationData.registerUsername);
-                    formData.append("password", this.registrationData.registerPassword);
-                    formData.append("firstLastName", this.registrationData.firstLastName);
-                    formData.append("email", this.registrationData.email);
-
-                    console.log("******** formData is:", formData);
-
-                    let url = getRegisterUrl();
-                    //console.log("aaaand url is:", url);
-
-                    return this.http.post(url, formData);
+                    return this.restClient.registerUser(
+                        this.registrationData.registerUsername,
+                        this.registrationData.registerPassword,
+                        this.registrationData.firstLastName,
+                        this.registrationData.email
+                    );
                 }),
                 finalize(() => {
                     //console.log("step 3, in finalize");
-                    //this.reset();
+                    //this.registerHttpCall$ = null;
                     this.unsubscribeFromRegisterRequest();
                 })
             )
@@ -222,7 +216,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     cancelRequest() {
         this.unsubscribeFromRegisterRequest();
 
-        this.reset();
+        this.registerHttpCall$ = null;
     }
 
     unsubscribeFromRegisterRequest() {
@@ -237,10 +231,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         } else {
             return false;
         }
-    }
-
-    reset() {
-        this.registerHttpCall$ = null;
     }
 
     ngOnDestroy() {
