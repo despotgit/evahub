@@ -1,5 +1,9 @@
 Really delete the document with id {{ data.documentId }} ?
 <div class="wrapper">
-    <button class="button-yes-no" mat-button md-button matButton (click)="emitIt('yes')">Y</button>
-    <button class="button-yes-no" mat-button md-button matButton (click)="emitIt('no')">N</button>
+    <button class="button-yes-no" mat-button md-button matButton (click)="answerClicked('yes')">
+        Y
+    </button>
+    <button class="button-yes-no" mat-button md-button matButton (click)="answerClicked('no')">
+        N
+    </button>
 </div>

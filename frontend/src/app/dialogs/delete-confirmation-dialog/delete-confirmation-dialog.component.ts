@@ -16,8 +16,6 @@ export class DeleteDocumentConfirmationDialogComponent {
         this.data = d;
     }
 
-    @Output() emitAnswer: EventEmitter<string> = new EventEmitter();
-
     constructor(
         public dialogRef: DialogRef<string>,
         @Inject(DIALOG_DATA) public data: DeleteDocumentConfirmationDialogData
@@ -25,7 +23,7 @@ export class DeleteDocumentConfirmationDialogComponent {
         //
     }
 
-    emitIt(ans = "no") {
+    answerClicked(ans = "no") {
         this.dialogRef.close(ans);
     }
 }
