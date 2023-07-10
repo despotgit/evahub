@@ -177,12 +177,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.submitClicked$ = fromEvent(this.done._elementRef.nativeElement, "click");
-        this.registerSubmit();
-    }
-
-    registerSubmit() {
-        let url;
-
         this.registerHttpCall$ = this.submitClicked$
             .pipe(
                 switchMap(a => {
@@ -195,7 +189,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
                     console.log("******** formData is:", formData);
 
-                    url = getRegisterUrl();
+                    let url = getRegisterUrl();
                     //console.log("aaaand url is:", url);
 
                     return this.http.post(url, formData);
