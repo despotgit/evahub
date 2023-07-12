@@ -19,20 +19,20 @@ def deleteDocument(documentId, username, documentType):
 
     # DEV:  check why this throws an error:
     # START HERE
-    #
-    # user = getDbUser(username)
 
-    # if user == None:
-    #    print("User not found in DB")
+    user = getDbUser(username)
 
-    #    response = {
-    #        "authenticated": True,
-    #        "status": "error",
-    #        "message": "User not found in DB.",
-    #    }
-    # else:
-    #    deleteUserDocument(documentId, username, documentType)
-    #
+    if user == None:
+        print("User not found in DB")
+
+        response = {
+            "authenticated": True,
+            "status": "error",
+            "message": "User not found in DB.",
+        }
+    else:
+        deleteUserDocument(documentId, username, documentType)
+
     # END HERE
 
     deleteUserDocument(documentId, username, documentType)
