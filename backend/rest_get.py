@@ -1,6 +1,6 @@
 from flask import Blueprint, json
 from flask_jwt_extended import jwt_required
-from auth import verifyUser, authenticateJwt
+from auth import verifyUser
 from db_user_documents_broker import getUploadedUserDocuments
 from db_users_broker import getDbUser
 
