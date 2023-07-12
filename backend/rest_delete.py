@@ -1,5 +1,5 @@
 from flask import Blueprint, json, request
-from auth import authenticateJwt
+from auth import verifyUser
 from db_users_broker import deleteAllDbUserData, getDbUser
 from db_user_documents_broker import deleteUserDocument
 
@@ -12,28 +12,9 @@ rest_delete = Blueprint("rest_delete", __name__)
     methods=["DELETE"],
 )
 def deleteDocument(documentId, username, documentType):
-    authentication = authenticateJwt(username)
-
-    if not authentication["authenticated"]:
-        return authentication
-
-    # DEV:  check why this throws an error:
-    # START HERE
-
-    user = getDbUser(username)
-
-    if user == None:
-        print("User not found in DB")
-
-        response = {
-            "authenticated": True,
-            "status": "error",
-            "message": "User not found in DB.",
-        }
-    else:
-        deleteUserDocument(documentId, username, documentType)
-
-    # END HERE
+    v = verifyUser(username)
+    if v != True:
+        return v
 
     deleteUserDocument(documentId, username, documentType)
 

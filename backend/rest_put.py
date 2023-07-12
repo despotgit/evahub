@@ -1,10 +1,9 @@
 import os
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
-from auth import authenticateJwt
+from auth import verifyUser
 from db import executeCustomQuery
 from werkzeug.utils import secure_filename
-from auth import authenticateJwt
 from common import getUserDocumentsDir
 
 rest_put = Blueprint("rest_put", __name__)
@@ -25,11 +24,9 @@ def uploadDocument(documentType, username):
     print("type is:")
     print(documentType)
 
-    authentication = authenticateJwt(username)
-
-    if not authentication["authenticated"]:
-        print("Not authenticated for the requested operation")
-        return authentication
+    v = verifyUser(username)
+    if v != True:
+        return v
 
     f = request.files["file"]
 

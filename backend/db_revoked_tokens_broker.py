@@ -7,7 +7,6 @@ db = getDb()
 
 
 def addRevokedToken(username, jwt, t):
-
     usersCollection = db["users"]
 
     t = {"username": username, "is-revoked-token": True, "jwt": jwt, "revoked-at": t}

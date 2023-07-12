@@ -1,14 +1,12 @@
 import datetime
 import time
-import jwt
+from db_users_broker import getDbUser
 import config
 import bcrypt
 from flask import request, Blueprint
 from db_revoked_tokens_broker import isTokenRevoked
 from flask import Blueprint, json, request
 from flask_jwt_extended import (
-    jwt_required,
-    get_jwt_identity,
     create_access_token,
     decode_token,
 )
@@ -80,7 +78,6 @@ def register():
 # create_access_token() function is used to actually generate the JWT.
 @auth.route("/login", methods=["POST"])
 def login():
-
     isPostman = False
 
     if not isPostman:
@@ -155,7 +152,6 @@ def getTest():
 # Check if JWT is genuine and belongs to the user for which the resource is requested
 # (i.e. the argument "username" has to be the same as the username in JWT)
 def authenticateJwt(username):
-
     auth_header = request.headers.get("Authorization")
     if auth_header:
         jwt_token = auth_header.split(" ")[1]
@@ -173,7 +169,6 @@ def authenticateJwt(username):
     # print(decodedToken)
 
     if decodedToken["sub"] != username:
-
         return {
             "status": "error",
             "authenticated": False,
@@ -217,6 +212,33 @@ def authenticateJwt(username):
             "message": "Token successfully verified for given user.",
             "decodedToken": decodedToken,
         }
+
+
+# Verify:
+# 1. User's jwt is synced with username from the request
+# 2. User exists in the database
+def verifyUser(username) -> any:
+    authentication = authenticateJwt(username)
+
+    if not authentication["authenticated"]:
+        return authentication
+
+    user = getDbUser(username)
+
+    if user == None:
+        print("User not found in DB")
+
+        response = {
+            "authenticated": True,
+            "status": "error",
+            "message": "User not found in DB.",
+        }
+
+        response = json.jsonify(response)
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
+    else:
+        return True
 
 
 # Authorization method, based on the decoded token, decide if the user's domain

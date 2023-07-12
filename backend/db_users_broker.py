@@ -1,4 +1,5 @@
 import time
+from db import executeCustomQuery
 
 from db_config import getDb
 
@@ -22,14 +23,13 @@ def addDbUser(u):
 
 
 def getDbUser(username):
-    usersCollection = db["users"]
-    uq = {"username": username}
+    q = "select * from users where username='" + str(username) + "'"
+    results = executeCustomQuery(q, True)
 
-    user = usersCollection.find_one(uq)
-    if user == None:
-        return None
-    else:
-        return user
+    print("results are:")
+    print(results)
+
+    return results
 
 
 def updateDbUser(username, field, value):
