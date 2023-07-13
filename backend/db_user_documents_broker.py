@@ -37,9 +37,6 @@ def getUploadedUserDocuments(username, documentType):
         + "'"
     )
 
-    # print("results are:")
-    # print(results)
-
     toReturn = []
     for r in results:
         dir = getUserDocumentsDir(documentType, username)

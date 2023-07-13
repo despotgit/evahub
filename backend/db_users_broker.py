@@ -26,9 +26,6 @@ def getDbUser(username):
     q = "select * from users where username='" + str(username) + "'"
     results = executeCustomQuery(q, True)
 
-    print("results are:")
-    print(results)
-
     return results
 
 
