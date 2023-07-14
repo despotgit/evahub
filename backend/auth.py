@@ -212,7 +212,7 @@ def authenticateJwt(username):
 
 
 # Verify:
-# 1. User's jwt is synced with username from the request
+# 1. The given username is equal to the username extracted from the jwt
 # 2. User exists in the database
 def verifyUser(username):
     authentication = authenticateJwt(username)
