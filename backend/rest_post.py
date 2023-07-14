@@ -20,7 +20,7 @@ def before_request():
 @rest_post.route("/user/set/<username>", methods=["POST"])
 def setUserData(username):
     v = verifyUser(username)
-    if v["verified"] != True:
+    if not v["verified"]:
         return formatResponse(v)
 
     r = json.loads(request.data.decode("UTF-8"))

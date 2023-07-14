@@ -21,11 +21,8 @@ def before_request():
     "/document/documentType/<documentType>/username/<username>", methods=["PUT"]
 )
 def uploadDocument(documentType, username):
-    print("type is:")
-    print(documentType)
-
     v = verifyUser(username)
-    if v["verified"] != True:
+    if not v["verified"]:
         return formatResponse(v)
 
     f = request.files["file"]

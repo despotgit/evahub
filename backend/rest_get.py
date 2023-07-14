@@ -20,7 +20,7 @@ def before_request():
 @rest_get.route("/user/username/<username>", methods=["GET"])
 def getUserData(username):
     v = verifyUser(username)
-    if v["verified"] != True:
+    if not v["verified"]:
         return formatResponse(v)
 
     user = getDbUser(username)
@@ -39,7 +39,7 @@ def getUserData(username):
 @rest_get.route("documents/type/<documentType>/username/<username>", methods=["GET"])
 def getUserDocuments(documentType, username):
     v = verifyUser(username)
-    if v["verified"] != True:
+    if not v["verified"]:
         return formatResponse(v)
 
     userDocuments = getUploadedUserDocuments(username, documentType)

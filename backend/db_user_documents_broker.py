@@ -73,7 +73,18 @@ def deleteUserDocument(id, username, documentType):
     tableName = documentType + "s"
     idField = documentType + "_id"
 
-    query = (
+    sq = (
+        "select path from "
+        + tableName
+        + " where username = '"
+        + str(username)
+        + "' and "
+        + idField
+        + "="
+        + id
+    )
+
+    dq = (
         "delete from "
         + tableName
         + " where username = '"
@@ -87,9 +98,9 @@ def deleteUserDocument(id, username, documentType):
     print("query is:")
     print(query)
 
-    results = executeCustomQuery(query)
+    res = executeCustomQuery(dq)
 
-    return results
+    return res
 
 
 def getLogContent(logLocation):
