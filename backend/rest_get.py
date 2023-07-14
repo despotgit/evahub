@@ -1,6 +1,7 @@
 from flask import Blueprint, json
 from flask_jwt_extended import jwt_required
 from auth import verifyUser
+from auth import formatResponse
 from db_user_documents_broker import getUploadedUserDocuments
 from db_users_broker import getDbUser
 
@@ -19,8 +20,8 @@ def before_request():
 @rest_get.route("/user/username/<username>", methods=["GET"])
 def getUserData(username):
     v = verifyUser(username)
-    if v != True:
-        return v
+    if v["verified"] != True:
+        return formatResponse(v)
 
     user = getDbUser(username)
 
@@ -31,18 +32,15 @@ def getUserData(username):
         "message": "User retrieved successfully",
     }
 
-    response = json.jsonify(response)
-
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return formatResponse(response)
 
 
 # Get user's documents (by username and document type)
 @rest_get.route("documents/type/<documentType>/username/<username>", methods=["GET"])
 def getUserDocuments(documentType, username):
     v = verifyUser(username)
-    if v != True:
-        return v
+    if v["verified"] != True:
+        return formatResponse(v)
 
     userDocuments = getUploadedUserDocuments(username, documentType)
 
@@ -63,7 +61,4 @@ def getUserDocuments(documentType, username):
             "message": "Documents retrieved successfully.",
         }
 
-    response = json.jsonify(response)
-
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return formatResponse(response)

@@ -1,6 +1,6 @@
 from flask import Blueprint, json, request
 from auth import verifyUser
-from db_users_broker import deleteAllDbUserData, getDbUser
+from auth import formatResponse
 from db_user_documents_broker import deleteUserDocument
 
 rest_delete = Blueprint("rest_delete", __name__)
@@ -13,8 +13,8 @@ rest_delete = Blueprint("rest_delete", __name__)
 )
 def deleteDocument(documentId, username, documentType):
     v = verifyUser(username)
-    if v != True:
-        return v
+    if v["verified"] != True:
+        return formatResponse(v)
 
     deleteUserDocument(documentId, username, documentType)
 
@@ -26,14 +26,11 @@ def deleteDocument(documentId, username, documentType):
         "username": username,
     }
 
-    response = json.jsonify(response)
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return formatResponse(response)
 
 
 # Delete user (by username)
 @rest_delete.route("/user/<username>", methods=["DELETE"])
 def deleteUser():
-    response = json.jsonify({})
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    r = {}
+    return formatResponse(r)

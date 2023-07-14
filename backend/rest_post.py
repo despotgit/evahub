@@ -1,6 +1,6 @@
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
-from auth import verifyUser
+from auth import verifyUser, formatResponse
 from db_users_broker import getDbUser, updateDbUser
 
 rest_post = Blueprint("rest_post", __name__)
@@ -20,8 +20,8 @@ def before_request():
 @rest_post.route("/user/set/<username>", methods=["POST"])
 def setUserData(username):
     v = verifyUser(username)
-    if v != True:
-        return v
+    if v["verified"] != True:
+        return formatResponse(v)
 
     r = json.loads(request.data.decode("UTF-8"))
     updateDbUser(username, r["field"], r["value"])
@@ -35,6 +35,4 @@ def setUserData(username):
         "user": user,
     }
 
-    response = json.jsonify(response)
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return formatResponse(response)

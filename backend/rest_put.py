@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
-from auth import verifyUser
+from auth import verifyUser, formatResponse
 from db import executeCustomQuery
 from werkzeug.utils import secure_filename
 from common import getUserDocumentsDir
@@ -25,8 +25,8 @@ def uploadDocument(documentType, username):
     print(documentType)
 
     v = verifyUser(username)
-    if v != True:
-        return v
+    if v["verified"] != True:
+        return formatResponse(v)
 
     f = request.files["file"]
 
@@ -66,6 +66,4 @@ def uploadDocument(documentType, username):
         "message": "File uploaded.",
     }
 
-    response = json.jsonify(response)
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return formatResponse(response)
