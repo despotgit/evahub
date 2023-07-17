@@ -10,7 +10,7 @@ db = getDb()
 
 def addDbUserDocument(finalFilename, username):
     res = executeCustomQuery(
-        "insert into logs (`log_name`,`log_filename`,`username`) values ('"
+        "insert into logs (`log_name`,`filepath`,`username`) values ('"
         + finalFilename[:25]
         + "', '"
         + finalFilename
@@ -25,21 +25,22 @@ def getUploadedUserDocuments(username, documentType):
     tableName = documentType + "s"
     idField = documentType + "_id"
     nameField = documentType + "_name"
-    filenameField = documentType + "_filename"
 
-    results = executeCustomQuery(
+    q = (
         "select "
         + idField
         + ", "
         + nameField
-        + ", "
-        + filenameField
-        + " from "
+        + ", filepath from "
         + tableName
         + " where username = '"
         + str(username)
         + "'"
     )
+
+    print("q is:" + q)
+
+    results = executeCustomQuery(q)
 
     toReturn = []
     for r in results:

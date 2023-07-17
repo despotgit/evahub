@@ -18,6 +18,29 @@ def deleteDocument(documentId, username, documentType):
 
     deleteUserDocument(documentId, username, documentType)
 
+    sq = (
+        "select filepath from "
+        + tableName
+        + " where username = '"
+        + str(username)
+        + "' and "
+        + idField
+        + "="
+        + id
+    )
+
+    searchRes = executeCustomQuery(sq)
+
+    # finalFilename, userDir, documentFullPath = getDocumentFileInfo(
+    #    documentType, username, f.filename
+    # )
+
+    print("sq res[0] is:" + str(searchRes[0]))
+
+    print("sq is:" + sq)
+
+    getDocumentFileInfo
+
     # Return response
     response = {
         "authenticated": True,
