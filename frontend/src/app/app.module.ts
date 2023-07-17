@@ -22,6 +22,7 @@ import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { documentsReducer } from "./store/reducers/documents.reducer";
 import { environment } from "../environments/environment";
+import { GearsSpinnerComponent } from "./gears-spinner/gears-spinner.component";
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { environment } from "../environments/environment";
         MainMenuComponent,
         DocumentsGraphComponent,
         DocumentsTextComponent,
-        DeleteDocumentConfirmationDialogComponent
+        DeleteDocumentConfirmationDialogComponent,
+        GearsSpinnerComponent
     ],
     imports: [
         BrowserModule,
