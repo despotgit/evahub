@@ -1,7 +1,8 @@
 from flask import Blueprint, json, request
 from auth import verifyUser
 from auth import formatResponse
-from db_user_documents_broker import deleteUserDocument
+from file_system_manager import removeFile
+from db_user_documents_broker import getDocumentFilepath, deleteUserDocumentFromDb
 
 rest_delete = Blueprint("rest_delete", __name__)
 
@@ -16,30 +17,13 @@ def deleteDocument(documentId, username, documentType):
     if not v["verified"]:
         return formatResponse(v)
 
-    deleteUserDocument(documentId, username, documentType)
+    deleteUserDocumentFromDb(documentId, username, documentType)
 
-    sq = (
-        "select filepath from "
-        + tableName
-        + " where username = '"
-        + str(username)
-        + "' and "
-        + idField
-        + "="
-        + id
-    )
+    filepath = getDocumentFilepath(username, documentType, documentId)
 
-    searchRes = executeCustomQuery(sq)
+    print("filepath is:" + filepath)
 
-    # finalFilename, userDir, documentFullPath = getDocumentFileInfo(
-    #    documentType, username, f.filename
-    # )
-
-    print("sq res[0] is:" + str(searchRes[0]))
-
-    print("sq is:" + sq)
-
-    getDocumentFileInfo
+    # removeFile(filepath)
 
     # Return response
     response = {

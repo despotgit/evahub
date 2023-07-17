@@ -74,7 +74,7 @@ def deleteAllDbUserDocuments(username, documentType):
     return
 
 
-def deleteUserDocument(id, username, documentType):
+def deleteUserDocumentFromDb(username, documentType, id):
     tableName = documentType + "s"
     idField = documentType + "_id"
 
@@ -89,13 +89,29 @@ def deleteUserDocument(id, username, documentType):
         + id
     )
 
-    print("query is:")
-    print(dq)
+    # print("query is:")
+    # print(dq)
 
-    # deleteRes = executeCustomQuery(dq)
+    deleteRes = executeCustomQuery(dq)
 
-    # return deleteRes
+    return deleteRes
 
 
-def getLogContent(logLocation):
-    return ""
+def getDocumentFilepath(username, documentType, id):
+    tableName = documentType + "s"
+    idField = documentType + "_id"
+
+    sq = (
+        "select filepath from "
+        + tableName
+        + " where username = '"
+        + str(username)
+        + "' and "
+        + idField
+        + "="
+        + id
+    )
+
+    res = executeCustomQuery(sq)
+
+    return res

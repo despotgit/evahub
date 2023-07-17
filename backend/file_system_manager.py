@@ -1,5 +1,5 @@
 import os
 
 
-def removeFile(filename):
-    os.remove(filename)
+def removeFile(filepath):
+    os.remove(filepath)
