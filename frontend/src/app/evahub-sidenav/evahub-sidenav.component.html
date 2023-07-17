@@ -10,4 +10,6 @@
         </mat-list-item>
     </mat-card>
 </mat-list>
-<div *ngIf="menuItems.length == 0">faruk loading</div>
+<div class="spinner-wrapper" *ngIf="menuItems.length == 0">
+    <app-gears-spinner [gearsSpinnerWidth]="150"></app-gears-spinner>
+</div>

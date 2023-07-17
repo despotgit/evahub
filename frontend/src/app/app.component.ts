@@ -54,12 +54,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     userChecks$: Observable<Check[]> = this.store.userChecks$;
     userLogs$: Observable<Log[]> = this.store.userLogs$;
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
-        tap(a => {
-            // first reset the sidenav menu, or put spinner while it loads
+        tap(_ => {
+            // first reset the sidenav menu, and put spinner while it loads
             this.store.resetSidenavMenuItems();
         }),
         distinctUntilChanged(),
-        debounceTime(100),
+        debounceTime(60000),
         tap(a => {
             // var s is a singularDocumentTypeName
             const s: string = getPageNameFromPageIndex(a);
