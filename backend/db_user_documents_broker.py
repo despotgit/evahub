@@ -8,9 +8,17 @@ import json
 db = getDb()
 
 
-def addDbUserDocument(username, documentType):
-    results = executeCustomQuery("insert into " + documentType + "s values()")
-    return
+def addDbUserDocument(finalFilename, username):
+    res = executeCustomQuery(
+        "insert into logs (`log_name`,`log_filename`,`username`) values ('"
+        + finalFilename[:25]
+        + "', '"
+        + finalFilename
+        + "', '"
+        + username
+        + "')"
+    )
+    return res
 
 
 def getUploadedUserDocuments(username, documentType):

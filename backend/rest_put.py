@@ -2,6 +2,7 @@ import os
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
 from auth import verifyUser, formatResponse
+from db_user_documents_broker import addDbUserDocument
 from db import executeCustomQuery
 from common import getDocumentFileInfo
 
@@ -26,7 +27,7 @@ def uploadDocument(documentType, username):
 
     f = request.files["file"]
 
-    finalFilename, userDir, documentFullPath = getDocumentFileInfo(
+    finalFilename, userDir, uploadLocation = getDocumentFileInfo(
         documentType, username, f.filename
     )
 
@@ -36,8 +37,6 @@ def uploadDocument(documentType, username):
         os.mkdir(userDir)
         # print("dir created")
 
-    uploadLocation = documentFullPath
-
     print("uploadLocation is:")
     print(uploadLocation)
 
@@ -45,15 +44,7 @@ def uploadDocument(documentType, username):
     print(f)
     f.save(uploadLocation)
 
-    executeCustomQuery(
-        "insert into logs (`log_name`,`log_filename`,`username`) values ('"
-        + finalFilename[:25]
-        + "', '"
-        + finalFilename
-        + "', '"
-        + username
-        + "')"
-    )
+    addDbUserDocument(finalFilename, username)
 
     response = {
         "authenticated": True,
