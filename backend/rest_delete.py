@@ -12,8 +12,9 @@ rest_delete = Blueprint("rest_delete", __name__)
     methods=["DELETE"],
 )
 def deleteDocument(documentId, username, documentType):
-    if verifyUser(username)["verified"] != True:
-        return formatResponse(verifyUser(username))
+    v = verifyUser(username)
+    if not v["verified"]:
+        return formatResponse(v)
 
     deleteUserDocument(documentId, username, documentType)
 
