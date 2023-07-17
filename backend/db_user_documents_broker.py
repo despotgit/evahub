@@ -13,10 +13,6 @@ def addDbUserDocument(username, documentType):
     return
 
 
-def getDbUserDocument(username, documentId):
-    return
-
-
 def getUploadedUserDocuments(username, documentType):
     tableName = documentType + "s"
     idField = documentType + "_id"
@@ -89,7 +85,11 @@ def deleteUserDocument(id, username, documentType):
 
     searchRes = executeCustomQuery(sq)
 
-    # print("sq res is:" + searchRes)
+    # finalFilename, userDir, documentFullPath = getDocumentFileInfo(
+    #    documentType, username, f.filename
+    # )
+
+    print("sq res[0] is:" + str(searchRes[0]))
 
     print("sq is:" + sq)
 
@@ -107,7 +107,7 @@ def deleteUserDocument(id, username, documentType):
     print("query is:")
     print(dq)
 
-    deleteRes = executeCustomQuery(dq)
+    # deleteRes = executeCustomQuery(dq)
 
     return deleteRes
 
