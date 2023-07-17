@@ -131,12 +131,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     shouldDisplayDocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
     menuItemClickedSubject$: Subject<any> = new Subject();
     micd$: Observable<any> = this.menuItemClickedSubject$.pipe(
-        tap(_ => {
-            // first reset the sidenav menu, and put spinner while it loads
-            this.store.updateShouldEvahubDocumentsDisplaySpinner(true);
-        }),
-        distinctUntilChanged(),
-        debounceTime(100),
         //Menu Item Clicked Derived obs.
         // distinctUntilChanged(), // this would be the other way to restrict if it's the same
         withLatestFrom(this.currentDocumentId$),
