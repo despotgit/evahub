@@ -55,6 +55,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     sidenavMenuItems$: Observable<EvahubSidenavMenuItem[]> = this.select(
         state => state.sidenav.sidenavMenuItems
     );
+    shouldDisplaySidenavSpinner$: Observable<boolean> = this.select(
+        state => state.sidenav.shouldDisplaySidenavSpinner
+    );
 
     // MAIN MENU
     mainMenuItems$: Observable<EvahubMainMenuItem[]> = this.select(
@@ -173,6 +176,10 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     updateSidenavMenuItems(sidenavMenuItems: EvahubSidenavMenuItem[]) {
         updateState(this, "sidenav", "sidenavMenuItems", sidenavMenuItems);
+    }
+
+    resetSidenavMenuItems() {
+        updateState(this, "sidenav", "sidenavMenuItems", []);
     }
 
     // MAIN MENU:

@@ -3,8 +3,7 @@ from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
 from auth import verifyUser, formatResponse
 from db import executeCustomQuery
-from werkzeug.utils import secure_filename
-from common import getUserDocumentsDir
+from common import getDocumentFileInfo
 
 rest_put = Blueprint("rest_put", __name__)
 
@@ -18,7 +17,7 @@ def before_request():
 
 # Set user data (by username, field name, and value)
 @rest_put.route(
-    "/document/documentType/<documentType>/username/<username>", methods=["PUT"]
+    "/document/document-type/<documentType>/username/<username>", methods=["PUT"]
 )
 def uploadDocument(documentType, username):
     v = verifyUser(username)
@@ -27,18 +26,17 @@ def uploadDocument(documentType, username):
 
     f = request.files["file"]
 
-    userDir = getUserDocumentsDir("log", username)
+    finalFilename, userDir, documentFullPath = getDocumentFileInfo(
+        documentType, username, f.filename
+    )
 
     if os.path.isdir(userDir):
-        print()
-        # print("exists already")
+        print("Directory exists already")
     else:
         os.mkdir(userDir)
         # print("dir created")
 
-    finalFilename = secure_filename(f.filename)
-
-    uploadLocation = userDir + "/" + finalFilename
+    uploadLocation = documentFullPath
 
     print("uploadLocation is:")
     print(uploadLocation)

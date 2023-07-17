@@ -54,6 +54,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     userChecks$: Observable<Check[]> = this.store.userChecks$;
     userLogs$: Observable<Log[]> = this.store.userLogs$;
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
+        tap(a => {
+            // first reset the sidenav menu, or put spinner while it loads
+            this.store.resetSidenavMenuItems();
+        }),
         distinctUntilChanged(),
         debounceTime(100),
         tap(a => {

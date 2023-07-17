@@ -215,7 +215,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     cancelRequest() {
         this.unsubscribeFromRegisterRequest();
-
         this.registerHttpCall$ = null;
     }
 

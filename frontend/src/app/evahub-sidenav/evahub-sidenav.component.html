@@ -1,4 +1,4 @@
-<mat-list>
+<mat-list *ngIf="menuItems.length != 0">
     <mat-card
         *ngFor="let mo of menuItems"
         [ngClass]="selectedDocumentId == mo.id ? 'selected-menu-item' : 'unselected-menu-item'"
@@ -10,3 +10,4 @@
         </mat-list-item>
     </mat-card>
 </mat-list>
+<div *ngIf="menuItems.length == 0">faruk loading</div>

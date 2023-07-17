@@ -72,9 +72,12 @@ def deleteAllDbUserDocuments(username, documentType):
 def deleteUserDocument(id, username, documentType):
     tableName = documentType + "s"
     idField = documentType + "_id"
+    pathField = documentType + "_filename"
 
     sq = (
-        "select path from "
+        "select "
+        + pathField
+        + " from "
         + tableName
         + " where username = '"
         + str(username)
@@ -83,6 +86,12 @@ def deleteUserDocument(id, username, documentType):
         + "="
         + id
     )
+
+    searchRes = executeCustomQuery(sq)
+
+    # print("sq res is:" + searchRes)
+
+    print("sq is:" + sq)
 
     dq = (
         "delete from "
@@ -96,11 +105,11 @@ def deleteUserDocument(id, username, documentType):
     )
 
     print("query is:")
-    print(query)
+    print(dq)
 
-    res = executeCustomQuery(dq)
+    deleteRes = executeCustomQuery(dq)
 
-    return res
+    return deleteRes
 
 
 def getLogContent(logLocation):

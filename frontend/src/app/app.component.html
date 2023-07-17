@@ -18,7 +18,7 @@
         <span class="title">{{ title }}</span>
         <evahub-main-menu
             *ngIf="asyncData.isLoggedIn"
-            (itemClickedEmit)="goTo($event)"
+            (mainMenuItemClickedEmit)="goTo($event)"
             [cpi]="asyncData.currentPageIndex"
             [menuItems]="asyncData.mainMenuItems"
         ></evahub-main-menu>

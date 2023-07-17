@@ -26,13 +26,13 @@ export class MainMenuComponent implements OnInit {
         this.pageSelected = cpi;
     }
 
-    @Output() itemClickedEmit: EventEmitter<any> = new EventEmitter();
+    @Output() mainMenuItemClickedEmit: EventEmitter<any> = new EventEmitter();
 
     constructor() {}
 
     ngOnInit(): void {}
 
     itemClicked(e) {
-        this.itemClickedEmit.emit(e);
+        this.mainMenuItemClickedEmit.emit(e);
     }
 }
