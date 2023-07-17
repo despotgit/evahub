@@ -8,12 +8,12 @@ import json
 db = getDb()
 
 
-def addDbUserDocument(finalFilename, username):
+def addDbUserDocument(secureFilename, username):
     res = executeCustomQuery(
-        "insert into logs (`log_name`,`filepath`,`username`) values ('"
-        + finalFilename[:25]
+        "insert into logs (`log_name`,`filename`,`username`) values ('"
+        + secureFilename[:25]
         + "', '"
-        + finalFilename
+        + secureFilename
         + "', '"
         + username
         + "')"
@@ -31,7 +31,7 @@ def getUploadedUserDocuments(username, documentType):
         + idField
         + ", "
         + nameField
-        + ", filepath from "
+        + ", filename from "
         + tableName
         + " where username = '"
         + str(username)
@@ -70,10 +70,6 @@ def getUploadedUserDocuments(username, documentType):
     return toReturn
 
 
-def deleteAllDbUserDocuments(username, documentType):
-    return
-
-
 def deleteUserDocumentFromDb(username, documentType, id):
     tableName = documentType + "s"
     idField = documentType + "_id"
@@ -97,12 +93,12 @@ def deleteUserDocumentFromDb(username, documentType, id):
     return deleteRes
 
 
-def getDocumentFilepath(username, documentType, id):
+def getDocumentFilenameFromDb(username, documentType, id):
     tableName = documentType + "s"
     idField = documentType + "_id"
 
     sq = (
-        "select filepath from "
+        "select filename from "
         + tableName
         + " where username = '"
         + str(username)
@@ -112,6 +108,6 @@ def getDocumentFilepath(username, documentType, id):
         + id
     )
 
-    res = executeCustomQuery(sq)
+    res = executeCustomQuery(sq, True)
 
     return res

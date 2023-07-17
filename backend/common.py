@@ -9,8 +9,8 @@ def getUserDocumentsDir(documentType, username):
 
 
 def getDocumentFileInfo(documentType, username, filename):
-    finalFilename = secure_filename(filename)
+    secureFilename = secure_filename(filename)
     userDir = getUserDocumentsDir(documentType, username)
-    documentFullPath = userDir + "/" + finalFilename
+    fullFileLocation = userDir + "/" + secureFilename
 
-    return finalFilename, userDir, documentFullPath
+    return secureFilename, userDir, fullFileLocation

@@ -27,7 +27,7 @@ def uploadDocument(documentType, username):
 
     f = request.files["file"]
 
-    finalFilename, userDir, uploadLocation = getDocumentFileInfo(
+    secureFilename, userDir, uploadLocation = getDocumentFileInfo(
         documentType, username, f.filename
     )
 
@@ -44,7 +44,7 @@ def uploadDocument(documentType, username):
     print(f)
     f.save(uploadLocation)
 
-    addDbUserDocument(finalFilename, username)
+    addDbUserDocument(secureFilename, username)
 
     response = {
         "authenticated": True,
