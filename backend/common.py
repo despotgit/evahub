@@ -8,9 +8,12 @@ def getUserDocumentsDir(documentType, username):
     return userDir
 
 
-def getDocumentFileInfo(documentType, username, filename):
-    secureFilename = secure_filename(filename)
+def getDocumentFileInfo(documentType, username, filename, secureFilename=False):
+    if secureFilename:
+        fn = secure_filename(filename)
+    else:
+        fn = filename
     userDir = getUserDocumentsDir(documentType, username)
-    fullFileLocation = userDir + "/" + secureFilename
+    fullFileLocation = userDir + "/" + fn
 
-    return secureFilename, userDir, fullFileLocation
+    return fn, userDir, "kurac"

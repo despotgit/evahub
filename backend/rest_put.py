@@ -28,7 +28,7 @@ def uploadDocument(documentType, username):
     f = request.files["file"]
 
     secureFilename, userDir, uploadLocation = getDocumentFileInfo(
-        documentType, username, f.filename
+        documentType, username, f.filename, True
     )
 
     if os.path.isdir(userDir):
