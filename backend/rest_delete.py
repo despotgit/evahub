@@ -21,13 +21,7 @@ def deleteDocument(documentId, username, documentType):
 
     filename = getDocumentFilenameFromDb(username, documentType, documentId)
 
-    print("filename is:")
-    print(filename[0])
-
     _, _, fullFilePath = getDocumentFileInfo(documentType, username, filename[0])
-
-    # print("fullfilepath is:")
-    # print(fullFilePath)
 
     removeFile(fullFilePath)
 
