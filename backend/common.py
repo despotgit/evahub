@@ -13,7 +13,10 @@ def getDocumentFileInfo(documentType, username, filename, secureFilename=False):
         fn = secure_filename(filename)
     else:
         fn = filename
+
+    print("fn is:")
+    print(fn[0])
     userDir = getUserDocumentsDir(documentType, username)
     fullFileLocation = userDir + "/" + fn
 
-    return fn, userDir, "kurac"
+    return fn, userDir, fullFileLocation
