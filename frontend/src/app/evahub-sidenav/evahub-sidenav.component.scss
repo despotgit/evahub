@@ -7,7 +7,8 @@
 .sidenav-menu-item {
     display: flex;
     align-items: center;
-    min-height: 70px;
+    min-height: 90px;
+    padding-right: 0px;
 }
 
 .menu-item-wrapper {
@@ -67,4 +68,11 @@ mat-card {
     padding-top: 0;
     overflow: hidden;
     padding-right: 0px;
+}
+
+.elements-wrapper {
+    display: flex;
+    div {
+        align-items: center;
+    }
 }

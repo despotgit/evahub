@@ -70,7 +70,7 @@ let modules = [
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatRippleModule,
-    //MatListModule // this one causes styles break
+    MatListModule, // this one causes styles break
     MatCheckboxModule,
     MatChipsModule,
     DialogModule
