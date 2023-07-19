@@ -1,4 +1,6 @@
 import { Component, Input } from "@angular/core";
+import { ThemePalette } from "@angular/material/core";
+import { ProgressSpinnerMode } from "@angular/material/progress-spinner";
 
 @Component({
     selector: "app-gears-spinner",
@@ -7,5 +9,10 @@ import { Component, Input } from "@angular/core";
 })
 export class GearsSpinnerComponent {
     @Input()
-    gearsSpinnerWidth: number;
+    gearsSpinnerWidth: number = 300;
+
+    color: ThemePalette = "primary";
+    mode: ProgressSpinnerMode = "indeterminate";
+
+    value = 80;
 }

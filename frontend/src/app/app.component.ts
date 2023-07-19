@@ -131,7 +131,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     shouldDisplayDocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
     menuItemClickedSubject$: Subject<any> = new Subject();
     micd$: Observable<any> = this.menuItemClickedSubject$.pipe(
-        //Menu Item Clicked Derived obs.
+        // Menu Item Clicked Derived obs.
         // distinctUntilChanged(), // this would be the other way to restrict if it's the same
         withLatestFrom(this.currentDocumentId$),
         map(([mic, cdi]) => {
@@ -139,6 +139,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             } else {
                 //console.log("mic is:", mic);
                 //console.log("cdi is:", cdi);
+                console.log("innit");
                 this.store.updateShouldEvahubDocumentsDisplaySpinner(true);
                 this.store.updateCurrentDocumentId(mic);
             }
