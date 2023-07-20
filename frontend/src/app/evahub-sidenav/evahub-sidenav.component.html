@@ -6,7 +6,16 @@
         <mat-list-item (click)="menuItemClicked(mo.id)" class="sidenav-menu-item">
             <div class="elements-wrapper">
                 <div class="document-name">{{ mo.id }} {{ mo.label }}</div>
-                <div class="delete-document" (click)="deleteClicked($event, mo.id)">DELETE</div>
+                <span class="buttons-wrapper">
+                    <div
+                        class="request-report-button"
+                        (click)="requestReportClicked($event, mo.id)"
+                    >
+                        REQUEST <br />
+                        REPORT
+                    </div>
+                    <div class="delete-document" (click)="deleteClicked($event, mo.id)">DELETE</div>
+                </span>
             </div>
         </mat-list-item>
     </mat-card>

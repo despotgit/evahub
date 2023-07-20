@@ -46,6 +46,10 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
         this.openDocumentDeleteConfirmationDialog(iid);
     }
 
+    requestReportClicked($event, iid: number) {
+        console.log("in requestReportClicked");
+    }
+
     openDocumentDeleteConfirmationDialog(did) {
         this.deleteDialog = this.dialog.open(DeleteDocumentConfirmationDialogComponent, {
             minWidth: "300px",
