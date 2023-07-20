@@ -39,13 +39,13 @@ mat-card {
 
 .delete-document {
     left: 65px;
-    background-color: mat.get-color-from-palette($evahub-light-primary, 300);
+    background-color: mat.get-color-from-palette($evahub-light-accent, 300);
     font-weight: bolder;
 }
 
 .request-report-button {
     left: 140px;
-    background-color: mat.get-color-from-palette($evahub-light-accent, 300);
+    background-color: mat.get-color-from-palette($evahub-light-primary, 300);
 }
 
 .buttons-wrapper {
