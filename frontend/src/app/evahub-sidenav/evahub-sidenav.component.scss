@@ -44,7 +44,8 @@ mat-card {
 }
 
 .request-report-button {
-    left: 140px;
+    position: absolute;
+    left: 251px;
     background-color: mat.get-color-from-palette($evahub-light-primary, 300);
 }
 
