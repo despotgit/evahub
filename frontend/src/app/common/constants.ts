@@ -85,14 +85,14 @@ export const PageIndexDictionary = {
     report: {
         pageIndex: PageIndexEnum.REPORTS_PAGE,
         isDocumentsPage: true,
-        label: "Reports",
+        label: "Report check",
         gotoParam: "report",
         isInMainMenu: true
     },
     check: {
         pageIndex: PageIndexEnum.CHECKS_PAGE,
         isDocumentsPage: true,
-        label: "Checks",
+        label: "Order report",
         gotoParam: "check",
         isInMainMenu: true
     }
