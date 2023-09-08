@@ -1,0 +1,15 @@
+flask
+flask-cors
+Pillow
+reportlab
+testresources
+pymongo
+python-cas
+pyjwt==2.1.0gunicorn
+python-dotenv
+flask_jwt_extended
+setproctitle
+pycryptodome
+bcrypt
+Flask-MySQL==1.5.2
+

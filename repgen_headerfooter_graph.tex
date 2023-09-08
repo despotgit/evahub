@@ -1,0 +1,133 @@
+%% LyX 2.3.6.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{report}
+\usepackage{mathptmx}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{lastpage} 
+\renewcommand{\headrulewidth}{0.4pt} 
+\renewcommand{\footrulewidth}{0.4pt} 
+\lhead{\$-SiteId}
+\chead{page \thepage \space of \pageref{LastPage}}
+\lfoot{\$-SiteOperator}
+\cfoot{\today}
+\rhead{Period:\$-MoniPeriod}
+\rfoot{\$-Author}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\section*{Monitoring of Storage Unit in the Grid Structure}
+\noindent \begin{center}
+\begin{tabular}{ll}
+SITE : & \$-SiteId \tabularnewline
+OPERATOR : & \$-SiteOperator \tabularnewline
+MONITORING PERIOD : & \$-MoniPeriod \tabularnewline
+EVALUATION DATE : & \$-EvaDate \tabularnewline
+\end{tabular}
+\par\end{center}
+
+\subsection*{Introduction}
+
+This report provides analysis and presentation of measured data for
+the storage system
+
+/\$-SiteId 
+
+SiteDescription 
+
+The storage unit is located at
+
+It enables installation and operation of an enlarged PV-Generator
+with 2.5 times higher peak power by means of buffering PV generation,
+ensuring the line power to stay within the limits allowed. 
+
+\noindent The report is conforming with the EC Guidelines for unified
+monitoring and performance assessement of storage-units in the grid
+structure. 
+
+\noindent Thus, it reveals energy balancing in a subgrid, characterized
+by both energy surplus and autonomy ratio. Further it quantifies and
+details contribution of the storage unit to grid control and balancing,
+and thus relief of the utility interface, resp. power line. 
+
+\noindent In the form of directed power-flows, monitoring data is
+suitable for spatial aggregation with results from other storage units
+in a common grid area. 
+
+\noindent Further to reporting for storage and distribution system
+operators, guideline conformant data and monitoring evaluation qualify
+for sharing performance experience, e.g. in the JRC's storage observatory.
+
+\subsection*{General Data}
+
+\begin{tabular}{lll}
+Storage Unit & Nominal Power/{[}MW{]}: /\$-NomStoPow & \multicolumn{1}{l}{Nominal Capacity/{[}MWh{]}: /\$-NomStoCap }\tabularnewline
+Utility Interface & Nominal Power/{[}MW{]}: /\$-NomUIPPow  & Site : /\$-SiteId \tabularnewline
+\end{tabular}
+
+\newpage
+
+\subsection*{Energetic Balances }
+
+In line with recording format from independent metering, the total
+energies in the monitoring period sum up to :\vspace{0.3cm}
+
+\begin{tabular}{lrlrl}
+ & ~~~~~~~~Input &  & ~~~~~~~~Output & \tabularnewline
+Subgrid & 17.5 & MWh & 19.5 & MWh\tabularnewline
+Utility & 30.0 & MWh & 30.0 & MWh\tabularnewline
+Storage & 28.0 & MWh & 25.0 & MWh\tabularnewline
+\end{tabular}	 
+
+\vspace{0.3cm}
+
+\noindent with the total difference between in- and outputs covering
+the storage losses.
+
+\noindent In accumulation of directed powerflows, the energy exchanges
+of the storage unit with subgrid surpluses(net generation) and deficits(net-load),
+and with the utility can be distinguished from the direct flows between
+subgrid and utility.\vspace{0.3cm}
+
+\begin{tabular}{lrl}
+net-generation to utility & ~~~~~~~~19.58 & MWh\tabularnewline
+storage from net-generation & 25.00 & MWh\tabularnewline
+storage from utility & 3.21 & MWh\tabularnewline
+storage to utility & 2.73 & MWh\tabularnewline
+storage to net-load & 25.07 & MWh\tabularnewline
+net-load from utility & 30.84 & MWh\tabularnewline
+\end{tabular}\vspace{0.3cm}
+
+
+\subsection*{Exchange Yields}
+
+Normalizing the directed powerflows, to the nominal power of the storage
+unit, is resulting in yields, comparable for units of different sizes.
+Chart 1 shows the exchange yields in their daily averages .
+
+\includegraphics[scale=0.6]{/Users/jsachau/_INITIATIVES/TecVerb_EnergieSicherheit/JRC_Sabbatical/JS_work/gIt_evahub/evahub/TestUser/JRC_GridStorage/Image_chart1}
+
+\vspace{0.3cm}
+
+\begin{center}
+chart 1 : Average DailyYields
+\par\end{center}
+
+\newpage
+\end{document}

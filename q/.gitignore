@@ -1,0 +1,11 @@
+__pycache__/
+
+# System files
+.DS_Store
+Thumbs.db
+
+documents/
+
+db_config.py
+
+
