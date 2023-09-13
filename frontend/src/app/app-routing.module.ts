@@ -7,13 +7,10 @@ import { EvahubDocumentsComponent } from "./documents/evahub-documents.component
 import { UserFileUploadComponent } from "./user-file-upload/user-file-upload.component";
 
 const routes: Routes = [
-    { path: "", redirectTo: "home", pathMatch: "full" },
+    { path: "", redirectTo: "documents/logs", pathMatch: "full" },
     { path: "login", component: LoginComponent },
     { path: "register", component: RegisterComponent },
     { path: "user-file-upload", component: UserFileUploadComponent, canActivate: [AuthGuard] },
-    //{ path: "logs", component: LogsComponent, canActivate: [AuthGuard] },
-    //{ path: "checks", component: ChecksComponent, canActivate: [AuthGuard] },
-    //{ path: "reports", component: ReportsComponent, canActivate: [AuthGuard] },
     {
         path: "documents/:documentType",
         component: EvahubDocumentsComponent,

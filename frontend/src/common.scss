@@ -5,12 +5,14 @@ $regular-rounded-border-radius: 11px;
 $small-rounded-border-radius: 8px;
 
 $global-background-color: whitesmoke;
+//$global-background-color: brown;
 
 $color-button-general: #3f51b5;
 
 // DOCUMENTS PAGE
 .mat-grid-tile-content {
     padding: 20px !important;
+    background-color: $global-background-color;
 }
 
 // BUTTONS

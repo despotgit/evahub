@@ -13,7 +13,9 @@
     } as asyncData"
 >
     <mat-toolbar>
-        <span class="title">{{ title }}</span>
+        <a href="/">
+            <span class="title">{{ title }}</span>
+        </a>
         <evahub-main-menu
             *ngIf="asyncData.isLoggedIn"
             (itemClickedEmit)="goTo($event)"
