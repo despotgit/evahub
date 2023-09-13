@@ -10,7 +10,7 @@ db = getDb()
 
 def addDbUserDocument(secureFilename, username):
     res = executeCustomQuery(
-        "insert into logs (`log_name`,`filename`,`username`) values ('"
+        "insert into logs (`log_name`,`log_filename`,`username`) values ('"
         + secureFilename[:25]
         + "', '"
         + secureFilename
@@ -25,13 +25,16 @@ def getUploadedUserDocuments(username, documentType):
     tableName = documentType + "s"
     idField = documentType + "_id"
     nameField = documentType + "_name"
+    filenameField = documentType + "_filename"
 
     q = (
         "select "
         + idField
         + ", "
         + nameField
-        + ", filename from "
+        + ", "
+        + filenameField
+        + " from "
         + tableName
         + " where username = '"
         + str(username)
@@ -96,9 +99,12 @@ def deleteUserDocumentFromDb(username, documentType, id):
 def getDocumentFilenameFromDb(username, documentType, id):
     tableName = documentType + "s"
     idField = documentType + "_id"
+    filenameField = documentType + "_filename"
 
     sq = (
-        "select filename from "
+        "select "
+        + filenameField
+        + " from "
         + tableName
         + " where username = '"
         + str(username)
