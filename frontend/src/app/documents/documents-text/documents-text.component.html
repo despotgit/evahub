@@ -1,8 +1,5 @@
-<div *ngIf="!shouldDisplaySpinner" class="doc">
-    {{ documentContent }}
-</div>
+<div *ngIf="!shouldDisplaySpinner" class="doc">{{ documentContent }}</div>
 
 <div *ngIf="shouldDisplaySpinner" class="loader-cogs">
-    <img src="../../../assets/images/loader.gif" />
-    <span>Fetching the document</span>
+    <app-gears-spinner [gearsSpinnerWidth]="350"></app-gears-spinner>
 </div>

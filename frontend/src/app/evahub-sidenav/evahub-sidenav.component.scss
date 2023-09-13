@@ -1,9 +1,14 @@
+@use "@angular/material/theming" as theming;
+@use "@angular/material" as mat;
+
 @import "../../common.scss";
+@import "../../theme/tema.scss";
 
 .sidenav-menu-item {
     display: flex;
     align-items: center;
-    min-height: 70px;
+    min-height: 90px;
+    padding-right: 0px;
 }
 
 .menu-item-wrapper {
@@ -18,38 +23,55 @@ mat-card {
     box-shadow: 0 0 10px $box-shadow-color;
 }
 
-.delete-document {
+.delete-document,
+.request-report-button {
     display: inherit;
+    float: left;
     position: relative;
-    left: 65px;
-    background-color: $color-button-general;
-    color: white;
     font-weight: bolder;
     align-items: center;
     height: 100px;
     transition: transform 400ms;
-    //overflow: hidden;
     padding-left: 15px;
     padding-right: 15px;
+    color: white;
 }
 
-.delete-document:hover {
-    transform: translateX(-60px);
+.delete-document {
+    left: 65px;
+    background-color: mat.get-color-from-palette($evahub-light-accent, 300);
+    font-weight: bolder;
+}
+
+.request-report-button {
+    position: absolute;
+    left: 251px;
+    background-color: mat.get-color-from-palette($evahub-light-primary, 300);
+}
+
+.buttons-wrapper {
+    display: inherit;
+}
+
+.buttons-wrapper:hover {
+    .delete-document {
+        transform: translateX(-65px);
+    }
+
+    .request-report-button {
+        transform: translateX(-140px);
+    }
 }
 
 .document-name {
+    float: left;
     display: inherit;
     width: -webkit-fill-available;
 }
 
-.delete-document,
-.document-name {
-    float: left;
-}
-
 .selected-menu-item {
-    background-color: $selection-color;
-    color: black;
+    background-color: mat.get-color-from-palette($evahub-light-primary, 400);
+    color: mat.get-color-from-palette($evahub-light-primary, default-contrast) !important;
 }
 
 .unselected-menu-item {
@@ -62,4 +84,11 @@ mat-card {
     padding-top: 0;
     overflow: hidden;
     padding-right: 0px;
+}
+
+.elements-wrapper {
+    display: flex;
+    div {
+        align-items: center;
+    }
 }

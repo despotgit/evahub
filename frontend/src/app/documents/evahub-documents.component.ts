@@ -1,8 +1,23 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import {
+    AfterContentChecked,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    OnInit
+} from "@angular/core";
 import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
 import { ApplicationStateStoreService } from "../store/application-state-store";
 import { ActivatedRoute } from "@angular/router";
-import { map, Observable, startWith, Subject, tap, withLatestFrom } from "rxjs";
+import {
+    debounceTime,
+    distinctUntilChanged,
+    map,
+    Observable,
+    startWith,
+    Subject,
+    tap,
+    withLatestFrom
+} from "rxjs";
 import { Log } from "../models/Log";
 import { FormControl } from "@angular/forms";
 import { GraphDataset } from "../common/datasets";
@@ -13,10 +28,10 @@ import { GraphDataset } from "../common/datasets";
     styleUrls: ["./evahub-documents.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
+export class EvahubDocumentsComponent implements OnInit {
     selectedDocument$ = this.store.selectedDocument$.pipe(
         tap(d => {
-            console.log("d is:", d);
+            //console.log("d is:", d);
             if (!d || !d["reportContent"] || !d["reportContent"]["BalDura_sub_plot"]) {
             } else {
                 this.formGraphData(d, "BalDura_sub_plot");
@@ -52,7 +67,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         map(a => {
             let pageName = getPageNameFromPageIndex(a);
             console.log("pageName is: ", pageName);
-            if (pageName == "report") {
+            if (pageName.toLowerCase() == "report") {
                 this.displayGraph = true;
                 return true;
             } else {
@@ -62,7 +77,7 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         })
     );
 
-    shouldDisplaySpinner$ = this.store.shouldDisplayDocumentSpinner$.pipe();
+    shouldDisplaydocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
 
     gdsc$: Subject<any> = new Subject(); // Graph Data Set Change
 
@@ -111,8 +126,6 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {}
 
-    ngAfterViewInit() {}
-
     onGraphDatasetChange(e) {
         this.gdsc$.next(e.value);
     }
@@ -121,8 +134,6 @@ export class EvahubDocumentsComponent implements OnInit, AfterViewInit {
         this.graphValues = [];
         this.graphLabels = [];
         if (document["reportContent"] && document["reportContent"][whichSet]) {
-            let arr = [...document["reportContent"][whichSet]];
-
             document["reportContent"][whichSet].forEach(el => {
                 this.graphLabels.push(el[0]);
                 this.graphValues.push(el[1]);

@@ -8,13 +8,17 @@ import json
 db = getDb()
 
 
-def addDbUserDocument(username, documentType):
-    results = executeCustomQuery("insert into " + documentType + "s values()")
-    return
-
-
-def getDbUserDocument(username, documentId):
-    return
+def addDbUserDocument(secureFilename, username):
+    res = executeCustomQuery(
+        "insert into logs (`log_name`,`log_filename`,`username`) values ('"
+        + secureFilename[:25]
+        + "', '"
+        + secureFilename
+        + "', '"
+        + username
+        + "')"
+    )
+    return res
 
 
 def getUploadedUserDocuments(username, documentType):
@@ -23,7 +27,7 @@ def getUploadedUserDocuments(username, documentType):
     nameField = documentType + "_name"
     filenameField = documentType + "_filename"
 
-    results = executeCustomQuery(
+    q = (
         "select "
         + idField
         + ", "
@@ -37,8 +41,9 @@ def getUploadedUserDocuments(username, documentType):
         + "'"
     )
 
-    # print("results are:")
-    # print(results)
+    print("q is:" + q)
+
+    results = executeCustomQuery(q)
 
     toReturn = []
     for r in results:
@@ -68,27 +73,47 @@ def getUploadedUserDocuments(username, documentType):
     return toReturn
 
 
-def deleteAllDbUserDocuments(username, documentType):
-    return
-
-
-def deleteUserDocument(username, documentType, id):
+def deleteUserDocumentFromDb(username, documentType, id):
     tableName = documentType + "s"
     idField = documentType + "_id"
 
-    results = executeCustomQuery(
+    dq = (
         "delete from "
         + tableName
-        + " where username = "
+        + " where username = '"
         + str(username)
-        + " and "
+        + "' and "
         + idField
         + " = "
         + id
     )
 
-    return results
+    # print("query is:")
+    # print(dq)
+
+    deleteRes = executeCustomQuery(dq)
+
+    return deleteRes
 
 
-def getLogContent(logLocation):
-    return ""
+def getDocumentFilenameFromDb(username, documentType, id):
+    tableName = documentType + "s"
+    idField = documentType + "_id"
+    filenameField = documentType + "_filename"
+
+    sq = (
+        "select "
+        + filenameField
+        + " from "
+        + tableName
+        + " where username = '"
+        + str(username)
+        + "' and "
+        + idField
+        + "="
+        + id
+    )
+
+    res = executeCustomQuery(sq, True)
+
+    return res

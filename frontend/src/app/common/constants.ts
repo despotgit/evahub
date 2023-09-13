@@ -1,28 +1,26 @@
 import { environment } from "src/environments/environment";
 
+export const EVAHUB_DOCUMENT_TYPE_UNKNOWN = 0;
 export const EVAHUB_DOCUMENT_TYPE_LOG = 1;
 export const EVAHUB_DOCUMENT_TYPE_REPORT = 2;
 export const EVAHUB_DOCUMENT_TYPE_CHECK = 3;
 
-export const enum EvahubDocumentTypeAsString {
-    EVAHUB_DOCUMENT_TYPE_LOG = "Log",
-    EVAHUB_DOCUMENT_TYPE_REPORT = "Report",
-    EVAHUB_DOCUMENT_TYPE_CHECK = "Check"
+export enum EvahubDocumentTypeWordToNumber {
+    unknown = EVAHUB_DOCUMENT_TYPE_UNKNOWN,
+    log = EVAHUB_DOCUMENT_TYPE_LOG,
+    report = EVAHUB_DOCUMENT_TYPE_REPORT,
+    check = EVAHUB_DOCUMENT_TYPE_CHECK
 }
 
-export const EvahubDocumentTypeWordToNumber = {
-    log: EVAHUB_DOCUMENT_TYPE_LOG,
-    report: EVAHUB_DOCUMENT_TYPE_REPORT,
-    check: EVAHUB_DOCUMENT_TYPE_CHECK
-};
-
 export function getDocumentTypeAsStringFromNumber(numberedDT: number) {
-    return Object.keys(EvahubDocumentTypeWordToNumber).filter(
+    return Object.keys(EvahubDocumentTypeWordToNumber).find(
         dt => numberedDT == EvahubDocumentTypeWordToNumber[dt]
     );
 }
 
-export const EvahubDocumentTypeStringArray = ["log", "report", "check"];
+export function getDocumentTypeAsNumberFromString(dt: string) {
+    return EvahubDocumentTypeWordToNumber[dt.toLowerCase()];
+}
 
 export const storedObjectName = "evahubJwt";
 
@@ -87,28 +85,21 @@ export const PageIndexDictionary = {
     report: {
         pageIndex: PageIndexEnum.REPORTS_PAGE,
         isDocumentsPage: true,
-        label: "Reports",
+        label: "Report check",
         gotoParam: "report",
         isInMainMenu: true
     },
     check: {
         pageIndex: PageIndexEnum.CHECKS_PAGE,
         isDocumentsPage: true,
-        label: "Checks",
+        label: "Order report",
         gotoParam: "check",
         isInMainMenu: true
     }
 };
 
-export function getPageNameFromPageIndex(i) {
-    let res = "x";
-    Object.keys(PageIndexDictionary).forEach(k => {
-        if (PageIndexDictionary[k].pageIndex == i) {
-            res = k;
-        }
-    });
-
-    return res;
+export function getPageNameFromPageIndex(i: number): string {
+    return Object.keys(PageIndexDictionary).find(k => PageIndexDictionary[k].pageIndex == i);
 }
 
 export class EvahubMainMenuItem {
@@ -134,12 +125,20 @@ export function getInitialMainMenuItems() {
     return toRet;
 }
 
-export function capitalizeDocumentType(word: EvahubDocumentTypeAsString): string {
-    let res: EvahubGrammar = EvahubDocumentTypeGrammar[word];
-    return res.singularNameCapitalized;
+export function getAllEvahubDocumentTypes() {
+    return {
+        1: "a",
+        2: "b"
+    };
 }
 
+/*
+    Will change the words:
+    "cAMEL", "CAMEL", "camel", "cAmEl", "CaMeL"
+    to "Camel"
+*/
 export function capitalizeWord(word: string): string {
+    word = word.toLowerCase();
     const flc = word.toUpperCase().substring(0, 1); // First Letter Capitalized
     const sc = flc + word.substring(1, word.length); // Capitalized word
 
@@ -165,54 +164,6 @@ export function doesMaterialFormHaveErrors(mf: any) {
     }
 
     return false;
-}
-
-export const enum EvahubDocumentTypeNumber {
-    EVAHUB_DOCUMENT_TYPE_LOG,
-    EVAHUB_DOCUMENT_TYPE_REPORT,
-    EVAHUB_DOCUMENT_TYPE_CHECK
-}
-
-export class EvahubDocumentTypeGrammar {
-    static readonly LOG: EvahubGrammar = {
-        singularNameCapitalized: "Log",
-        pluralNameCapitalized: "Logs",
-        singularNameMiniscule: "log",
-        pluralNameMiniscule: "logs",
-        numberConstant: EVAHUB_DOCUMENT_TYPE_LOG
-    };
-
-    static readonly REPORT: EvahubGrammar = {
-        singularNameCapitalized: "Report",
-        pluralNameCapitalized: "Reports",
-        singularNameMiniscule: "report",
-        pluralNameMiniscule: "reports",
-        numberConstant: EVAHUB_DOCUMENT_TYPE_REPORT
-    };
-
-    static readonly CHECK: EvahubGrammar = {
-        singularNameCapitalized: "Check",
-        pluralNameCapitalized: "Checks",
-        singularNameMiniscule: "check",
-        pluralNameMiniscule: "checks",
-        numberConstant: EVAHUB_DOCUMENT_TYPE_CHECK
-    };
-
-    //static allTypes = Array(3);
-
-    static allTypes = [
-        EVAHUB_DOCUMENT_TYPE_LOG => EvahubDocumentTypeGrammar.LOG,
-        EVAHUB_DOCUMENT_TYPE_REPORT => EvahubDocumentTypeGrammar.REPORT,
-        EVAHUB_DOCUMENT_TYPE_CHECK => EvahubDocumentTypeGrammar.CHECK
-    ];
-}
-
-export class EvahubGrammar {
-    singularNameCapitalized: string;
-    pluralNameCapitalized: string;
-    singularNameMiniscule: string;
-    pluralNameMiniscule: string;
-    numberConstant: number;
 }
 
 export class EvahubSidenavMenuItem {

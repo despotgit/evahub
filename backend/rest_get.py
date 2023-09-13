@@ -1,6 +1,7 @@
 from flask import Blueprint, json
 from flask_jwt_extended import jwt_required
-from auth import authenticateJwt
+from auth import verifyUser
+from auth import formatResponse
 from db_user_documents_broker import getUploadedUserDocuments
 from db_users_broker import getDbUser
 
@@ -18,47 +19,28 @@ def before_request():
 # will be used on Account or Register page for getting the user's data
 @rest_get.route("/user/username/<username>", methods=["GET"])
 def getUserData(username):
-    authentication = authenticateJwt(username)
-
-    if not authentication["authenticated"]:
-        return authentication
+    v = verifyUser(username)
+    if not v["verified"]:
+        return formatResponse(v)
 
     user = getDbUser(username)
 
-    if user == None:
-        print("User not found in DB")
+    response = {
+        "authenticated": True,
+        "status": "ok",
+        "user": user,
+        "message": "User retrieved successfully",
+    }
 
-        response = {
-            "authenticated": True,
-            "status": "error",
-            "message": "User not found",
-        }
-    else:
-        response = {
-            "authenticated": True,
-            "status": "ok",
-            "user": user,
-            "message": "User retrieved successfully",
-        }
-
-    response = json.jsonify(response)
-
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return formatResponse(response)
 
 
 # Get user's documents (by username and document type)
 @rest_get.route("documents/type/<documentType>/username/<username>", methods=["GET"])
 def getUserDocuments(documentType, username):
-    authentication = authenticateJwt(username)
-
-    # print("authentication is:")
-    # print(authentication)
-
-    # DEV:  FOR TESTING PURPOSING NO LOGIN REQUIRED:
-    # if not authentication["authenticated"] and False:
-    if not authentication["authenticated"]:
-        return authentication
+    v = verifyUser(username)
+    if not v["verified"]:
+        return formatResponse(v)
 
     userDocuments = getUploadedUserDocuments(username, documentType)
 
@@ -79,7 +61,4 @@ def getUserDocuments(documentType, username):
             "message": "Documents retrieved successfully.",
         }
 
-    response = json.jsonify(response)
-
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return formatResponse(response)

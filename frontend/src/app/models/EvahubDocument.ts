@@ -1,7 +1,7 @@
-import { EvahubDocumentTypeNumber } from "../common/constants";
+import { EvahubDocumentTypeWordToNumber } from "../common/constants";
 
 export interface EvahubDocument {
-    documentType: EvahubDocumentTypeNumber;
+    documentType: EvahubDocumentTypeWordToNumber;
 
     getDocumentId();
     getDocumentName();

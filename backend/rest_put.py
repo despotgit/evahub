@@ -1,11 +1,10 @@
 import os
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
-from auth import authenticateJwt
+from auth import verifyUser, formatResponse
+from db_user_documents_broker import addDbUserDocument
 from db import executeCustomQuery
-from werkzeug.utils import secure_filename
-from auth import authenticateJwt
-from common import getUserDocumentsDir
+from common import getDocumentFileInfo
 
 rest_put = Blueprint("rest_put", __name__)
 
@@ -19,32 +18,24 @@ def before_request():
 
 # Set user data (by username, field name, and value)
 @rest_put.route(
-    "/document/documentType/<documentType>/username/<username>", methods=["PUT"]
+    "/document/document-type/<documentType>/username/<username>", methods=["PUT"]
 )
 def uploadDocument(documentType, username):
-    print("type is:")
-    print(documentType)
-
-    authentication = authenticateJwt(username)
-
-    if not authentication["authenticated"]:
-        print("Not authenticated for the requested operation")
-        return authentication
+    v = verifyUser(username)
+    if not v["verified"]:
+        return formatResponse(v)
 
     f = request.files["file"]
 
-    userDir = getUserDocumentsDir("log", username)
+    secureFilename, userDir, uploadLocation = getDocumentFileInfo(
+        documentType, username, f.filename, True
+    )
 
     if os.path.isdir(userDir):
-        print()
-        # print("exists already")
+        print("Directory exists already")
     else:
         os.mkdir(userDir)
         # print("dir created")
-
-    finalFilename = secure_filename(f.filename)
-
-    uploadLocation = userDir + "/" + finalFilename
 
     print("uploadLocation is:")
     print(uploadLocation)
@@ -53,15 +44,7 @@ def uploadDocument(documentType, username):
     print(f)
     f.save(uploadLocation)
 
-    executeCustomQuery(
-        "insert into logs (`log_name`,`log_filename`,`username`) values ('"
-        + finalFilename[:25]
-        + "', '"
-        + finalFilename
-        + "', '"
-        + username
-        + "')"
-    )
+    addDbUserDocument(secureFilename, username)
 
     response = {
         "authenticated": True,
@@ -69,6 +52,4 @@ def uploadDocument(documentType, username):
         "message": "File uploaded.",
     }
 
-    response = json.jsonify(response)
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return formatResponse(response)

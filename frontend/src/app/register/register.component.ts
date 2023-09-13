@@ -3,10 +3,8 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ElementRef,
     OnInit,
-    ViewChild,
-    forwardRef
+    ViewChild
 } from "@angular/core";
 import { Router } from "@angular/router";
 import {
@@ -18,27 +16,23 @@ import {
     Subscription,
     tap,
     switchMap,
-    of,
-    fromEvent,
-    Subject
+    fromEvent
 } from "rxjs";
-import { combineLatestWith, finalize, startWith, withLatestFrom } from "rxjs/operators";
+import { finalize } from "rxjs/operators";
 import {
-    Form,
-    FormControl,
-    NG_VALUE_ACCESSOR,
     UntypedFormBuilder,
     UntypedFormControl,
     UntypedFormGroup,
     Validators
 } from "@angular/forms";
 import { ApplicationStateStoreService } from "../store/application-state-store";
-import { doesMaterialFormHaveErrors, getRegisterUrl, PageIndexEnum } from "../common/constants";
+import { getRegisterUrl, PageIndexEnum } from "../common/constants";
 
-import { HttpClient, HttpEventType } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 //import { MatLegacyButton as MatButton } from "@angular/material/legacy-button";
 import { MatButton } from "@angular/material/button";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
+import { RestApiService } from "../services/rest-api.service";
 
 @Component({
     selector: "app-register",
@@ -86,6 +80,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     );
     isFormValid$: Observable<boolean>;
 
+    submitClicked$: Observable<any>;
+
     @ViewChild("done") done: MatButton;
 
     isPosted = false;
@@ -98,8 +94,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private router: Router,
         private store: ApplicationStateStoreService,
         private formBuilder: UntypedFormBuilder,
-        private http: HttpClient,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private restClient: RestApiService
     ) {
         this.theForm = this.formBuilder.group({
             registerUsernameFormControl: ["", [Validators.required]],
@@ -181,34 +177,20 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.registerSubmit();
-    }
-
-    registerSubmit() {
-        let url;
-
-        const clicks$ = fromEvent(this.done._elementRef.nativeElement, "click");
-
-        this.registerHttpCall$ = clicks$
+        this.submitClicked$ = fromEvent(this.done._elementRef.nativeElement, "click");
+        this.registerHttpCall$ = this.submitClicked$
             .pipe(
                 switchMap(a => {
-                    const formData = new FormData();
-
-                    formData.append("username", this.registrationData.registerUsername);
-                    formData.append("password", this.registrationData.registerPassword);
-                    formData.append("firstLastName", this.registrationData.firstLastName);
-                    formData.append("email", this.registrationData.email);
-
-                    console.log("******** formData is:", formData);
-
-                    url = getRegisterUrl();
-                    //console.log("aaaand url is:", url);
-
-                    return this.http.post(url, formData);
+                    return this.restClient.registerUser(
+                        this.registrationData.registerUsername,
+                        this.registrationData.registerPassword,
+                        this.registrationData.firstLastName,
+                        this.registrationData.email
+                    );
                 }),
                 finalize(() => {
                     //console.log("step 3, in finalize");
-                    //this.reset();
+                    //this.registerHttpCall$ = null;
                     this.unsubscribeFromRegisterRequest();
                 })
             )
@@ -224,16 +206,16 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     this.isBackendRegistrationSuccessful = false;
                     this.backendRegistrationError = d.message;
                 }
-                // DEV:  for testing purposes, reset page after the API call
+                // DEV:  for testing purposes, don't reset page after the API call:
                 // this.store.resetRegisterPage();
+
                 this.cd.markForCheck();
             });
     }
 
     cancelRequest() {
         this.unsubscribeFromRegisterRequest();
-
-        this.reset();
+        this.registerHttpCall$ = null;
     }
 
     unsubscribeFromRegisterRequest() {
@@ -248,10 +230,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         } else {
             return false;
         }
-    }
-
-    reset() {
-        this.registerHttpCall$ = null;
     }
 
     ngOnDestroy() {

@@ -22,7 +22,13 @@ import {
     withLatestFrom
 } from "rxjs";
 
-import { getPageNameFromPageIndex, PageIndexEnum, PageIndexDictionary } from "./common/constants";
+import {
+    getPageNameFromPageIndex,
+    PageIndexEnum,
+    PageIndexDictionary,
+    getDocumentTypeAsStringFromNumber,
+    getDocumentTypeAsNumberFromString
+} from "./common/constants";
 import { Check } from "./models/Check";
 import { EvahubDocument } from "./models/EvahubDocument";
 import { EvahubDocumentTypeWordToNumber } from "../app/common/constants";
@@ -48,13 +54,19 @@ export class AppComponent implements OnInit, AfterViewInit {
     userChecks$: Observable<Check[]> = this.store.userChecks$;
     userLogs$: Observable<Log[]> = this.store.userLogs$;
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
+        tap(_ => {
+            // first reset the sidenav menu, and put spinner while it loads
+            this.store.resetSidenavMenuItems();
+        }),
         distinctUntilChanged(),
         debounceTime(100),
         tap(a => {
-            const s = getPageNameFromPageIndex(a); // s : singularDocumentTypeName
+            // var s is a singularDocumentTypeName
+            const s: string = getPageNameFromPageIndex(a);
 
             if (PageIndexDictionary[s].isDocumentsPage) {
                 this.updateDocumentsSetFromApi(s);
+                this.store.updateCurrentDocumentType(getDocumentTypeAsNumberFromString(s));
             }
 
             this.currentPageIndex = a;
@@ -87,6 +99,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         })
     );
     currentDocumentId$ = this.store.currentDocumentId$;
+    currentDocumentType$ = this.store.currentDocumentType$;
     mainMenuItems$ = this.store.mainMenuItems$;
     shouldDisplayRegisterButton$ = combineLatest([
         this.store.isloggedIn$,
@@ -118,13 +131,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     shouldDisplayDocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
     menuItemClickedSubject$: Subject<any> = new Subject();
     micd$: Observable<any> = this.menuItemClickedSubject$.pipe(
-        //distinctUntilChanged(), // this would be the other way to restrict if it's the same
+        // Menu Item Clicked Derived obs.
+        // distinctUntilChanged(), // this would be the other way to restrict if it's the same
         withLatestFrom(this.currentDocumentId$),
         map(([mic, cdi]) => {
             if (mic == cdi) {
             } else {
                 //console.log("mic is:", mic);
                 //console.log("cdi is:", cdi);
+                console.log("innit");
                 this.store.updateShouldEvahubDocumentsDisplaySpinner(true);
                 this.store.updateCurrentDocumentId(mic);
             }
@@ -205,17 +220,25 @@ export class AppComponent implements OnInit, AfterViewInit {
     }>(event$ =>
         event$.pipe(
             tap<{ source: Event; itemId: number }>(event => {
-                // room for effect, to do DB stuff
-
                 event.source.stopPropagation();
             }),
-            withLatestFrom(this.sidenavMenuItems$),
+            withLatestFrom(this.sidenavMenuItems$, this.username$, this.currentDocumentType$),
             map(data => {
-                // Remove UI element
-                let snmi = data[1];
-                let docId = data[0].itemId;
+                console.log("data in effect is:");
+                console.log(data);
 
-                let newSnmi = snmi.filter(mi => mi.id != docId);
+                let docId = data[0].itemId;
+                let snmis = data[1];
+                let un = data[2];
+                let dt = data[3];
+
+                let dType = getDocumentTypeAsStringFromNumber(dt);
+
+                // Do database/API call, if needed
+                this.restApiClient.deleteDocument(docId, un, dType).subscribe();
+
+                // Remove UI element
+                let newSnmi = snmis.filter(mi => mi.id != docId);
                 console.log("newSnmi is:", newSnmi);
                 this.store.updateSidenavMenuItems(newSnmi);
             })

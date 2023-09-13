@@ -1,7 +1,10 @@
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
     "cli": {
-        "analytics": "6c74a5b9-5ffc-4fa4-97b5-c4cfdcbdeb12"
+        "analytics": "6c74a5b9-5ffc-4fa4-97b5-c4cfdcbdeb12",
+        "cache": {
+            "enabled": false
+        }
     },
     "version": 1,
     "newProjectRoot": "projects",
@@ -39,7 +42,7 @@
                             }
                         ],
                         "styles": [
-                            "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
+                            "src/theme/tema.scss",
                             "src/styles.scss",
                             {
                                 "input": "node_modules/@ionic/angular/css/core.css"
@@ -87,8 +90,8 @@
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "2kb",
-                                    "maximumError": "4kb"
+                                    "maximumWarning": "1mb",
+                                    "maximumError": "2mb"
                                 }
                             ],
                             "fileReplacements": [
@@ -145,10 +148,7 @@
                                 "output": "./svg"
                             }
                         ],
-                        "styles": [
-                            "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
-                            "src/styles.scss"
-                        ],
+                        "styles": ["src/styles.scss"],
                         "scripts": []
                     }
                 },
