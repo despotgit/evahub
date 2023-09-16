@@ -27,6 +27,7 @@ body {
 
 .mat-toolbar {
     background: $global-background-color;
+    display: inherit !important;
 }
 
 // END REPORTS PAGE

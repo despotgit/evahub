@@ -2,4 +2,10 @@
 
 .main-menu-wrapper {
     display: flex;
+    max-width: 450px;
+}
+
+.main-menu-item {
+    display: flex;
+    flex: 1;
 }
