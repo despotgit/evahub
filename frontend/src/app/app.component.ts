@@ -1,11 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    OnInit,
-    ViewChild
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 
 import {
@@ -101,10 +95,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     currentDocumentId$ = this.store.currentDocumentId$;
     currentDocumentType$ = this.store.currentDocumentType$;
     mainMenuItems$ = this.store.mainMenuItems$;
-    shouldDisplayRegisterButton$ = combineLatest([
-        this.store.isloggedIn$,
-        this.store.currentPageIndex$
-    ]).pipe(
+    shouldDisplayRegisterButton$ = combineLatest([this.store.isloggedIn$, this.store.currentPageIndex$]).pipe(
         map(([ili, cpi]) => {
             //console.log("ili and cpi is:", ili, cpi);
             if (!ili && cpi != PageIndexEnum.REGISTER_PAGE) {
@@ -114,10 +105,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             }
         })
     );
-    shouldDisplayLoginButton$ = combineLatest([
-        this.store.isloggedIn$,
-        this.store.currentPageIndex$
-    ]).pipe(
+    shouldDisplayLoginButton$ = combineLatest([this.store.isloggedIn$, this.store.currentPageIndex$]).pipe(
         map(([ili, cpi]) => {
             //console.log("ili and cpi is:", ili, cpi);
             //console.log("login page index is:", PageIndex.LOGIN_PAGE);
@@ -128,20 +116,21 @@ export class AppComponent implements OnInit, AfterViewInit {
             }
         })
     );
+    shouldDisplaySidenavSpinner$ = this.store.shouldDisplaySidenavSpinner$;
     shouldDisplayDocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
-    menuItemClickedSubject$: Subject<any> = new Subject();
-    micd$: Observable<any> = this.menuItemClickedSubject$.pipe(
+    sideMenuItemClickedSubject$: Subject<any> = new Subject();
+    smicd$: Observable<any> = this.sideMenuItemClickedSubject$.pipe(
         // Menu Item Clicked Derived obs.
         // distinctUntilChanged(), // this would be the other way to restrict if it's the same
         withLatestFrom(this.currentDocumentId$),
-        map(([mic, cdi]) => {
-            if (mic == cdi) {
+        map(([smi, cdi]) => {
+            if (smi == cdi) {
             } else {
                 //console.log("mic is:", mic);
                 //console.log("cdi is:", cdi);
                 console.log("innit");
-                this.store.updateShouldEvahubDocumentsDisplaySpinner(true);
-                this.store.updateCurrentDocumentId(mic);
+                this.store.updateShouldDisplayEvahubDocumentSpinner(true);
+                this.store.updateCurrentDocumentId(smi);
             }
         })
     );
@@ -196,6 +185,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
 
         this.store.updateCurrentPageIndex(newPageIndex);
+        this.store.updateShouldDisplaySidenavSpinner(true);
     }
 
     logOut() {
@@ -206,10 +196,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.goTo;
     }
 
-    menuItemClicked($event) {
+    sideMenuItemClicked($event) {
         //console.log("in app in menuItemClicked, $event is:", $event);
 
-        this.menuItemClickedSubject$.next($event);
+        this.sideMenuItemClickedSubject$.next($event);
 
         return;
     }
@@ -267,6 +257,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                     //let ds = ud["user" + docType + "s"];
                     let ds = ud["userDocuments"];
                     this.processDocuments(ds, docType);
+                    this.store.updateShouldDisplaySidenavSpinner(false);
                     return ud;
                 })
             )

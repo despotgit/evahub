@@ -7,6 +7,7 @@ import {
     DeleteDocumentConfirmationDialogData
 } from "../dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
 import { Dialog, DialogRef } from "@angular/cdk/dialog";
+import { ApplicationStateStoreService } from "../store/application-state-store";
 
 @Component({
     selector: "evahub-sidenav",
@@ -14,6 +15,9 @@ import { Dialog, DialogRef } from "@angular/cdk/dialog";
     styleUrls: ["./evahub-sidenav.component.scss"]
 })
 export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
+    @Input()
+    shouldDisplaySpinner: boolean;
+
     @Input()
     menuItems: EvahubSidenavMenuItem[];
 
@@ -32,7 +36,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     deleteDialog: DialogRef;
     deleteSubscription: any;
 
-    constructor(private dialog: Dialog) {
+    constructor(private dialog: Dialog, private store: ApplicationStateStoreService) {
         //
     }
 

@@ -22,23 +22,15 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // CURRENT USER
     username$: Observable<string> = this.select(state => state.currentUserSession.username);
     isloggedIn$: Observable<boolean> = this.select(state => state.currentUserSession.isLoggedIn);
-    currentPageIndex$: Observable<PageIndexEnum> = this.select(
-        state => state.currentUserSession.currentPageIndex
-    );
-    currentDocumentId$: Observable<number> = this.select(
-        state => state.currentUserSession.currentDocumentId
-    );
+    currentPageIndex$: Observable<PageIndexEnum> = this.select(state => state.currentUserSession.currentPageIndex);
+    currentDocumentId$: Observable<number> = this.select(state => state.currentUserSession.currentDocumentId);
     currentDocumentType$: Observable<EvahubDocumentTypeWordToNumber> = this.select(
         state => state.currentUserSession.currentDocumentType
     );
 
     // REGISTER PAGE
-    registerUsername$: Observable<string> = this.select(
-        state => state.registerPageData.registerUsername
-    );
-    registerPassword$: Observable<string> = this.select(
-        state => state.registerPageData.registerPassword
-    );
+    registerUsername$: Observable<string> = this.select(state => state.registerPageData.registerUsername);
+    registerPassword$: Observable<string> = this.select(state => state.registerPageData.registerPassword);
     registerPasswordConfirmation$: Observable<string> = this.select(
         state => state.registerPageData.registerPasswordConfirmation
     );
@@ -52,17 +44,13 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     // SIDENAV
     isSidenavOpened$: Observable<boolean> = this.select(state => state.sidenav.isSidenavOpened);
-    sidenavMenuItems$: Observable<EvahubSidenavMenuItem[]> = this.select(
-        state => state.sidenav.sidenavMenuItems
-    );
+    sidenavMenuItems$: Observable<EvahubSidenavMenuItem[]> = this.select(state => state.sidenav.sidenavMenuItems);
     shouldDisplaySidenavSpinner$: Observable<boolean> = this.select(
         state => state.sidenav.shouldDisplaySidenavSpinner
     );
 
     // MAIN MENU
-    mainMenuItems$: Observable<EvahubMainMenuItem[]> = this.select(
-        state => state.mainMenu.mainMenuItems
-    );
+    mainMenuItems$: Observable<EvahubMainMenuItem[]> = this.select(state => state.mainMenu.mainMenuItems);
 
     // REPORTS
     userReports$: Observable<Report[]> = this.select(state => state.userReports);
@@ -140,12 +128,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     }
 
     updateRegisterPasswordConfirmation(registerPasswordConfirmation: string) {
-        updateState(
-            this,
-            "registerPageData",
-            "registerPasswordConfirmation",
-            registerPasswordConfirmation
-        );
+        updateState(this, "registerPageData", "registerPasswordConfirmation", registerPasswordConfirmation);
     }
 
     updateRegisterFirstLastName(firstLastName: string) {
@@ -165,7 +148,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     }
 
     // EVAHUB DOCUMENTS CONTENT:
-    updateShouldEvahubDocumentsDisplaySpinner(should: boolean) {
+    updateShouldDisplayEvahubDocumentSpinner(should: boolean) {
         updateState(this, "documentContent", "shouldDisplaySpinner", should);
     }
 
@@ -176,6 +159,10 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     updateSidenavMenuItems(sidenavMenuItems: EvahubSidenavMenuItem[]) {
         updateState(this, "sidenav", "sidenavMenuItems", sidenavMenuItems);
+    }
+
+    updateShouldDisplaySidenavSpinner(should: boolean) {
+        updateState(this, "sidenav", "shouldDisplaySidenavSpinner", should);
     }
 
     resetSidenavMenuItems() {

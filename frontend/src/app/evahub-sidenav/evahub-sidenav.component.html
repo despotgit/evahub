@@ -1,4 +1,4 @@
-<mat-list *ngIf="menuItems.length != 0">
+<mat-list *ngIf="!shouldDisplaySpinner">
     <mat-card
         *ngFor="let mo of menuItems"
         [ngClass]="selectedDocumentId == mo.id ? 'selected-menu-item' : 'unselected-menu-item'"
@@ -7,10 +7,7 @@
             <div class="elements-wrapper">
                 <div class="document-name">{{ mo.id }} {{ mo.label }}</div>
                 <span class="buttons-wrapper">
-                    <div
-                        class="request-report-button"
-                        (click)="requestReportClicked($event, mo.id)"
-                    >
+                    <div class="request-report-button" (click)="requestReportClicked($event, mo.id)">
                         REQUEST <br />
                         REPORT
                     </div>
@@ -20,6 +17,6 @@
         </mat-list-item>
     </mat-card>
 </mat-list>
-<div class="spinner-wrapper" *ngIf="menuItems.length == 0">
+<div class="spinner-wrapper" *ngIf="shouldDisplaySpinner">
     <evahub-gears-spinner [gearsSpinnerWidth]="150"></evahub-gears-spinner>
 </div>

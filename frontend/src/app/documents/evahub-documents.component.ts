@@ -1,23 +1,8 @@
-import {
-    AfterContentChecked,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    OnInit
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
 import { ApplicationStateStoreService } from "../store/application-state-store";
 import { ActivatedRoute } from "@angular/router";
-import {
-    debounceTime,
-    distinctUntilChanged,
-    map,
-    Observable,
-    startWith,
-    Subject,
-    tap,
-    withLatestFrom
-} from "rxjs";
+import { map, Observable, startWith, Subject, tap, withLatestFrom } from "rxjs";
 import { Log } from "../models/Log";
 import { FormControl } from "@angular/forms";
 import { GraphDataset } from "../common/datasets";
@@ -121,7 +106,7 @@ export class EvahubDocumentsComponent implements OnInit {
     }
 
     onDocumentContentDisplayed() {
-        this.store.updateShouldEvahubDocumentsDisplaySpinner(false);
+        this.store.updateShouldDisplayEvahubDocumentSpinner(false);
     }
 
     ngOnInit(): void {}

@@ -10,7 +10,8 @@
         mainMenuItems: mainMenuItems$ | async,
         shouldDisplayRegisterButton: shouldDisplayRegisterButton$ | async,
         shouldDisplayLoginButton: shouldDisplayLoginButton$ | async,
-        micd: micd$ | async,
+        shouldDisplaySidenavSpinner: shouldDisplaySidenavSpinner$ | async,
+        smicd: smicd$ | async,
         ddcd: ddcd$ | async
     } as asyncData"
     class="main-wrapper-div"
@@ -36,9 +37,7 @@
 
         <div class="right-pusher"></div>
         <div class="username mat-button">{{ asyncData.username }}</div>
-        <button *ngIf="asyncData.isLoggedIn" mat-raised-button color="primary" (click)="logOut()">
-            Log out
-        </button>
+        <button *ngIf="asyncData.isLoggedIn" mat-raised-button color="primary" (click)="logOut()">Log out</button>
         <button
             *ngIf="asyncData.shouldDisplayRegisterButton"
             mat-raised-button
@@ -57,17 +56,13 @@
         </button>
     </mat-toolbar>
     <mat-sidenav-container class="main-container">
-        <mat-sidenav
-            #sidenav
-            class="main-sidenav"
-            mode="side"
-            [(opened)]="asyncData.isSidenavOpened"
-        >
+        <mat-sidenav #sidenav class="main-sidenav" mode="side" [(opened)]="asyncData.isSidenavOpened">
             <evahub-sidenav
-                (emitItemClicked)="menuItemClicked($event)"
+                (emitItemClicked)="sideMenuItemClicked($event)"
                 (emitDeleteItemClicked)="deleteMenuItemClicked($event)"
                 [menuItems]="asyncData.menuItems"
                 [selectedDocumentId]="asyncData.currentDocumentId"
+                [shouldDisplaySpinner]="asyncData.shouldDisplaySidenavSpinner"
             ></evahub-sidenav>
         </mat-sidenav>
 

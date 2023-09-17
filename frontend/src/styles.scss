@@ -60,12 +60,6 @@ body {
     color: $regular-text-color !important;
 }
 
-.mat-primary
-    .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled)
-    .mdc-list-item__primary-text {
-    color: $unselected-item-color;
-}
-
 .mdc-text-field--filled .mdc-line-ripple::after {
     display: none !important;
 }
