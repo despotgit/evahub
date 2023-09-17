@@ -4,7 +4,6 @@
 @import "common.scss";
 
 /* You can add global styles to this file, and also import other style files */
-
 html,
 body {
     height: 100%;
@@ -80,13 +79,5 @@ body {
     --mat-mdc-button-persistent-ripple-color: #000;
     --mat-mdc-button-ripple-color: $hover-color;
 }
-
-//.mdc-circular-progress__circle-clipper {
-//    display: inline-flex;
-//    position: relative;
-//    width: 50%;
-//    height: 100%;
-//    overflow: hidden;
-//}
 
 // END MATERIAL MODIFICATIONS

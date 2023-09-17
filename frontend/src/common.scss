@@ -1,3 +1,6 @@
+@use "@angular/material" as mat;
+@import "./theme/tema.scss";
+
 $default-background-color: #c8e5f5;
 $selection-color: rgb(242, 213, 133);
 $hover-color: lightyellow;
@@ -27,3 +30,5 @@ $box-shadow-color: lightgrey;
 $unselected-item-color: white;
 
 $regular-text-color: black;
+
+$main-menu-button-color: mat.get-color-from-palette($evahub-light-primary, 300);

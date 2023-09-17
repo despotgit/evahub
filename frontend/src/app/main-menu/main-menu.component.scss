@@ -10,3 +10,8 @@
     flex: 1;
     padding: 0 !important;
 }
+
+.main-menu-item.mat-primary {
+    color: $regular-text-color;
+    background-color: $main-menu-button-color !important;
+}

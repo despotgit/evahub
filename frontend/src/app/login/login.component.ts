@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
                 if (data.authenticated) {
                     this.router.navigate([this.returnUrl]);
                 } else {
-                    console.log("just before Wrong cred entered");
+                    console.log("just before wrong credentials entered");
                     this.error = data.message;
                     console.log("error is:", this.error);
                     this.cd.markForCheck();
