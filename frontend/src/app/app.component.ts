@@ -87,6 +87,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             if (d !== undefined) {
                 //console.log("first's getDocumentId is:", d.getDocumentId());
                 this.store.updateCurrentDocumentId(d.getDocumentId());
+            } else {
+                this.store.updateCurrentDocumentId(0);
             }
 
             return cds;
