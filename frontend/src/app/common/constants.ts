@@ -148,7 +148,12 @@ export function capitalizeWord(word: string): string {
 export function getRegisterUrl() {
     let url = environment.baseApiBackendUrl + "/auth/register";
     console.log("url is: ", url);
-    //let base = environment.baseApiBackendUrl + '/register/user'
+    return url;
+}
+
+export function getLoginUrl() {
+    let url = environment.baseApiBackendUrl + "/auth/login";
+    console.log("url is: ", url);
     return url;
 }
 
