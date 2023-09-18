@@ -177,17 +177,19 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         const pageToLower: string = page.toLowerCase();
 
-        let newPageIndex;
-        if (isDocumentsPage) {
-            this.router.navigate(["/documents/" + pageToLower]);
-            newPageIndex = PageIndexDictionary[pageToLower].pageIndex;
-        } else {
-            this.router.navigate(["/" + pageToLower]);
-            newPageIndex = PageIndexDictionary[pageToLower].pageIndex;
-        }
+        let newPageIndex = PageIndexDictionary[pageToLower].pageIndex;
 
-        this.store.updateCurrentPageIndex(newPageIndex);
-        this.store.updateShouldDisplaySidenavSpinner(true);
+        if (newPageIndex == this.currentPageIndex) {
+        } else {
+            if (isDocumentsPage) {
+                this.router.navigate(["/documents/" + pageToLower]);
+            } else {
+                this.router.navigate(["/" + pageToLower]);
+            }
+
+            this.store.updateCurrentPageIndex(newPageIndex);
+            this.store.updateShouldDisplaySidenavSpinner(true);
+        }
     }
 
     logOut() {

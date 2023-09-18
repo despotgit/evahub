@@ -132,14 +132,14 @@ def login():
         response["username"] = username
         response["iat"] = datetime.datetime.now().timestamp()
 
-    return formatResponse(response)
+    return finalizeResponse(response)
 
 
 # GET - Test
 @auth.route("/test", methods=["GET"])
 def getTest():
     r = {"authenticated": True, "status": "ok", "message": "Fine"}
-    return formatResponse(r)
+    return finalizeResponse(r)
 
 
 # Check if JWT is genuine and belongs to the user for which the resource is requested
