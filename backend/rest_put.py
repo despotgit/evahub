@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
-from auth import verifyUser, formatResponse
+from auth import verifyUser, finalizeResponse
 from db_user_documents_broker import addDbUserDocument
 from db import executeCustomQuery
 from common import getDocumentFileInfo
@@ -23,7 +23,7 @@ def before_request():
 def uploadDocument(documentType, username):
     v = verifyUser(username)
     if not v["verified"]:
-        return formatResponse(v)
+        return finalizeResponse(v)
 
     f = request.files["file"]
 
@@ -52,4 +52,4 @@ def uploadDocument(documentType, username):
         "message": "File uploaded.",
     }
 
-    return formatResponse(response)
+    return finalizeResponse(response)

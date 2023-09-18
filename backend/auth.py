@@ -132,11 +132,7 @@ def login():
         response["username"] = username
         response["iat"] = datetime.datetime.now().timestamp()
 
-    response = json.jsonify(response)
-
-    response.headers.add("Access-Control-Allow-Origin", "*")
-
-    return response
+    return formatResponse(response)
 
 
 # GET - Test
@@ -258,7 +254,7 @@ def checkIfAuthorized(decodedToken, resource) -> bool:
     print(resource)
 
 
-def formatResponse(r):
+def finalizeResponse(r):
     response = json.jsonify(r)
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response

@@ -1,7 +1,7 @@
 from flask import Blueprint, json
 from flask_jwt_extended import jwt_required
 from auth import verifyUser
-from auth import formatResponse
+from auth import finalizeResponse
 from db_user_documents_broker import getUploadedUserDocuments
 from db_users_broker import getDbUser
 
@@ -21,7 +21,7 @@ def before_request():
 def getUserData(username):
     v = verifyUser(username)
     if not v["verified"]:
-        return formatResponse(v)
+        return finalizeResponse(v)
 
     user = getDbUser(username)
 
@@ -32,7 +32,7 @@ def getUserData(username):
         "message": "User retrieved successfully",
     }
 
-    return formatResponse(response)
+    return finalizeResponse(response)
 
 
 # Get user's documents (by username and document type)
@@ -40,7 +40,7 @@ def getUserData(username):
 def getUserDocuments(documentType, username):
     v = verifyUser(username)
     if not v["verified"]:
-        return formatResponse(v)
+        return finalizeResponse(v)
 
     userDocuments = getUploadedUserDocuments(username, documentType)
 
@@ -61,4 +61,4 @@ def getUserDocuments(documentType, username):
             "message": "Documents retrieved successfully.",
         }
 
-    return formatResponse(response)
+    return finalizeResponse(response)

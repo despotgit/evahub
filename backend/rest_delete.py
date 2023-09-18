@@ -1,6 +1,6 @@
 from flask import Blueprint, json, request
 from auth import verifyUser
-from auth import formatResponse
+from auth import finalizeResponse
 from db_user_documents_broker import deleteUserDocumentFromDb, getDocumentFilenameFromDb
 from common import getDocumentFileInfo
 from file_system_manager import removeFile
@@ -17,7 +17,7 @@ rest_delete = Blueprint("rest_delete", __name__)
 def deleteDocument(documentId, username, documentType):
     v = verifyUser(username)
     if not v["verified"]:
-        return formatResponse(v)
+        return finalizeResponse(v)
 
     filename = getDocumentFilenameFromDb(username, documentType, documentId)
 
@@ -35,11 +35,11 @@ def deleteDocument(documentId, username, documentType):
         "username": username,
     }
 
-    return formatResponse(response)
+    return finalizeResponse(response)
 
 
 # Delete user (by username)
 @rest_delete.route("/user/<username>", methods=["DELETE"])
 def deleteUser():
     r = {}
-    return formatResponse(r)
+    return finalizeResponse(r)
