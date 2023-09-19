@@ -78,7 +78,7 @@
                                 "input": "src/theme/variables.css"
                             }
                         ],
-                        "scripts": []
+                        "scripts": ["src/app/evahub-sidenav/braintree.js"]
                     },
                     "configurations": {
                         "production": {

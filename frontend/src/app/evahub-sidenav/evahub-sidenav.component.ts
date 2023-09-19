@@ -9,6 +9,8 @@ import {
 import { Dialog, DialogRef } from "@angular/cdk/dialog";
 import { ApplicationStateStoreService } from "../store/application-state-store";
 
+declare function braintreeGetToken(a): void;
+
 @Component({
     selector: "evahub-sidenav",
     templateUrl: "./evahub-sidenav.component.html",
@@ -52,6 +54,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
 
     requestReportClicked($event, iid: number) {
         console.log("in requestReportClicked");
+        braintreeGetToken(iid);
     }
 
     openDocumentDeleteConfirmationDialog(did) {

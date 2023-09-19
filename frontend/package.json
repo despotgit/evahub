@@ -26,6 +26,7 @@
     "@ngrx/schematics": "^16.0.1",
     "@ngrx/store": "^15.2.9",
     "@ngrx/store-devtools": "^16.0.1",
+    "braintree-web": "^3.97.1",
     "chart.js": "^4.2.1",
     "ngrx": "0.0.1-security",
     "rxjs": "~7.5.0",
