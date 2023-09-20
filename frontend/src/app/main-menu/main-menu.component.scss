@@ -2,13 +2,14 @@
 
 .main-menu-wrapper {
     display: flex;
-    min-width: 500px;
 }
 
 .main-menu-item {
     display: flex;
     flex: 1;
     padding: 0 !important;
+    text-wrap: wrap;
+    line-height: 15px;
 }
 
 .main-menu-item.mat-primary {

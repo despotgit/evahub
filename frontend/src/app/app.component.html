@@ -21,19 +21,14 @@
             <span class="title">{{ title }}</span>
         </a>
         <evahub-main-menu
+            class="evahub-main-menu"
             *ngIf="asyncData.isLoggedIn"
+            [isLoggedIn]="asyncData.isLoggedIn"
+            (emitToggleSidenav)="sidenav.toggle()"
             (mainMenuItemClickedEmit)="goTo($event)"
             [cpi]="asyncData.currentPageIndex"
             [menuItems]="asyncData.mainMenuItems"
         ></evahub-main-menu>
-
-        <mat-icon
-            *ngIf="asyncData.isLoggedIn"
-            (click)="sidenav.toggle()"
-            aria-hidden="false"
-            aria-label="Home icon"
-            >menu</mat-icon
-        >
 
         <div class="right-pusher"></div>
         <div class="username mat-button">{{ asyncData.username }}</div>

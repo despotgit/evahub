@@ -1,11 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 import { EvahubMainMenuItem, PageIndexEnum } from "../common/constants";
 
@@ -26,7 +19,11 @@ export class MainMenuComponent implements OnInit {
         this.pageSelected = cpi;
     }
 
+    @Input() isLoggedIn = true;
+
     @Output() mainMenuItemClickedEmit: EventEmitter<any> = new EventEmitter();
+
+    @Output() emitToggleSidenav: EventEmitter<null> = new EventEmitter();
 
     constructor() {}
 
@@ -34,5 +31,9 @@ export class MainMenuComponent implements OnInit {
 
     itemClicked(e) {
         this.mainMenuItemClickedEmit.emit(e);
+    }
+
+    onToggleSidenavClicked() {
+        this.emitToggleSidenav.emit();
     }
 }
