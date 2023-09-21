@@ -7,7 +7,7 @@ import numpy as np
 
 # run with Python 3.9.15 github_venv :conda
 # backend > source github_venv/bin/activate
-#  evahub> % python -i "backend/python-jsonplot.py"    end with CTRL+D
+#  evahub> % python -i "backend/python-jsonplot_V1.py"    end with CTRL+D
 #                    interactive in the treminal
 # %matplotlibdata = ()
 with open(
