@@ -13,7 +13,7 @@ import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { IonicModule } from "@ionic/angular";
 import { EvahubSidenavComponent } from "./evahub-sidenav/evahub-sidenav.component";
 import { DeleteDocumentConfirmationDialogComponent } from "./dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
-import { UserFileUploadComponent } from "./user-file-upload/user-file-upload.component";
+import { EvahubProjectsComponent } from "./evahub-projects/evahub-projects.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { MatSelectModule } from "@angular/material/select";
 import { DocumentsGraphComponent } from "./documents/documents-graph/documents-graph.component";
@@ -31,7 +31,7 @@ import { GearsSpinnerComponent } from "./gears-spinner/gears-spinner.component";
         RegisterComponent,
         EvahubDocumentsComponent,
         EvahubSidenavComponent,
-        UserFileUploadComponent,
+        EvahubProjectsComponent,
         MainMenuComponent,
         DocumentsGraphComponent,
         DocumentsTextComponent,

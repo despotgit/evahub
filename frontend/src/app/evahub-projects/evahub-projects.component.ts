@@ -2,15 +2,15 @@ import { HttpClient, HttpEventType } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Input, OnDestroy } from "@angular/core";
 import { Subscription, switchMap, map, Subject, Observable } from "rxjs";
 import { combineLatestWith, finalize } from "rxjs/operators";
-import { environment } from "src/environments/environment";
 import { ApplicationStateStoreService } from "../store/application-state-store";
+import { environment } from "../../environments/environment";
 
 @Component({
-    selector: "evahub-user-file-upload",
-    templateUrl: "user-file-upload.component.html",
-    styleUrls: ["user-file-upload.component.scss"]
+    selector: "evahub-projects",
+    templateUrl: "evahub-projects.component.html",
+    styleUrls: ["evahub-projects.component.scss"]
 })
-export class UserFileUploadComponent implements OnDestroy {
+export class EvahubProjectsComponent implements OnDestroy {
     @Input()
     requiredFileType: string = "png";
 
@@ -73,7 +73,7 @@ export class UserFileUploadComponent implements OnDestroy {
             this.uploadSub$.unsubscribe();
         }
 
-        this.uploadProgress = null;
+        this.uploadProgress = 0;
         this.uploadSub$ = null;
     }
 

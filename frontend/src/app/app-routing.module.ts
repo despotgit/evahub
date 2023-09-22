@@ -4,13 +4,13 @@ import { AuthGuard } from "./guards/auth.guard";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { EvahubDocumentsComponent } from "./documents/evahub-documents.component";
-import { UserFileUploadComponent } from "./user-file-upload/user-file-upload.component";
+import { EvahubProjectsComponent } from "./evahub-projects/evahub-projects.component";
 
 const routes: Routes = [
     { path: "", redirectTo: "documents/logs", pathMatch: "full" },
     { path: "login", component: LoginComponent },
     { path: "register", component: RegisterComponent },
-    { path: "user-file-upload", component: UserFileUploadComponent, canActivate: [AuthGuard] },
+    { path: "projects", component: EvahubProjectsComponent, canActivate: [AuthGuard] },
     {
         path: "documents/:documentType",
         component: EvahubDocumentsComponent,

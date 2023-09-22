@@ -31,7 +31,7 @@ export const enum PageIndexEnum {
     REGISTER_PAGE = 1,
     LOGIN_PAGE = 2,
     HOME_PAGE = 3,
-    USER_FILE_UPLOAD_PAGE = 4,
+    USER_PROJECTS_PAGE = 4,
     LOGS_PAGE = 5,
     REPORTS_PAGE = 6,
     CHECKS_PAGE = 7
@@ -68,11 +68,11 @@ export const PageIndexDictionary = {
         gotoParam: "home",
         isInMainMenu: false
     },
-    "user-file-upload": {
-        pageIndex: PageIndexEnum.USER_FILE_UPLOAD_PAGE,
+    projects: {
+        pageIndex: PageIndexEnum.USER_PROJECTS_PAGE,
         isDocumentsPage: false,
-        label: "Upload",
-        gotoParam: "user-file-upload",
+        label: "Projects",
+        gotoParam: "projects",
         isInMainMenu: true
     },
     log: {
