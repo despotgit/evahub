@@ -35,7 +35,8 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
         itemId;
     }>();
 
-    deleteDialog: DialogRef;
+    deleteDialog: DialogRef<any, any>;
+
     deleteSubscription: any;
 
     constructor(private dialog: Dialog, private store: ApplicationStateStoreService) {
