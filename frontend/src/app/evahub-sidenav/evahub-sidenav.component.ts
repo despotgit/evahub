@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 
 import { EvahubSidenavMenuItem } from "../common/constants";
 import { tap } from "rxjs";
@@ -8,6 +8,7 @@ import {
 } from "../dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
 import { Dialog, DialogRef } from "@angular/cdk/dialog";
 import { ApplicationStateStoreService } from "../store/application-state-store";
+import { HttpClient } from "@angular/common/http";
 
 declare function braintreeGetToken(a): void;
 
@@ -19,6 +20,9 @@ declare function braintreeGetToken(a): void;
 export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     @Input()
     shouldDisplaySpinner: boolean;
+
+    @Input()
+    isInDocumentUploadMode: boolean;
 
     @Input()
     menuItems: EvahubSidenavMenuItem[];
@@ -35,11 +39,18 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
         itemId;
     }>();
 
+    username$ = this.store.username$;
+
     deleteDialog: DialogRef<any, any>;
 
     deleteSubscription: any;
 
-    constructor(private dialog: Dialog, private store: ApplicationStateStoreService) {
+    constructor(
+        private dialog: Dialog,
+        private store: ApplicationStateStoreService,
+        private http: HttpClient,
+        private cd: ChangeDetectorRef
+    ) {
         //
     }
 
@@ -47,6 +58,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
 
     menuItemClicked(itemId) {
         this.emitItemClicked.emit(itemId);
+        this.store.updateIsInDocumentUploadMode(false);
     }
 
     deleteClicked($event, iid: number) {
@@ -80,7 +92,9 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
             .subscribe();
     }
 
-    ngOnDestroy() {
-        this.deleteSubscription.unsubscribe();
+    uploadNewDocument() {
+        this.store.updateIsInDocumentUploadMode(true);
     }
+
+    ngOnDestroy(): void {}
 }

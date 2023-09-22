@@ -5,38 +5,77 @@
         shouldDisplaySpinner: shouldDisplaydocumentSpinner$ | async,
         datasets: graphDatasets$ | async,
         dcd: dcd$ | async,
-
+        currentDocumentType: currentDocumentType$ | async,
+        isInDocumentUploadMode: isInDocumentUploadMode$ | async
     } as asyncData"
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
-            <div *ngIf="asyncData.displayGraph" class="document-graph">
-                <mat-form-field class="box-shadow-small" appearance="fill">
-                    <mat-label>Select graph dataset</mat-label>
-                    <mat-select
-                        [formControl]="graphDatasetsFormControl"
-                        (selectionChange)="onGraphDatasetChange($event)"
-                        ngDefaultControl
-                    >
-                        <mat-option
-                            *ngFor="let dataset of asyncData.datasets"
-                            [value]="dataset['datasetName']"
-                            >{{ dataset["datasetName"] }}</mat-option
-                        >
-                    </mat-select>
-                </mat-form-field>
-                <app-documents-graph
-                    [graphLabels]="graphLabels"
-                    [graphValues]="graphValues"
-                ></app-documents-graph>
+            <div *ngIf="asyncData.isInDocumentUploadMode">
+                <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
+                    <mat-grid-tile colspan="6">
+                        <input
+                            type="file"
+                            class="file-input"
+                            [accept]="requiredFileType"
+                            (change)="onFileSelected($event)"
+                            #fileUpload
+                        />
+                        <button (click)="onUploadInitiated()">Upload</button>
+
+                        <div class="file-upload">
+                            {{ fileName || "No file uploaded yet." }}
+
+                            <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                                <mat-icon>attach_file</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="progress">
+                            <mat-progress-bar
+                                class="progress-bar"
+                                mode="determinate"
+                                [value]="uploadProgress"
+                                *ngIf="uploadProgress"
+                            >
+                            </mat-progress-bar>
+
+                            <mat-icon class="cancel-upload" (click)="resetUpload()" *ngIf="uploadProgress"
+                                >delete_forever</mat-icon
+                            >
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
             </div>
-            <div *ngIf="!asyncData.displayGraph" class="document-text">
-                <app-documents-text
-                    [documentContent]="asyncData.sd ? asyncData.sd.getDocumentContent() : ''"
-                    [shouldDisplaySpinner]="asyncData.shouldDisplaySpinner"
-                    (emitContentDisplayed)="onDocumentContentDisplayed()"
-                >
-                </app-documents-text>
+            <div *ngIf="!asyncData.isInDocumentUploadMode">
+                <div *ngIf="asyncData.displayGraph" class="document-graph">
+                    <mat-form-field class="box-shadow-small" appearance="fill">
+                        <mat-label>Select graph dataset</mat-label>
+                        <mat-select
+                            [formControl]="graphDatasetsFormControl"
+                            (selectionChange)="onGraphDatasetChange($event)"
+                            ngDefaultControl
+                        >
+                            <mat-option
+                                *ngFor="let dataset of asyncData.datasets"
+                                [value]="dataset['datasetName']"
+                                >{{ dataset["datasetName"] }}</mat-option
+                            >
+                        </mat-select>
+                    </mat-form-field>
+                    <app-documents-graph
+                        [graphLabels]="graphLabels"
+                        [graphValues]="graphValues"
+                    ></app-documents-graph>
+                </div>
+                <div *ngIf="!asyncData.displayGraph" class="document-text">
+                    <app-documents-text
+                        [documentContent]="asyncData.sd ? asyncData.sd.getDocumentContent() : ''"
+                        [shouldDisplaySpinner]="asyncData.shouldDisplaySpinner"
+                        (emitContentDisplayed)="onDocumentContentDisplayed()"
+                    >
+                    </app-documents-text>
+                </div>
             </div>
         </mat-grid-tile>
     </mat-grid-list>

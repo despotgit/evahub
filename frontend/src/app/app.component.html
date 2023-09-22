@@ -12,7 +12,9 @@
         shouldDisplayLoginButton: shouldDisplayLoginButton$ | async,
         shouldDisplaySidenavSpinner: shouldDisplaySidenavSpinner$ | async,
         smicd: smicd$ | async,
-        ddcd: ddcd$ | async
+        ddcd: ddcd$ | async,
+        currentDocumentType: currentDocumentType$ | async,
+        isInDocumentUploadMode: isInDocumentUploadMode$ | async
     } as asyncData"
     class="main-wrapper-div"
 >
@@ -58,6 +60,7 @@
                 [menuItems]="asyncData.menuItems"
                 [selectedDocumentId]="asyncData.currentDocumentId"
                 [shouldDisplaySpinner]="asyncData.shouldDisplaySidenavSpinner"
+                [IsInDocumentUploadMode]="asyncData.isInDocumentUploadMode"
             ></evahub-sidenav>
         </mat-sidenav>
 

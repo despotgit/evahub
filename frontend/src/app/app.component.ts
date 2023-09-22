@@ -120,6 +120,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     );
     shouldDisplaySidenavSpinner$ = this.store.shouldDisplaySidenavSpinner$;
     shouldDisplayDocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
+    isInDocumentUploadMode$ = this.store.isInDocumentUploadMode$;
     sideMenuItemClickedSubject$: Subject<any> = new Subject();
     smicd$: Observable<any> = this.sideMenuItemClickedSubject$.pipe(
         // Menu Item Clicked Derived obs.

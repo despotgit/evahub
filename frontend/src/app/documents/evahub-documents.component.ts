@@ -1,11 +1,24 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
 import { ApplicationStateStoreService } from "../store/application-state-store";
 import { ActivatedRoute } from "@angular/router";
-import { map, Observable, startWith, Subject, tap, withLatestFrom } from "rxjs";
+import {
+    BehaviorSubject,
+    finalize,
+    map,
+    Observable,
+    startWith,
+    Subject,
+    Subscription,
+    switchMap,
+    tap,
+    withLatestFrom
+} from "rxjs";
 import { Log } from "../models/Log";
 import { FormControl } from "@angular/forms";
 import { GraphDataset } from "../common/datasets";
+import { HttpClient, HttpEventType } from "@angular/common/http";
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: "app-evahub-documents",
@@ -24,7 +37,6 @@ export class EvahubDocumentsComponent implements OnInit {
         }),
         startWith(new Log())
     );
-
     graphDatasets$: Observable<any> = this.store.selectedDocument$.pipe(
         map(a => {
             //let dss = <any>[]; // datasets for the x and y axes
@@ -47,7 +59,6 @@ export class EvahubDocumentsComponent implements OnInit {
         }),
         startWith([1, 3, 5])
     );
-
     displayGraph$: Observable<boolean> = this.store.currentPageIndex$.pipe(
         map(a => {
             let pageName = getPageNameFromPageIndex(a);
@@ -61,13 +72,10 @@ export class EvahubDocumentsComponent implements OnInit {
             }
         })
     );
-
     shouldDisplaydocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
-
     gdsc$: Subject<any> = new Subject(); // Graph Data Set Change
-
-    // Document Change Derived observable
     dcd$: Observable<any> = this.gdsc$.pipe(
+        // Document Change Derived observable
         withLatestFrom(this.store.selectedDocument$),
         map(e => {
             console.log("e is:", e);
@@ -75,6 +83,12 @@ export class EvahubDocumentsComponent implements OnInit {
             return e;
         })
     );
+    currentDocumentType$ = this.store.currentDocumentType$;
+    isInDocumentUploadMode$ = this.store.isInDocumentUploadMode$;
+    username$ = this.store.username$;
+
+    @Input()
+    requiredFileType: string = "png";
 
     displayGraph: boolean;
     graphValues: Array<number> = [];
@@ -82,7 +96,17 @@ export class EvahubDocumentsComponent implements OnInit {
 
     graphDatasetsFormControl = new FormControl("");
 
-    constructor(private store: ApplicationStateStoreService, route: ActivatedRoute) {
+    fileName = "";
+    uploadProgress: number;
+    uploadObs$: Observable<any>;
+    uploadSub$: Subscription;
+
+    constructor(
+        private store: ApplicationStateStoreService,
+        route: ActivatedRoute,
+        private http: HttpClient,
+        private cd: ChangeDetectorRef
+    ) {
         setTimeout(() => {
             this.store.updateIsSidenavOpened(true);
         }, 100);
@@ -124,5 +148,56 @@ export class EvahubDocumentsComponent implements OnInit {
                 this.graphValues.push(el[1]);
             });
         }
+    }
+
+    onFileSelected(event) {
+        const file: File = event.target.files[0];
+
+        if (file) {
+            this.fileName = file.name;
+            const formData = new FormData();
+            formData.append("file", file);
+
+            this.uploadObs$ = this.username$.pipe(
+                switchMap(username => {
+                    let url = `${environment.baseApiBackendUrl}/rest/put/document/document-type/log/username/${username}`;
+
+                    return this.http.put(url, formData, {
+                        reportProgress: true,
+                        observe: "events"
+                    });
+                }),
+                finalize(() => {
+                    console.log("step 3, in finalize");
+                    this.resetUpload();
+                })
+            );
+        }
+    }
+
+    onUploadInitiated() {
+        console.log();
+
+        this.uploadSub$ = this.uploadObs$.subscribe(event => {
+            if (event.type == HttpEventType.UploadProgress) {
+                console.log("UPLOAD PROGRESS, event is:", event);
+                const newProgress = Math.round(100 * (event.loaded / event.total));
+                this.uploadProgress = newProgress;
+                this.cd.markForCheck();
+            }
+        });
+    }
+
+    resetUpload() {
+        if (this.uploadSub$) {
+            this.uploadSub$.unsubscribe();
+        }
+
+        this.uploadProgress = 0;
+        this.uploadSub$ = null;
+    }
+
+    ngOnDestroy() {
+        this.resetUpload();
     }
 }

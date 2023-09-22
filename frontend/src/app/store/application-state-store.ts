@@ -41,6 +41,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     shouldDisplayDocumentSpinner$: Observable<boolean> = this.select(
         state => state.documentContent.shouldDisplaySpinner
     );
+    isInDocumentUploadMode$: Observable<boolean> = this.select(
+        state => state.documentContent.isInDocumentUploadMode
+    );
 
     // SIDENAV
     isSidenavOpened$: Observable<boolean> = this.select(state => state.sidenav.isSidenavOpened);
@@ -150,6 +153,10 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // EVAHUB DOCUMENTS CONTENT:
     updateShouldDisplayEvahubDocumentSpinner(should: boolean) {
         updateState(this, "documentContent", "shouldDisplaySpinner", should);
+    }
+
+    updateIsInDocumentUploadMode(is: boolean) {
+        updateState(this, "documentContent", "isInDocumentUploadMode", is);
     }
 
     // SIDENAV:
