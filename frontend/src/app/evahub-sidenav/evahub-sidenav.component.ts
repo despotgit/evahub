@@ -61,11 +61,11 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
         this.store.updateIsInDocumentUploadMode(false);
     }
 
-    deleteClicked($event, iid: number) {
+    deleteClicked(iid: number) {
         this.openDocumentDeleteConfirmationDialog(iid);
     }
 
-    requestReportClicked($event, iid: number) {
+    requestReportClicked(iid: number) {
         console.log("in requestReportClicked");
         braintreeGetToken(iid);
     }

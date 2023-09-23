@@ -9,11 +9,7 @@ import { INITIAL_APPLICATION_STATE } from "../store/state/application.state";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
-    constructor(
-        public http: HttpClient,
-        private store: ApplicationStateStoreService,
-        private router: Router
-    ) {
+    constructor(public http: HttpClient, private store: ApplicationStateStoreService, private router: Router) {
         this.store.setState(INITIAL_APPLICATION_STATE);
 
         let cu = localStorage.getItem(storedObjectName);
@@ -39,7 +35,7 @@ export class AuthenticationService {
             })
             .pipe(
                 map(user => {
-                    //console.log("user from pipe map is:", user);
+                    console.log("user from pipe map is:", user);
                     if (user.authenticated && user.token) {
                         localStorage.setItem(storedObjectName, JSON.stringify(user));
 

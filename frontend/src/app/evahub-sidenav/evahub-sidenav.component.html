@@ -1,4 +1,4 @@
-<button (click)="uploadNewDocument()">Upload new document</button>
+<mat-card class="unselected-menu-item" (click)="uploadNewDocument()">Upload new document</mat-card>
 <mat-list *ngIf="!shouldDisplaySpinner">
     <mat-card
         *ngFor="let mo of menuItems"
@@ -8,11 +8,13 @@
             <div class="elements-wrapper">
                 <div class="document-name">{{ mo.id }} {{ mo.label }}</div>
                 <span class="buttons-wrapper">
-                    <div class="request-report-button" (click)="requestReportClicked($event, mo.id)">
-                        REQUEST <br />
-                        REPORT
+                    <div class="request-report-button" (click)="requestReportClicked(mo.id)">
+                        <span title="Request report" class="material-icons">assignment</span>
                     </div>
-                    <div class="delete-document" (click)="deleteClicked($event, mo.id)">DELETE</div>
+                    <div class="delete-document" (click)="deleteClicked(mo.id)">
+                        <!-- <mat-icon>delete</mat-icon>  -->
+                        <span class="material-icons">delete</span>
+                    </div>
                 </span>
             </div>
         </mat-list-item>

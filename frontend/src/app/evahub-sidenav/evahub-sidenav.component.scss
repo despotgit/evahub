@@ -27,7 +27,6 @@ mat-card {
 .request-report-button {
     display: inherit;
     float: left;
-    position: relative;
     font-weight: bolder;
     align-items: center;
     height: 100px;
@@ -38,14 +37,14 @@ mat-card {
 }
 
 .delete-document {
-    left: 65px;
+    position: relative;
+    left: 38px;
     background-color: mat.get-color-from-palette($evahub-light-accent, 300);
-    font-weight: bolder;
 }
 
 .request-report-button {
     position: absolute;
-    left: 251px;
+    left: 247px;
     background-color: mat.get-color-from-palette($evahub-light-primary, 300);
 }
 
@@ -55,11 +54,11 @@ mat-card {
 
 .buttons-wrapper:hover {
     .delete-document {
-        transform: translateX(-65px);
+        transform: translateX(-35px);
     }
 
     .request-report-button {
-        transform: translateX(-140px);
+        transform: translateX(-72px);
     }
 }
 
