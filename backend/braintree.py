@@ -1,4 +1,9 @@
 import braintree
+from db_users_broker import getDbUser
+from flask import request, Blueprint
+from db_revoked_tokens_broker import isTokenRevoked
+from flask import Blueprint, json, request
+
 
 braintree = Blueprint("braintree", __name__)
 
@@ -12,13 +17,7 @@ gateway = braintree.BraintreeGateway(
 )
 
 
-def getToken():
-    # pass client_token to your front-end
-    client_token = gateway.client_token.generate({"customer_id": "test2"})
-    return client_token
-
-
-@app.route("/client_token", methods=["GET"])
+@braintree.route("/client_token", methods=["GET"])
 def client_token():
     return gateway.client_token.generate()
 
@@ -35,6 +34,12 @@ def pay():
     response.headers.add("Access-Control-Allow-Origin", "*")
 
     return response
+
+
+def getToken():
+    # pass client_token to your front-end
+    client_token = gateway.client_token.generate({"customer_id": "test2"})
+    return client_token
 
 
 def finalizeResponse(r):

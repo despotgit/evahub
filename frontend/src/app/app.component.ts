@@ -28,6 +28,7 @@ import { EvahubDocument } from "./models/EvahubDocument";
 import { EvahubDocumentTypeWordToNumber } from "../app/common/constants";
 import { Log } from "./models/Log";
 import { Report } from "./models/Report";
+import { Project } from "./models/Project";
 import { ApplicationStateStoreService } from "./store/application-state-store";
 import { EvahubSidenavMenuItem } from "./common/constants";
 import { AuthenticationService } from "./services/authentication.service";
@@ -44,9 +45,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     isLoggedIn$: Observable<boolean> = this.store.isloggedIn$;
     isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$;
     sidenavMenuItems$: Observable<EvahubSidenavMenuItem[]> = this.store.sidenavMenuItems$;
+    userProjects$: Observable<Log[]> = this.store.userProjects$;
+    userLogs$: Observable<Log[]> = this.store.userLogs$;
     userReports$: Observable<Report[]> = this.store.userReports$;
     userChecks$: Observable<Check[]> = this.store.userChecks$;
-    userLogs$: Observable<Log[]> = this.store.userLogs$;
     currentPageIndex$ = this.store.currentPageIndex$.pipe(
         tap(_ => {
             // first reset the sidenav menu, and put spinner while it loads
@@ -69,6 +71,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     currentDocumentSet$ = this.currentPageIndex$.pipe(
         switchMap(cpi => {
             switch (cpi) {
+                case PageIndexEnum.PROJECTS_PAGE:
+                    return this.userProjects$;
+
                 case PageIndexEnum.LOGS_PAGE:
                     return this.userLogs$;
 
@@ -296,6 +301,10 @@ export class AppComponent implements OnInit, AfterViewInit {
             ds.map(d => {
                 let doc;
                 switch (dtToLower) {
+                    case "project":
+                        doc = new Project();
+                        //console.log("is a project");
+                        break;
                     case "log":
                         doc = new Log();
                         //console.log("is a log");

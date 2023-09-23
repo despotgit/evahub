@@ -10,6 +10,7 @@ import {
 } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument } from "../models/EvahubDocument";
+import { Project } from "../models/Project";
 import { Log } from "../models/Log";
 import { Report } from "../models/Report";
 import { ApplicationState, INITIAL_APPLICATION_STATE } from "./state/application.state";
@@ -55,28 +56,42 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // MAIN MENU
     mainMenuItems$: Observable<EvahubMainMenuItem[]> = this.select(state => state.mainMenu.mainMenuItems);
 
-    // REPORTS
-    userReports$: Observable<Report[]> = this.select(state => state.userReports);
+    // PROJECTS
+    userProjects$: Observable<Log[]> = this.select(state => state.userProjects);
 
     // LOGS
     userLogs$: Observable<Log[]> = this.select(state => state.userLogs);
+
+    // REPORTS
+    userReports$: Observable<Report[]> = this.select(state => state.userReports);
 
     // CHECKS
     userChecks$: Observable<Check[]> = this.select(state => state.userChecks);
 
     // DERIVED OBSERVABLES:
     selectedDocument$: Observable<EvahubDocument> = this.currentDocumentId$.pipe(
-        withLatestFrom(this.currentPageIndex$, this.userLogs$, this.userReports$, this.userChecks$),
+        withLatestFrom(
+            this.currentPageIndex$,
+            this.userProjects$,
+            this.userLogs$,
+            this.userReports$,
+            this.userChecks$
+        ),
         map(arr => {
             // arr -> [cdi, cpi, logs, reports, checks]
             let cdi = arr[0];
             let cpi = arr[1];
-            let logs = arr[2];
-            let reports = arr[3];
-            let checks = arr[4];
+            let projects = arr[2];
+            let logs = arr[3];
+            let reports = arr[4];
+            let checks = arr[5];
 
             let theDocs = [];
             switch (cpi) {
+                case PageIndexEnum.PROJECTS_PAGE:
+                    theDocs = projects;
+                    break;
+
                 case PageIndexEnum.LOGS_PAGE:
                     theDocs = logs;
                     break;

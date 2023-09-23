@@ -65,13 +65,9 @@ def register():
 
     print("CHECKPOINT 1")
 
-    response = json.jsonify(
-        {"status": "ok", "message": "User successfully registered."}
-    )
+    response = {"status": "ok", "message": "User successfully registered."}
 
-    response.headers.add("Access-Control-Allow-Origin", "*")
-
-    return response
+    return finalizeResponse(response)
 
 
 # Create a route to authenticate your users and return JWTs. The

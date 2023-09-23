@@ -1,12 +1,14 @@
 import { environment } from "src/environments/environment";
 
 export const EVAHUB_DOCUMENT_TYPE_UNKNOWN = 0;
-export const EVAHUB_DOCUMENT_TYPE_LOG = 1;
-export const EVAHUB_DOCUMENT_TYPE_REPORT = 2;
-export const EVAHUB_DOCUMENT_TYPE_CHECK = 3;
+export const EVAHUB_DOCUMENT_TYPE_PROJECT = 1;
+export const EVAHUB_DOCUMENT_TYPE_LOG = 2;
+export const EVAHUB_DOCUMENT_TYPE_REPORT = 3;
+export const EVAHUB_DOCUMENT_TYPE_CHECK = 4;
 
 export enum EvahubDocumentTypeWordToNumber {
     unknown = EVAHUB_DOCUMENT_TYPE_UNKNOWN,
+    project = EVAHUB_DOCUMENT_TYPE_PROJECT,
     log = EVAHUB_DOCUMENT_TYPE_LOG,
     report = EVAHUB_DOCUMENT_TYPE_REPORT,
     check = EVAHUB_DOCUMENT_TYPE_CHECK
@@ -31,7 +33,7 @@ export const enum PageIndexEnum {
     REGISTER_PAGE = 1,
     LOGIN_PAGE = 2,
     HOME_PAGE = 3,
-    USER_PROJECTS_PAGE = 4,
+    PROJECTS_PAGE = 4,
     LOGS_PAGE = 5,
     REPORTS_PAGE = 6,
     CHECKS_PAGE = 7
@@ -69,7 +71,7 @@ export const PageIndexDictionary = {
         isInMainMenu: false
     },
     projects: {
-        pageIndex: PageIndexEnum.USER_PROJECTS_PAGE,
+        pageIndex: PageIndexEnum.PROJECTS_PAGE,
         isDocumentsPage: false,
         label: "Projects",
         gotoParam: "projects",
@@ -123,13 +125,6 @@ export function getInitialMainMenuItems() {
     });
 
     return toRet;
-}
-
-export function getAllEvahubDocumentTypes() {
-    return {
-        1: "a",
-        2: "b"
-    };
 }
 
 /*
