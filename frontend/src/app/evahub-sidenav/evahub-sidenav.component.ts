@@ -111,8 +111,9 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
         this.emitNewDocumentClicked.emit();
     }
 
-    isInNewDocumentMode() {
-        return this.isInDocumentUploadMode || this.isInNewProjectCreationMode;
+    isInCreationMode() {
+        let val = this.isInDocumentUploadMode || this.isInNewProjectCreationMode;
+        return val;
     }
 
     ngOnDestroy(): void {}

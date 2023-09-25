@@ -68,6 +68,14 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.currentPageIndex = a;
         })
     );
+    //hook to switch of creation flags when switching to a new page:
+    disengageCreationMode$ = this.currentPageIndex$.pipe(
+        tap(a => {
+            console.log("disengaging....");
+            this.store.updateIsInDocumentUploadMode(false);
+            this.store.updateIsInNewProjectCreationMode(false);
+        })
+    );
     currentDocumentSet$ = this.currentPageIndex$.pipe(
         switchMap(cpi => {
             switch (cpi) {
@@ -352,6 +360,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.store.updateIsInDocumentUploadMode(true);
             this.store.updateIsInNewProjectCreationMode(false);
         }
+        this.store.updateCurrentDocumentId(0);
     }
 
     unSubscribe() {

@@ -10,8 +10,8 @@ export class RestApiService {
     constructor(private httpClient: HttpClient) {}
 
     getDocumentsSet(docTypeToLower, username) {
-        console.log("in getDocumentsSet docTypeToLower is", docTypeToLower);
-        console.log("in getDocumentsSet username is", username);
+        //console.log("in getDocumentsSet docTypeToLower is", docTypeToLower);
+        //console.log("in getDocumentsSet username is", username);
         let url = `${environment.baseApiBackendUrl}/rest/get/documents/type/${docTypeToLower}/username/${username}`;
         return this.httpClient.get(url);
     }
