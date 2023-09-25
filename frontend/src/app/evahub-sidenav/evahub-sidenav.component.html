@@ -1,4 +1,4 @@
-<mat-card class="unselected-menu-item" (click)="uploadNewDocument()">Upload new document</mat-card>
+<mat-icon class="add-new-icon" (click)="uploadNewDocument()">add_circle</mat-icon>
 <mat-list *ngIf="!shouldDisplaySpinner">
     <mat-card
         *ngFor="let mo of menuItems"

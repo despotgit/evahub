@@ -92,3 +92,8 @@ mat-card {
         align-items: center;
     }
 }
+
+.add-new-icon {
+    color: mat.get-color-from-palette($evahub-light-primary, 500);
+    margin-left: 10px;
+}
