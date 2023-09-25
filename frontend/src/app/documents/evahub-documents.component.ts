@@ -85,6 +85,7 @@ export class EvahubDocumentsComponent implements OnInit {
     );
     currentDocumentType$ = this.store.currentDocumentType$;
     isInDocumentUploadMode$ = this.store.isInDocumentUploadMode$;
+    isInNewProjectCreationMode$ = this.store.isInNewProjectCreationMode$;
     username$ = this.store.username$;
 
     @Input()

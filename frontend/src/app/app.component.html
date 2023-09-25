@@ -14,7 +14,8 @@
         smicd: smicd$ | async,
         ddcd: ddcd$ | async,
         currentDocumentType: currentDocumentType$ | async,
-        isInDocumentUploadMode: isInDocumentUploadMode$ | async
+        isInDocumentUploadMode: isInDocumentUploadMode$ | async,
+        isInNewProjectCreationMode: isInNewProjectCreationMode$ | async
     } as asyncData"
     class="main-wrapper-div"
 >
@@ -61,6 +62,8 @@
                 [selectedDocumentId]="asyncData.currentDocumentId"
                 [shouldDisplaySpinner]="asyncData.shouldDisplaySidenavSpinner"
                 [isInDocumentUploadMode]="asyncData.isInDocumentUploadMode"
+                [isInNewProjectCreationMode]="asyncData.isInNewProjectCreationMode"
+                (emitNewDocumentClicked)="onNewDocumentClicked()"
             ></evahub-sidenav>
         </mat-sidenav>
 

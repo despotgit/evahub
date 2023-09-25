@@ -1,5 +1,5 @@
 <mat-icon
-    [ngClass]="isInDocumentUploadMode ? 'add-new-icon-selected' : 'add-new-icon-unselected'"
+    [ngClass]="isInNewDocumentMode() ? 'add-new-icon-selected' : 'add-new-icon-unselected'"
     (click)="uploadNewDocumentClicked()"
     >add_circle</mat-icon
 >

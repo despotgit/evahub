@@ -6,15 +6,18 @@
         datasets: graphDatasets$ | async,
         dcd: dcd$ | async,
         currentDocumentType: currentDocumentType$ | async,
-        isInDocumentUploadMode: isInDocumentUploadMode$ | async
+        isInDocumentUploadMode: isInDocumentUploadMode$ | async,
+        isInNewProjectCreationMode: isInNewProjectCreationMode$ | async
     } as asyncData"
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
             <div *ngIf="asyncData.isInDocumentUploadMode">
-                <app-document-upload-form-component>
-                    <!-- -->
-                </app-document-upload-form-component>
+                <evahub-document-upload-form-component *ngIf="asyncData.isInDocumentUploadMode">
+                </evahub-document-upload-form-component>
+
+                <evahub-document-new-project-form *ngIf="asyncData.isInNewProjectCreationMode">
+                </evahub-document-new-project-form>
             </div>
             <div *ngIf="!asyncData.isInDocumentUploadMode">
                 <div *ngIf="asyncData.displayGraph" class="document-graph">

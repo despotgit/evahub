@@ -45,6 +45,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     isInDocumentUploadMode$: Observable<boolean> = this.select(
         state => state.documentContent.isInDocumentUploadMode
     );
+    isInNewProjectCreationMode$: Observable<boolean> = this.select(
+        state => state.documentContent.isInNewProjectCreationMode
+    );
 
     // SIDENAV
     isSidenavOpened$: Observable<boolean> = this.select(state => state.sidenav.isSidenavOpened);
@@ -172,6 +175,10 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     updateIsInDocumentUploadMode(is: boolean) {
         updateState(this, "documentContent", "isInDocumentUploadMode", is);
+    }
+
+    updateIsInNewProjectCreationMode(is: boolean) {
+        updateState(this, "documentContent", "isInNewProjectCreationMode", is);
     }
 
     // SIDENAV:

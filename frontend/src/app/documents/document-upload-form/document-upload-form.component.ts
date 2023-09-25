@@ -6,7 +6,7 @@ import { environment } from "src/environments/environment";
 import { ApplicationStateStoreService } from "../../store/application-state-store";
 
 @Component({
-    selector: "app-document-upload-form-component",
+    selector: "evahub-document-upload-form-component",
     templateUrl: "document-upload-form.component.html",
     styleUrls: ["document-upload-form.component.scss"]
 })

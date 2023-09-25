@@ -35,6 +35,9 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     isInDocumentUploadMode: boolean;
 
     @Input()
+    isInNewProjectCreationMode: boolean;
+
+    @Input()
     menuItems: EvahubSidenavMenuItem[];
 
     @Input()
@@ -48,6 +51,9 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
         source;
         itemId;
     }>();
+
+    @Output()
+    emitNewDocumentClicked: EventEmitter<any> = new EventEmitter();
 
     username$ = this.store.username$;
 
@@ -68,7 +74,6 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
 
     menuItemClicked(itemId) {
         this.emitItemClicked.emit(itemId);
-        this.store.updateIsInDocumentUploadMode(false);
     }
 
     deleteClicked(iid: number) {
@@ -103,8 +108,11 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     }
 
     uploadNewDocumentClicked() {
-        this.store.updateIsInDocumentUploadMode(true);
-        this.store.updateCurrentDocumentId(0);
+        this.emitNewDocumentClicked.emit();
+    }
+
+    isInNewDocumentMode() {
+        return this.isInDocumentUploadMode || this.isInNewProjectCreationMode;
     }
 
     ngOnDestroy(): void {}

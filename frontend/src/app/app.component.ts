@@ -126,6 +126,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     shouldDisplaySidenavSpinner$ = this.store.shouldDisplaySidenavSpinner$;
     shouldDisplayDocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
     isInDocumentUploadMode$ = this.store.isInDocumentUploadMode$;
+    isInNewProjectCreationMode$ = this.store.isInNewProjectCreationMode$;
     sideMenuItemClickedSubject$: Subject<any> = new Subject();
     smicd$: Observable<any> = this.sideMenuItemClickedSubject$.pipe(
         // Menu Item Clicked Derived obs.
@@ -208,6 +209,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     sideMenuItemClicked($event) {
         //console.log("in app in menuItemClicked, $event is:", $event);
+        this.store.updateIsInDocumentUploadMode(false);
+        this.store.updateIsInNewProjectCreationMode(false);
 
         this.sideMenuItemClickedSubject$.next($event);
 
@@ -338,6 +341,17 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
 
         return { menuItems, docs };
+    }
+
+    onNewDocumentClicked() {
+        console.log("currentPageIndex is:", this.currentPageIndex);
+        if (this.currentPageIndex == PageIndexEnum.PROJECTS_PAGE) {
+            this.store.updateIsInNewProjectCreationMode(true);
+            this.store.updateIsInDocumentUploadMode(false);
+        } else {
+            this.store.updateIsInDocumentUploadMode(true);
+            this.store.updateIsInNewProjectCreationMode(false);
+        }
     }
 
     unSubscribe() {

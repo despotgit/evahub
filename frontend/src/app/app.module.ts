@@ -24,6 +24,7 @@ import { environment } from "../environments/environment";
 import { GearsSpinnerComponent } from "./gears-spinner/gears-spinner.component";
 import { EvahubGraphControlsComponent } from "./documents/documents-graph/evahub-graph-controls/evahub-graph-controls.component";
 import { DocumentUploadFormComponent } from './documents/document-upload-form/document-upload-form.component';
+import { DocumentNewProjectFormComponent } from './documents/document-new-project-form/document-new-project-form.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { DocumentUploadFormComponent } from './documents/document-upload-form/do
         DeleteDocumentConfirmationDialogComponent,
         GearsSpinnerComponent,
         EvahubGraphControlsComponent,
-        DocumentUploadFormComponent
+        DocumentUploadFormComponent,
+        DocumentNewProjectFormComponent
     ],
     imports: [
         BrowserModule,
