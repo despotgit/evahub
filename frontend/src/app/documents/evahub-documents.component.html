@@ -12,13 +12,9 @@
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
             <div *ngIf="asyncData.isInDocumentUploadMode">
-                <app-document-upload-form
-                    [accept]="requiredFileType"
-                    (emitFileSelected)="onFileSelected($event)"
-                    (emitUploadInitiated)="onUploadInitiated()"
-                    [uploadProgress]="uploadProgress"
-                >
-                </app-document-upload-form>
+                <app-document-upload-form-component>
+                    <!-- -->
+                </app-document-upload-form-component>
             </div>
             <div *ngIf="!asyncData.isInDocumentUploadMode">
                 <div *ngIf="asyncData.displayGraph" class="document-graph">
