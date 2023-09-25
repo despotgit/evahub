@@ -19,12 +19,7 @@ import {
     fromEvent
 } from "rxjs";
 import { finalize } from "rxjs/operators";
-import {
-    UntypedFormBuilder,
-    UntypedFormControl,
-    UntypedFormGroup,
-    Validators
-} from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../store/application-state-store";
 import { getRegisterUrl, PageIndexEnum } from "../common/constants";
 
@@ -61,12 +56,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.theForm.get("registerPasswordFormControl").setValue(newRegisterPassword);
         })
     );
-    registerPasswordConfirmation$: Observable<string> =
-        this.store.registerPasswordConfirmation$.pipe(
-            tap(newRPC => {
-                this.theForm.get("registerPasswordConfirmationFormControl").setValue(newRPC);
-            })
-        );
+    registerPasswordConfirmation$: Observable<string> = this.store.registerPasswordConfirmation$.pipe(
+        tap(newRPC => {
+            this.theForm.get("registerPasswordConfirmationFormControl").setValue(newRPC);
+        })
+    );
     firstLastName$: Observable<string> = this.store.firstLastName$.pipe(
         tap(newName => {
             //console.log("CHECKPOINT 2");
@@ -132,9 +126,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         const registerPasswordConfirmationEvents$: Observable<any> = this.theForm.get(
             "registerPasswordConfirmationFormControl"
         ).valueChanges;
-        const firstLastNameEvents$: Observable<any> = this.theForm.get(
-            "firstLastNameFormControl"
-        ).valueChanges;
+        const firstLastNameEvents$: Observable<any> = this.theForm.get("firstLastNameFormControl").valueChanges;
         const emailEvents$: Observable<any> = this.theForm.get("emailFormControl").valueChanges;
 
         combineLatest([
@@ -147,30 +139,21 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             .pipe(
                 debounceTime(300),
                 distinctUntilChanged(),
-                map(
-                    ([
-                        registerUsername,
-                        registerPassword,
-                        registerPasswordConfirmation,
-                        firstLastName,
-                        email
-                    ]) => {
-                        this.store.updateRegisterUsername(registerUsername);
-                        this.store.updateRegisterPassword(registerPassword);
-                        this.store.updateRegisterPasswordConfirmation(registerPasswordConfirmation);
-                        this.store.updateRegisterFirstLastName(firstLastName);
-                        this.store.updateRegisterEmail(email);
+                map(([registerUsername, registerPassword, registerPasswordConfirmation, firstLastName, email]) => {
+                    this.store.updateRegisterUsername(registerUsername);
+                    this.store.updateRegisterPassword(registerPassword);
+                    this.store.updateRegisterPasswordConfirmation(registerPasswordConfirmation);
+                    this.store.updateRegisterFirstLastName(firstLastName);
+                    this.store.updateRegisterEmail(email);
 
-                        this.registrationData.registerUsername = registerUsername;
-                        this.registrationData.registerPassword = registerPassword;
-                        this.registrationData.registerPasswordConfirmation =
-                            registerPasswordConfirmation;
-                        this.registrationData.firstLastName = firstLastName;
-                        this.registrationData.email = email;
+                    this.registrationData.registerUsername = registerUsername;
+                    this.registrationData.registerPassword = registerPassword;
+                    this.registrationData.registerPasswordConfirmation = registerPasswordConfirmation;
+                    this.registrationData.firstLastName = firstLastName;
+                    this.registrationData.email = email;
 
-                        //console.log("regData is:", this.registrationData);
-                    }
-                )
+                    //console.log("regData is:", this.registrationData);
+                })
             )
             .subscribe();
         this.store.updateCurrentPageIndex(PageIndexEnum.REGISTER_PAGE);

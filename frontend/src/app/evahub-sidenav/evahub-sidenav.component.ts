@@ -1,4 +1,13 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output
+} from "@angular/core";
 
 import { EvahubSidenavMenuItem } from "../common/constants";
 import { tap } from "rxjs";
@@ -15,7 +24,8 @@ declare function braintreeGetToken(a): void;
 @Component({
     selector: "evahub-sidenav",
     templateUrl: "./evahub-sidenav.component.html",
-    styleUrls: ["./evahub-sidenav.component.scss"]
+    styleUrls: ["./evahub-sidenav.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     @Input()
@@ -94,6 +104,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
 
     uploadNewDocumentClicked() {
         this.store.updateIsInDocumentUploadMode(true);
+        this.store.updateCurrentDocumentId(0);
     }
 
     ngOnDestroy(): void {}

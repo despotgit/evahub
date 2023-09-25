@@ -93,7 +93,14 @@ mat-card {
     }
 }
 
-.add-new-icon {
+.add-new-icon-selected {
     color: mat.get-color-from-palette($evahub-light-primary, 500);
+    background-color: white;
+    margin-left: 10px;
+}
+
+.add-new-icon-unselected {
+    color: white;
+    background-color: $box-shadow-color;
     margin-left: 10px;
 }
