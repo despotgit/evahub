@@ -2,7 +2,7 @@ import os
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
 from auth import verifyUser, finalizeResponse
-from db_user_documents_broker import addDbUserDocument
+from db_user_documents_broker import addDbUserLog
 from db import executeCustomQuery
 from common import getDocumentFileInfo
 
@@ -44,7 +44,7 @@ def uploadDocument(documentType, username):
     print(f)
     f.save(uploadLocation)
 
-    addDbUserDocument(secureFilename, username)
+    addDbUserLog(secureFilename, username)
 
     response = {
         "authenticated": True,

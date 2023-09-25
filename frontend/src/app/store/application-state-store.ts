@@ -57,7 +57,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     mainMenuItems$: Observable<EvahubMainMenuItem[]> = this.select(state => state.mainMenu.mainMenuItems);
 
     // PROJECTS
-    userProjects$: Observable<Log[]> = this.select(state => state.userProjects);
+    userProjects$: Observable<Project[]> = this.select(state => state.userProjects);
 
     // LOGS
     userLogs$: Observable<Log[]> = this.select(state => state.userLogs);

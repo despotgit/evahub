@@ -70,11 +70,11 @@ export const PageIndexDictionary = {
         gotoParam: "home",
         isInMainMenu: false
     },
-    projects: {
+    project: {
         pageIndex: PageIndexEnum.PROJECTS_PAGE,
-        isDocumentsPage: false,
+        isDocumentsPage: true,
         label: "Projects",
-        gotoParam: "projects",
+        gotoParam: "project",
         isInMainMenu: true
     },
     log: {

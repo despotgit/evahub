@@ -92,7 +92,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
             .subscribe();
     }
 
-    uploadNewDocument() {
+    uploadNewDocumentClicked() {
         this.store.updateIsInDocumentUploadMode(true);
     }
 

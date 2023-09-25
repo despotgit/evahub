@@ -8,7 +8,7 @@ import json
 db = getDb()
 
 
-def addDbUserDocument(secureFilename, username):
+def addDbUserLog(secureFilename, username):
     res = executeCustomQuery(
         "insert into logs (`log_name`,`log_filename`,`username`) values ('"
         + secureFilename[:25]
