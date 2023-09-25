@@ -23,6 +23,7 @@ import { documentsReducer } from "./store/reducers/documents.reducer";
 import { environment } from "../environments/environment";
 import { GearsSpinnerComponent } from "./gears-spinner/gears-spinner.component";
 import { EvahubGraphControlsComponent } from "./documents/documents-graph/evahub-graph-controls/evahub-graph-controls.component";
+import { DocumentUploadFormComponent } from './documents/document-upload-form/document-upload-form.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { EvahubGraphControlsComponent } from "./documents/documents-graph/evahub
         DocumentsTextComponent,
         DeleteDocumentConfirmationDialogComponent,
         GearsSpinnerComponent,
-        EvahubGraphControlsComponent
+        EvahubGraphControlsComponent,
+        DocumentUploadFormComponent
     ],
     imports: [
         BrowserModule,

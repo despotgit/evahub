@@ -175,7 +175,7 @@ export class EvahubDocumentsComponent implements OnInit {
     }
 
     onUploadInitiated() {
-        console.log();
+        console.log("in onUploadInitiated in evahub documents");
 
         this.uploadSub$ = this.uploadObs$.subscribe(event => {
             if (event.type == HttpEventType.UploadProgress) {
