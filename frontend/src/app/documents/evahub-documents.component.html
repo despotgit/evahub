@@ -12,14 +12,14 @@
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
-            <div *ngIf="asyncData.isInDocumentUploadMode">
+            <div *ngIf="asyncData.isInDocumentUploadMode || asyncData.isInNewProjectCreationMode">
                 <evahub-document-upload-form-component *ngIf="asyncData.isInDocumentUploadMode">
                 </evahub-document-upload-form-component>
 
                 <evahub-document-new-project-form *ngIf="asyncData.isInNewProjectCreationMode">
                 </evahub-document-new-project-form>
             </div>
-            <div *ngIf="!asyncData.isInDocumentUploadMode">
+            <div *ngIf="!asyncData.isInDocumentUploadMode && !asyncData.isInNewProjectCreationMode">
                 <div *ngIf="asyncData.displayGraph" class="document-graph">
                     <evahub-graph-controls
                         [datasets]="asyncData.datasets"
