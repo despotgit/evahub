@@ -94,8 +94,6 @@ export class EvahubDocumentsComponent implements OnInit {
     graphValues: Array<number> = [];
     graphLabels: Array<number> = [];
 
-    graphDatasetsFormControl = new FormControl("");
-
     fileName = "";
     uploadProgress: number;
     uploadObs$: Observable<any>;
@@ -136,7 +134,8 @@ export class EvahubDocumentsComponent implements OnInit {
     ngOnInit(): void {}
 
     onGraphDatasetChange(e) {
-        this.gdsc$.next(e.value);
+        console.log("in evahub documents comp, onGraphDatasetChange, e is:", e);
+        this.gdsc$.next(e);
     }
 
     formGraphData(document, whichSet) {

@@ -22,6 +22,7 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { documentsReducer } from "./store/reducers/documents.reducer";
 import { environment } from "../environments/environment";
 import { GearsSpinnerComponent } from "./gears-spinner/gears-spinner.component";
+import { EvahubGraphControlsComponent } from "./documents/documents-graph/evahub-graph-controls/evahub-graph-controls.component";
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { GearsSpinnerComponent } from "./gears-spinner/gears-spinner.component";
         DocumentsGraphComponent,
         DocumentsTextComponent,
         DeleteDocumentConfirmationDialogComponent,
-        GearsSpinnerComponent
+        GearsSpinnerComponent,
+        EvahubGraphControlsComponent
     ],
     imports: [
         BrowserModule,
