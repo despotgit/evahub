@@ -9,6 +9,7 @@ import { getRegisterUrl } from "../common/constants";
 export class RestApiService {
     constructor(private httpClient: HttpClient) {}
 
+    // docTypeToLower is singular
     getDocumentsSet(docTypeToLower, username) {
         //console.log("in getDocumentsSet docTypeToLower is", docTypeToLower);
         //console.log("in getDocumentsSet username is", username);
@@ -36,5 +37,12 @@ export class RestApiService {
         //console.log("aaaand url is:", url);
 
         return this.httpClient.post(url, formData);
+    }
+
+    putNewDocument(url, formData) {
+        return this.httpClient.put(url, formData, {
+            reportProgress: true,
+            observe: "events"
+        });
     }
 }

@@ -1,8 +1,19 @@
-Pleasae enter the basic information about your project:
+Please enter the basic information about your project:
 
 <mat-card class="registration-area">
+    <button (click)="displayLogs()">DISPLAY LOGS</button>
+    {{ this.username }}
+
+    <mat-chip-listbox selectable multiple class="lista mat-mdc-chip-set-stacked" aria-label="Color selection">
+        <mat-chip-option *ngFor="let chip of availableColors" selected [color]="chip.color">
+            {{ chip.name }}
+        </mat-chip-option>
+    </mat-chip-listbox>
+
+    <!--
     <div class="register-content-wrapper" *ngIf="{} as asyncData">
         <form *ngIf="true" [formGroup]="theForm">
+
             <ng-template matStepLabel>Fill out your username</ng-template>
             <mat-form-field class="registration-field">
                 <input matInput placeholder="Username" formControlName="registerUsernameFormControl" />
@@ -48,4 +59,5 @@ Pleasae enter the basic information about your project:
             confirmation email.
         </div>
     </div>
+    -->
 </mat-card>

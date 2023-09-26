@@ -32,3 +32,14 @@ $unselected-item-color: white;
 $regular-text-color: black;
 
 $main-menu-button-color: mat.get-color-from-palette($evahub-light-primary, 300);
+
+// MATERIAL CHIPS
+
+.mat-mdc-chip-set-stacked .mat-mdc-chip {
+    display: block;
+    width: fit-content !important;
+}
+
+.mat-mdc-chip-set .mdc-evolution-chip-set__chips {
+    display: block !important;
+}

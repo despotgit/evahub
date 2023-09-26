@@ -4,6 +4,7 @@ import { Subscription, switchMap, map, Subject, Observable } from "rxjs";
 import { combineLatestWith, finalize } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { ApplicationStateStoreService } from "../../store/application-state-store";
+import { RestApiService } from "src/app/services/rest-api.service";
 
 @Component({
     selector: "evahub-document-upload-form-component",
@@ -24,7 +25,8 @@ export class DocumentUploadFormComponent implements OnDestroy {
     constructor(
         private http: HttpClient,
         private store: ApplicationStateStoreService,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private rest: RestApiService
     ) {
         //this.store.updateSidenavMenuItems([]);
         //this.store.updateIsSidenavOpened(false);
@@ -42,10 +44,7 @@ export class DocumentUploadFormComponent implements OnDestroy {
                 switchMap(username => {
                     let url = `${environment.baseApiBackendUrl}/rest/put/document/document-type/log/username/${username}`;
 
-                    return this.http.put(url, formData, {
-                        reportProgress: true,
-                        observe: "events"
-                    });
+                    return this.rest.putNewDocument(url, formData);
                 }),
                 finalize(() => {
                     console.log("step 3, in finalize");
