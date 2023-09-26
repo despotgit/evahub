@@ -1,1 +1,51 @@
-<p>document-new-project-form works!</p>
+Pleasae enter the basic information about your project:
+
+<mat-card class="registration-area">
+    <div class="register-content-wrapper" *ngIf="{} as asyncData">
+        <form *ngIf="true" [formGroup]="theForm">
+            <ng-template matStepLabel>Fill out your username</ng-template>
+            <mat-form-field class="registration-field">
+                <input matInput placeholder="Username" formControlName="registerUsernameFormControl" />
+            </mat-form-field>
+
+            <ng-template matStepLabel>Fill out your password</ng-template>
+            <mat-form-field class="registration-field">
+                <input
+                    type="password"
+                    matInput
+                    placeholder="Password"
+                    formControlName="registerPasswordFormControl"
+                />
+            </mat-form-field>
+
+            <mat-form-field class="registration-field">
+                <input
+                    type="password"
+                    matInput
+                    placeholder="Confirm password"
+                    formControlName="registerPasswordConfirmationFormControl"
+                />
+            </mat-form-field>
+
+            <ng-template matStepLabel>Fill out your name</ng-template>
+            <mat-form-field class="registration-field">
+                <input matInput placeholder="Your name" formControlName="firstLastNameFormControl" />
+            </mat-form-field>
+
+            <ng-template matStepLabel>Fill out your email</ng-template>
+            <mat-form-field class="registration-field">
+                <input matInput placeholder="Email" formControlName="emailFormControl" value="email" />
+            </mat-form-field>
+
+            <div>
+                <button [disabled]="false" #done mat-button>Done</button>
+            </div>
+        </form>
+        <div class="invalid-feedback">errorrinho</div>
+
+        <div class="thanks" *ngIf="true">
+            Thanks for registering. In order to confirm your registration, please click on the link in the
+            confirmation email.
+        </div>
+    </div>
+</mat-card>

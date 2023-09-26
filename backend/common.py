@@ -1,11 +1,14 @@
+import os
 from werkzeug.utils import secure_filename
 
 
 def getUserDocumentsDir(documentType, username):
-    filePathPrefix = "/Applications/MAMP/htdocs/evahub/backend/"
-    rootDir = filePathPrefix + "documents/" + documentType + "s"
-    userDir = rootDir + "/" + username
-    return userDir
+    filePathPrefix = os.path.abspath("./") + "/"
+
+    userDir = filePathPrefix + "documents/" + username + "/"
+    documentsDir = userDir + documentType + "s"
+
+    return documentsDir
 
 
 def getDocumentFileInfo(documentType, username, filename, secureFilename=False):
