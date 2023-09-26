@@ -95,7 +95,7 @@ mat-card {
 
 .add-new-icon-selected {
     color: mat.get-color-from-palette($evahub-light-primary, 500);
-    background-color: white;
+    background-color: transparent;
     margin-left: 10px;
 }
 
