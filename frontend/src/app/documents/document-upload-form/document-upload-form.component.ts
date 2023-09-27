@@ -1,11 +1,10 @@
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Input, OnDestroy } from "@angular/core";
-import { Subscription, switchMap, map, Subject, Observable } from "rxjs";
-import { combineLatestWith, finalize } from "rxjs/operators";
-import { environment } from "src/environments/environment";
+import { Subscription, switchMap, Observable } from "rxjs";
+import { finalize } from "rxjs/operators";
 import { ApplicationStateStoreService } from "../../store/application-state-store";
 import { RestApiClient } from "src/app/services/rest-api-client.service";
-import { formPostNewLogUrl, formPostNewProjectUrl } from "src/app/common/common";
+import { formPutNewLogUrl } from "src/app/common/common";
 
 @Component({
     selector: "evahub-document-upload-form-component",
@@ -43,9 +42,7 @@ export class DocumentUploadFormComponent implements OnDestroy {
 
             this.uploadObs$ = this.username$.pipe(
                 switchMap(username => {
-                    let url = formPostNewLogUrl(username);
-
-                    return this.rest.putNewDocument(url, formData);
+                    return this.rest.putNewDocument(formData, username);
                 }),
                 finalize(() => {
                     console.log("step 3, in finalize");

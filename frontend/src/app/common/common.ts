@@ -53,12 +53,12 @@ export function getLoginUrl() {
     return url;
 }
 
-export function formPostNewLogUrl(username = "") {
+export function formPutNewLogUrl(username = "") {
     return `${environment.baseApiBackendUrl}/rest/put/document/document-type/log/username/${username}`;
 }
 
-export function formNewProjectUrl(username = "") {
-    let url = `${environment.baseApiBackendUrl}/rest/post/documents/type/project/username/${username}`;
+export function formPostNewProjectUrl(username = "") {
+    let url = `${environment.baseApiBackendUrl}/rest/post/document/document-type/project/username/${username}`;
     //console.log("url is: ", url);
     return url;
 }
