@@ -104,28 +104,21 @@ export class DocumentNewProjectFormComponent implements OnInit {
     onSubmit() {
         console.log("in onSubmit");
         this.submitted = true;
-
-        // stop if form is invalid
-        if (this.theForm.invalid) {
-            console.log("form is invalid");
-            return;
-        }
-
         this.loading = true;
 
-        let filteredLogIds = this.logSelections
-            .filter(ls => ls.selected)
-            .map(f => {
-                return f.log.logId;
-            });
-
-        let projectLogsForDb = filteredLogIds.join(",");
-
-        this.formData.projectLogs = projectLogsForDb;
+        this.formData.projectLogs = this.getSelectedLogs().join(",");
 
         this.rest.createNewProject(this.formData, this.username).subscribe(r => {
             console.log("r is:", r);
         });
+    }
+
+    getSelectedLogs() {
+        return this.logSelections
+            .filter(ls => ls.selected)
+            .map(f => {
+                return f.log.logId;
+            });
     }
 
     onChipsSelectionChange(logId) {

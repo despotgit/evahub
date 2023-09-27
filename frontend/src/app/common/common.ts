@@ -41,7 +41,7 @@ export function capitalizeWord(word: string): string {
     return sc;
 }
 
-export function getRegisterUrl() {
+export function formRegisterUrl() {
     let url = environment.baseApiBackendUrl + "/auth/register";
     //console.log("url is: ", url);
     return url;
@@ -53,7 +53,11 @@ export function getLoginUrl() {
     return url;
 }
 
-export function getNewProjectUrl(username = "") {
+export function formPostNewLogUrl(username = "") {
+    return `${environment.baseApiBackendUrl}/rest/put/document/document-type/log/username/${username}`;
+}
+
+export function formNewProjectUrl(username = "") {
     let url = `${environment.baseApiBackendUrl}/rest/post/documents/type/project/username/${username}`;
     //console.log("url is: ", url);
     return url;

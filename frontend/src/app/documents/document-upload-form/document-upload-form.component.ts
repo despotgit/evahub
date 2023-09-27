@@ -5,6 +5,7 @@ import { combineLatestWith, finalize } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { ApplicationStateStoreService } from "../../store/application-state-store";
 import { RestApiClient } from "src/app/services/rest-api-client.service";
+import { formPostNewLogUrl, formPostNewProjectUrl } from "src/app/common/common";
 
 @Component({
     selector: "evahub-document-upload-form-component",
@@ -42,7 +43,7 @@ export class DocumentUploadFormComponent implements OnDestroy {
 
             this.uploadObs$ = this.username$.pipe(
                 switchMap(username => {
-                    let url = `${environment.baseApiBackendUrl}/rest/put/document/document-type/log/username/${username}`;
+                    let url = formPostNewLogUrl(username);
 
                     return this.rest.putNewDocument(url, formData);
                 }),
