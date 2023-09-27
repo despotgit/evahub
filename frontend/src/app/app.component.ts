@@ -15,13 +15,7 @@ import {
     withLatestFrom
 } from "rxjs";
 
-import {
-    getPageNameFromPageIndex,
-    PageIndexEnum,
-    PageIndexDictionary,
-    getDocumentTypeAsStringFromNumber,
-    getDocumentTypeAsNumberFromString
-} from "./common/constants";
+import { PageIndexEnum, PageIndexDictionary } from "./common/constants";
 import { Check } from "./models/Check";
 import { EvahubDocument } from "./models/EvahubDocument";
 import { EvahubDocumentTypeWordToNumber } from "../app/common/constants";
@@ -32,6 +26,11 @@ import { ApplicationStateStoreService } from "./store/application-state-store";
 import { EvahubSidenavMenuItem } from "./common/constants";
 import { AuthenticationService } from "./services/authentication.service";
 import { RestApiClient } from "./services/rest-api-client.service";
+import {
+    getDocumentTypeAsNumberFromString,
+    getDocumentTypeAsStringFromNumber,
+    getPageNameFromPageIndex
+} from "./common/common";
 
 @Component({
     selector: "app-root",

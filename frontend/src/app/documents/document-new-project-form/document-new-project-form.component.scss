@@ -10,7 +10,6 @@
 }
 
 .project-form-wrapper {
-    left: 9px;
     position: relative;
     top: 10px;
     width: 92%;
@@ -20,6 +19,8 @@
 .project-field {
     display: flex;
     margin: 10px;
+    margin-left: 0px;
+    max-width: 300px;
 }
 
 .project-area {

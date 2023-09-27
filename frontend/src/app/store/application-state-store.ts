@@ -5,8 +5,7 @@ import {
     EvahubDocumentTypeWordToNumber,
     EvahubMainMenuItem,
     EvahubSidenavMenuItem,
-    PageIndexEnum,
-    capitalizeWord
+    PageIndexEnum
 } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument } from "../models/EvahubDocument";
@@ -15,6 +14,7 @@ import { Log } from "../models/Log";
 import { Report } from "../models/Report";
 import { ApplicationState, INITIAL_APPLICATION_STATE } from "./state/application.state";
 import { updateState } from "./reducers/generic.quasi.reducer";
+import { capitalizeWord } from "../common/common";
 
 @Injectable({
     providedIn: "root"

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
-import { PageIndexDictionary, getPageNameFromPageIndex } from "../common/constants";
+import { PageIndexDictionary } from "../common/constants";
 import { ApplicationStateStoreService } from "../store/application-state-store";
 import { ActivatedRoute } from "@angular/router";
 import {
@@ -19,6 +19,7 @@ import { FormControl } from "@angular/forms";
 import { GraphDataset } from "../common/datasets";
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { getPageNameFromPageIndex } from "../common/common";
 
 @Component({
     selector: "app-evahub-documents",

@@ -42,13 +42,13 @@ label {
 }
 
 .registration-area {
-    width: 20%;
     min-width: 200px;
     margin-left: 15px;
     margin-top: 25px;
     border-radius: $regular-rounded-border-radius;
     background-color: $global-background-color;
     height: -webkit-fill-available;
+    max-width: 300px;
 }
 
 .thanks {

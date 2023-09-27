@@ -21,9 +21,8 @@ import {
 import { finalize } from "rxjs/operators";
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { ApplicationStateStoreService } from "../store/application-state-store";
-import { getRegisterUrl, PageIndexEnum } from "../common/constants";
+import { PageIndexEnum } from "../common/constants";
 
-import { HttpClient } from "@angular/common/http";
 //import { MatLegacyButton as MatButton } from "@angular/material/legacy-button";
 import { MatButton } from "@angular/material/button";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";

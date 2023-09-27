@@ -1,6 +1,7 @@
 // MAIN MENU
 
-import { EvahubMainMenuItem, getInitialMainMenuItems } from "src/app/common/constants";
+import { getInitialMainMenuItems } from "src/app/common/common";
+import { EvahubMainMenuItem } from "src/app/common/constants";
 
 export class MainMenuState {
     mainMenuItems: EvahubMainMenuItem[]; // can potentially be ommited of properties

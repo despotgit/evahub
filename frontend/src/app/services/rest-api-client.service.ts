@@ -1,7 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { getRegisterUrl } from "../common/constants";
+
+import { Project } from "../models/Project";
+import { getNewProjectUrl, getRegisterUrl } from "../common/common";
 
 @Injectable({
     providedIn: "root"
@@ -44,6 +46,15 @@ export class RestApiClient {
             reportProgress: true,
             observe: "events"
         });
+    }
+
+    createNewProject(projectName, projectDescription, logIds) {
+        let data: any = Project;
+        data.projectName = projectName;
+        data.projectDescription = projectDescription;
+        data.logIds = logIds;
+
+        let url = getNewProjectUrl();
     }
 
     postNewProject(url, formData) {

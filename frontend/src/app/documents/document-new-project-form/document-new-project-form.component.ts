@@ -7,9 +7,9 @@ import { ThemePalette } from "@angular/material/core";
 import { Observable, combineLatest, debounceTime, distinctUntilChanged, map, tap } from "rxjs";
 import { ApplicationStateStoreService } from "src/app/store/application-state-store";
 
-export interface ChipColor {
-    name: string;
-    color: ThemePalette;
+export class LogSelection {
+    log: Log;
+    selected: boolean;
 }
 
 @Component({
@@ -35,16 +35,13 @@ export class DocumentNewProjectFormComponent implements OnInit {
     username: string;
 
     @Input()
-    logs: Log[];
-
-    @Input()
     newProjectName: string;
 
     @Input()
     newProjectDescription: string;
 
     @Input()
-    newProjectAvailableLogs: Log[];
+    logs: Log[];
 
     theForm: UntypedFormGroup;
     result: any;
@@ -52,15 +49,15 @@ export class DocumentNewProjectFormComponent implements OnInit {
     error = "";
     loading = false;
     formData: any = {};
+    logSelections: LogSelection[] = [];
 
     constructor(
-        private cd: ChangeDetectorRef,
-        private formBuilder: UntypedFormBuilder,
+        private fb: UntypedFormBuilder,
         private rest: RestApiClient,
         private store: ApplicationStateStoreService
     ) {
         //
-        this.theForm = this.formBuilder.group({
+        this.theForm = this.fb.group({
             projectName: ["", [Validators.required]],
             projectDescription: ["", []]
         });
@@ -85,6 +82,19 @@ export class DocumentNewProjectFormComponent implements OnInit {
                 })
             )
             .subscribe();
+
+        this.initLogs();
+    }
+
+    initLogs() {
+        this.logSelections = [];
+
+        this.logs.forEach(l => {
+            let ls: LogSelection = new LogSelection();
+            ls.log = l;
+            ls.selected = false;
+            this.logSelections.push(ls);
+        });
     }
 
     get f() {
@@ -105,29 +115,14 @@ export class DocumentNewProjectFormComponent implements OnInit {
         this.loading = true;
 
         this.rest.postNewProject("", null);
-
-        /*
-        this.rest. (this.f["username"].value, this.f["password"].value).subscribe(data => {
-            console.log("login dat. is:", data);
-            if (data.success) {
-                console.log("project created with success");
-            } else {
-                console.log("just before wrong credentials entered");
-                this.error = data.message;
-                console.log("error is:", this.error);
-                this.cd.markForCheck();
-            }
-            this.loading = false;
-            return;
-        });
-        */
     }
 
     isSelected(al) {
         return false;
     }
 
-    displayLogs() {
-        console.log("ls are:", this.logs);
+    onChipsSelectionChange(logId) {
+        console.log("logId is:", logId);
+        console.log("logSelections are", this.logSelections);
     }
 }

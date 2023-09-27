@@ -3,7 +3,8 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/c
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
-import { getRegisterUrl, storedObjectName } from "../common/constants";
+import { storedObjectName } from "../common/constants";
+import { getRegisterUrl } from "../common/common";
 
 /*
 The JWT interceptor intercepts the incoming requests from the application/user and adds JWT token to the request's Authorization header,
