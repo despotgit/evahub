@@ -53,8 +53,8 @@ export function getLoginUrl() {
     return url;
 }
 
-export function getNewProjectUrl() {
-    let url = environment.baseApiBackendUrl + "/newproj/";
+export function getNewProjectUrl(username = "") {
+    let url = `${environment.baseApiBackendUrl}/rest/post/documents/type/project/username/${username}`;
     //console.log("url is: ", url);
     return url;
 }

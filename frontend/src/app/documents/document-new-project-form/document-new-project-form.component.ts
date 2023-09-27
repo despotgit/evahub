@@ -3,7 +3,6 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms
 import { Log } from "src/app/models/Log";
 import { Project } from "src/app/models/Project";
 import { RestApiClient } from "src/app/services/rest-api-client.service";
-import { ThemePalette } from "@angular/material/core";
 import { Observable, combineLatest, debounceTime, distinctUntilChanged, map, tap } from "rxjs";
 import { ApplicationStateStoreService } from "src/app/store/application-state-store";
 
@@ -122,7 +121,11 @@ export class DocumentNewProjectFormComponent implements OnInit {
 
         let projectLogsForDb = filteredLogIds.join(",");
 
-        this.rest.postNewProject("", null);
+        this.formData.projectLogs = projectLogsForDb;
+
+        this.rest.createNewProject(this.formData, this.username).subscribe(r => {
+            console.log("r is:", r);
+        });
     }
 
     onChipsSelectionChange(logId) {

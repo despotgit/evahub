@@ -48,16 +48,14 @@ export class RestApiClient {
         });
     }
 
-    createNewProject(projectName, projectDescription, logIds) {
+    createNewProject(formData, username) {
         let data: any = Project;
-        data.projectName = projectName;
-        data.projectDescription = projectDescription;
-        data.logIds = logIds;
+        data.projectName = formData.projectName;
+        data.projectDescription = formData.projectDescription;
+        data.logIds = formData.logIds;
 
-        let url = getNewProjectUrl();
-    }
+        let url = getNewProjectUrl(username);
 
-    postNewProject(url, formData) {
         return this.httpClient.post(url, formData);
     }
 }
