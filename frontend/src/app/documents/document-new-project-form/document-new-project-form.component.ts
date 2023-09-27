@@ -114,11 +114,15 @@ export class DocumentNewProjectFormComponent implements OnInit {
 
         this.loading = true;
 
-        this.rest.postNewProject("", null);
-    }
+        let filteredLogIds = this.logSelections
+            .filter(ls => ls.selected)
+            .map(f => {
+                return f.log.logId;
+            });
 
-    isSelected(al) {
-        return false;
+        let projectLogsForDb = filteredLogIds.join(",");
+
+        this.rest.postNewProject("", null);
     }
 
     onChipsSelectionChange(logId) {
