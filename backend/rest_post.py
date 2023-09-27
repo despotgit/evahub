@@ -36,3 +36,26 @@ def setUserData(username):
     }
 
     return finalizeResponse(response)
+
+
+@rest_post.route("/document/document-type/<dt>/username/<username>", methods=["POST"])
+def postNewDocument(dt, username):
+    v = verifyUser(username)
+    if not v["verified"]:
+        return finalizeResponse(v)
+
+    print("dt is:")
+    print(dt)
+
+    print("username is:")
+    print(username)
+
+    r = json.loads(request.data.decode("UTF-8"))
+    print("r is:")
+    print(r)
+
+    response = {
+        "ok": True,
+    }
+
+    return finalizeResponse(response)
