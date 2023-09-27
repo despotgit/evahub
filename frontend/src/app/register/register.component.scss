@@ -38,6 +38,7 @@ label {
 
 .registration-field {
     display: flex;
+    margin-bottom: 10px;
 }
 
 .registration-area {
@@ -47,6 +48,7 @@ label {
     margin-top: 25px;
     border-radius: $regular-rounded-border-radius;
     background-color: $global-background-color;
+    height: -webkit-fill-available;
 }
 
 .thanks {
