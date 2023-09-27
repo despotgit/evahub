@@ -6,7 +6,7 @@ import { getRegisterUrl } from "../common/constants";
 @Injectable({
     providedIn: "root"
 })
-export class RestApiService {
+export class RestApiClient {
     constructor(private httpClient: HttpClient) {}
 
     // docTypeToLower is singular
@@ -44,5 +44,9 @@ export class RestApiService {
             reportProgress: true,
             observe: "events"
         });
+    }
+
+    postNewProject(url, formData) {
+        return this.httpClient.post(url, formData);
     }
 }

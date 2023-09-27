@@ -1,4 +1,3 @@
-import { HttpClient } from "@angular/common/http";
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 
@@ -32,7 +31,7 @@ import { Project } from "./models/Project";
 import { ApplicationStateStoreService } from "./store/application-state-store";
 import { EvahubSidenavMenuItem } from "./common/constants";
 import { AuthenticationService } from "./services/authentication.service";
-import { RestApiService } from "./services/rest-api.service";
+import { RestApiClient } from "./services/rest-api-client.service";
 
 @Component({
     selector: "app-root",
@@ -59,6 +58,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         tap(a => {
             // var s is a singularDocumentTypeName
             const s: string = getPageNameFromPageIndex(a);
+
+            if (s == "project") {
+                this.updateDocumentsSetFromApi("log", false);
+            }
 
             if (PageIndexDictionary[s].isDocumentsPage) {
                 this.updateDocumentsSetFromApi(s);
@@ -173,7 +176,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         private router: Router,
         private store: ApplicationStateStoreService,
         private authenticationService: AuthenticationService,
-        private restApiClient: RestApiService
+        private restApiClient: RestApiClient
     ) {}
 
     ngOnInit(): void {}
@@ -261,7 +264,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     // docType is document name as string, singular form
-    updateDocumentsSetFromApi(docType: string) {
+    updateDocumentsSetFromApi(docType: string, fillSidenav: boolean = true) {
         if (docType == undefined) return;
         //console.log("!!!!!docType is:", docType);
         let docTypeToLower = docType.toLowerCase();
@@ -276,7 +279,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                     //console.log("ud is:", ud);
                     //let ds = ud["user" + docType + "s"];
                     let ds = ud["userDocuments"];
-                    this.processDocuments(ds, docType);
+                    this.processDocuments(ds, docType, fillSidenav);
                     this.store.updateShouldDisplaySidenavSpinner(false);
                     return ud;
                 })
@@ -285,7 +288,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     // Runs as part of fetching the data from API backend
-    processDocuments(ds: any[], dt: string) {
+    processDocuments(ds: any[], dt: string, fillSidenav: boolean = true) {
         //console.log("in process ds is:", ds);
         //console.log("in process dt is:", dt);
 
@@ -295,8 +298,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         let menuItems = res.menuItems;
         let docs = res.docs;
         //console.log("menuItems are: ", menuItems);
+        console.log("about to updateUserDocuments of type: ", dt);
         this.store.updateUserDocuments(dt, docs);
-        this.store.updateSidenavMenuItems(menuItems);
+        if (fillSidenav) {
+            this.store.updateSidenavMenuItems(menuItems);
+        }
     }
 
     // Returns menuItems[] and EvahubDocuments[]

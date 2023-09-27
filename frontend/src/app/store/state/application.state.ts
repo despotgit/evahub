@@ -1,6 +1,7 @@
 import { DocumentContentState, INITIAL_DOCUMENT_CONTENT_STATE } from "./document-content-state";
 import { UserProjectsState, UserLogsState, UserReportsState, UserChecksState } from "./documents-state";
 import { INITIAL_MAIN_MENU, MainMenuState } from "./main-menu-state";
+import { INITIAL_NEW_PROJECT_PAGE_STATE, NewProjectPageState } from "./new-project-page.state";
 
 import { INITIAL_REGISTER_PAGE_STATE, RegisterPageDataState } from "./register-page-state";
 import { INITIAL_SIDENAV_STATE, SidenavState } from "./sidenav-state";
@@ -16,6 +17,7 @@ export interface ApplicationState {
     userChecks: UserChecksState;
     sidenav: SidenavState;
     mainMenu: MainMenuState;
+    newProjectPage: NewProjectPageState;
 }
 
 // APP STATE:
@@ -29,5 +31,6 @@ export const INITIAL_APPLICATION_STATE = {
     userReports: [],
     userChecks: [],
     sidenav: INITIAL_SIDENAV_STATE,
-    mainMenu: INITIAL_MAIN_MENU
+    mainMenu: INITIAL_MAIN_MENU,
+    newProjectPage: INITIAL_NEW_PROJECT_PAGE_STATE
 };

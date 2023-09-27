@@ -1,10 +1,4 @@
-import {
-    Component,
-    OnInit,
-    AfterViewChecked,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef
-} from "@angular/core";
+import { Component, OnInit, AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
@@ -64,21 +58,19 @@ export class LoginComponent implements OnInit, AfterViewChecked {
 
         this.loading = true;
 
-        this.authenticationService
-            .login(this.f["username"].value, this.f["password"].value)
-            .subscribe(data => {
-                console.log("login dat. is:", data);
-                if (data.authenticated) {
-                    this.router.navigate([this.returnUrl]);
-                } else {
-                    console.log("just before wrong credentials entered");
-                    this.error = data.message;
-                    console.log("error is:", this.error);
-                    this.cd.markForCheck();
-                }
-                this.loading = false;
-                return;
-            });
+        this.authenticationService.login(this.f["username"].value, this.f["password"].value).subscribe(data => {
+            console.log("login dat. is:", data);
+            if (data.authenticated) {
+                this.router.navigate([this.returnUrl]);
+            } else {
+                console.log("just before wrong credentials entered");
+                this.error = data.message;
+                console.log("error is:", this.error);
+                this.cd.markForCheck();
+            }
+            this.loading = false;
+            return;
+        });
 
         //loginSubscription.unsubscribe();
     }

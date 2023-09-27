@@ -8,7 +8,9 @@
         currentDocumentType: currentDocumentType$ | async,
         isInDocumentUploadMode: isInDocumentUploadMode$ | async,
         isInNewProjectCreationMode: isInNewProjectCreationMode$ | async,
-        username: username$ | async
+        username: username$ | async,
+        logs: logs$ | async,
+
     } as asyncData"
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
@@ -18,8 +20,9 @@
                 </evahub-document-upload-form-component>
 
                 <evahub-document-new-project-form
-                    [username]="asyncData.username"
                     *ngIf="asyncData.isInNewProjectCreationMode"
+                    [username]="asyncData.username"
+                    [logs]="asyncData.logs"
                 >
                 </evahub-document-new-project-form>
             </div>

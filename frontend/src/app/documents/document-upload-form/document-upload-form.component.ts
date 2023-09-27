@@ -4,7 +4,7 @@ import { Subscription, switchMap, map, Subject, Observable } from "rxjs";
 import { combineLatestWith, finalize } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { ApplicationStateStoreService } from "../../store/application-state-store";
-import { RestApiService } from "src/app/services/rest-api.service";
+import { RestApiClient } from "src/app/services/rest-api-client.service";
 
 @Component({
     selector: "evahub-document-upload-form-component",
@@ -26,7 +26,7 @@ export class DocumentUploadFormComponent implements OnDestroy {
         private http: HttpClient,
         private store: ApplicationStateStoreService,
         private cd: ChangeDetectorRef,
-        private rest: RestApiService
+        private rest: RestApiClient
     ) {
         //this.store.updateSidenavMenuItems([]);
         //this.store.updateIsSidenavOpened(false);

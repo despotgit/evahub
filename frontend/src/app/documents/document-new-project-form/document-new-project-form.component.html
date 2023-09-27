@@ -1,63 +1,44 @@
-Please enter the basic information about your project:
+<div *ngIf="{} as asyncData">
+    <mat-card class="new-project-form-area">
+        Please enter the basic information about your project:
 
-<mat-card class="registration-area">
-    <button (click)="displayLogs()">DISPLAY LOGS</button>
-    {{ this.username }}
+        <div class="project-form-wrapper">
+            <form [formGroup]="theForm">
+                <ng-template matStepLabel>Enter project name</ng-template>
+                <mat-form-field class="project-field">
+                    <input
+                        matInput
+                        placeholder="Project name"
+                        formControlName="projectName"
+                        [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
+                    />
+                </mat-form-field>
+                <div *ngIf="submitted && f['projectName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['projectName'].errors['required']">Project name is required</div>
+                </div>
 
-    <mat-chip-listbox selectable multiple class="lista mat-mdc-chip-set-stacked" aria-label="Color selection">
-        <mat-chip-option *ngFor="let chip of availableColors" selected [color]="chip.color">
-            {{ chip.name }}
-        </mat-chip-option>
-    </mat-chip-listbox>
+                <ng-template matStepLabel>Enter project description</ng-template>
+                <mat-form-field class="project-field">
+                    <input matInput placeholder="Project description" formControlName="projectDescription" />
+                </mat-form-field>
 
-    <!--
-    <div class="register-content-wrapper" *ngIf="{} as asyncData">
-        <form *ngIf="true" [formGroup]="theForm">
-
-            <ng-template matStepLabel>Fill out your username</ng-template>
-            <mat-form-field class="registration-field">
-                <input matInput placeholder="Username" formControlName="registerUsernameFormControl" />
-            </mat-form-field>
-
-            <ng-template matStepLabel>Fill out your password</ng-template>
-            <mat-form-field class="registration-field">
-                <input
-                    type="password"
-                    matInput
-                    placeholder="Password"
-                    formControlName="registerPasswordFormControl"
+                <div>
+                    <button [disabled]="this.theForm.invalid" class="btn btn-primary">Submit</button>
+                </div>
+                <img
+                    *ngIf="loading"
+                    class="pl-2"
+                    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                 />
-            </mat-form-field>
+            </form>
 
-            <mat-form-field class="registration-field">
-                <input
-                    type="password"
-                    matInput
-                    placeholder="Confirm password"
-                    formControlName="registerPasswordConfirmationFormControl"
-                />
-            </mat-form-field>
-
-            <ng-template matStepLabel>Fill out your name</ng-template>
-            <mat-form-field class="registration-field">
-                <input matInput placeholder="Your name" formControlName="firstLastNameFormControl" />
-            </mat-form-field>
-
-            <ng-template matStepLabel>Fill out your email</ng-template>
-            <mat-form-field class="registration-field">
-                <input matInput placeholder="Email" formControlName="emailFormControl" value="email" />
-            </mat-form-field>
-
-            <div>
-                <button [disabled]="false" #done mat-button>Done</button>
-            </div>
-        </form>
-        <div class="invalid-feedback">errorrinho</div>
-
-        <div class="thanks" *ngIf="true">
-            Thanks for registering. In order to confirm your registration, please click on the link in the
-            confirmation email.
+            <div class="thanks" *ngIf="submitted && !loading">Thanks</div>
         </div>
-    </div>
-    -->
-</mat-card>
+        Select the logs for your project:
+        <mat-chip-listbox selectable multiple class="lista mat-mdc-chip-set-stacked" aria-label="Color selection">
+            <mat-chip-option *ngFor="let al of logs" [selected]="isSelected(al)" [color]="'primary'">
+                {{ al.logName }}
+            </mat-chip-option>
+        </mat-chip-listbox>
+    </mat-card>
+</div>

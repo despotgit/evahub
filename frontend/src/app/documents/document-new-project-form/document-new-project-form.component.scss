@@ -1,3 +1,31 @@
+@import "../../../common.scss";
+
 .lista {
     max-width: 200px;
+}
+
+.new-project-form-area {
+    padding: 20px;
+    border-radius: $regular-rounded-border-radius;
+}
+
+.project-form-wrapper {
+    left: 9px;
+    position: relative;
+    top: 10px;
+    width: 92%;
+    margin-bottom: 25px;
+}
+
+.project-field {
+    display: flex;
+}
+
+.project-area {
+    width: 20%;
+    min-width: 200px;
+    margin-left: 15px;
+    margin-top: 25px;
+    border-radius: $regular-rounded-border-radius;
+    background-color: $global-background-color;
 }

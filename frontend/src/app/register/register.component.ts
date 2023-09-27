@@ -27,7 +27,7 @@ import { HttpClient } from "@angular/common/http";
 //import { MatLegacyButton as MatButton } from "@angular/material/legacy-button";
 import { MatButton } from "@angular/material/button";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
-import { RestApiService } from "../services/rest-api.service";
+import { RestApiClient } from "../services/rest-api-client.service";
 
 @Component({
     selector: "app-register",
@@ -89,7 +89,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private store: ApplicationStateStoreService,
         private formBuilder: UntypedFormBuilder,
         private cd: ChangeDetectorRef,
-        private restClient: RestApiService
+        private restClient: RestApiClient
     ) {
         this.theForm = this.formBuilder.group({
             registerUsernameFormControl: ["", [Validators.required]],

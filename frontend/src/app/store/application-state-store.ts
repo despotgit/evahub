@@ -38,6 +38,13 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     firstLastName$: Observable<string> = this.select(state => state.registerPageData.firstLastName);
     email$: Observable<string> = this.select(state => state.registerPageData.email);
 
+    // NEW PROJECT PAGE
+    newProjectDescription$: Observable<string> = this.select(state => state.newProjectPage.description);
+
+    newProjectName$: Observable<string> = this.select(state => state.newProjectPage.name);
+
+    newProjectSelectedLogs$: Observable<Log[]> = this.select(state => state.newProjectPage.selectedLogs);
+
     // EVAHUB DOCUMENT CONTENT
     shouldDisplayDocumentSpinner$: Observable<boolean> = this.select(
         state => state.documentContent.shouldDisplaySpinner
@@ -166,6 +173,19 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         this.updateRegisterPasswordConfirmation("");
         this.updateRegisterFirstLastName("");
         this.updateRegisterEmail("");
+    }
+
+    // NEW PROJECT PAGE
+    updateNewProjectDescription(d: string) {
+        updateState(this, "newProjectPage", "description", d);
+    }
+
+    updateNewProjectName(n: string) {
+        updateState(this, "newProjectPage", "name", n);
+    }
+
+    updateNewProjectSelectedLogsName(ls: Log[]) {
+        updateState(this, "newProjectPage", "selectedLogs", ls);
     }
 
     // EVAHUB DOCUMENTS CONTENT:

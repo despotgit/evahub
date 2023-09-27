@@ -87,6 +87,12 @@ export class EvahubDocumentsComponent implements OnInit {
     isInDocumentUploadMode$ = this.store.isInDocumentUploadMode$;
     isInNewProjectCreationMode$ = this.store.isInNewProjectCreationMode$;
     username$ = this.store.username$;
+    logs$ = this.store.userLogs$;
+
+    // Related to new project page
+    newProjectName$ = this.store.newProjectName$;
+    newProjectDescription$ = this.store.newProjectDescription$;
+    newProjectSelectedLogs$ = this.store.newProjectSelectedLogs$;
 
     @Input()
     requiredFileType: string = "png";
@@ -110,12 +116,11 @@ export class EvahubDocumentsComponent implements OnInit {
             this.store.updateIsSidenavOpened(true);
         }, 100);
 
-        this.updatePageIndex(route);
-
+        this.updatePageIndexAccordingToRoute(route);
         this.displayGraph = true;
     }
 
-    updatePageIndex(route) {
+    updatePageIndexAccordingToRoute(route) {
         const urlEnd = route.snapshot.url[1].path;
         //console.log("urlEnd is:", urlEnd);
         let pi = PageIndexDictionary.log.pageIndex;
@@ -150,54 +155,5 @@ export class EvahubDocumentsComponent implements OnInit {
         }
     }
 
-    onFileSelected(event) {
-        const file: File = event.target.files[0];
-
-        if (file) {
-            this.fileName = file.name;
-            const formData = new FormData();
-            formData.append("file", file);
-
-            this.uploadObs$ = this.username$.pipe(
-                switchMap(username => {
-                    let url = `${environment.baseApiBackendUrl}/rest/put/document/document-type/log/username/${username}`;
-
-                    return this.http.put(url, formData, {
-                        reportProgress: true,
-                        observe: "events"
-                    });
-                }),
-                finalize(() => {
-                    console.log("step 3, in finalize");
-                    this.resetUpload();
-                })
-            );
-        }
-    }
-
-    onUploadInitiated() {
-        console.log("in onUploadInitiated in evahub documents");
-
-        this.uploadSub$ = this.uploadObs$.subscribe(event => {
-            if (event.type == HttpEventType.UploadProgress) {
-                console.log("UPLOAD PROGRESS, event is:", event);
-                const newProgress = Math.round(100 * (event.loaded / event.total));
-                this.uploadProgress = newProgress;
-                this.cd.markForCheck();
-            }
-        });
-    }
-
-    resetUpload() {
-        if (this.uploadSub$) {
-            this.uploadSub$.unsubscribe();
-        }
-
-        this.uploadProgress = 0;
-        this.uploadSub$ = null;
-    }
-
-    ngOnDestroy() {
-        this.resetUpload();
-    }
+    ngOnDestroy() {}
 }

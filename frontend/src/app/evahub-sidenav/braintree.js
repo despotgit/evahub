@@ -1,5 +1,3 @@
-console.log("AAAAAAAAAAAAAand we're in the external js for braintree");
-
 function a() {
     console.log("in the a");
 }
