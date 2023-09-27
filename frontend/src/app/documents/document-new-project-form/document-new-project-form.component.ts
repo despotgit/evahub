@@ -4,7 +4,8 @@ import { Log } from "src/app/models/Log";
 import { Project } from "src/app/models/Project";
 import { RestApiClient } from "src/app/services/rest-api-client.service";
 import { ThemePalette } from "@angular/material/core";
-import { Observable } from "rxjs";
+import { Observable, combineLatest, debounceTime, distinctUntilChanged, map, tap } from "rxjs";
+import { ApplicationStateStoreService } from "src/app/store/application-state-store";
 
 export interface ChipColor {
     name: string;
@@ -18,9 +19,17 @@ export interface ChipColor {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DocumentNewProjectFormComponent implements OnInit {
-    isFormValid$: Observable<boolean>;
-
     submitClicked$: Observable<any>;
+    projectName$: Observable<string> = this.store.newProjectName$.pipe(
+        tap(newProjectName => {
+            this.theForm.get("projectName").setValue(newProjectName);
+        })
+    );
+    projectDescription$: Observable<string> = this.store.newProjectDescription$.pipe(
+        tap(projectDescription => {
+            this.theForm.get("projectDescription").setValue(projectDescription);
+        })
+    );
 
     @Input()
     username: string;
@@ -42,11 +51,13 @@ export class DocumentNewProjectFormComponent implements OnInit {
     submitted = false;
     error = "";
     loading = false;
+    formData: any = {};
 
     constructor(
         private cd: ChangeDetectorRef,
         private formBuilder: UntypedFormBuilder,
-        private rest: RestApiClient
+        private rest: RestApiClient,
+        private store: ApplicationStateStoreService
     ) {
         //
         this.theForm = this.formBuilder.group({
@@ -55,7 +66,26 @@ export class DocumentNewProjectFormComponent implements OnInit {
         });
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        const projectName$: Observable<any> = this.theForm.get("projectName").valueChanges;
+        const projectDescription$: Observable<any> = this.theForm.get("projectDescription").valueChanges;
+
+        combineLatest([projectName$, projectDescription$])
+            .pipe(
+                debounceTime(300),
+                distinctUntilChanged(),
+                map(([projectName, projectDescription]) => {
+                    this.store.updateNewProjectName(projectName);
+                    this.store.updateNewProjectDescription(projectDescription);
+
+                    this.formData.projectName = projectName;
+                    this.formData.projectDescription = projectDescription;
+
+                    //console.log("regData is:", this.registrationData);
+                })
+            )
+            .subscribe();
+    }
 
     get f() {
         return this.theForm.controls;
@@ -63,10 +93,12 @@ export class DocumentNewProjectFormComponent implements OnInit {
 
     // On submitting the username and password
     onSubmit() {
+        console.log("in onSubmit");
         this.submitted = true;
 
         // stop if form is invalid
         if (this.theForm.invalid) {
+            console.log("form is invalid");
             return;
         }
 
