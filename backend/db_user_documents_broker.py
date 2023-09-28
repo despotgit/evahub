@@ -1,6 +1,5 @@
 import time
 from common import getUserDocumentsDir
-
 from db_config import getDb
 from db import executeCustomQuery
 import json
@@ -8,12 +7,12 @@ import json
 db = getDb()
 
 
-def addDbUserLog(secureFilename, username):
+def addDbUserLog(filename, username):
     res = executeCustomQuery(
         "insert into logs (`log_name`,`log_filename`,`username`) values ('"
-        + secureFilename[:25]
+        + filename[:25]
         + "', '"
-        + secureFilename
+        + filename
         + "', '"
         + username
         + "')"

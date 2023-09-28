@@ -212,10 +212,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.authenticationService.logOut();
     }
 
-    goRegister() {
-        this.goTo;
-    }
-
     sideMenuItemClicked($event) {
         //console.log("in app in menuItemClicked, $event is:", $event);
         this.store.updateIsInDocumentUploadMode(false);
@@ -269,6 +265,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         let docTypeToLower = docType.toLowerCase();
         //console.log("docType is:", docType);
 
+        console.log("docType is:", docType);
+
         this.httpDocsCall = this.username$
             .pipe(
                 switchMap(username => {
@@ -278,6 +276,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                     //console.log("ud is:", ud);
                     //let ds = ud["user" + docType + "s"];
                     let ds = ud["userDocuments"];
+                    console.log("in updateDocumentsSetFromApi, fillSidenav is:", fillSidenav);
                     this.processDocuments(ds, docType, fillSidenav);
                     this.store.updateShouldDisplaySidenavSpinner(false);
                     return ud;
@@ -368,7 +367,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     unSubscribe() {
-        this.docSelectedSub.unsubscribe();
+        //this.docSelectedSub.unsubscribe();
         this.httpDocsCall.unsubscribe();
     }
 

@@ -1,44 +1,37 @@
-import time
+from db_user_documents_broker import deleteUserDocumentFromDb
 from common import getUserDocumentsDir
 
 from db_config import getDb
 from db import executeCustomQuery
-import json
 
 db = getDb()
 
 
-def addDbUserProject(secureFilename, username):
-    res = executeCustomQuery(
+def addDbUserProject(username, name, description, logs):
+    q = (
         "insert into projects "
-        + "(`username`,`project_name`,`contained_logs`,`project_description`) "
+        + "(`username`,`project_name`,`project_description`,`contained_logs`) "
         + "values ('"
-        + secureFilename[:24]
-        + "', '"
-        + secureFilename
-        + "', '"
         + username
+        + "', '"
+        + name[:24]
+        + "', '"
+        + description
+        + "', '"
+        + logs
         + "')"
     )
+
+    print("q is:")
+    print(q)
+
+    res = executeCustomQuery(q)
     return res
 
 
-def getUploadedUserDocuments(username, documentType):
-    tableName = documentType + "s"
-    idField = documentType + "_id"
-    nameField = documentType + "_name"
-    filenameField = documentType + "_filename"
-
+def getUploadedUserProjects(username):
     q = (
-        "select "
-        + idField
-        + ", "
-        + nameField
-        + ", "
-        + filenameField
-        + " from "
-        + tableName
-        + " where username = '"
+        "select project_id, project_name, project_description, contained_logs from projects where username = '"
         + str(username)
         + "'"
     )
@@ -49,27 +42,12 @@ def getUploadedUserDocuments(username, documentType):
 
     toReturn = []
     for r in results:
-        dir = getUserDocumentsDir(documentType, username)
-        filePath = dir + "/" + r[2]
-
-        content = ""
-
-        with open(filePath, "rb") as f:
-            if documentType == "project":
-                content = json.load(f)
-
-            if documentType == "log":
-                text = f.read()
-                content = str(text, "utf-8")
-
-            if documentType == "report":
-                content = json.load(f)
-
         toReturn.append(
             {
-                documentType + "Id": r[0],
-                documentType + "Name": r[1],
-                documentType + "Content": content,
+                "projectId": r[0],
+                "projectName": r[1],
+                "projectDescription": r[2],
+                "projectLogs": r[3],
             }
         )
 
@@ -78,47 +56,5 @@ def getUploadedUserDocuments(username, documentType):
     return toReturn
 
 
-def deleteUserDocumentFromDb(username, documentType, id):
-    tableName = documentType + "s"
-    idField = documentType + "_id"
-
-    dq = (
-        "delete from "
-        + tableName
-        + " where username = '"
-        + str(username)
-        + "' and "
-        + idField
-        + " = "
-        + id
-    )
-
-    # print("query is:")
-    # print(dq)
-
-    deleteRes = executeCustomQuery(dq)
-
-    return deleteRes
-
-
-def getDocumentFilenameFromDb(username, documentType, id):
-    tableName = documentType + "s"
-    idField = documentType + "_id"
-    filenameField = documentType + "_filename"
-
-    sq = (
-        "select "
-        + filenameField
-        + " from "
-        + tableName
-        + " where username = '"
-        + str(username)
-        + "' and "
-        + idField
-        + "="
-        + id
-    )
-
-    res = executeCustomQuery(sq, True)
-
-    return res
+def deleteUserProjectFromDb(username, id):
+    deleteUserDocumentFromDb(username, "project", id)

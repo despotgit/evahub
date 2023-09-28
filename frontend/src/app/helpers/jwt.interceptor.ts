@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../services/authentication.service";
 import { storedObjectName } from "../common/constants";
-import { formRegisterUrl } from "../common/common";
+import { registerUrl } from "../common/url-helper";
 
 /*
 The JWT interceptor intercepts the incoming requests from the application/user and adds JWT token to the request's Authorization header,
@@ -42,7 +42,7 @@ export class JwtInterceptor implements HttpInterceptor {
             //console.log("in when false validateLoginToken in jwt interceptor");
             //console.log("request is:", request);
 
-            if (request.url == formRegisterUrl()) {
+            if (request.url == registerUrl()) {
                 console.log("Interceptor: that's fine, don't redirect");
             } else {
                 let state = this.router.routerState;

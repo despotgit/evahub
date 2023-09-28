@@ -2,6 +2,7 @@ from flask import Blueprint, json
 from flask_jwt_extended import jwt_required
 from auth import verifyUser
 from auth import finalizeResponse
+from db_user_projects_broker import getUploadedUserProjects
 from db_user_documents_broker import getUploadedUserDocuments
 from db_users_broker import getDbUser
 
@@ -42,7 +43,10 @@ def getUserDocuments(documentType, username):
     if not v["verified"]:
         return finalizeResponse(v)
 
-    userDocuments = getUploadedUserDocuments(username, documentType)
+    if documentType == "project":
+        userDocuments = getUploadedUserProjects(username)
+    else:
+        userDocuments = getUploadedUserDocuments(username, documentType)
 
     if userDocuments == None:
         print("No documents of given type for the user are found.")

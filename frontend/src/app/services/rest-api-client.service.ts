@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 
 import { Project } from "../models/Project";
-import { formPutNewLogUrl, formPostNewProjectUrl, formRegisterUrl } from "../common/common";
+import { formPostNewProjectUrl, formPutNewLogUrl, registerUrl } from "../common/url-helper";
 
 @Injectable({
     providedIn: "root"
@@ -35,7 +35,7 @@ export class RestApiClient {
 
         console.log("******** formData is:", formData);
 
-        let url = formRegisterUrl();
+        let url = registerUrl();
         //console.log("aaaand url is:", url);
 
         return this.httpClient.post(url, formData);

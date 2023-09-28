@@ -1,6 +1,7 @@
 from flask import Blueprint, json, request
 from flask_jwt_extended import jwt_required
 from auth import verifyUser, finalizeResponse
+from db_user_projects_broker import addDbUserProject
 from db_users_broker import getDbUser, updateDbUser
 
 rest_post = Blueprint("rest_post", __name__)
@@ -44,15 +45,14 @@ def postNewDocument(dt, username):
     if not v["verified"]:
         return finalizeResponse(v)
 
-    print("dt is:")
-    print(dt)
-
-    print("username is:")
-    print(username)
-
     r = json.loads(request.data.decode("UTF-8"))
-    print("r is:")
-    print(r)
+
+    addDbUserProject(
+        username,
+        str(r["projectName"]),
+        str(r["projectDescription"]),
+        str(r["projectLogs"]),
+    )
 
     response = {
         "ok": True,

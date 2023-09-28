@@ -4,7 +4,6 @@ import { Subscription, switchMap, Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { ApplicationStateStoreService } from "../../store/application-state-store";
 import { RestApiClient } from "src/app/services/rest-api-client.service";
-import { formPutNewLogUrl } from "src/app/common/common";
 
 @Component({
     selector: "evahub-document-upload-form-component",
