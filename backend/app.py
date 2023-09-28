@@ -13,6 +13,7 @@ from auth import auth
 import config
 
 app = Flask(__name__)
+CORS(app)
 
 app.config["JWT_HEADER_TYPE"] = "Bearer"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = JWT_EXPIRY_INTERVAL
