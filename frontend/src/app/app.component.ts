@@ -337,6 +337,10 @@ export class AppComponent implements OnInit, AfterViewInit {
                     doc[p] = d[p];
                 });
 
+                if (dtToLower == "project") {
+                    doc.projectLogIds = doc.projectLogs != "" ? doc.projectLogs.split(",") : [];
+                }
+
                 doc.documentType = EvahubDocumentTypeWordToNumber[dtToLower];
 
                 docs.push(doc);
