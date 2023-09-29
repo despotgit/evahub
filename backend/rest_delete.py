@@ -19,11 +19,12 @@ def deleteDocument(documentId, username, documentType):
     if not v["verified"]:
         return finalizeResponse(v)
 
-    filename = getDocumentFilenameFromDb(username, documentType, documentId)
-
-    _, _, fullFilePath = getDocumentFileInfo(documentType, username, filename[0])
-
-    removeFile(fullFilePath)
+    if documentType == "project":
+        print("it's a project, so no files to delete")
+    else:
+        filename = getDocumentFilenameFromDb(username, documentType, documentId)
+        _, _, fullFilePath = getDocumentFileInfo(documentType, username, filename[0])
+        removeFile(fullFilePath)
 
     deleteUserDocumentFromDb(username, documentType, documentId)
 
