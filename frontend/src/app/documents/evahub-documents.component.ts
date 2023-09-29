@@ -59,25 +59,18 @@ export class EvahubDocumentsComponent implements OnInit {
             }
         }),
         map(([sd, ls, dt]) => {
-            console.log("KONZUM!");
-            console.log("sd is:", sd);
-            console.log("ls is:", ls);
-            //console.log("dt is:", dt);
-
             let projectLogIds = sd.projectLogIds;
 
             let res = ls.filter(l => {
                 let isIt = projectLogIds.map(pli => +pli).indexOf(l.logId) != -1;
-                console.log("isIt is:", isIt);
+
                 return isIt;
             });
-
-            //console.log("res is:", res);
 
             return res;
         }),
         tap(p => {
-            //console.log("filtered logs are:", p);
+            //
         })
     );
     graphDatasets$: Observable<any> = this.store.selectedDocument$.pipe(
