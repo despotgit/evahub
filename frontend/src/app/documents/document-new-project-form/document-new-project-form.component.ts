@@ -63,19 +63,19 @@ export class DocumentNewProjectFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        const projectName$: Observable<any> = this.theForm.get("projectName").valueChanges;
-        const projectDescription$: Observable<any> = this.theForm.get("projectDescription").valueChanges;
+        const projectNameChanges$: Observable<any> = this.theForm.get("projectName").valueChanges;
+        const projectDescriptionChanges$: Observable<any> = this.theForm.get("projectDescription").valueChanges;
 
-        combineLatest([projectName$, projectDescription$])
+        combineLatest([projectNameChanges$, projectDescriptionChanges$])
             .pipe(
                 debounceTime(300),
                 distinctUntilChanged(),
-                map(([projectName, projectDescription]) => {
-                    this.store.updateNewProjectName(projectName);
-                    this.store.updateNewProjectDescription(projectDescription);
+                map(([projectNameChanges, projectDescriptionChanges]) => {
+                    this.store.updateNewProjectName(projectNameChanges);
+                    this.store.updateNewProjectDescription(projectDescriptionChanges);
 
-                    this.formData.projectName = projectName;
-                    this.formData.projectDescription = projectDescription;
+                    this.formData.projectName = projectNameChanges;
+                    this.formData.projectDescription = projectDescriptionChanges;
 
                     //console.log("regData is:", this.registrationData);
                 })
