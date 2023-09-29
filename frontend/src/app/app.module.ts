@@ -25,6 +25,7 @@ import { GearsSpinnerComponent } from "./gears-spinner/gears-spinner.component";
 import { EvahubGraphControlsComponent } from "./documents/documents-graph/evahub-graph-controls/evahub-graph-controls.component";
 import { DocumentUploadFormComponent } from "./documents/document-upload-form/document-upload-form.component";
 import { DocumentNewProjectFormComponent } from "./documents/document-new-project-form/document-new-project-form.component";
+import { DocumentsProjectComponent } from './documents/documents-project/documents-project.component';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { DocumentNewProjectFormComponent } from "./documents/document-new-projec
         GearsSpinnerComponent,
         EvahubGraphControlsComponent,
         DocumentUploadFormComponent,
-        DocumentNewProjectFormComponent
+        DocumentNewProjectFormComponent,
+        DocumentsProjectComponent
     ],
     imports: [
         BrowserModule,

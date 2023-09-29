@@ -10,7 +10,8 @@
         isInNewProjectCreationMode: isInNewProjectCreationMode$ | async,
         username: username$ | async,
         logs: logs$ | async,
-
+        cdts: currentDocumentTypeString$ | async,
+        projectLogs: projectLogs$ | async
     } as asyncData"
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
@@ -39,12 +40,23 @@
                     ></app-documents-graph>
                 </div>
                 <div *ngIf="!asyncData.displayGraph" class="document-text">
-                    <app-documents-text
-                        [documentContent]="asyncData.sd ? asyncData.sd.getDocumentContent() : ''"
-                        [shouldDisplaySpinner]="asyncData.shouldDisplaySpinner"
-                        (emitContentDisplayed)="onDocumentContentDisplayed()"
-                    >
-                    </app-documents-text>
+                    <ng-container *ngIf="asyncData.cdts == 'project'">
+                        <app-documents-project
+                            [projectLogs]="asyncData.projectLogs"
+                            [projectName]="asyncData.sd ? asyncData.sd.projectName : ''"
+                            [projectDescription]="asyncData.sd ? asyncData.sd.projectDescription : ''"
+                        >
+                        </app-documents-project>
+                    </ng-container>
+
+                    <ng-container *ngIf="asyncData.cdts != 'project'">
+                        <app-documents-text
+                            [documentContent]="asyncData.sd ? asyncData.sd.getDocumentContent() : ''"
+                            [shouldDisplaySpinner]="asyncData.shouldDisplaySpinner"
+                            (emitContentDisplayed)="onDocumentContentDisplayed()"
+                        >
+                        </app-documents-text>
+                    </ng-container>
                 </div>
             </div>
         </mat-grid-tile>

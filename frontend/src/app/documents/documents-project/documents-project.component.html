@@ -1,0 +1,14 @@
+<div>
+    Project name:
+    {{ projectName }}
+</div>
+<div>
+    Project description:
+    {{ projectDescription }}
+</div>
+
+<mat-chip-listbox selectable multiple class="lista mat-mdc-chip-set-stacked" aria-label="Color selection">
+    <mat-chip-option *ngFor="let log of projectLogs" [selected]="false" [disabled]="true" [color]="'primary'">
+        {{ log.logName }} {{ log.logId }}
+    </mat-chip-option>
+</mat-chip-listbox>

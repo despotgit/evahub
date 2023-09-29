@@ -1,4 +1,6 @@
 export function updateState(store, sliceName, propertyName, newValue) {
+    //console.log("in QUASI REDUCER:");
+    //console.log(store, sliceName, propertyName, newValue);
     let toApply = genericStateUpdaterFunction(store, sliceName, propertyName, newValue);
     store.patchState(toApply);
 }

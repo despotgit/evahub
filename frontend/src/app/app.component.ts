@@ -146,7 +146,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             } else {
                 //console.log("mic is:", mic);
                 //console.log("cdi is:", cdi);
-                console.log("innit");
+
                 this.store.updateShouldDisplayEvahubDocumentSpinner(true);
                 this.store.updateCurrentDocumentId(smi);
             }
@@ -265,8 +265,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         let docTypeToLower = docType.toLowerCase();
         //console.log("docType is:", docType);
 
-        console.log("docType is:", docType);
-
         this.httpDocsCall = this.username$
             .pipe(
                 switchMap(username => {
@@ -276,7 +274,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                     //console.log("ud is:", ud);
                     //let ds = ud["user" + docType + "s"];
                     let ds = ud["userDocuments"];
-                    console.log("in updateDocumentsSetFromApi, fillSidenav is:", fillSidenav);
+                    //console.log("in updateDocumentsSetFromApi, fillSidenav is:", fillSidenav);
                     this.processDocuments(ds, docType, fillSidenav);
                     this.store.updateShouldDisplaySidenavSpinner(false);
                     return ud;
@@ -288,7 +286,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     // Runs as part of fetching the data from API backend
     processDocuments(ds: any[], dt: string, fillSidenav: boolean = true) {
         //console.log("in process ds is:", ds);
-        //console.log("in process dt is:", dt);
 
         const dtToLower = dt.toLowerCase();
         //let [menuItems, docs] = this.transformDbDocuments(ds, dtToLower);
@@ -296,7 +293,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         let menuItems = res.menuItems;
         let docs = res.docs;
         //console.log("menuItems are: ", menuItems);
-        console.log("about to updateUserDocuments of type: ", dt);
+        //console.log("about to updateUserDocuments of type: ", dt);
         this.store.updateUserDocuments(dt, docs);
         if (fillSidenav) {
             this.store.updateSidenavMenuItems(menuItems);

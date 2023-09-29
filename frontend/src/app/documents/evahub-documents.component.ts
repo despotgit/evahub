@@ -3,10 +3,13 @@ import { PageIndexDictionary } from "../common/constants";
 import { ApplicationStateStoreService } from "../store/application-state-store";
 import { ActivatedRoute } from "@angular/router";
 import {
-    BehaviorSubject,
-    finalize,
+    combineLatestWith,
+    filter,
     map,
     Observable,
+    skip,
+    skipUntil,
+    skipWhile,
     startWith,
     Subject,
     Subscription,
@@ -15,11 +18,10 @@ import {
     withLatestFrom
 } from "rxjs";
 import { Log } from "../models/Log";
-import { FormControl } from "@angular/forms";
 import { GraphDataset } from "../common/datasets";
-import { HttpClient, HttpEventType } from "@angular/common/http";
-import { environment } from "src/environments/environment";
-import { getPageNameFromPageIndex } from "../common/common";
+import { HttpClient } from "@angular/common/http";
+import { getDocumentTypeAsStringFromNumber, getPageNameFromPageIndex } from "../common/common";
+import { ofType } from "@ngrx/effects";
 
 @Component({
     selector: "app-evahub-documents",
@@ -28,15 +30,55 @@ import { getPageNameFromPageIndex } from "../common/common";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EvahubDocumentsComponent implements OnInit {
+    username$ = this.store.username$;
+    logs$ = this.store.userLogs$;
+    currentDocumentType$ = this.store.currentDocumentType$;
+    currentDocumentTypeString$ = this.currentDocumentType$.pipe(
+        map(cdt => {
+            return getDocumentTypeAsStringFromNumber(cdt);
+        })
+    );
     selectedDocument$ = this.store.selectedDocument$.pipe(
         tap(d => {
-            //console.log("d is:", d);
+            //console.log("DEV:  WINNER IS:d is:", d);
             if (!d || !d["reportContent"] || !d["reportContent"]["BalDura_sub_plot"]) {
             } else {
                 this.formGraphData(d, "BalDura_sub_plot");
             }
+        })
+        //startWith(new Log())
+    );
+    projectLogs$ = this.selectedDocument$.pipe(
+        combineLatestWith(this.logs$, this.currentDocumentTypeString$),
+        filter(([sd, ls, dt]) => {
+            if (sd && sd.documentType) {
+                let currentDocumentsType = getDocumentTypeAsStringFromNumber(sd.documentType);
+                return dt == "project" && currentDocumentsType == "project";
+            } else {
+                return false;
+            }
         }),
-        startWith(new Log())
+        map(([sd, ls, dt]) => {
+            console.log("KONZUM!");
+            console.log("sd is:", sd);
+            console.log("ls is:", ls);
+            //console.log("dt is:", dt);
+
+            let projectLogIds = sd.projectLogIds;
+
+            let res = ls.filter(l => {
+                let isIt = projectLogIds.map(pli => +pli).indexOf(l.logId) != -1;
+                console.log("isIt is:", isIt);
+                return isIt;
+            });
+
+            //console.log("res is:", res);
+
+            return res;
+        }),
+        tap(p => {
+            //console.log("filtered logs are:", p);
+        })
     );
     graphDatasets$: Observable<any> = this.store.selectedDocument$.pipe(
         map(a => {
@@ -63,7 +105,7 @@ export class EvahubDocumentsComponent implements OnInit {
     displayGraph$: Observable<boolean> = this.store.currentPageIndex$.pipe(
         map(a => {
             let pageName = getPageNameFromPageIndex(a);
-            console.log("pageName is: ", pageName);
+            //console.log("pageName is: ", pageName);
             if (pageName.toLowerCase() == "report") {
                 this.displayGraph = true;
                 return true;
@@ -84,19 +126,13 @@ export class EvahubDocumentsComponent implements OnInit {
             return e;
         })
     );
-    currentDocumentType$ = this.store.currentDocumentType$;
     isInDocumentUploadMode$ = this.store.isInDocumentUploadMode$;
     isInNewProjectCreationMode$ = this.store.isInNewProjectCreationMode$;
-    username$ = this.store.username$;
-    logs$ = this.store.userLogs$;
 
     // Related to new project page
     newProjectName$ = this.store.newProjectName$;
     newProjectDescription$ = this.store.newProjectDescription$;
     newProjectSelectedLogs$ = this.store.newProjectSelectedLogs$;
-
-    @Input()
-    requiredFileType: string = "png";
 
     displayGraph: boolean;
     graphValues: Array<number> = [];
