@@ -26,14 +26,13 @@ def setUserData(username):
 
     r = json.loads(request.data.decode("UTF-8"))
     updateDbUser(username, r["field"], r["value"])
-    user = getDbUser(username)
 
     # Return response
     response = {
         "authenticated": True,
         "status": "ok",
         "message": "User updated correctly.",
-        "user": user,
+        "username": username,
     }
 
     return finalizeResponse(response)
@@ -55,7 +54,10 @@ def postNewDocument(dt, username):
     )
 
     response = {
-        "ok": True,
+        "authenticated": True,
+        "status": "ok",
+        "message": "Project added correctly.",
+        "username": username,
     }
 
     return finalizeResponse(response)

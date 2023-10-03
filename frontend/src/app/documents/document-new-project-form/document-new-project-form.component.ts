@@ -49,11 +49,13 @@ export class DocumentNewProjectFormComponent implements OnInit {
     loading = false;
     formData: any = {};
     logSelections: LogSelection[] = [];
+    displaySuccessMessage: boolean;
 
     constructor(
         private fb: UntypedFormBuilder,
         private rest: RestApiClient,
-        private store: ApplicationStateStoreService
+        private store: ApplicationStateStoreService,
+        private cd: ChangeDetectorRef
     ) {
         //
         this.theForm = this.fb.group({
@@ -83,6 +85,7 @@ export class DocumentNewProjectFormComponent implements OnInit {
             .subscribe();
 
         this.initLogs();
+        this.displaySuccessMessage = false;
     }
 
     initLogs() {
@@ -108,8 +111,14 @@ export class DocumentNewProjectFormComponent implements OnInit {
 
         this.formData.projectLogs = this.getSelectedLogs().join(",");
 
-        this.rest.createNewProject(this.formData, this.username).subscribe(r => {
+        this.rest.createNewProject(this.formData, this.username).subscribe((r: any) => {
             console.log("r is:", r);
+            if (r.status == "ok") {
+                console.log("yes it is perfectly ok");
+                this.loading = false;
+                this.displaySuccessMessage = true;
+                this.cd.markForCheck();
+            }
         });
     }
 
