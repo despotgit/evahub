@@ -53,7 +53,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     }>();
 
     @Output()
-    emitNewDocumentClicked: EventEmitter<any> = new EventEmitter();
+    emitUploadNewDocumentClicked: EventEmitter<any> = new EventEmitter();
 
     username$ = this.store.username$;
 
@@ -106,7 +106,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     }
 
     uploadNewDocumentClicked() {
-        this.emitNewDocumentClicked.emit();
+        this.emitUploadNewDocumentClicked.emit();
     }
 
     isInCreationMode() {

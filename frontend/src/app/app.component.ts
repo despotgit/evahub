@@ -108,6 +108,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                 // not the document itself, so no automatic document selection ought
                 // to occur
 
+                this.store.updateIsEmptyDocumentPage(false);
                 this.store.updateCurrentDocumentId(d.getDocumentId());
             } else {
                 this.store.updateCurrentDocumentId(0);
@@ -376,7 +377,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         return { menuItems, docs };
     }
 
-    onNewDocumentClicked() {
+    onUploadNewDocumentClicked() {
         console.log("currentPageIndex is:", this.currentPageIndex);
         if (this.currentPageIndex == PageIndexEnum.PROJECTS_PAGE) {
             this.store.updateIsInNewProjectCreationMode(true);
