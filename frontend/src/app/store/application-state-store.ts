@@ -1,12 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { map, Observable, withLatestFrom, shareReplay, observeOn, asyncScheduler, Subject } from "rxjs";
-import {
-    EvahubDocumentTypeWordToNumber,
-    EvahubMainMenuItem,
-    EvahubSidenavMenuItem,
-    PageIndexEnum
-} from "../common/constants";
+import { EvahubDocumentType, EvahubMainMenuItem, EvahubSidenavMenuItem, PageIndexEnum } from "../common/constants";
 import { Check } from "../models/Check";
 import { EvahubDocument } from "../models/EvahubDocument";
 import { Project } from "../models/Project";
@@ -25,7 +20,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     isloggedIn$: Observable<boolean> = this.select(state => state.currentUserSession.isLoggedIn);
     currentPageIndex$: Observable<PageIndexEnum> = this.select(state => state.currentUserSession.currentPageIndex);
     currentDocumentId$: Observable<number> = this.select(state => state.currentUserSession.currentDocumentId);
-    currentDocumentType$: Observable<EvahubDocumentTypeWordToNumber> = this.select(
+    currentDocumentType$: Observable<EvahubDocumentType> = this.select(
         state => state.currentUserSession.currentDocumentType
     );
 
@@ -123,7 +118,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     );
 
     // SUBJECTS
-    updateDocumentsSetFromApi$: Subject<EvahubDocumentTypeWordToNumber> = new Subject();
+    updateDocumentsSetFromApi$: Subject<EvahubDocumentType> = new Subject();
 
     constructor() {
         super();
@@ -146,7 +141,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         updateState(this, "currentUserSession", "currentDocumentId", id);
     }
 
-    updateCurrentDocumentType(type: EvahubDocumentTypeWordToNumber) {
+    updateCurrentDocumentType(type: EvahubDocumentType) {
         updateState(this, "currentUserSession", "currentDocumentType", type);
     }
 

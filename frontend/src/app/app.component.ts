@@ -18,7 +18,7 @@ import {
 import { PageIndexEnum, PageIndexDictionary } from "./common/constants";
 import { Check } from "./models/Check";
 import { EvahubDocument } from "./models/EvahubDocument";
-import { EvahubDocumentTypeWordToNumber } from "../app/common/constants";
+import { EvahubDocumentType } from "../app/common/constants";
 import { Log } from "./models/Log";
 import { Report } from "./models/Report";
 import { Project } from "./models/Project";
@@ -172,10 +172,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         tap(a => {
             console.log("tapped!!!!, a is:");
             console.log(a);
-            if (a == EvahubDocumentTypeWordToNumber.project) {
+            if (a == EvahubDocumentType.project) {
                 console.log("yes it is a project.");
                 this.updateDocumentsSetFromApi(
-                    getDocumentTypeAsStringFromNumber(EvahubDocumentTypeWordToNumber.project),
+                    getDocumentTypeAsStringFromNumber(EvahubDocumentType.project),
                     true
                 );
             }
@@ -358,7 +358,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                     doc.projectLogIds = doc.projectLogs != "" ? doc.projectLogs.split(",") : [];
                 }
 
-                doc.documentType = EvahubDocumentTypeWordToNumber[dtToLower];
+                doc.documentType = EvahubDocumentType[dtToLower];
 
                 docs.push(doc);
 

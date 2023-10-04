@@ -1,14 +1,12 @@
 import { environment } from "src/environments/environment";
-import { EvahubDocumentTypeWordToNumber, EvahubMainMenuItem, PageIndexDictionary } from "./constants";
+import { EvahubDocumentType, EvahubMainMenuItem, PageIndexDictionary } from "./constants";
 
 export function getDocumentTypeAsStringFromNumber(numberedDT: number) {
-    return Object.keys(EvahubDocumentTypeWordToNumber).find(
-        dt => numberedDT == EvahubDocumentTypeWordToNumber[dt]
-    );
+    return Object.keys(EvahubDocumentType).find(dt => numberedDT == EvahubDocumentType[dt]);
 }
 
 export function getDocumentTypeAsNumberFromString(dt: string) {
-    return EvahubDocumentTypeWordToNumber[dt.toLowerCase()];
+    return EvahubDocumentType[dt.toLowerCase()];
 }
 
 export function getPageNameFromPageIndex(i: number): string {

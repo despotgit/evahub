@@ -5,7 +5,7 @@ import { Project } from "src/app/models/Project";
 import { RestApiClient } from "src/app/services/rest-api-client.service";
 import { Observable, combineLatest, debounceTime, distinctUntilChanged, map, tap } from "rxjs";
 import { ApplicationStateStoreService } from "src/app/store/application-state-store";
-import { EvahubDocumentTypeWordToNumber } from "src/app/common/constants";
+import { EvahubDocumentType } from "src/app/common/constants";
 
 export class LogSelection {
     log: Log;
@@ -118,7 +118,7 @@ export class DocumentNewProjectFormComponent implements OnInit {
                 this.loading = false;
                 this.displaySuccessMessage = true;
                 this.cd.markForCheck();
-                this.store.updateDocumentsSetFromApi$.next(EvahubDocumentTypeWordToNumber.project);
+                this.store.updateDocumentsSetFromApi$.next(EvahubDocumentType.project);
             }
         });
     }

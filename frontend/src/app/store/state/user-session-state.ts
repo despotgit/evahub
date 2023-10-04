@@ -1,17 +1,13 @@
 // USER
 
-import {
-    EVAHUB_DOCUMENT_TYPE_LOG,
-    EvahubDocumentTypeWordToNumber,
-    PageIndexEnum
-} from "src/app/common/constants";
+import { EVAHUB_DOCUMENT_TYPE_LOG, EvahubDocumentType, PageIndexEnum } from "src/app/common/constants";
 
 export interface UserSessionState {
     username: string;
     isLoggedIn: boolean;
     currentPageIndex: PageIndexEnum;
     currentDocumentId: number;
-    currentDocumentType: EvahubDocumentTypeWordToNumber;
+    currentDocumentType: EvahubDocumentType;
 }
 
 export const INITIAL_USER_SESSION_STATE = {

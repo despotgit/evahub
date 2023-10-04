@@ -1,7 +1,7 @@
-import { EvahubDocumentTypeWordToNumber } from "../common/constants";
+import { EvahubDocumentType } from "../common/constants";
 
 export interface EvahubDocument {
-    documentType: EvahubDocumentTypeWordToNumber;
+    documentType: EvahubDocumentType;
 
     projectLogIds?: number[];
     projectName?: string;

@@ -6,7 +6,7 @@ export const EVAHUB_DOCUMENT_TYPE_LOG = 2;
 export const EVAHUB_DOCUMENT_TYPE_REPORT = 3;
 export const EVAHUB_DOCUMENT_TYPE_CHECK = 4;
 
-export enum EvahubDocumentTypeWordToNumber {
+export enum EvahubDocumentType {
     unknown = EVAHUB_DOCUMENT_TYPE_UNKNOWN,
     project = EVAHUB_DOCUMENT_TYPE_PROJECT,
     log = EVAHUB_DOCUMENT_TYPE_LOG,
