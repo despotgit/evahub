@@ -121,6 +121,7 @@ export class EvahubDocumentsComponent implements OnInit {
     );
     isInDocumentUploadMode$ = this.store.isInDocumentUploadMode$;
     isInNewProjectCreationMode$ = this.store.isInNewProjectCreationMode$;
+    isEmptyDocumentPage$ = this.store.isEmptyDocumentPage$;
 
     // Related to new project page
     newProjectName$ = this.store.newProjectName$;

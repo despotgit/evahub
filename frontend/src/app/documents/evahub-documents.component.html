@@ -11,54 +11,57 @@
         username: username$ | async,
         logs: logs$ | async,
         cdts: currentDocumentTypeString$ | async,
-        projectLogs: projectLogs$ | async
+        projectLogs: projectLogs$ | async,
+        isEmptyDocumentPage: isEmptyDocumentPage$ | async
     } as asyncData"
 >
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
-            <div *ngIf="asyncData.isInDocumentUploadMode || asyncData.isInNewProjectCreationMode">
-                <evahub-document-upload-form-component *ngIf="asyncData.isInDocumentUploadMode">
-                </evahub-document-upload-form-component>
+            <ng-container *ngIf="!asyncData.isEmptyDocumentPage">
+                <div *ngIf="asyncData.isInDocumentUploadMode || asyncData.isInNewProjectCreationMode">
+                    <evahub-document-upload-form-component *ngIf="asyncData.isInDocumentUploadMode">
+                    </evahub-document-upload-form-component>
 
-                <evahub-document-new-project-form
-                    *ngIf="asyncData.isInNewProjectCreationMode"
-                    [username]="asyncData.username"
-                    [logs]="asyncData.logs"
-                >
-                </evahub-document-new-project-form>
-            </div>
-            <div *ngIf="!asyncData.isInDocumentUploadMode && !asyncData.isInNewProjectCreationMode">
-                <div *ngIf="asyncData.displayGraph" class="document-graph">
-                    <evahub-graph-controls
-                        [datasets]="asyncData.datasets"
-                        (graphDatasetChange)="onGraphDatasetChange($event)"
-                    ></evahub-graph-controls>
-
-                    <app-documents-graph
-                        [graphLabels]="graphLabels"
-                        [graphValues]="graphValues"
-                    ></app-documents-graph>
+                    <evahub-document-new-project-form
+                        *ngIf="asyncData.isInNewProjectCreationMode"
+                        [username]="asyncData.username"
+                        [logs]="asyncData.logs"
+                    >
+                    </evahub-document-new-project-form>
                 </div>
-                <div *ngIf="!asyncData.displayGraph" class="document-text">
-                    <ng-container *ngIf="asyncData.cdts == 'project'">
-                        <app-documents-project
-                            [projectLogs]="asyncData.projectLogs"
-                            [projectName]="asyncData.sd ? asyncData.sd.projectName : ''"
-                            [projectDescription]="asyncData.sd ? asyncData.sd.projectDescription : ''"
-                        >
-                        </app-documents-project>
-                    </ng-container>
+                <div *ngIf="!asyncData.isInDocumentUploadMode && !asyncData.isInNewProjectCreationMode">
+                    <div *ngIf="asyncData.displayGraph" class="document-graph">
+                        <evahub-graph-controls
+                            [datasets]="asyncData.datasets"
+                            (graphDatasetChange)="onGraphDatasetChange($event)"
+                        ></evahub-graph-controls>
 
-                    <ng-container *ngIf="asyncData.cdts != 'project'">
-                        <app-documents-text
-                            [documentContent]="asyncData.sd ? asyncData.sd.getDocumentContent() : ''"
-                            [shouldDisplaySpinner]="asyncData.shouldDisplaySpinner"
-                            (emitContentDisplayed)="onDocumentContentDisplayed()"
-                        >
-                        </app-documents-text>
-                    </ng-container>
+                        <app-documents-graph
+                            [graphLabels]="graphLabels"
+                            [graphValues]="graphValues"
+                        ></app-documents-graph>
+                    </div>
+                    <div *ngIf="!asyncData.displayGraph" class="document-text">
+                        <ng-container *ngIf="asyncData.cdts == 'project'">
+                            <app-documents-project
+                                [projectLogs]="asyncData.projectLogs"
+                                [projectName]="asyncData.sd ? asyncData.sd.projectName : ''"
+                                [projectDescription]="asyncData.sd ? asyncData.sd.projectDescription : ''"
+                            >
+                            </app-documents-project>
+                        </ng-container>
+
+                        <ng-container *ngIf="asyncData.cdts != 'project'">
+                            <app-documents-text
+                                [documentContent]="asyncData.sd ? asyncData.sd.getDocumentContent() : ''"
+                                [shouldDisplaySpinner]="asyncData.shouldDisplaySpinner"
+                                (emitContentDisplayed)="onDocumentContentDisplayed()"
+                            >
+                            </app-documents-text>
+                        </ng-container>
+                    </div>
                 </div>
-            </div>
+            </ng-container>
         </mat-grid-tile>
     </mat-grid-list>
 </div>

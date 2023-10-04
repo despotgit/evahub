@@ -269,6 +269,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                 let newSnmi = snmis.filter(mi => mi.id != docId);
                 console.log("newSnmi is:", newSnmi);
                 this.store.updateSidenavMenuItems(newSnmi);
+                this.store.updateIsEmptyDocumentPage(true);
             })
         )
     );

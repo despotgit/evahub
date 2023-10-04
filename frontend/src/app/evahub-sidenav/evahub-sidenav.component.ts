@@ -74,6 +74,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
 
     menuItemClicked(itemId) {
         this.emitItemClicked.emit(itemId);
+        this.store.updateIsEmptyDocumentPage(false);
     }
 
     deleteClicked(iid: number) {
