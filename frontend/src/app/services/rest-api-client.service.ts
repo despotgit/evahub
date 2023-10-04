@@ -33,7 +33,7 @@ export class RestApiClient {
         formData.append("firstLastName", flname);
         formData.append("email", email);
 
-        console.log("******** formData is:", formData);
+        //console.log("******** formData is:", formData);
 
         let url = registerUrl();
         //console.log("aaaand url is:", url);
@@ -50,7 +50,7 @@ export class RestApiClient {
     }
 
     createNewProject(formData, username) {
-        console.log("formData is:", formData);
+        //console.log("formData is:", formData);
         let data: any = Project;
         data.projectName = formData.projectName;
         data.projectDescription = formData.projectDescription;

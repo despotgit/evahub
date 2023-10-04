@@ -77,6 +77,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.store.updateIsInNewProjectCreationMode(false);
         })
     );
+    isInDocumentUploadMode$ = this.store.isInDocumentUploadMode$;
+    isInNewProjectCreationMode$ = this.store.isInNewProjectCreationMode$;
     currentDocumentSet$ = this.currentPageIndex$.pipe(
         switchMap(cpi => {
             switch (cpi) {
@@ -96,10 +98,16 @@ export class AppComponent implements OnInit, AfterViewInit {
                     return of([]);
             }
         }),
-        map(cds => {
+        withLatestFrom(this.isInNewProjectCreationMode$),
+        map(([cds, is]) => {
             let d = cds[0];
-            if (d !== undefined) {
-                //console.log("first's getDocumentId is:", d.getDocumentId());
+            if (d !== undefined && !is) {
+                // If document exists (is not undefined), select that first one, but
+                // if the project creation mode is on, don't select the first document,
+                // because there is still the success message displayed, and
+                // not the document itself, so no automatic document selection ought
+                // to occur
+
                 this.store.updateCurrentDocumentId(d.getDocumentId());
             } else {
                 this.store.updateCurrentDocumentId(0);
@@ -134,8 +142,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     );
     shouldDisplaySidenavSpinner$ = this.store.shouldDisplaySidenavSpinner$;
     shouldDisplayDocumentSpinner$ = this.store.shouldDisplayDocumentSpinner$;
-    isInDocumentUploadMode$ = this.store.isInDocumentUploadMode$;
-    isInNewProjectCreationMode$ = this.store.isInNewProjectCreationMode$;
     sideMenuItemClickedSubject$: Subject<any> = new Subject();
     smicd$: Observable<any> = this.sideMenuItemClickedSubject$.pipe(
         // Menu Item Clicked Derived obs.
@@ -159,6 +165,20 @@ export class AppComponent implements OnInit, AfterViewInit {
         map(([docId, snmi]) => {
             docId = docId.id;
             console.log("snmi is:", snmi);
+        })
+    );
+    updateDocumentsSetFromApi$ = this.store.updateDocumentsSetFromApi$;
+    updateDocumentsSetFromApiDerived$: Observable<any> = this.updateDocumentsSetFromApi$.pipe(
+        tap(a => {
+            console.log("tapped!!!!, a is:");
+            console.log(a);
+            if (a == EvahubDocumentTypeWordToNumber.project) {
+                console.log("yes it is a project.");
+                this.updateDocumentsSetFromApi(
+                    getDocumentTypeAsStringFromNumber(EvahubDocumentTypeWordToNumber.project),
+                    true
+                );
+            }
         })
     );
 
@@ -232,8 +252,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             }),
             withLatestFrom(this.sidenavMenuItems$, this.username$, this.currentDocumentType$),
             map(data => {
-                console.log("data in effect is:");
-                console.log(data);
+                //console.log("data in effect is:");
+                //console.log(data);
 
                 let docId = data[0].itemId;
                 let snmis = data[1];

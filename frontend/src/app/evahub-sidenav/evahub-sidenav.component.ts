@@ -96,9 +96,6 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
         this.deleteSubscription = this.deleteDialog.closed
             .pipe(
                 tap(x => {
-                    console.log("x is:");
-                    console.log(x);
-
                     if (x == "yes") {
                         this.emitDeleteItemClicked.emit({ source: event, itemId: did });
                     }

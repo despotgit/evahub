@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
-import { map, Observable, withLatestFrom, shareReplay, observeOn, asyncScheduler } from "rxjs";
+import { map, Observable, withLatestFrom, shareReplay, observeOn, asyncScheduler, Subject } from "rxjs";
 import {
     EvahubDocumentTypeWordToNumber,
     EvahubMainMenuItem,
@@ -88,6 +88,7 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
             this.userChecks$
         ),
         map(arr => {
+            console.log("in selectedDocument$");
             // arr -> [cdi, cpi, logs, reports, checks]
             let cdi = arr[0];
             let cpi = arr[1];
@@ -120,6 +121,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
         shareReplay(1),
         observeOn(asyncScheduler)
     );
+
+    // SUBJECTS
+    updateDocumentsSetFromApi$: Subject<EvahubDocumentTypeWordToNumber> = new Subject();
 
     constructor() {
         super();

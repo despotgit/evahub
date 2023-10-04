@@ -5,6 +5,7 @@ import { Project } from "src/app/models/Project";
 import { RestApiClient } from "src/app/services/rest-api-client.service";
 import { Observable, combineLatest, debounceTime, distinctUntilChanged, map, tap } from "rxjs";
 import { ApplicationStateStoreService } from "src/app/store/application-state-store";
+import { EvahubDocumentTypeWordToNumber } from "src/app/common/constants";
 
 export class LogSelection {
     log: Log;
@@ -114,10 +115,10 @@ export class DocumentNewProjectFormComponent implements OnInit {
         this.rest.createNewProject(this.formData, this.username).subscribe((r: any) => {
             console.log("r is:", r);
             if (r.status == "ok") {
-                console.log("yes it is perfectly ok");
                 this.loading = false;
                 this.displaySuccessMessage = true;
                 this.cd.markForCheck();
+                this.store.updateDocumentsSetFromApi$.next(EvahubDocumentTypeWordToNumber.project);
             }
         });
     }
