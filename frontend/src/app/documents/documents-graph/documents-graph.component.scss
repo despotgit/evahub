@@ -3,8 +3,8 @@
     z-index: 9;
 
     display: initial !important;
-    width: 93%;
-    height: 100%;
+
+    height: -webkit-fill-available;
     margin-left: 20px;
     margin-top: 0px;
 }
