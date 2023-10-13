@@ -60,4 +60,9 @@ export class RestApiClient {
 
         return this.httpClient.post(url, formData);
     }
+
+    triggerScript() {
+        let url = `${environment.baseApiBackendUrl}/rest/get/trigger-script`;
+        return this.httpClient.get(url);
+    }
 }

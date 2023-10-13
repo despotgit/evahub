@@ -55,6 +55,9 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     @Output()
     emitUploadNewDocumentClicked: EventEmitter<any> = new EventEmitter();
 
+    @Output()
+    emitTriggerScriptClicked: EventEmitter<any> = new EventEmitter();
+
     username$ = this.store.username$;
 
     deleteDialog: DialogRef<any, any>;
@@ -84,6 +87,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     requestReportClicked(iid: number) {
         console.log("in requestReportClicked");
         braintreeGetToken(iid);
+        this.emitTriggerScriptClicked.emit();
     }
 
     openDocumentDeleteConfirmationDialog(did) {

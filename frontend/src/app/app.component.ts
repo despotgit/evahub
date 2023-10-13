@@ -389,6 +389,13 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.store.updateCurrentDocumentId(0);
     }
 
+    onTriggerScriptClicked() {
+        console.log();
+        this.restApiClient.triggerScript().subscribe(r => {
+            console.log("r is:", r);
+        });
+    }
+
     unSubscribe() {
         //this.docSelectedSub.unsubscribe();
         this.httpDocsCall.unsubscribe();

@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, json
 from flask_jwt_extended import jwt_required
 from auth import verifyUser
@@ -66,3 +67,25 @@ def getUserDocuments(documentType, username):
         }
 
     return finalizeResponse(response)
+
+
+# Get user (by username)
+# will be used on Account or Register page for getting the user's data
+@rest_get.route("/trigger-script", methods=["GET"])
+def generateReport():
+    print("generating....os.cwd is:")
+    print(os.getcwd())
+    # p = os.getcwd() + "/report_gen_V12.py"
+    # "/Applications/MAMP/htdocs/evahub/backend/report_gen_V12.py"
+
+    # os.system('#!/bin/sh python3 main.py')
+    os.system("python3 report_gen_V12.py TestUser/JRC_GridStorage  _06_2023")
+
+    response = {
+        "status": "ok",
+        "message": "Script triggered successfully.",
+    }
+
+    return finalizeResponse(response)
+
+    # return exec("python3 report_gen_V11.py TestUser/JRC_GridStorage  _06_2023")
