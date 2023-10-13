@@ -27,6 +27,7 @@ import { EvahubGraphControlsComponent } from "./documents/documents-graph/evahub
 import { DocumentUploadFormComponent } from "./documents/document-upload-form/document-upload-form.component";
 import { DocumentNewProjectFormComponent } from "./documents/document-new-project-form/document-new-project-form.component";
 import { DocumentsProjectComponent } from "./documents/documents-project/documents-project.component";
+import { DocumentNewReportTemplateComponent } from './documents/document-new-report-template/document-new-report-template.component';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import { DocumentsProjectComponent } from "./documents/documents-project/documen
         EvahubGraphControlsComponent,
         DocumentUploadFormComponent,
         DocumentNewProjectFormComponent,
-        DocumentsProjectComponent
+        DocumentsProjectComponent,
+        DocumentNewReportTemplateComponent
     ],
     imports: [
         BrowserModule,

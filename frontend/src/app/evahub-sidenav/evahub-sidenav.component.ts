@@ -38,6 +38,9 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     isInNewProjectCreationMode: boolean;
 
     @Input()
+    isInNewReportTemplateMode: boolean;
+
+    @Input()
     menuItems: EvahubSidenavMenuItem[];
 
     @Input()
@@ -114,7 +117,7 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     }
 
     isInCreationMode() {
-        let val = this.isInDocumentUploadMode || this.isInNewProjectCreationMode;
+        let val = this.isInDocumentUploadMode || this.isInNewProjectCreationMode || this.isInNewReportTemplateMode;
         return val;
     }
 

@@ -50,6 +50,9 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     isInNewProjectCreationMode$: Observable<boolean> = this.select(
         state => state.documentContent.isInNewProjectCreationMode
     );
+    isInNewReportTemplateMode$: Observable<boolean> = this.select(
+        state => state.documentContent.isInNewReportTemplateMode
+    );
     isEmptyDocumentPage$: Observable<boolean> = this.select(state => state.documentContent.isEmptyDocumentPage);
 
     // SIDENAV
@@ -199,6 +202,10 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
 
     updateIsInNewProjectCreationMode(is: boolean) {
         updateState(this, "documentContent", "isInNewProjectCreationMode", is);
+    }
+
+    updateIsInNewReportTemplateMode(is: boolean) {
+        updateState(this, "documentContent", "isInNewReportTemplateMode", is);
     }
 
     updateIsEmptyDocumentPage(is: boolean) {

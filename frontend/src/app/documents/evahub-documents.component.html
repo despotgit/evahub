@@ -8,6 +8,7 @@
         currentDocumentType: currentDocumentType$ | async,
         isInDocumentUploadMode: isInDocumentUploadMode$ | async,
         isInNewProjectCreationMode: isInNewProjectCreationMode$ | async,
+        isInNewReportTemplateMode: isInNewReportTemplateMode$ | async,
         username: username$ | async,
         logs: logs$ | async,
         cdts: currentDocumentTypeString$ | async,
@@ -18,6 +19,9 @@
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
             <ng-container *ngIf="!asyncData.isEmptyDocumentPage">
+                <div *ngIf="asyncData.isInNewReportTemplateMode">
+                    <app-document-new-report-template> </app-document-new-report-template>
+                </div>
                 <div *ngIf="asyncData.isInDocumentUploadMode || asyncData.isInNewProjectCreationMode">
                     <evahub-document-upload-form-component *ngIf="asyncData.isInDocumentUploadMode">
                     </evahub-document-upload-form-component>
@@ -29,7 +33,13 @@
                     >
                     </evahub-document-new-project-form>
                 </div>
-                <div *ngIf="!asyncData.isInDocumentUploadMode && !asyncData.isInNewProjectCreationMode">
+                <div
+                    *ngIf="
+                        !asyncData.isInNewReportTemplateMode &&
+                        !asyncData.isInDocumentUploadMode &&
+                        !asyncData.isInNewProjectCreationMode
+                    "
+                >
                     <div *ngIf="asyncData.displayGraph" class="document-graph">
                         <evahub-graph-controls
                             [datasets]="asyncData.datasets"

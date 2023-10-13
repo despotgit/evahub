@@ -75,10 +75,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         tap(a => {
             this.store.updateIsInDocumentUploadMode(false);
             this.store.updateIsInNewProjectCreationMode(false);
+            this.store.updateIsInNewReportTemplateMode(false);
         })
     );
     isInDocumentUploadMode$ = this.store.isInDocumentUploadMode$;
     isInNewProjectCreationMode$ = this.store.isInNewProjectCreationMode$;
+    isInNewReportTemplateMode$ = this.store.isInNewReportTemplateMode$;
     currentDocumentSet$ = this.currentPageIndex$.pipe(
         switchMap(cpi => {
             switch (cpi) {
@@ -237,6 +239,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         //console.log("in app in menuItemClicked, $event is:", $event);
         this.store.updateIsInDocumentUploadMode(false);
         this.store.updateIsInNewProjectCreationMode(false);
+        this.store.updateIsInNewReportTemplateMode(false);
 
         this.sideMenuItemClickedSubject$.next($event);
 
@@ -382,11 +385,22 @@ export class AppComponent implements OnInit, AfterViewInit {
         if (this.currentPageIndex == PageIndexEnum.PROJECTS_PAGE) {
             this.store.updateIsInNewProjectCreationMode(true);
             this.store.updateIsInDocumentUploadMode(false);
-        } else {
-            this.store.updateIsInDocumentUploadMode(true);
-            this.store.updateIsInNewProjectCreationMode(false);
+            this.store.updateIsInNewReportTemplateMode(false);
         }
-        this.store.updateCurrentDocumentId(0);
+
+        if (this.currentPageIndex == PageIndexEnum.REPORTS_PAGE) {
+            this.store.updateIsInDocumentUploadMode(false);
+            this.store.updateIsInNewProjectCreationMode(false);
+            this.store.updateIsInNewReportTemplateMode(true);
+        }
+
+        if (this.currentPageIndex == PageIndexEnum.LOGS_PAGE) {
+            this.store.updateIsInNewProjectCreationMode(false);
+            this.store.updateIsInDocumentUploadMode(true);
+            this.store.updateIsInNewReportTemplateMode(false);
+        }
+
+        this.store.updateCurrentDocumentId(-1);
     }
 
     onTriggerScriptClicked() {
