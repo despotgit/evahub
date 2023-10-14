@@ -1,0 +1,22 @@
+.paragraph1 {
+    display: block;
+}
+
+.paragraph2 {
+    display: block;
+}
+
+.paragraph3 {
+    display: block;
+}
+
+.paragraph1,
+.paragraph2,
+.paragraph3 {
+    display: block;
+    width: 100%;
+    //border: dotted 1 px mat.get-color-from-palette($evahub-light-primary, 10);
+    border: dotted 1px gray;
+    min-height: 100px;
+    margin-bottom: 5px;
+}
