@@ -75,3 +75,9 @@ body {
 }
 
 // END MATERIAL MODIFICATIONS
+
+// NEW PROJECT (REPORT) TEMPLATE SIDENAV
+
+.draggable-items div[cdkscrollable] {
+    overflow: initial;
+}

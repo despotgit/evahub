@@ -1,3 +1,6 @@
+@use "@angular/material" as mat;
+@import "../../../common.scss";
+
 .paragraph1 {
     display: block;
 }
@@ -15,8 +18,8 @@
 .paragraph3 {
     display: block;
     width: 100%;
-    //border: dotted 1 px mat.get-color-from-palette($evahub-light-primary, 10);
-    border: dotted 1px gray;
+    border: dotted 2px mat.get-color-from-palette($evahub-light-primary, 10);
+    //border: dotted 2px gray;
     min-height: 100px;
     margin-bottom: 5px;
 }
