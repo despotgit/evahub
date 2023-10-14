@@ -79,6 +79,9 @@ export class EvahubSidenavComponent implements OnInit, OnDestroy, OnDestroy {
     ngOnInit(): void {}
 
     menuItemClicked(itemId) {
+        if (this.isInNewReportTemplateMode) {
+            return;
+        }
         this.emitItemClicked.emit(itemId);
         this.store.updateIsEmptyDocumentPage(false);
     }
