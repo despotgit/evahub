@@ -6,6 +6,7 @@ import {
     OnInit,
     Signal,
     WritableSignal,
+    computed,
     signal
 } from "@angular/core";
 import { PageIndexDictionary } from "../common/constants";
@@ -147,6 +148,7 @@ export class EvahubDocumentsComponent implements OnInit {
     uploadObs$: Observable<any>;
     uploadSub$: Subscription;
     sig: WritableSignal<number>;
+    derivedSig: any;
 
     constructor(private store: ApplicationStateStoreService, private route: ActivatedRoute) {
         setTimeout(() => {
@@ -157,6 +159,8 @@ export class EvahubDocumentsComponent implements OnInit {
         this.displayGraph = true;
 
         this.sig = signal(6);
+
+        this.derivedSig = computed(() => this.sig() * 2);
     }
 
     fja() {

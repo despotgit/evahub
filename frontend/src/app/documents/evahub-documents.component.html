@@ -19,10 +19,12 @@
     <mat-grid-list rowHeight="fit" gutterSize="15px" cols="6">
         <mat-grid-tile colspan="6">
             {{ sig() }}
+            {{ derivedSig() }}
             <button (click)="fja()">FJA BOTONCINO</button>
             <ng-container *ngIf="!asyncData.isEmptyDocumentPage">
                 <div *ngIf="asyncData.isInNewReportTemplateMode">
-                    <app-document-new-report-template> </app-document-new-report-template>
+                    <app-document-new-report-template [derivedSig]="derivedSig()">
+                    </app-document-new-report-template>
                 </div>
                 <div *ngIf="asyncData.isInDocumentUploadMode || asyncData.isInNewProjectCreationMode">
                     <evahub-document-upload-form-component *ngIf="asyncData.isInDocumentUploadMode">
