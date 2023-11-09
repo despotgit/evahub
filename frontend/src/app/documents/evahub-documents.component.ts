@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnInit,
+    Signal,
+    WritableSignal,
+    signal
+} from "@angular/core";
 import { PageIndexDictionary } from "../common/constants";
 import { ApplicationStateStoreService } from "../store/application-state-store";
 import { ActivatedRoute } from "@angular/router";
@@ -137,19 +146,22 @@ export class EvahubDocumentsComponent implements OnInit {
     uploadProgress: number;
     uploadObs$: Observable<any>;
     uploadSub$: Subscription;
+    sig: WritableSignal<number>;
 
-    constructor(
-        private store: ApplicationStateStoreService,
-        route: ActivatedRoute,
-        private http: HttpClient,
-        private cd: ChangeDetectorRef
-    ) {
+    constructor(private store: ApplicationStateStoreService, private route: ActivatedRoute) {
         setTimeout(() => {
             this.store.updateIsSidenavOpened(true);
         }, 100);
 
         this.updatePageIndexAccordingToRoute(route);
         this.displayGraph = true;
+
+        this.sig = signal(6);
+    }
+
+    fja() {
+        console.log("yeah");
+        this.sig.set(this.sig() + 1);
     }
 
     updatePageIndexAccordingToRoute(route) {
