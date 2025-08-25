@@ -39,7 +39,9 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, AfterViewInit {
+
     username$: Observable<string> = this.store.username$;
+    loggedInEmail$: Observable<string> = this.store.loggedInEmail$;
     isLoggedIn$: Observable<boolean> = this.store.isloggedIn$;
     isSidenavOpened$: Observable<boolean> = this.store.isSidenavOpened$;
     sidenavMenuItems$: Observable<EvahubSidenavMenuItem[]> = this.store.sidenavMenuItems$;
@@ -199,11 +201,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         private store: ApplicationStateStoreService,
         private authenticationService: AuthenticationService,
         private restApiClient: RestApiClient
-    ) {}
+    ) { }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
-    ngAfterViewInit(): void {}
+    ngAfterViewInit(): void { }
 
     // e can be string or a full PageIndexDictionary property
     goTo(e) {

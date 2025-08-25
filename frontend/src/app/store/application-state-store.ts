@@ -17,6 +17,7 @@ import { capitalizeWord } from "../common/common";
 export class ApplicationStateStoreService extends ComponentStore<ApplicationState> {
     // CURRENT USER
     username$: Observable<string> = this.select(state => state.currentUserSession.username);
+    loggedInEmail$: Observable<string> = this.select(state => state.currentUserSession.email);
     isloggedIn$: Observable<boolean> = this.select(state => state.currentUserSession.isLoggedIn);
     currentPageIndex$: Observable<PageIndexEnum> = this.select(state => state.currentUserSession.currentPageIndex);
     currentDocumentId$: Observable<number> = this.select(state => state.currentUserSession.currentDocumentId);
@@ -131,6 +132,10 @@ export class ApplicationStateStoreService extends ComponentStore<ApplicationStat
     // CURRENT USER:
     updateUsername(username: string) {
         updateState(this, "currentUserSession", "username", username);
+    }
+
+    updateLoggedInEmail(email: string) {
+        updateState(this, "currentUserSession", "email", email);
     }
 
     updateIsLoggedIn(isLoggedIn: boolean) {

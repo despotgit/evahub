@@ -40,6 +40,7 @@ export class AuthenticationService {
                         localStorage.setItem(storedObjectName, JSON.stringify(user));
 
                         this.store.updateUsername(u);
+                        this.store.updateLoggedInEmail(user.email);
                         this.store.updateIsSidenavOpened(true);
                     }
 

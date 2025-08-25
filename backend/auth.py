@@ -89,7 +89,7 @@ def login():
 
     connection = getDb()
     cursor = connection.cursor()
-    sql = "SELECT password, role FROM users WHERE username='" + username + "'"
+    sql = "SELECT password, role, email FROM users WHERE username='" + username + "'"
 
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -102,6 +102,7 @@ def login():
         result = results[0]
         dbPassword = result[0]
         dbRole = result[1]
+        email = result[2]
 
         if bcrypt.checkpw(password.encode("utf-8"), dbPassword.encode("utf-8")):
             # print("It matches!")
@@ -126,6 +127,7 @@ def login():
         response["token"] = accessToken
         response["role"] = dbRole
         response["username"] = username
+        response["email"] = email
         response["iat"] = datetime.datetime.now().timestamp()
 
     return finalizeResponse(response)

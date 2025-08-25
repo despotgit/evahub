@@ -1,6 +1,6 @@
-<div
-    *ngIf="{
+<div *ngIf="{
         username: username$ | async,
+        email: loggedInEmail$ | async,
         isLoggedIn: isLoggedIn$ | async,
         isSidenavOpened: isSidenavOpened$ | async,
         menuItems: sidenavMenuItems$ | async,
@@ -19,63 +19,42 @@
         isInNewReportTemplateMode: isInNewReportTemplateMode$ | async,
         disengageCreationMode: disengageCreationMode$ | async,
         updateDocumentsSetFromApiDerived: updateDocumentsSetFromApiDerived$ | async
-    } as asyncData"
-    class="main-wrapper-div"
->
+    } as asyncData" class="main-wrapper-div">
     <mat-toolbar class="main-menu">
         <a href="/">
             <span class="title">{{ title }}</span>
         </a>
-        <evahub-main-menu
-            class="evahub-main-menu"
-            *ngIf="asyncData.isLoggedIn"
-            [isLoggedIn]="asyncData.isLoggedIn"
-            (emitToggleSidenav)="sidenav.toggle()"
-            (mainMenuItemClickedEmit)="goTo($event)"
-            [cpi]="asyncData.currentPageIndex"
-            [menuItems]="asyncData.mainMenuItems"
-        ></evahub-main-menu>
+        <evahub-main-menu class="evahub-main-menu" *ngIf="asyncData.isLoggedIn"
+            [isLoggedIn]="asyncData.isLoggedIn" (emitToggleSidenav)="sidenav.toggle()"
+            (mainMenuItemClickedEmit)="goTo($event)" [cpi]="asyncData.currentPageIndex"
+            [menuItems]="asyncData.mainMenuItems"></evahub-main-menu>
 
         <div class="right-pusher"></div>
-        <div class="username mat-button">{{ asyncData.username }}</div>
-        <button *ngIf="asyncData.isLoggedIn" mat-raised-button color="primary" (click)="logOut()">Log out</button>
-        <button
-            *ngIf="asyncData.shouldDisplayRegisterButton"
-            mat-raised-button
-            color="primary"
-            (click)="goTo('register')"
-        >
+        USERNAME: <div class="username mat-button">{{ asyncData.username }}</div>
+        EMAIL: <div class="username mat-button">{{ asyncData.email }}</div>
+        <button *ngIf="asyncData.isLoggedIn" mat-raised-button color="primary"
+            (click)="logOut()">Log out</button>
+        <button *ngIf="asyncData.shouldDisplayRegisterButton" mat-raised-button color="primary"
+            (click)="goTo('register')">
             Register
         </button>
-        <button
-            *ngIf="asyncData.shouldDisplayLoginButton"
-            mat-raised-button
-            color="primary"
-            (click)="goTo('login')"
-        >
+        <button *ngIf="asyncData.shouldDisplayLoginButton" mat-raised-button color="primary"
+            (click)="goTo('login')">
             Login
         </button>
     </mat-toolbar>
     <mat-sidenav-container class="main-container">
-        <mat-sidenav
-            #sidenav
-            [ngClass]="{ 'draggable-items': asyncData.isInNewReportTemplateMode }"
-            class="main-sidenav"
-            mode="side"
-            [(opened)]="asyncData.isSidenavOpened"
-        >
-            <evahub-sidenav
-                (emitItemClicked)="sideMenuItemClicked($event)"
+        <mat-sidenav #sidenav [ngClass]="{ 'draggable-items': asyncData.isInNewReportTemplateMode }"
+            class="main-sidenav" mode="side" [(opened)]="asyncData.isSidenavOpened">
+            <evahub-sidenav (emitItemClicked)="sideMenuItemClicked($event)"
                 (emitDeleteItemClicked)="deleteMenuItemClicked($event)"
-                [menuItems]="asyncData.menuItems"
-                [selectedDocumentId]="asyncData.currentDocumentId"
+                [menuItems]="asyncData.menuItems" [selectedDocumentId]="asyncData.currentDocumentId"
                 [shouldDisplaySpinner]="asyncData.shouldDisplaySidenavSpinner"
                 [isInDocumentUploadMode]="asyncData.isInDocumentUploadMode"
                 [isInNewProjectCreationMode]="asyncData.isInNewProjectCreationMode"
                 [isInNewReportTemplateMode]="asyncData.isInNewReportTemplateMode"
                 (emitUploadNewDocumentClicked)="onUploadNewDocumentClicked()"
-                (emitTriggerScriptClicked)="onTriggerScriptClicked()"
-            ></evahub-sidenav>
+                (emitTriggerScriptClicked)="onTriggerScriptClicked()"></evahub-sidenav>
         </mat-sidenav>
 
         <mat-sidenav-content [ngStyle]="{ left: asyncData.isSidenavOpened ? '1px' : '-3px' }">
