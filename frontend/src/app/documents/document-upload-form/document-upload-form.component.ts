@@ -4,6 +4,8 @@ import { Subscription, switchMap, Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { ApplicationStateStoreService } from "../../store/application-state-store";
 import { RestApiClient } from "src/app/services/rest-api-client.service";
+import { tap } from "rxjs/operators";
+import { EvahubDocumentType } from "src/app/common/constants";
 
 @Component({
     selector: "evahub-document-upload-form-component",
@@ -39,13 +41,26 @@ export class DocumentUploadFormComponent implements OnDestroy {
             const formData = new FormData();
             formData.append("file", file);
 
+            /*
             this.uploadObs$ = this.username$.pipe(
-                switchMap(username => {
-                    return this.rest.putNewDocument(formData, username);
-                }),
+                switchMap(username => this.rest.putNewDocument(formData, username)),
                 finalize(() => {
                     console.log("step 3, in finalize");
                     this.resetUpload();
+                })
+            );
+            */
+
+            this.uploadObs$ = this.username$.pipe(
+                switchMap(username => this.rest.putNewDocument(formData, username)),
+                tap(event => {
+                    if (event.type === HttpEventType.Response) {
+                        console.log("Upload complete, server responded:", event.body);
+                        this.store.updateDocumentsSetFromApi$.next(EvahubDocumentType.log);
+
+
+                        this.resetUpload();
+                    }
                 })
             );
         }

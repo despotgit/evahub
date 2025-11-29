@@ -61,7 +61,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             const s: string = getPageNameFromPageIndex(a);
 
             if (s == "project") {
-                this.updateDocumentsSetFromApi("log", false);
+                this.updateDocumentsSetFromApi("log", false); // jer je za projekat potrebno da se ucitaju logovi
             }
 
             if (PageIndexDictionary[s].isDocumentsPage) {
@@ -175,12 +175,20 @@ export class AppComponent implements OnInit, AfterViewInit {
     updateDocumentsSetFromApi$ = this.store.updateDocumentsSetFromApi$;
     updateDocumentsSetFromApiDerived$: Observable<any> = this.updateDocumentsSetFromApi$.pipe(
         tap(a => {
-            console.log("tapped!!!!, a is:");
+            console.log("tapped!!!! in app component, a is:");
             console.log(a);
             if (a == EvahubDocumentType.project) {
                 console.log("yes it is a project.");
                 this.updateDocumentsSetFromApi(
                     getDocumentTypeAsStringFromNumber(EvahubDocumentType.project),
+                    true
+                );
+            }
+
+            if (a == EvahubDocumentType.log) {
+                console.log("yes it is a log.");
+                this.updateDocumentsSetFromApi(
+                    getDocumentTypeAsStringFromNumber(EvahubDocumentType.log),
                     true
                 );
             }
