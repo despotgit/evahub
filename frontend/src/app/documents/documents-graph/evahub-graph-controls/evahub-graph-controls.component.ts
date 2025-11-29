@@ -32,7 +32,9 @@ import { interval, fromEvent, takeUntil, timer } from 'rxjs';
 const source = interval(1000);
 const clicks = fromEvent(document, 'click');
 const result = source.pipe(takeUntil(clicks));
-result.subscribe(x => console.log(`time is now: ${x}`));
+result.subscribe(x => {
+    //console.log(`time is now: ${x}`)
+});
 
 clicks.subscribe(() => {
     timer(2000).subscribe(() => {
