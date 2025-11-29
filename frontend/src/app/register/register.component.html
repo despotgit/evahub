@@ -1,52 +1,45 @@
 <mat-card class="registration-area">
-    <div
-        class="register-content-wrapper"
-        *ngIf="{
+    <div class="register-content-wrapper" *ngIf="{
             registerUsername: registerUsername$ | async,
             registerPassword: registerPassword$ | async,
             registerPasswordConfirmation: registerPasswordConfirmation$ | async,
             firstLastname: firstLastName$ | async,
             email: email$ | async,
             isFormValid: isFormValid$ | async
-        } as asyncData"
-    >
+        } as asyncData">
         <form *ngIf="!isRegistrationSuccessful()" [formGroup]="theForm">
             <ng-template matStepLabel>Fill out your username</ng-template>
             <mat-form-field class="registration-field">
-                <input matInput placeholder="Username" formControlName="registerUsernameFormControl" />
+                <input matInput placeholder="Username"
+                    formControlName="registerUsernameFormControl" />
             </mat-form-field>
 
             <ng-template matStepLabel>Fill out your password</ng-template>
             <mat-form-field class="registration-field">
-                <input
-                    type="password"
-                    matInput
-                    placeholder="Password"
-                    formControlName="registerPasswordFormControl"
-                />
+                <input type="password" matInput placeholder="Password"
+                    formControlName="registerPasswordFormControl" />
             </mat-form-field>
 
             <mat-form-field class="registration-field">
-                <input
-                    type="password"
-                    matInput
-                    placeholder="Confirm password"
-                    formControlName="registerPasswordConfirmationFormControl"
-                />
+                <input type="password" matInput placeholder="Confirm password"
+                    formControlName="registerPasswordConfirmationFormControl" />
             </mat-form-field>
 
             <ng-template matStepLabel>Fill out your name</ng-template>
             <mat-form-field class="registration-field">
-                <input matInput placeholder="Your name" formControlName="firstLastNameFormControl" />
+                <input matInput placeholder="Your name"
+                    formControlName="firstLastNameFormControl" />
             </mat-form-field>
 
             <ng-template matStepLabel>Fill out your email</ng-template>
             <mat-form-field class="registration-field">
-                <input matInput placeholder="Email" formControlName="emailFormControl" value="email" />
+                <input matInput placeholder="Email" formControlName="emailFormControl"
+                    value="email" />
             </mat-form-field>
 
             <div>
-                <button mat-raised-button #done color="primary" [disabled]="!asyncData.isFormValid">Done</button>
+                <button mat-raised-button #done color="primary"
+                    [disabled]="!asyncData.isFormValid">Done</button>
             </div>
         </form>
         <div class="invalid-feedback">
@@ -54,7 +47,8 @@
         </div>
 
         <div class="thanks" *ngIf="isRegistrationSuccessful()">
-            Thanks for registering. In order to confirm your registration, please click on the link in the
+            Thanks for registering. In order to confirm your registration, please click on the link
+            in the
             confirmation email.
         </div>
     </div>

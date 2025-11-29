@@ -1,27 +1,26 @@
-from flaskext.mysql import MySQL
+# db_config.py
+import pymysql
+pymysql.install_as_MySQLdb()  # Make PyMySQL act as MySQLdb
+
 from flask import Flask
+from flaskext.mysql import MySQL  # flask-mysql, not flask-mysqldb
 
 app = Flask(__name__)
 
-app.config["MYSQL_DATABASE_USER"] = "root"
-app.config["MYSQL_DATABASE_PASSWORD"] = "root"  # juergen's setup is empty password
-app.config["MYSQL_DATABASE_DB"] = "evahub"
-app.config["MYSQL_DATABASE_HOST"] = "localhost"
+# MySQL configuration
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_DB'] = 'evahub'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
+# Initialize MySQL
+mysql = MySQL()
+mysql.init_app(app)  # Note: flask-mysql uses init_app
 
+# Function to get a connection (cursor-ready)
 def getDb():
-    mysql = MySQL(
-        app,
-        prefix="",
-        host=app.config["MYSQL_DATABASE_HOST"],
-        user=app.config["MYSQL_DATABASE_USER"],
-        password=app.config["MYSQL_DATABASE_PASSWORD"],
-        db=app.config["MYSQL_DATABASE_DB"],
-        autocommit=True,
-    )
     connection = mysql.connect()
     return connection
-
 
 def fromDbConfig():
     print("yeah from the db_config")

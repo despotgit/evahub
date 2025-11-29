@@ -12,9 +12,7 @@ from flask_jwt_extended import (
 )
 from db_config import getDb
 
-
 auth = Blueprint("auth", __name__)
-
 
 @auth.route("/register", methods=["POST"])
 def register():
