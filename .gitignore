@@ -1,4 +1,5 @@
 .DS_Store
 backend/.venv
+backend/documents
 evahub_mamp.code-workspace
 **/.DS_Store
