@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  baseApiBackendUrl: "https://despot82.pythonanywhere.com",
-  baseApiFrontendUrl: "http://despotovicvladimir.com/evahub/www"
+  baseApiBackendUrl: "https://despot82.pythonanywhere.com"
+
 };
 
 /*

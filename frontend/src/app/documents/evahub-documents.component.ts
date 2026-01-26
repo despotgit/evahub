@@ -81,6 +81,7 @@ export class EvahubDocumentsComponent implements OnInit {
         }),
         tap(p => {
             //
+            console.log(p);
         })
     );
     graphDatasets$: Observable<any> = this.store.selectedDocument$.pipe(
@@ -185,7 +186,7 @@ export class EvahubDocumentsComponent implements OnInit {
         this.store.updateShouldDisplayEvahubDocumentSpinner(false);
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     onGraphDatasetChange(e) {
         console.log("in evahub documents comp, onGraphDatasetChange, e is:", e);
@@ -203,5 +204,5 @@ export class EvahubDocumentsComponent implements OnInit {
         }
     }
 
-    ngOnDestroy() {}
+    ngOnDestroy() { }
 }
